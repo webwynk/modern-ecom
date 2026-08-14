@@ -5,7 +5,9 @@
    zero-clipping hover effects, and responsive card sizing.
    ============================================================ */
 
+.section-category-slider-wrapper,
 .section-category-slider {
+  margin: 0 !important;
   padding: 50px 0 0 0;
   max-width: 100%;
   box-sizing: border-box;
