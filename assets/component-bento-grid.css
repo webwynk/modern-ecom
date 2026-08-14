@@ -1,8 +1,9 @@
 /* ============================================================
-   Component: 7-Card Bento Promo Grid
-   Asymmetrical 3-Column layout matching the exact reference:
+   Component: 7-Card Bento Promo Grid (Brand Palette)
+   Asymmetrical 3-Column layout with Luxury Brand Palette:
+   - Gold (#997A51), Rich Black (#000000 / #1A1815), Warm Beige (#FFF8F0 / #F8F3EC)
    - Left: 1 Wide Card (top) + 2 Square Cards (bottom)
-   - Center: 1 Tall Hero Card with floating "SHOP NOW" Badge
+   - Center: 1 Tall Hero Card with floating Gold "SHOP NOW" Badge
    - Right: 2 Square Cards (top) + 1 Wide Card (bottom)
    ============================================================ */
 
@@ -53,23 +54,26 @@
   overflow: hidden;
   text-decoration: none;
   display: flex;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 0.1rem solid rgba(153, 122, 81, 0.15);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
   box-sizing: border-box;
 }
 
 .bento-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 1.2rem 2.8rem rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1.2rem 2.8rem rgba(153, 122, 81, 0.16);
+  border-color: rgba(153, 122, 81, 0.4);
 }
 
 /* ========================================
    1. Wide Landscape Cards (Top-Left & Bottom-Right)
+   Warm Brand Tint (#FFF8F0 / #F8F3EC)
    ======================================== */
 .bento-card--wide {
   flex: 1.15;
   min-height: 20rem;
   padding: 2.6rem 2.2rem 2.2rem 2.4rem;
-  background-color: #E8F2FA;
+  background-color: #FFF8F0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -77,7 +81,7 @@
 }
 
 .bento-card--wide-alt {
-  background-color: #EAF4FD;
+  background-color: #F8F3EC;
 }
 
 .bento-card__content-left {
@@ -90,19 +94,20 @@
 
 .bento-card__eyebrow {
   font-size: 1.4rem;
-  font-weight: 500;
-  color: #123456;
-  margin: 0 0 0.2rem 0;
+  font-weight: 600;
+  color: var(--color-highlight, #997A51);
+  margin: 0 0 0.3rem 0;
   line-height: 1.25;
+  letter-spacing: 0.02em;
 }
 
 .bento-card__main-title {
   font-family: var(--font-heading-family);
-  font-size: 2.6rem;
+  font-size: 2.5rem;
   font-weight: 800;
-  color: #0B2240;
+  color: #000000;
   margin: 0 0 1.4rem 0;
-  line-height: 1.1;
+  line-height: 1.12;
   letter-spacing: -0.02em;
   text-transform: uppercase;
 }
@@ -113,7 +118,7 @@
   gap: 0.6rem;
   font-size: 1.4rem;
   font-weight: 700;
-  color: #0B2240;
+  color: #000000;
   text-decoration: none;
   transition: gap 0.2s ease, color 0.2s ease;
 }
@@ -157,20 +162,21 @@
   text-align: center;
 }
 
-/* Square Light Variant */
+/* Square Light Brand Variant */
 .bento-card--square-light {
-  background-color: #EBF4FC;
+  background-color: #FAF6F0;
 }
 
-/* Square Dark Variant */
+/* Square Dark Brand Variant */
 .bento-card--square-dark {
-  background-color: #073575;
+  background-color: #1A1815;
   color: #ffffff;
+  border-color: rgba(153, 122, 81, 0.3);
 }
 
-/* Square Floral / Pastel Variant */
+/* Square Gold Accent Variant */
 .bento-card--square-floral {
-  background: linear-gradient(135deg, #FBEBF2 0%, #F5F1FB 100%);
+  background: linear-gradient(135deg, #FAF4EB 0%, #F5ECDF 100%);
 }
 
 .bento-card__square-header {
@@ -182,12 +188,12 @@
   font-weight: 700;
   text-transform: uppercase;
   margin: 0;
-  letter-spacing: 0.02em;
-  color: #0B2240;
+  letter-spacing: 0.04em;
+  color: var(--color-highlight, #997A51);
 }
 
 .bento-card--square-dark .bento-card__square-tag {
-  color: #ffffff;
+  color: rgba(255, 255, 255, 0.7);
   font-weight: 500;
 }
 
@@ -196,13 +202,13 @@
   font-size: 2.2rem;
   font-weight: 800;
   text-transform: uppercase;
-  margin: 0.2rem 0 0 0;
+  margin: 0.3rem 0 0 0;
   line-height: 1.15;
-  color: #0B2240;
+  color: #000000;
 }
 
 .bento-card--square-dark .bento-card__square-title {
-  color: #2EA2F8;
+  color: var(--color-highlight, #997A51);
   font-weight: 800;
 }
 
@@ -227,18 +233,19 @@
 }
 
 /* ========================================
-   3. Center Hero Card (Dominant Focal Point)
+   3. Center Hero Card (Luxury Charcoal & Gold)
    ======================================== */
 .bento-card--hero {
   height: 100%;
   min-height: 42rem;
-  background: linear-gradient(180deg, #092854 0%, #051937 100%);
+  background: linear-gradient(180deg, #1C1A17 0%, #0E0D0C 100%);
+  border: 0.1rem solid rgba(153, 122, 81, 0.35);
   padding: 3.6rem 2.8rem 0 2.8rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   color: #ffffff;
-  box-shadow: 0 1.2rem 3.6rem rgba(5, 25, 55, 0.2);
+  box-shadow: 0 1.2rem 3.6rem rgba(0, 0, 0, 0.25);
 }
 
 .bento-card__hero-header {
@@ -257,7 +264,7 @@
   font-family: var(--font-heading-family);
   font-size: 3.6rem;
   font-weight: 800;
-  color: #2EA2F8;
+  color: var(--color-highlight, #997A51);
   text-transform: uppercase;
   margin: 0.4rem 0 1.2rem 0;
   line-height: 1.05;
@@ -277,7 +284,7 @@
 
 .bento-card--hero:hover .bento-card__hero-link {
   gap: 1rem;
-  color: #2EA2F8;
+  color: var(--color-highlight, #997A51);
 }
 
 .bento-card__hero-media {
@@ -302,7 +309,7 @@
   transform: scale(1.04);
 }
 
-/* Floating Circular "SHOP NOW" Badge */
+/* Floating Circular Brand Gold "SHOP NOW" Badge */
 .bento-card__floating-badge {
   position: absolute;
   bottom: 2.4rem;
@@ -310,21 +317,21 @@
   width: 8.4rem;
   height: 8.4rem;
   border-radius: 50%;
-  background: linear-gradient(135deg, #FF6A00 0%, #FF3D00 100%);
+  background: linear-gradient(135deg, #B59367 0%, #997A51 100%);
   color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  box-shadow: 0 0.8rem 2.4rem rgba(255, 61, 0, 0.45);
+  box-shadow: 0 0.8rem 2.4rem rgba(153, 122, 81, 0.45);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
   z-index: 5;
 }
 
 .bento-card--hero:hover .bento-card__floating-badge {
   transform: scale(1.12) rotate(-6deg);
-  box-shadow: 0 1.2rem 3rem rgba(255, 61, 0, 0.6);
+  box-shadow: 0 1.2rem 3rem rgba(153, 122, 81, 0.6);
 }
 
 .bento-card__badge-icon svg {

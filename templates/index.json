@@ -322,7 +322,7 @@
   "order": [
     "hero_slider",
     "category_slider",
-    "bento_grid",
-    "featured_deals_grid"
+    "featured_deals_grid",
+    "bento_grid"
   ]
 }
