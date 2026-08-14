@@ -1,0 +1,329 @@
+/* ============================================================
+   Component: Hero Slider
+   Ultra-smooth slide carousel with exact natural aspect ratios:
+   - Desktop & Tablet (>=750px): Exact 16:9 ratio (no cropping, no zoom)
+   - Mobile (<750px): Exact 4:2 ratio (no cropping, no zoom)
+   5s autoplay, hover pause, progress bar, dot navigation, arrows.
+   Contained at page-width minus gutters with rounded corners.
+   ============================================================ */
+
+.section-hero-slider {
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+.section-hero-slider .page-width {
+  padding: 0 !important;
+  max-width: 100% !important;
+}
+
+/* ========================================
+   Slider Container — Exact 16:9 natural ratio
+   ======================================== */
+.hero-slider {
+  position: relative;
+  width: calc(100% - 40px);
+  max-width: calc(var(--page-width, 1240px) - 40px);
+  margin: 2rem auto 0;
+  overflow: hidden;
+  border-radius: 2rem;
+  background-color: #000000;
+  aspect-ratio: 1915 / 821;
+  height: auto;
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ========================================
+   Slide Track — Horizontal flex layout
+   Smooth CSS transform sliding
+   ======================================== */
+.hero-slider__track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+.hero-slider__slide {
+  min-width: 100%;
+  width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-slider__slide picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-slider__slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: none; /* Exact 1:1 natural size, zero zoom */
+}
+
+/* ========================================
+   Arrow Navigation — Glassmorphism circles
+   ======================================== */
+.hero-slider__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 4.4rem;
+  height: 4.4rem;
+  border-radius: 50%;
+  border: 0.1rem solid rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.hero-slider__arrow:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.7);
+  transform: translateY(-50%) scale(1.06);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.hero-slider__arrow:active {
+  transform: translateY(-50%) scale(0.92);
+}
+
+.hero-slider__arrow svg {
+  width: 1.8rem;
+  height: 1.8rem;
+  stroke: #ffffff;
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.hero-slider__arrow--prev {
+  left: 1.6rem;
+}
+
+.hero-slider__arrow--next {
+  right: 1.6rem;
+}
+
+/* ========================================
+   Dot Pagination — Bottom center
+   ======================================== */
+.hero-slider__dots {
+  position: absolute;
+  bottom: 1.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.4rem 0.8rem;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.hero-slider__dot {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  border: 0.2rem solid rgba(255, 255, 255, 0.6);
+  background-color: transparent;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hero-slider__dot:hover {
+  border-color: #ffffff;
+  transform: scale(1.2);
+}
+
+.hero-slider__dot--active {
+  border-color: var(--color-highlight, #997A51);
+  background-color: var(--color-highlight, #997A51);
+  transform: scale(1.2);
+  box-shadow: 0 0 8px rgba(153, 122, 81, 0.6);
+}
+
+/* Progress ring on active dot (5s duration) */
+.hero-slider__dot--active::after {
+  content: '';
+  position: absolute;
+  top: -0.45rem;
+  left: -0.45rem;
+  width: calc(100% + 0.9rem);
+  height: calc(100% + 0.9rem);
+  border-radius: 50%;
+  border: 0.18rem solid transparent;
+  border-top-color: var(--color-highlight, #997A51);
+  animation: hero-dot-progress 5s linear infinite;
+}
+
+@keyframes hero-dot-progress {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Pause dot ring on hover */
+.hero-slider:hover .hero-slider__dot--active::after {
+  animation-play-state: paused;
+}
+
+/* ========================================
+   Bottom Progress Bar (5s sync)
+   ======================================== */
+.hero-slider__progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0.3rem;
+  background-color: rgba(255, 255, 255, 0.15);
+  z-index: 10;
+  overflow: hidden;
+  border-radius: 0 0 2rem 2rem;
+}
+
+.hero-slider__progress-bar {
+  height: 100%;
+  background-color: var(--color-highlight, #997A51);
+  width: 0%;
+  transition: width 0.05s linear;
+}
+
+/* ========================================
+   Responsive — Tablet (750px to 989px)
+   ======================================== */
+@media screen and (max-width: 989px) {
+  .hero-slider {
+    width: calc(100% - 40px);
+    border-radius: 1.6rem;
+    aspect-ratio: 1915 / 821;
+    height: auto;
+  }
+
+  .hero-slider__arrow {
+    width: 3.8rem;
+    height: 3.8rem;
+  }
+
+  .hero-slider__arrow svg {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+
+  .hero-slider__arrow--prev {
+    left: 1.2rem;
+  }
+
+  .hero-slider__arrow--next {
+    right: 1.2rem;
+  }
+
+  .hero-slider__dots {
+    bottom: 1.2rem;
+    gap: 0.8rem;
+  }
+
+  .hero-slider__dot {
+    width: 0.9rem;
+    height: 0.9rem;
+  }
+
+  .hero-slider__progress {
+    border-radius: 0 0 1.6rem 1.6rem;
+  }
+}
+
+/* ========================================
+   Responsive — Mobile (<750px): Exact 4:2 Aspect Ratio
+   ======================================== */
+@media screen and (max-width: 749px) {
+  .hero-slider {
+    width: calc(100% - 30px);
+    margin-top: 1.5rem;
+    border-radius: 1.4rem;
+    aspect-ratio: 1448 / 1086;
+    height: auto;
+  }
+
+  .hero-slider__arrow {
+    width: 3.4rem;
+    height: 3.4rem;
+  }
+
+  .hero-slider__arrow svg {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  .hero-slider__arrow--prev {
+    left: 0.8rem;
+  }
+
+  .hero-slider__arrow--next {
+    right: 0.8rem;
+  }
+
+  .hero-slider__dots {
+    bottom: 1rem;
+    gap: 0.7rem;
+  }
+
+  .hero-slider__dot {
+    width: 0.8rem;
+    height: 0.8rem;
+  }
+
+  .hero-slider__progress {
+    border-radius: 0 0 1.4rem 1.4rem;
+  }
+}
+
+/* ========================================
+   Accessibility — Reduced Motion
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  .hero-slider__track {
+    transition: none;
+  }
+
+  .hero-slider__slide img {
+    transition: none;
+    transform: none !important;
+  }
+
+  .hero-slider__dot--active::after {
+    animation: none;
+  }
+}

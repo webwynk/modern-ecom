@@ -1,0 +1,368 @@
+{% comment %}
+  Custom Hero Slider — 3-Slide Loop Carousel
+  Features: 5s autoplay, smooth horizontal slide animation,
+  pause on hover, progress bar, dot navigation, arrows, and swipe.
+{% endcomment %}
+
+{{ 'component-hero-slider.css' | asset_url | stylesheet_tag }}
+
+<div
+  id="HeroSlider-{{ section.id }}"
+  class="hero-slider"
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="Homepage hero banner slideshow"
+>
+  <!-- Slide Track -->
+  <div class="hero-slider__track" id="HeroSliderTrack-{{ section.id }}">
+    <!-- Slide 1: Heritage Craftsmanship (Rugs) -->
+    <div
+      class="hero-slider__slide hero-slider__slide--active"
+      role="group"
+      aria-roledescription="slide"
+      aria-label="Slide 1 of 3: Handcrafted Heritage — Timeless Rugs, Woven By Hand"
+      data-index="0"
+    >
+      <picture>
+        <source
+          media="(min-width: 750px)"
+          srcset="{{ 'hero-slide-1-desktop.jpg' | asset_url }}"
+          type="image/jpeg"
+        >
+        <img
+          src="{{ 'hero-slide-1-mobile.jpg' | asset_url }}"
+          alt="Handcrafted Heritage — Timeless hand-knotted rugs in a warm sunlit living room"
+          width="1915"
+          height="821"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        >
+      </picture>
+    </div>
+
+    <!-- Slide 2: Executive Workspace (Furniture) -->
+    <div
+      class="hero-slider__slide"
+      role="group"
+      aria-roledescription="slide"
+      aria-label="Slide 2 of 3: New Collection — Crafted For Command"
+      data-index="1"
+    >
+      <picture>
+        <source
+          media="(min-width: 750px)"
+          srcset="{{ 'hero-slide-2-desktop.jpg' | asset_url }}"
+          type="image/jpeg"
+        >
+        <img
+          src="{{ 'hero-slide-2-mobile.jpg' | asset_url }}"
+          alt="New Collection — Executive solid wood desk and premium leather chair in a dark modern study"
+          width="1915"
+          height="821"
+          loading="lazy"
+          decoding="async"
+        >
+      </picture>
+    </div>
+
+    <!-- Slide 3: Golden Hour Collection (Combined) -->
+    <div
+      class="hero-slider__slide"
+      role="group"
+      aria-roledescription="slide"
+      aria-label="Slide 3 of 3: The Golden Rug Collection — Where Craft Meets Home"
+      data-index="2"
+    >
+      <picture>
+        <source
+          media="(min-width: 750px)"
+          srcset="{{ 'hero-slide-3-desktop.jpg' | asset_url }}"
+          type="image/jpeg"
+        >
+        <img
+          src="{{ 'hero-slide-3-mobile.jpg' | asset_url }}"
+          alt="The Golden Rug Collection — Handmade rugs and artisan furniture curated for modern living"
+          width="1915"
+          height="821"
+          loading="lazy"
+          decoding="async"
+        >
+      </picture>
+    </div>
+  </div>
+
+  <!-- Left Arrow -->
+  <button
+    type="button"
+    class="hero-slider__arrow hero-slider__arrow--prev"
+    aria-label="Previous slide"
+    id="HeroSliderPrev-{{ section.id }}"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+  </button>
+
+  <!-- Right Arrow -->
+  <button
+    type="button"
+    class="hero-slider__arrow hero-slider__arrow--next"
+    aria-label="Next slide"
+    id="HeroSliderNext-{{ section.id }}"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </button>
+
+  <!-- Dot Pagination -->
+  <div class="hero-slider__dots" role="tablist" aria-label="Slide navigation" id="HeroSliderDots-{{ section.id }}">
+    <button
+      type="button"
+      class="hero-slider__dot hero-slider__dot--active"
+      role="tab"
+      aria-selected="true"
+      aria-label="Go to slide 1"
+      data-slide="0"
+    ></button>
+    <button
+      type="button"
+      class="hero-slider__dot"
+      role="tab"
+      aria-selected="false"
+      aria-label="Go to slide 2"
+      data-slide="1"
+    ></button>
+    <button
+      type="button"
+      class="hero-slider__dot"
+      role="tab"
+      aria-selected="false"
+      aria-label="Go to slide 3"
+      data-slide="2"
+    ></button>
+  </div>
+
+  <!-- Bottom Progress Bar -->
+  <div class="hero-slider__progress">
+    <div class="hero-slider__progress-bar" id="HeroSliderProgress-{{ section.id }}"></div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    'use strict';
+
+    var sectionId = '{{ section.id }}';
+    var slider = document.getElementById('HeroSlider-' + sectionId);
+    if (!slider) return;
+
+    var track = document.getElementById('HeroSliderTrack-' + sectionId);
+    var prevBtn = document.getElementById('HeroSliderPrev-' + sectionId);
+    var nextBtn = document.getElementById('HeroSliderNext-' + sectionId);
+    var dotsContainer = document.getElementById('HeroSliderDots-' + sectionId);
+    var progressBar = document.getElementById('HeroSliderProgress-' + sectionId);
+    var dots = dotsContainer.querySelectorAll('.hero-slider__dot');
+    var slides = track.querySelectorAll('.hero-slider__slide');
+    var totalSlides = slides.length;
+
+    var currentSlide = 0;
+    var duration = 5000; // 5 seconds per slide
+    var elapsed = 0;
+    var intervalTime = 50; // update every 50ms for smooth progress bar
+    var timer = null;
+    var isHovered = false;
+    var isTransitioning = false;
+
+    function updateSlideUI() {
+      // Smooth slide transform
+      track.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+
+      // Update active slide classes
+      slides.forEach(function(slide, idx) {
+        if (idx === currentSlide) {
+          slide.classList.add('hero-slider__slide--active');
+        } else {
+          slide.classList.remove('hero-slider__slide--active');
+        }
+      });
+
+      // Update dot states
+      dots.forEach(function(dot, idx) {
+        if (idx === currentSlide) {
+          dot.classList.add('hero-slider__dot--active');
+          dot.setAttribute('aria-selected', 'true');
+        } else {
+          dot.classList.remove('hero-slider__dot--active');
+          dot.setAttribute('aria-selected', 'false');
+        }
+      });
+
+      // Reset progress bar
+      elapsed = 0;
+      if (progressBar) {
+        progressBar.style.width = '0%';
+      }
+    }
+
+    function goToSlide(index) {
+      if (index < 0) {
+        index = totalSlides - 1;
+      } else if (index >= totalSlides) {
+        index = 0;
+      }
+      currentSlide = index;
+      updateSlideUI();
+    }
+
+    function nextSlide() {
+      goToSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      goToSlide(currentSlide - 1);
+    }
+
+    // Progress and Autoplay Loop
+    function startTimer() {
+      stopTimer();
+      timer = setInterval(function() {
+        if (!isHovered) {
+          elapsed += intervalTime;
+          if (progressBar) {
+            var percent = Math.min((elapsed / duration) * 100, 100);
+            progressBar.style.width = percent + '%';
+          }
+          if (elapsed >= duration) {
+            nextSlide();
+          }
+        }
+      }, intervalTime);
+    }
+
+    function stopTimer() {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    }
+
+    function resetTimer() {
+      elapsed = 0;
+      if (progressBar) {
+        progressBar.style.width = '0%';
+      }
+      startTimer();
+    }
+
+    // Arrow Event Listeners
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        prevSlide();
+        resetTimer();
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        nextSlide();
+        resetTimer();
+      });
+    }
+
+    // Dot Event Listeners
+    dots.forEach(function(dot) {
+      dot.addEventListener('click', function(e) {
+        e.preventDefault();
+        var targetIndex = parseInt(dot.getAttribute('data-slide'), 10);
+        goToSlide(targetIndex);
+        resetTimer();
+      });
+    });
+
+    // Hover to Pause
+    slider.addEventListener('mouseenter', function() {
+      isHovered = true;
+    });
+
+    slider.addEventListener('mouseleave', function() {
+      isHovered = false;
+    });
+
+    // Touch / Swipe support for mobile
+    var touchStartX = 0;
+    var touchStartY = 0;
+    var isSwiping = false;
+
+    slider.addEventListener('touchstart', function(e) {
+      if (e.touches.length === 1) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        isSwiping = true;
+      }
+    }, { passive: true });
+
+    slider.addEventListener('touchend', function(e) {
+      if (!isSwiping || e.changedTouches.length === 0) return;
+      isSwiping = false;
+      var touchEndX = e.changedTouches[0].clientX;
+      var touchEndY = e.changedTouches[0].clientY;
+      var diffX = touchStartX - touchEndX;
+      var diffY = touchStartY - touchEndY;
+
+      // Check horizontal swipe
+      if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX > 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+        resetTimer();
+      }
+    }, { passive: true });
+
+    // Keyboard navigation
+    slider.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevSlide();
+        resetTimer();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextSlide();
+        resetTimer();
+      }
+    });
+
+    // Page visibility check (pause when tab is hidden)
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        stopTimer();
+      } else {
+        startTimer();
+      }
+    });
+
+    // Initialize
+    slider.setAttribute('tabindex', '0');
+    updateSlideUI();
+    startTimer();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Hero Slider",
+  "tag": "section",
+  "class": "section section-hero-slider",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Hero Slider"
+    }
+  ]
+}
+{% endschema %}
