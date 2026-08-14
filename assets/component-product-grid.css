@@ -28,11 +28,20 @@
 }
 
 /* ========================================
-   Section Header
+   Section Header (Title + View All Button)
    ======================================== */
 .product-grid__header {
-  margin-bottom: 3.2rem;
-  text-align: left;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.6rem;
+  margin-bottom: 2.4rem;
+}
+
+.product-grid__title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 
 .product-grid__heading {
@@ -40,7 +49,7 @@
   font-size: 2.8rem;
   font-weight: 700;
   color: #000000;
-  margin: 0 0 0.6rem 0;
+  margin: 0;
   line-height: 1.2;
   letter-spacing: -0.02em;
 }
@@ -52,14 +61,50 @@
   line-height: 1.4;
 }
 
+.product-grid__view-all-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 2.2rem;
+  background-color: #ffffff;
+  border: 0.1rem solid rgba(0, 0, 0, 0.15);
+  color: #000000;
+  font-family: var(--font-heading-family);
+  font-size: 1.4rem;
+  font-weight: 600;
+  border-radius: 3rem;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  flex-shrink: 0;
+}
+
+.product-grid__view-all-btn svg {
+  width: 1.6rem;
+  height: 1.6rem;
+  transition: transform 0.25s ease;
+}
+
+.product-grid__view-all-btn:hover {
+  background-color: var(--color-highlight, #997A51);
+  border-color: var(--color-highlight, #997A51);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(153, 122, 81, 0.25);
+}
+
+.product-grid__view-all-btn:hover svg {
+  transform: translateX(3px);
+}
+
 /* ========================================
-   10-Product Responsive Grid
+   10-Product Responsive Grid (Gap 1.2rem)
    Desktop: 5 Columns (2 rows of 5)
    ======================================== */
 .product-grid__items {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 2rem;
+  gap: 1.2rem;
   list-style: none;
   margin: 0;
   padding: 0;
