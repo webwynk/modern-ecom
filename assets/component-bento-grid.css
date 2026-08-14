@@ -1,8 +1,8 @@
 /* ============================================================
-   Component: 7-Card Bento Promo Grid (Brand Palette)
-   Asymmetrical 3-Column layout with Luxury Brand Palette:
-   - Gold (#997A51), Rich Black (#000000 / #1A1815), Warm Beige (#FFF8F0 / #F8F3EC)
-   - Zero white box artifacts via mix-blend-mode: multiply & integrated white frames.
+   Component: 7-Card Bento Promo Grid (Luxury Gradient Color Blends)
+   - Smooth 2.2rem border-radius
+   - Rich ambient CSS gradient color blending (Warm Gold, Cream, Charcoal)
+   - Zero white box artifacts with mix-blend-mode: multiply
    ============================================================ */
 
 .section-bento-grid {
@@ -25,62 +25,62 @@
 .bento-grid {
   display: grid;
   grid-template-columns: 1fr 1.35fr 1fr;
-  gap: 1.6rem;
+  gap: 1.8rem;
   align-items: stretch;
 }
 
 .bento-col {
   display: flex;
   flex-direction: column;
-  gap: 1.6rem;
+  gap: 1.8rem;
   height: 100%;
 }
 
 .bento-row--split {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.6rem;
+  gap: 1.8rem;
   flex: 1;
 }
 
 /* ========================================
-   Card Common Styles
+   Card Common Styles (2.2rem Border Radius)
    ======================================== */
 .bento-card {
-  border-radius: 1.8rem;
+  border-radius: 2.2rem;
   position: relative;
   overflow: hidden;
   text-decoration: none;
   display: flex;
-  border: 0.1rem solid rgba(153, 122, 81, 0.18);
-  box-shadow: 0 0.4rem 1.6rem rgba(153, 122, 81, 0.06);
+  border: 0.12rem solid rgba(153, 122, 81, 0.22);
+  box-shadow: 0 0.6rem 2rem rgba(153, 122, 81, 0.07);
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
   box-sizing: border-box;
 }
 
 .bento-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 1.2rem 2.8rem rgba(153, 122, 81, 0.18);
-  border-color: rgba(153, 122, 81, 0.45);
+  transform: translateY(-6px);
+  box-shadow: 0 1.4rem 3.2rem rgba(153, 122, 81, 0.22);
+  border-color: var(--color-highlight, #997A51);
 }
 
 /* ========================================
    1. Wide Landscape Cards (Top-Left & Bottom-Right)
-   Warm Luxury Background (#FFF8F0 / #F8F3EC)
+   Blended Warm Gold Gradients
    ======================================== */
 .bento-card--wide {
   flex: 1.15;
   min-height: 20rem;
-  padding: 2.6rem 2.2rem 2.2rem 2.4rem;
-  background-color: #FFF8F0;
+  padding: 2.8rem 2.4rem 2.4rem 2.6rem;
+  background: linear-gradient(135deg, #FFF9F2 0%, #F5EAE0 100%);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1.4rem;
+  gap: 1.6rem;
 }
 
 .bento-card--wide-alt {
-  background-color: #F8F3EC;
+  background: linear-gradient(135deg, #FAF4EB 0%, #EFE5D8 100%);
 }
 
 .bento-card__content-left {
@@ -95,9 +95,9 @@
   font-size: 1.4rem;
   font-weight: 600;
   color: var(--color-highlight, #997A51);
-  margin: 0 0 0.3rem 0;
+  margin: 0 0 0.4rem 0;
   line-height: 1.25;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
 }
 
 .bento-card__main-title {
@@ -141,7 +141,7 @@
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  mix-blend-mode: multiply; /* Seamless transparent blend */
+  mix-blend-mode: multiply;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -150,33 +150,33 @@
 }
 
 /* ========================================
-   2. Small Square Cards
+   2. Small Square Cards (Blended Colors)
    ======================================== */
 .bento-card--square {
   flex: 1;
   min-height: 19rem;
-  padding: 1.8rem 1.6rem;
+  padding: 2rem 1.6rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   text-align: center;
 }
 
-/* Square Light Brand Variant */
+/* Square Light Cream Blend */
 .bento-card--square-light {
-  background-color: #FAF6F0;
+  background: linear-gradient(145deg, #FCF9F4 0%, #F2E9DE 100%);
 }
 
-/* Square Dark Brand Variant */
+/* Square Dark Charcoal Ambient Gold Blend */
 .bento-card--square-dark {
-  background-color: #1A1815;
+  background: radial-gradient(circle at 80% 20%, rgba(153, 122, 81, 0.25) 0%, transparent 60%), linear-gradient(180deg, #1C1916 0%, #0F0E0C 100%);
   color: #ffffff;
-  border-color: rgba(153, 122, 81, 0.3);
+  border-color: rgba(153, 122, 81, 0.35);
 }
 
-/* Square Gold Accent Variant */
+/* Square Gold Ambient Accent Blend */
 .bento-card--square-floral {
-  background: linear-gradient(135deg, #FAF4EB 0%, #F5ECDF 100%);
+  background: linear-gradient(145deg, #FAF3E8 0%, #EFE1CE 100%);
 }
 
 .bento-card__square-header {
@@ -193,7 +193,7 @@
 }
 
 .bento-card--square-dark .bento-card__square-tag {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.75);
   font-weight: 500;
 }
 
@@ -225,17 +225,18 @@
   max-width: 90%;
   max-height: 10rem;
   object-fit: contain;
-  mix-blend-mode: multiply; /* Seamless transparent blend */
+  mix-blend-mode: multiply;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .bento-card--square-dark .bento-card__square-media {
-  background-color: #ffffff;
-  border-radius: 1.2rem;
+  background: linear-gradient(180deg, #ffffff 0%, #FAF6F0 100%);
+  border-radius: 1.6rem;
   padding: 0.8rem;
   margin-top: 0.8rem;
   height: 9.5rem;
   box-sizing: border-box;
+  box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.15);
 }
 
 .bento-card--square-dark .bento-card__square-media img {
@@ -248,19 +249,19 @@
 }
 
 /* ========================================
-   3. Center Hero Card (Luxury Charcoal & Gold)
+   3. Center Hero Card (Deep Charcoal & Radiant Gold Blend)
    ======================================== */
 .bento-card--hero {
   height: 100%;
   min-height: 42rem;
-  background: linear-gradient(180deg, #1C1A17 0%, #0E0D0C 100%);
-  border: 0.1rem solid rgba(153, 122, 81, 0.35);
-  padding: 3.6rem 2.8rem 0 2.8rem;
+  background: radial-gradient(circle at 90% 15%, rgba(153, 122, 81, 0.35) 0%, transparent 65%), linear-gradient(180deg, #1D1A17 0%, #0D0C0B 100%);
+  border: 0.14rem solid rgba(153, 122, 81, 0.4);
+  padding: 3.8rem 3rem 0 3rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   color: #ffffff;
-  box-shadow: 0 1.2rem 3.6rem rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1.4rem 4rem rgba(0, 0, 0, 0.3);
 }
 
 .bento-card__hero-header {
@@ -309,11 +310,12 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  background-color: #ffffff;
-  border-radius: 1.4rem 1.4rem 0 0;
-  padding: 1.2rem 1.2rem 0 1.2rem;
+  background: linear-gradient(180deg, #ffffff 0%, #FAF6F0 100%);
+  border-radius: 1.8rem 1.8rem 0 0;
+  padding: 1.4rem 1.4rem 0 1.4rem;
   box-sizing: border-box;
   overflow: hidden;
+  box-shadow: 0 -0.4rem 2rem rgba(0, 0, 0, 0.12);
   z-index: 1;
 }
 
@@ -333,30 +335,30 @@
 .bento-card__floating-badge {
   position: absolute;
   bottom: 2.4rem;
-  right: 2rem;
-  width: 8.4rem;
-  height: 8.4rem;
+  right: 2.2rem;
+  width: 8.6rem;
+  height: 8.6rem;
   border-radius: 50%;
-  background: linear-gradient(135deg, #B59367 0%, #997A51 100%);
+  background: linear-gradient(135deg, #C29E70 0%, #997A51 100%);
   color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  box-shadow: 0 0.8rem 2.4rem rgba(153, 122, 81, 0.45);
+  box-shadow: 0 0.8rem 2.6rem rgba(153, 122, 81, 0.5);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
   z-index: 5;
 }
 
 .bento-card--hero:hover .bento-card__floating-badge {
   transform: scale(1.12) rotate(-6deg);
-  box-shadow: 0 1.2rem 3rem rgba(153, 122, 81, 0.6);
+  box-shadow: 0 1.4rem 3.4rem rgba(153, 122, 81, 0.65);
 }
 
 .bento-card__badge-icon svg {
-  width: 1.8rem;
-  height: 1.8rem;
+  width: 1.9rem;
+  height: 1.9rem;
   fill: #ffffff;
   margin-bottom: 0.2rem;
 }
@@ -398,6 +400,10 @@
     width: calc(100% - 30px);
   }
 
+  .bento-card {
+    border-radius: 1.8rem;
+  }
+
   .bento-card--wide {
     padding: 2rem 1.6rem;
     min-height: 17rem;
@@ -421,8 +427,8 @@
   }
 
   .bento-card__floating-badge {
-    width: 7.2rem;
-    height: 7.2rem;
+    width: 7.4rem;
+    height: 7.4rem;
     bottom: 1.8rem;
     right: 1.4rem;
   }
