@@ -19,13 +19,31 @@
         "cat_2": {
           "type": "category_card",
           "settings": {
+            "title": "Executive Desks",
+            "count": "28+ Items",
+            "static_image": "cat-executive-desks.jpg",
+            "link": "/collections/all?filter=desks"
+          }
+        },
+        "cat_3": {
+          "type": "category_card",
+          "settings": {
             "title": "Kilim Rugs",
             "count": "32+ Items",
             "static_image": "cat-kilim-rugs.jpg",
             "link": "/collections/all?filter=kilim-rugs"
           }
         },
-        "cat_3": {
+        "cat_4": {
+          "type": "category_card",
+          "settings": {
+            "title": "Office Chairs",
+            "count": "35+ Items",
+            "static_image": "cat-chairs.jpg",
+            "link": "/collections/all?filter=chairs"
+          }
+        },
+        "cat_5": {
           "type": "category_card",
           "settings": {
             "title": "Bokhara Rugs",
@@ -34,40 +52,22 @@
             "link": "/collections/all?filter=bokhara-rugs"
           }
         },
-        "cat_4": {
+        "cat_6": {
+          "type": "category_card",
+          "settings": {
+            "title": "Storage & Cabinets",
+            "count": "18+ Items",
+            "static_image": "cat-storage.jpg",
+            "link": "/collections/all?filter=storage"
+          }
+        },
+        "cat_7": {
           "type": "category_card",
           "settings": {
             "title": "Runner Rugs",
             "count": "45+ Items",
             "static_image": "cat-runner-rugs.jpg",
             "link": "/collections/all?filter=entryway-runner"
-          }
-        },
-        "cat_5": {
-          "type": "category_card",
-          "settings": {
-            "title": "Oushak Rugs",
-            "count": "18+ Items",
-            "static_image": "cat-oushak-rugs.jpg",
-            "link": "/collections/all?filter=oushak-rugs"
-          }
-        },
-        "cat_6": {
-          "type": "category_card",
-          "settings": {
-            "title": "Executive Desks",
-            "count": "28+ Items",
-            "static_image": "cat-executive-desks.jpg",
-            "link": "/collections/all?filter=desks"
-          }
-        },
-        "cat_7": {
-          "type": "category_card",
-          "settings": {
-            "title": "Office Chairs",
-            "count": "35+ Items",
-            "static_image": "cat-chairs.jpg",
-            "link": "/collections/all?filter=chairs"
           }
         },
         "cat_8": {
@@ -77,6 +77,33 @@
             "count": "20+ Items",
             "static_image": "cat-tables.jpg",
             "link": "/collections/all?filter=tables"
+          }
+        },
+        "cat_9": {
+          "type": "category_card",
+          "settings": {
+            "title": "Oushak Rugs",
+            "count": "18+ Items",
+            "static_image": "cat-oushak-rugs.jpg",
+            "link": "/collections/all?filter=oushak-rugs"
+          }
+        },
+        "cat_10": {
+          "type": "category_card",
+          "settings": {
+            "title": "Bookshelves & Units",
+            "count": "15+ Items",
+            "static_image": "cat-bookshelves.jpg",
+            "link": "/collections/all?filter=storage"
+          }
+        },
+        "cat_11": {
+          "type": "category_card",
+          "settings": {
+            "title": "Desk Accessories",
+            "count": "40+ Items",
+            "static_image": "cat-desk-accessories.jpg",
+            "link": "/collections/all?filter=accessories"
           }
         }
       },
@@ -88,7 +115,10 @@
         "cat_5",
         "cat_6",
         "cat_7",
-        "cat_8"
+        "cat_8",
+        "cat_9",
+        "cat_10",
+        "cat_11"
       ],
       "settings": {
         "heading": "Explore Popular Categories",
