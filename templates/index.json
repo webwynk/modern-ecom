@@ -173,14 +173,6 @@
         "alt_text": "Curated Collections Discount"
       }
     },
-    "promo_banner_bottom": {
-      "type": "custom-promo-banner",
-      "settings": {
-        "default_desktop_asset": "discount-banner-16x9.jpg",
-        "default_mobile_asset": "discount-banner-4x2.jpg",
-        "alt_text": "Exclusive Season Clearance Banner"
-      }
-    },
     "featured_deals_grid": {
       "type": "custom-product-grid",
       "blocks": {
@@ -360,7 +352,6 @@
     "promo_banner_deals",
     "bento_grid",
     "promo_banner_bento",
-    "special_offer_grid",
-    "promo_banner_bottom"
+    "special_offer_grid"
   ]
 }
