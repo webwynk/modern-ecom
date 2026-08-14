@@ -2,7 +2,7 @@
   Custom Top Brands Dual-Row Animated Marquee Section
   - Row 1: 10 logos scrolling smoothly to the RIGHT
   - Row 2: 10 logos scrolling smoothly to the LEFT
-  - Interactive hover pause
+  - 100px max height images, no hover pause, no links
 {% endcomment %}
 
 {{ 'component-brand-logos.css' | asset_url | stylesheet_tag }}
@@ -27,28 +27,28 @@
       <div class="brand-marquee-row brand-marquee-row--right" aria-label="Brands Carousel Row 1">
         <div class="brand-marquee-track">
           <!-- Set 1 -->
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ '232-140x140-0.jpg' | asset_url }}" alt="HP" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'TORK_LOGO-140x140-0.jpg' | asset_url }}" alt="Tork" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'DIALCOMPLETE_LOGO-140x140-0.jpg' | asset_url }}" alt="Dial" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'DART_LOGO-140x140-0.jpg' | asset_url }}" alt="Dart" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'SWIFFER_LOGO_1-140x140-0.jpg' | asset_url }}" alt="Swiffer" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'BOARDWALK_LOGO-140x140-0.jpg' | asset_url }}" alt="Boardwalk" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'KLEENEX_LOGO-140x140-0.jpg' | asset_url }}" alt="Kleenex" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'WYPALL_1_LOGO-140x140-0.jpg' | asset_url }}" alt="WypAll" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'PURELL_LOGO-140x140-0.jpg' | asset_url }}" alt="Purell" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'MRCLEAN_LOGO-140x140-0.jpg' | asset_url }}" alt="Mr Clean" loading="lazy"></a>
+          <div class="brand-logo-card"><img src="{{ '232-140x140-0.jpg' | asset_url }}" alt="HP" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'TORK_LOGO-140x140-0.jpg' | asset_url }}" alt="Tork" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'DIALCOMPLETE_LOGO-140x140-0.jpg' | asset_url }}" alt="Dial" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'DART_LOGO-140x140-0.jpg' | asset_url }}" alt="Dart" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'SWIFFER_LOGO_1-140x140-0.jpg' | asset_url }}" alt="Swiffer" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'BOARDWALK_LOGO-140x140-0.jpg' | asset_url }}" alt="Boardwalk" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'KLEENEX_LOGO-140x140-0.jpg' | asset_url }}" alt="Kleenex" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'WYPALL_1_LOGO-140x140-0.jpg' | asset_url }}" alt="WypAll" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'PURELL_LOGO-140x140-0.jpg' | asset_url }}" alt="Purell" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'MRCLEAN_LOGO-140x140-0.jpg' | asset_url }}" alt="Mr Clean" loading="lazy"></div>
 
           <!-- Duplicate Set for Seamless Infinite Loop -->
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ '232-140x140-0.jpg' | asset_url }}" alt="HP" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'TORK_LOGO-140x140-0.jpg' | asset_url }}" alt="Tork" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'DIALCOMPLETE_LOGO-140x140-0.jpg' | asset_url }}" alt="Dial" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'DART_LOGO-140x140-0.jpg' | asset_url }}" alt="Dart" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'SWIFFER_LOGO_1-140x140-0.jpg' | asset_url }}" alt="Swiffer" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'BOARDWALK_LOGO-140x140-0.jpg' | asset_url }}" alt="Boardwalk" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'KLEENEX_LOGO-140x140-0.jpg' | asset_url }}" alt="Kleenex" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'WYPALL_1_LOGO-140x140-0.jpg' | asset_url }}" alt="WypAll" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'PURELL_LOGO-140x140-0.jpg' | asset_url }}" alt="Purell" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'MRCLEAN_LOGO-140x140-0.jpg' | asset_url }}" alt="Mr Clean" loading="lazy"></a>
+          <div class="brand-logo-card"><img src="{{ '232-140x140-0.jpg' | asset_url }}" alt="HP" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'TORK_LOGO-140x140-0.jpg' | asset_url }}" alt="Tork" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'DIALCOMPLETE_LOGO-140x140-0.jpg' | asset_url }}" alt="Dial" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'DART_LOGO-140x140-0.jpg' | asset_url }}" alt="Dart" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'SWIFFER_LOGO_1-140x140-0.jpg' | asset_url }}" alt="Swiffer" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'BOARDWALK_LOGO-140x140-0.jpg' | asset_url }}" alt="Boardwalk" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'KLEENEX_LOGO-140x140-0.jpg' | asset_url }}" alt="Kleenex" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'WYPALL_1_LOGO-140x140-0.jpg' | asset_url }}" alt="WypAll" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'PURELL_LOGO-140x140-0.jpg' | asset_url }}" alt="Purell" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'MRCLEAN_LOGO-140x140-0.jpg' | asset_url }}" alt="Mr Clean" loading="lazy"></div>
         </div>
       </div>
 
@@ -58,28 +58,28 @@
       <div class="brand-marquee-row brand-marquee-row--left" aria-label="Brands Carousel Row 2">
         <div class="brand-marquee-track">
           <!-- Set 1 -->
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'CLOROX_LOGO-140x140-0.jpg' | asset_url }}" alt="Clorox" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'RUBBERMAID_LOGO-140x140-0.jpg' | asset_url }}" alt="Rubbermaid" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'DAWNPRO_LOGO-140x140-0.jpg' | asset_url }}" alt="Dawn" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'BROTHER_LOGO-140x140-0.jpg' | asset_url }}" alt="Brother" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'GOJO_LOGO-140x140-0.jpg' | asset_url }}" alt="Gojo" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'WINDEX_LOGO-140x140-0.jpg' | asset_url }}" alt="Windex" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'SCOTT_1_LOGO-140x140-0.jpg' | asset_url }}" alt="Scott" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'AVERY_LOGO-140x140-0.jpg' | asset_url }}" alt="Avery" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'LYSOL_LOGO-140x140-0.jpg' | asset_url }}" alt="Lysol" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'BOUNTY_LOGO-140x140-0.jpg' | asset_url }}" alt="Bounty" loading="lazy"></a>
+          <div class="brand-logo-card"><img src="{{ 'CLOROX_LOGO-140x140-0.jpg' | asset_url }}" alt="Clorox" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'RUBBERMAID_LOGO-140x140-0.jpg' | asset_url }}" alt="Rubbermaid" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'DAWNPRO_LOGO-140x140-0.jpg' | asset_url }}" alt="Dawn" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'BROTHER_LOGO-140x140-0.jpg' | asset_url }}" alt="Brother" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'GOJO_LOGO-140x140-0.jpg' | asset_url }}" alt="Gojo" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'WINDEX_LOGO-140x140-0.jpg' | asset_url }}" alt="Windex" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'SCOTT_1_LOGO-140x140-0.jpg' | asset_url }}" alt="Scott" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'AVERY_LOGO-140x140-0.jpg' | asset_url }}" alt="Avery" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'LYSOL_LOGO-140x140-0.jpg' | asset_url }}" alt="Lysol" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'BOUNTY_LOGO-140x140-0.jpg' | asset_url }}" alt="Bounty" loading="lazy"></div>
 
           <!-- Duplicate Set for Seamless Infinite Loop -->
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'CLOROX_LOGO-140x140-0.jpg' | asset_url }}" alt="Clorox" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'RUBBERMAID_LOGO-140x140-0.jpg' | asset_url }}" alt="Rubbermaid" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'DAWNPRO_LOGO-140x140-0.jpg' | asset_url }}" alt="Dawn" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'BROTHER_LOGO-140x140-0.jpg' | asset_url }}" alt="Brother" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'GOJO_LOGO-140x140-0.jpg' | asset_url }}" alt="Gojo" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'WINDEX_LOGO-140x140-0.jpg' | asset_url }}" alt="Windex" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'SCOTT_1_LOGO-140x140-0.jpg' | asset_url }}" alt="Scott" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'AVERY_LOGO-140x140-0.jpg' | asset_url }}" alt="Avery" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'LYSOL_LOGO-140x140-0.jpg' | asset_url }}" alt="Lysol" loading="lazy"></a>
-          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'BOUNTY_LOGO-140x140-0.jpg' | asset_url }}" alt="Bounty" loading="lazy"></a>
+          <div class="brand-logo-card"><img src="{{ 'CLOROX_LOGO-140x140-0.jpg' | asset_url }}" alt="Clorox" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'RUBBERMAID_LOGO-140x140-0.jpg' | asset_url }}" alt="Rubbermaid" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'DAWNPRO_LOGO-140x140-0.jpg' | asset_url }}" alt="Dawn" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'BROTHER_LOGO-140x140-0.jpg' | asset_url }}" alt="Brother" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'GOJO_LOGO-140x140-0.jpg' | asset_url }}" alt="Gojo" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'WINDEX_LOGO-140x140-0.jpg' | asset_url }}" alt="Windex" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'SCOTT_1_LOGO-140x140-0.jpg' | asset_url }}" alt="Scott" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'AVERY_LOGO-140x140-0.jpg' | asset_url }}" alt="Avery" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'LYSOL_LOGO-140x140-0.jpg' | asset_url }}" alt="Lysol" loading="lazy"></div>
+          <div class="brand-logo-card"><img src="{{ 'BOUNTY_LOGO-140x140-0.jpg' | asset_url }}" alt="Bounty" loading="lazy"></div>
         </div>
       </div>
 
