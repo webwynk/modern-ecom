@@ -141,6 +141,7 @@
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+  border-radius: 1.4rem;
   mix-blend-mode: multiply;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -225,6 +226,7 @@
   max-width: 90%;
   max-height: 10rem;
   object-fit: contain;
+  border-radius: 1.2rem;
   mix-blend-mode: multiply;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -237,11 +239,13 @@
   height: 9.5rem;
   box-sizing: border-box;
   box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.15);
+  overflow: hidden;
 }
 
 .bento-card--square-dark .bento-card__square-media img {
   mix-blend-mode: normal;
   max-height: 100%;
+  border-radius: 1.2rem;
 }
 
 .bento-card:hover .bento-card__square-media img {
@@ -323,6 +327,7 @@
   width: 100%;
   max-height: 100%;
   object-fit: contain;
+  border-radius: 1.6rem;
   mix-blend-mode: multiply;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
