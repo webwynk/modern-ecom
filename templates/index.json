@@ -125,6 +125,28 @@
         "subheading": "Discover handcrafted rugs & artisan furniture curated for modern living"
       }
     },
+    "bento_grid": {
+      "type": "custom-bento-grid",
+      "settings": {
+        "card_1_eyebrow": "Wholesale & Custom",
+        "card_1_title": "HANDMADE RUGS",
+        "card_1_link_text": "Explore Now",
+        "card_2_tag": "Pure Wool",
+        "card_2_title": "KILIMS",
+        "card_3_tag": "Enjoy Special",
+        "card_3_title": "DEALS",
+        "hero_eyebrow": "Showroom",
+        "hero_title": "SAVINGS CENTER",
+        "hero_link_text": "Start Saving Here",
+        "card_5_tag": "Office Seating",
+        "card_5_title": "SAVINGS",
+        "card_6_tag": "Solid Oak",
+        "card_6_title": "SALE",
+        "card_7_eyebrow": "BIG Savings on",
+        "card_7_title": "EXECUTIVE SUITES",
+        "card_7_link_text": "Stock Up"
+      }
+    },
     "featured_deals_grid": {
       "type": "custom-product-grid",
       "blocks": {
@@ -300,6 +322,7 @@
   "order": [
     "hero_slider",
     "category_slider",
+    "bento_grid",
     "featured_deals_grid"
   ]
 }

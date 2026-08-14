@@ -1,0 +1,388 @@
+{% comment %}
+  Custom 7-Card Bento Promo Grid
+  Asymmetrical 3-Column layout matching the exact reference:
+  - Left: 1 Wide Landscape Card (Top) + 2 Square Cards (Bottom)
+  - Center: 1 Tall Hero Card with floating "SHOP NOW" circular badge
+  - Right: 2 Square Cards (Top) + 1 Wide Landscape Card (Bottom)
+{% endcomment %}
+
+{{ 'component-bento-grid.css' | asset_url | stylesheet_tag }}
+
+<div class="section-bento-grid" id="BentoGrid-{{ section.id }}">
+  <div class="bento-grid__container">
+    <div class="bento-grid">
+      
+      <!-- ========================================
+           COLUMN 1: Left Column
+           ======================================== -->
+      <div class="bento-col bento-col--left">
+        <!-- 1. Top Wide Card -->
+        <a href="{{ section.settings.card_1_link | default: '/collections/all?filter=handmade-rugs' }}" class="bento-card bento-card--wide">
+          <div class="bento-card__content-left">
+            <span class="bento-card__eyebrow">{{ section.settings.card_1_eyebrow | default: 'Wholesale & Custom' }}</span>
+            <h3 class="bento-card__main-title">{{ section.settings.card_1_title | default: 'HANDMADE RUGS' }}</h3>
+            <span class="bento-card__link-text">
+              {{ section.settings.card_1_link_text | default: 'Explore Now' }}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </span>
+          </div>
+          <div class="bento-card__media-right">
+            {% if section.settings.card_1_image != blank %}
+              <img src="{{ section.settings.card_1_image | image_url: width: 400 }}" alt="{{ section.settings.card_1_title | escape }}" loading="lazy">
+            {% else %}
+              <img src="{{ 'cat-handmade-rugs.jpg' | asset_url }}" alt="Handmade Rugs" loading="lazy">
+            {% endif %}
+          </div>
+        </a>
+
+        <!-- 2. Bottom Row (2 Split Square Cards) -->
+        <div class="bento-row--split">
+          <!-- Card 2: Square Light -->
+          <a href="{{ section.settings.card_2_link | default: '/collections/all?filter=kilim-rugs' }}" class="bento-card bento-card--square bento-card--square-light">
+            <div class="bento-card__square-header">
+              <span class="bento-card__square-tag">{{ section.settings.card_2_tag | default: 'Pure Wool' }}</span>
+              <h4 class="bento-card__square-title">{{ section.settings.card_2_title | default: 'KILIMS' }}</h4>
+            </div>
+            <div class="bento-card__square-media">
+              {% if section.settings.card_2_image != blank %}
+                <img src="{{ section.settings.card_2_image | image_url: width: 260 }}" alt="{{ section.settings.card_2_title | escape }}" loading="lazy">
+              {% else %}
+                <img src="{{ 'cat-kilim-rugs.jpg' | asset_url }}" alt="Kilim Rugs" loading="lazy">
+              {% endif %}
+            </div>
+          </a>
+
+          <!-- Card 3: Square Dark -->
+          <a href="{{ section.settings.card_3_link | default: '/collections/all?filter=bokhara-rugs' }}" class="bento-card bento-card--square bento-card--square-dark">
+            <div class="bento-card__square-header">
+              <span class="bento-card__square-tag">{{ section.settings.card_3_tag | default: 'Enjoy Special' }}</span>
+              <h4 class="bento-card__square-title">{{ section.settings.card_3_title | default: 'DEALS' }}</h4>
+            </div>
+            <div class="bento-card__square-media">
+              {% if section.settings.card_3_image != blank %}
+                <img src="{{ section.settings.card_3_image | image_url: width: 260 }}" alt="{{ section.settings.card_3_title | escape }}" loading="lazy">
+              {% else %}
+                <img src="{{ 'cat-bokhara-rugs.jpg' | asset_url }}" alt="Special Deals" loading="lazy">
+              {% endif %}
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- ========================================
+           COLUMN 2: Center Hero Card
+           ======================================== -->
+      <div class="bento-col bento-col--center">
+        <a href="{{ section.settings.hero_link | default: '/collections/all' }}" class="bento-card bento-card--hero">
+          <div class="bento-card__hero-header">
+            <span class="bento-card__hero-eyebrow">{{ section.settings.hero_eyebrow | default: 'Showroom' }}</span>
+            <h2 class="bento-card__hero-title">{{ section.settings.hero_title | default: 'SAVINGS CENTER' }}</h2>
+            <span class="bento-card__hero-link">
+              {{ section.settings.hero_link_text | default: 'Start Saving Here' }}
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </span>
+          </div>
+
+          <div class="bento-card__hero-media">
+            {% if section.settings.hero_image != blank %}
+              <img src="{{ section.settings.hero_image | image_url: width: 600 }}" alt="{{ section.settings.hero_title | escape }}" loading="lazy">
+            {% else %}
+              <img src="{{ 'cat-storage.jpg' | asset_url }}" alt="Warehouse Center" loading="lazy">
+            {% endif %}
+          </div>
+
+          <!-- Floating "SHOP NOW" Badge Button -->
+          <div class="bento-card__floating-badge">
+            <div class="bento-card__badge-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="9" cy="21" r="1.5"></circle>
+                <circle cx="20" cy="21" r="1.5"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+              </svg>
+            </div>
+            <span class="bento-card__badge-text">SHOP<br>NOW</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- ========================================
+           COLUMN 3: Right Column
+           ======================================== -->
+      <div class="bento-col bento-col--right">
+        <!-- 1. Top Row (2 Split Square Cards) -->
+        <div class="bento-row--split">
+          <!-- Card 5: Square Dark -->
+          <a href="{{ section.settings.card_5_link | default: '/collections/all?filter=chairs' }}" class="bento-card bento-card--square bento-card--square-dark">
+            <div class="bento-card__square-header">
+              <span class="bento-card__square-tag">{{ section.settings.card_5_tag | default: 'Office Seating' }}</span>
+              <h4 class="bento-card__square-title">{{ section.settings.card_5_title | default: 'SAVINGS' }}</h4>
+            </div>
+            <div class="bento-card__square-media">
+              {% if section.settings.card_5_image != blank %}
+                <img src="{{ section.settings.card_5_image | image_url: width: 260 }}" alt="{{ section.settings.card_5_title | escape }}" loading="lazy">
+              {% else %}
+                <img src="{{ 'cat-chairs.jpg' | asset_url }}" alt="Executive Chairs" loading="lazy">
+              {% endif %}
+            </div>
+          </a>
+
+          <!-- Card 6: Square Floral / Light -->
+          <a href="{{ section.settings.card_6_link | default: '/collections/all?filter=tables' }}" class="bento-card bento-card--square bento-card--square-floral">
+            <div class="bento-card__square-header">
+              <span class="bento-card__square-tag">{{ section.settings.card_6_tag | default: 'Solid Oak' }}</span>
+              <h4 class="bento-card__square-title" style="color: #6C1E4E;">{{ section.settings.card_6_title | default: 'SALE' }}</h4>
+            </div>
+            <div class="bento-card__square-media">
+              {% if section.settings.card_6_image != blank %}
+                <img src="{{ section.settings.card_6_image | image_url: width: 260 }}" alt="{{ section.settings.card_6_title | escape }}" loading="lazy">
+              {% else %}
+                <img src="{{ 'cat-tables.jpg' | asset_url }}" alt="Artisan Tables" loading="lazy">
+              {% endif %}
+            </div>
+          </a>
+        </div>
+
+        <!-- 2. Bottom Wide Card -->
+        <a href="{{ section.settings.card_7_link | default: '/collections/all?filter=desks' }}" class="bento-card bento-card--wide bento-card--wide-alt">
+          <div class="bento-card__content-left">
+            <span class="bento-card__eyebrow">{{ section.settings.card_7_eyebrow | default: 'BIG Savings on' }}</span>
+            <h3 class="bento-card__main-title">{{ section.settings.card_7_title | default: 'EXECUTIVE SUITES' }}</h3>
+            <span class="bento-card__link-text">
+              {{ section.settings.card_7_link_text | default: 'Stock Up' }}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </span>
+          </div>
+          <div class="bento-card__media-right">
+            {% if section.settings.card_7_image != blank %}
+              <img src="{{ section.settings.card_7_image | image_url: width: 400 }}" alt="{{ section.settings.card_7_title | escape }}" loading="lazy">
+            {% else %}
+              <img src="{{ 'cat-executive-desks.jpg' | asset_url }}" alt="Executive Suites" loading="lazy">
+            {% endif %}
+          </div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Bento Promo Grid",
+  "tag": "section",
+  "class": "section-bento-grid-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Card 1 (Top-Left Wide)"
+    },
+    {
+      "type": "text",
+      "id": "card_1_eyebrow",
+      "label": "Eyebrow Text",
+      "default": "Wholesale & Custom"
+    },
+    {
+      "type": "text",
+      "id": "card_1_title",
+      "label": "Title",
+      "default": "HANDMADE RUGS"
+    },
+    {
+      "type": "text",
+      "id": "card_1_link_text",
+      "label": "Link Text",
+      "default": "Explore Now"
+    },
+    {
+      "type": "url",
+      "id": "card_1_link",
+      "label": "Link URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_1_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Card 2 (Bottom-Left Light Square)"
+    },
+    {
+      "type": "text",
+      "id": "card_2_tag",
+      "label": "Tag",
+      "default": "Pure Wool"
+    },
+    {
+      "type": "text",
+      "id": "card_2_title",
+      "label": "Title",
+      "default": "KILIMS"
+    },
+    {
+      "type": "url",
+      "id": "card_2_link",
+      "label": "Link URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_2_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Card 3 (Bottom-Left Dark Square)"
+    },
+    {
+      "type": "text",
+      "id": "card_3_tag",
+      "label": "Tag",
+      "default": "Enjoy Special"
+    },
+    {
+      "type": "text",
+      "id": "card_3_title",
+      "label": "Title",
+      "default": "DEALS"
+    },
+    {
+      "type": "url",
+      "id": "card_3_link",
+      "label": "Link URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_3_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Center Hero Card"
+    },
+    {
+      "type": "text",
+      "id": "hero_eyebrow",
+      "label": "Eyebrow Text",
+      "default": "Showroom"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Title",
+      "default": "SAVINGS CENTER"
+    },
+    {
+      "type": "text",
+      "id": "hero_link_text",
+      "label": "Link Text",
+      "default": "Start Saving Here"
+    },
+    {
+      "type": "url",
+      "id": "hero_link",
+      "label": "Link URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Card 5 (Top-Right Dark Square)"
+    },
+    {
+      "type": "text",
+      "id": "card_5_tag",
+      "label": "Tag",
+      "default": "Office Seating"
+    },
+    {
+      "type": "text",
+      "id": "card_5_title",
+      "label": "Title",
+      "default": "SAVINGS"
+    },
+    {
+      "type": "url",
+      "id": "card_5_link",
+      "label": "Link URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_5_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Card 6 (Top-Right Floral Square)"
+    },
+    {
+      "type": "text",
+      "id": "card_6_tag",
+      "label": "Tag",
+      "default": "Solid Oak"
+    },
+    {
+      "type": "text",
+      "id": "card_6_title",
+      "label": "Title",
+      "default": "SALE"
+    },
+    {
+      "type": "url",
+      "id": "card_6_link",
+      "label": "Link URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_6_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Card 7 (Bottom-Right Wide)"
+    },
+    {
+      "type": "text",
+      "id": "card_7_eyebrow",
+      "label": "Eyebrow Text",
+      "default": "BIG Savings on"
+    },
+    {
+      "type": "text",
+      "id": "card_7_title",
+      "label": "Title",
+      "default": "EXECUTIVE SUITES"
+    },
+    {
+      "type": "text",
+      "id": "card_7_link_text",
+      "label": "Link Text",
+      "default": "Stock Up"
+    },
+    {
+      "type": "url",
+      "id": "card_7_link",
+      "label": "Link URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_7_image",
+      "label": "Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bento Promo Grid"
+    }
+  ]
+}
+{% endschema %}
