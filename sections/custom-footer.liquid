@@ -12,38 +12,132 @@
 <footer class="custom-footer">
   
   <!-- ========================================
-       TIER 1: Top Trust Badges Bar
+       TIER 1: Top Trust Badges Auto-Slide Ticker (No dots, no arrows)
        ======================================== -->
   <div class="footer-trust-bar">
-    <div class="custom-footer__container">
-      <div class="footer-trust-bar__grid">
+    <div class="footer-trust-marquee" aria-label="Trust & Guarantees Ticker">
+      <div class="footer-trust-track">
         
+        <!-- Set 1 -->
         <div class="trust-badge-item">
           <div class="trust-badge-icon">
-            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18H3c-.6 0-1-.4-1-1V7c0-.6.4-1 1-1h10c.6 0 1 .4 1 1v11"/><path d="M14 9h4l4 4v4c0 .6-.4 1-1 1h-2"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M5 18H3c-.6 0-1-.4-1-1V7c0-.6.4-1 1-1h10c.6 0 1 .4 1 1v11"/><path d="M14 9h4l4 4v4c0 .6-.4 1-1 1h-2"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
           </div>
-          <span class="trust-badge-text">{{ section.settings.trust_1_text | default: 'Free Worldwide Insured Shipping' }}</span>
+          <div class="trust-badge-content">
+            <span class="trust-badge-title">Free Worldwide Insured Shipping</span>
+            <span class="trust-badge-subtitle">On all artisan rugs & furniture orders</span>
+          </div>
         </div>
 
         <div class="trust-badge-item">
           <div class="trust-badge-icon">
-            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
           </div>
-          <span class="trust-badge-text">{{ section.settings.trust_2_text | default: 'Dedicated Artisan Concierge' }}</span>
+          <div class="trust-badge-content">
+            <span class="trust-badge-title">Dedicated Artisan Concierge</span>
+            <span class="trust-badge-subtitle">24/7 bespoke design advisory</span>
+          </div>
         </div>
 
         <div class="trust-badge-item">
           <div class="trust-badge-icon">
-            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
           </div>
-          <span class="trust-badge-text">{{ section.settings.trust_3_text | default: '100% Certificate of Authenticity' }}</span>
+          <div class="trust-badge-content">
+            <span class="trust-badge-title">100% Verified Authenticity</span>
+            <span class="trust-badge-subtitle">Hand-signed provenance document</span>
+          </div>
         </div>
 
         <div class="trust-badge-item">
           <div class="trust-badge-icon">
-            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           </div>
-          <span class="trust-badge-text">{{ section.settings.trust_4_text | default: 'Over 9,000 Verified 5-Star Reviews' }}</span>
+          <div class="trust-badge-content">
+            <span class="trust-badge-title">9,000+ Five-Star Reviews</span>
+            <span class="trust-badge-subtitle">Rated 4.9/5 by luxury collectors</span>
+          </div>
+        </div>
+
+        <div class="trust-badge-item">
+          <div class="trust-badge-icon">
+            <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          </div>
+          <div class="trust-badge-content">
+            <span class="trust-badge-title">30-Day In-Home Trial</span>
+            <span class="trust-badge-subtitle">Zero-risk returns & exchanges</span>
+          </div>
+        </div>
+
+        <div class="trust-badge-item">
+          <div class="trust-badge-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12A10 10 0 0 1 12 2z"/><path d="M12 6v12"/><path d="M8 10l4-4 4 4"/></svg>
+          </div>
+          <div class="trust-badge-content">
+            <span class="trust-badge-title">100% Sustainable Fibers</span>
+            <span class="trust-badge-subtitle">Organic New Zealand wool & silk</span>
+          </div>
+        </div>
+
+        <!-- Set 2 (Duplicate for Seamless Infinite Loop) -->
+        <div class="trust-badge-item">
+          <div class="trust-badge-icon">
+            <svg viewBox="0 0 24 24"><path d="M5 18H3c-.6 0-1-.4-1-1V7c0-.6.4-1 1-1h10c.6 0 1 .4 1 1v11"/><path d="M14 9h4l4 4v4c0 .6-.4 1-1 1h-2"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+          </div>
+          <div class="trust-badge-content">
+            <span class="trust-badge-title">Free Worldwide Insured Shipping</span>
+            <span class="trust-badge-subtitle">On all artisan rugs & furniture orders</span>
+          </div>
+        </div>
+
+        <div class="trust-badge-item">
+          <div class="trust-badge-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+          </div>
+          <div class="trust-badge-content">
+            <span class="trust-badge-title">Dedicated Artisan Concierge</span>
+            <span class="trust-badge-subtitle">24/7 bespoke design advisory</span>
+          </div>
+        </div>
+
+        <div class="trust-badge-item">
+          <div class="trust-badge-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+          </div>
+          <div class="trust-badge-content">
+            <span class="trust-badge-title">100% Verified Authenticity</span>
+            <span class="trust-badge-subtitle">Hand-signed provenance document</span>
+          </div>
+        </div>
+
+        <div class="trust-badge-item">
+          <div class="trust-badge-icon">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div class="trust-badge-content">
+            <span class="trust-badge-title">9,000+ Five-Star Reviews</span>
+            <span class="trust-badge-subtitle">Rated 4.9/5 by luxury collectors</span>
+          </div>
+        </div>
+
+        <div class="trust-badge-item">
+          <div class="trust-badge-icon">
+            <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          </div>
+          <div class="trust-badge-content">
+            <span class="trust-badge-title">30-Day In-Home Trial</span>
+            <span class="trust-badge-subtitle">Zero-risk returns & exchanges</span>
+          </div>
+        </div>
+
+        <div class="trust-badge-item">
+          <div class="trust-badge-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12A10 10 0 0 1 12 2z"/><path d="M12 6v12"/><path d="M8 10l4-4 4 4"/></svg>
+          </div>
+          <div class="trust-badge-content">
+            <span class="trust-badge-title">100% Sustainable Fibers</span>
+            <span class="trust-badge-subtitle">Organic New Zealand wool & silk</span>
+          </div>
         </div>
 
       </div>

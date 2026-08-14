@@ -23,54 +23,98 @@
 }
 
 /* ========================================
-   TIER 1: Top Trust Badges Bar
+   TIER 1: Top Trust Badges Auto-Slide Ticker
+   - Continuous smooth glide animation
+   - Zero dots, zero arrow buttons
+   - Luxury edge gradient mask & 2-line messaging
    ======================================== */
 .footer-trust-bar {
   background-color: #FAF5EE;
-  border-bottom: 0.1rem solid rgba(153, 122, 81, 0.12);
-  padding: 2.2rem 0;
+  border-bottom: 0.1rem solid rgba(153, 122, 81, 0.15);
+  padding: 2rem 0;
+  overflow: hidden;
+  width: 100%;
+  position: relative;
 }
 
-.footer-trust-bar__grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-  align-items: center;
+.footer-trust-marquee {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+}
+
+.footer-trust-track {
+  display: flex;
+  gap: 4rem;
+  width: max-content;
+  will-change: transform;
+  animation: trust-marquee-slide 38s linear infinite;
+  padding: 0.4rem 0;
 }
 
 .trust-badge-item {
   display: flex;
   align-items: center;
-  gap: 1.4rem;
+  gap: 1.6rem;
+  flex-shrink: 0;
 }
 
 .trust-badge-icon {
-  width: 3.8rem;
-  height: 3.8rem;
+  width: 4.8rem;
+  height: 4.8rem;
   border-radius: 50%;
   background-color: #ffffff;
-  border: 0.1rem solid rgba(153, 122, 81, 0.25);
+  border: 0.12rem solid rgba(153, 122, 81, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--color-highlight, #997A51);
   flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(153, 122, 81, 0.08);
+  box-shadow: 0 0.4rem 1.4rem rgba(153, 122, 81, 0.1);
 }
 
 .trust-badge-icon svg {
-  width: 2rem;
-  height: 2rem;
+  width: 2.2rem;
+  height: 2.2rem;
   stroke: currentColor;
+  stroke-width: 2;
   fill: none;
 }
 
-.trust-badge-text {
+.trust-badge-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.trust-badge-title {
   font-family: var(--font-heading-family);
-  font-size: 1.45rem;
-  font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: 700;
   color: #1A1815;
-  line-height: 1.25;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.trust-badge-subtitle {
+  font-size: 1.25rem;
+  color: rgba(0, 0, 0, 0.52);
+  font-weight: 400;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* Continuous Sliding Keyframe */
+@keyframes trust-marquee-slide {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 /* ========================================
