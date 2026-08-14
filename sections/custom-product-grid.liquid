@@ -1,0 +1,392 @@
+{% comment %}
+  Custom 10-Product Deals Grid
+  Features: Full-width #FFF8F0 background, 1240px container,
+  80px/50px padding, custom card with discount badge, wishlist heart,
+  star rating, 2-line title clamp, sale/old price, and Buy Now button.
+{% endcomment %}
+
+{{ 'component-product-grid.css' | asset_url | stylesheet_tag }}
+
+<div class="section-product-grid" id="ProductGrid-{{ section.id }}">
+  <div class="product-grid__container">
+    <!-- Header -->
+    <div class="product-grid__header">
+      <h2 class="product-grid__heading">{{ section.settings.heading | default: 'Featured Collection Deals' }}</h2>
+      {% if section.settings.subheading != blank %}
+        <p class="product-grid__subheading">{{ section.settings.subheading }}</p>
+      {% endif %}
+    </div>
+
+    <!-- 10-Product Grid -->
+    <ul class="product-grid__items" role="list">
+      {% for block in section.blocks %}
+        <li class="deal-grid-card" {{ block.shopify_attributes }}>
+          <!-- Top Row: Badge + Wishlist Button -->
+          <div class="deal-grid-card__top">
+            {% if block.settings.badge != blank %}
+              <span class="deal-grid-card__badge {% if block.settings.badge_style == 'gold' %}deal-grid-card__badge--gold{% endif %}">
+                {{ block.settings.badge }}
+              </span>
+            {% else %}
+              <span></span>
+            {% endif %}
+
+            <button
+              type="button"
+              class="deal-grid-card__wishlist"
+              aria-label="Add {{ block.settings.title | escape }} to wishlist"
+              onclick="toggleDealWishlist(this, '{{ block.id }}');"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Product Image -->
+          <a href="{{ block.settings.link | default: '/collections/all' }}" class="deal-grid-card__media" aria-label="{{ block.settings.title | escape }}">
+            {% if block.settings.image != blank %}
+              <img
+                src="{{ block.settings.image | image_url: width: 400 }}"
+                alt="{{ block.settings.title | escape }}"
+                class="deal-grid-card__image"
+                loading="lazy"
+                width="200"
+                height="200"
+              >
+            {% elsif block.settings.static_image != blank %}
+              <img
+                src="{{ block.settings.static_image | asset_url }}"
+                alt="{{ block.settings.title | escape }}"
+                class="deal-grid-card__image"
+                loading="lazy"
+                width="200"
+                height="200"
+              >
+            {% else %}
+              {{ 'product-1' | placeholder_svg_tag: 'deal-grid-card__image' }}
+            {% endif %}
+          </a>
+
+          <!-- Meta: SKU + Rating -->
+          <div class="deal-grid-card__meta">
+            <span class="deal-grid-card__sku">{{ block.settings.sku | default: 'SKU: GR-8820' }}</span>
+            <div class="deal-grid-card__rating">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+              <span>{{ block.settings.rating | default: '4.9' }} ({{ block.settings.rating_count | default: '128' }})</span>
+            </div>
+          </div>
+
+          <!-- Title (2-Line Limit) -->
+          <a href="{{ block.settings.link | default: '/collections/all' }}" style="text-decoration: none;">
+            <h3 class="deal-grid-card__title">{{ block.settings.title }}</h3>
+          </a>
+
+          <!-- Pricing -->
+          <div class="deal-grid-card__pricing">
+            <span class="deal-grid-card__price">{{ block.settings.price | default: '$499.00' }}</span>
+            {% if block.settings.old_price != blank %}
+              <span class="deal-grid-card__old-price">{{ block.settings.old_price }}</span>
+            {% endif %}
+          </div>
+
+          <!-- Buy Now CTA -->
+          <a href="{{ block.settings.link | default: '/collections/all' }}" class="deal-grid-card__btn">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span>Buy Now</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<script>
+  function toggleDealWishlist(btn, id) {
+    btn.classList.toggle('is-active');
+    var isLiked = btn.classList.contains('is-active');
+    try {
+      var key = 'wishlist_' + id;
+      if (isLiked) {
+        localStorage.setItem(key, 'true');
+      } else {
+        localStorage.removeItem(key);
+      }
+    } catch(e) {}
+  }
+
+  // Restore liked states on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    var buttons = document.querySelectorAll('.deal-grid-card__wishlist');
+    buttons.forEach(function(btn) {
+      var card = btn.closest('.deal-grid-card');
+      if (card) {
+        var id = card.getAttribute('data-block-id');
+        if (id && localStorage.getItem('wishlist_' + id) === 'true') {
+          btn.classList.add('is-active');
+        }
+      }
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Featured Deals Grid",
+  "tag": "section",
+  "class": "section-product-grid-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Featured Collection Deals"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Handcrafted luxury rugs and artisan executive office furniture"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Product Deal Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom Image"
+        },
+        {
+          "type": "text",
+          "id": "static_image",
+          "label": "Asset Image Filename (Fallback)",
+          "default": "cat-handmade-rugs.jpg"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Discount Badge",
+          "default": "SAVE 25%"
+        },
+        {
+          "type": "select",
+          "id": "badge_style",
+          "label": "Badge Color Style",
+          "options": [
+            { "value": "red", "label": "Red Deal" },
+            { "value": "gold", "label": "Gold Highlight" }
+          ],
+          "default": "red"
+        },
+        {
+          "type": "text",
+          "id": "sku",
+          "label": "SKU",
+          "default": "SKU: GR-1082"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Product Title",
+          "default": "Hand-Knotted Isfahan Wool & Silk Rug"
+        },
+        {
+          "type": "text",
+          "id": "rating",
+          "label": "Rating Score",
+          "default": "4.9"
+        },
+        {
+          "type": "text",
+          "id": "rating_count",
+          "label": "Rating Count",
+          "default": "128"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Sale Price",
+          "default": "$899.00"
+        },
+        {
+          "type": "text",
+          "id": "old_price",
+          "label": "Old Price",
+          "default": "$1,199.00"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Product Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Deals Grid",
+      "blocks": [
+        {
+          "type": "product_card",
+          "settings": {
+            "title": "Hand-Knotted Isfahan Wool & Silk Medallion Rug",
+            "badge": "SAVE 25%",
+            "badge_style": "red",
+            "sku": "SKU: RG-8812",
+            "rating": "4.9",
+            "rating_count": "142",
+            "price": "$899.00",
+            "old_price": "$1,199.00",
+            "static_image": "cat-handmade-rugs.jpg",
+            "link": "/collections/all?filter=handmade-rugs"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "title": "Executive Solid Walnut Office Desk with Brass Trim",
+            "badge": "SAVE 22%",
+            "badge_style": "gold",
+            "sku": "SKU: FN-4021",
+            "rating": "5.0",
+            "rating_count": "89",
+            "price": "$1,249.00",
+            "old_price": "$1,599.00",
+            "static_image": "cat-executive-desks.jpg",
+            "link": "/collections/all?filter=desks"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "title": "Tribal Geometric Kilim Flatweave Bohemian Rug",
+            "badge": "SAVE 22%",
+            "badge_style": "red",
+            "sku": "SKU: RG-3390",
+            "rating": "4.8",
+            "rating_count": "67",
+            "price": "$349.00",
+            "old_price": "$449.00",
+            "static_image": "cat-kilim-rugs.jpg",
+            "link": "/collections/all?filter=kilim-rugs"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "title": "Ergonomic High-Back Leather Executive Swivel Chair",
+            "badge": "HOT!",
+            "badge_style": "red",
+            "sku": "SKU: FN-5510",
+            "rating": "4.9",
+            "rating_count": "114",
+            "price": "$589.00",
+            "old_price": "$749.00",
+            "static_image": "cat-chairs.jpg",
+            "link": "/collections/all?filter=chairs"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "title": "Royal Bokhara Deep Ruby Red Wool Area Rug",
+            "badge": "SAVE 21%",
+            "badge_style": "gold",
+            "sku": "SKU: RG-2094",
+            "rating": "4.9",
+            "rating_count": "95",
+            "price": "$629.00",
+            "old_price": "$799.00",
+            "static_image": "cat-bokhara-rugs.jpg",
+            "link": "/collections/all?filter=bokhara-rugs"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "title": "Handcrafted Solid Oak Round Coffee Table",
+            "badge": "SAVE 24%",
+            "badge_style": "red",
+            "sku": "SKU: FN-1084",
+            "rating": "4.8",
+            "rating_count": "53",
+            "price": "$420.00",
+            "old_price": "$550.00",
+            "static_image": "cat-tables.jpg",
+            "link": "/collections/all?filter=tables"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "title": "Vintage Pastel Turkish Oushak Hand-Spun Wool Rug",
+            "badge": "SAVE 21%",
+            "badge_style": "gold",
+            "sku": "SKU: RG-7721",
+            "rating": "5.0",
+            "rating_count": "38",
+            "price": "$780.00",
+            "old_price": "$990.00",
+            "static_image": "cat-oushak-rugs.jpg",
+            "link": "/collections/all?filter=oushak-rugs"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "title": "Modern Minimalist Open Wood Bookshelf & Display Unit",
+            "badge": "SAVE 20%",
+            "badge_style": "red",
+            "sku": "SKU: FN-6632",
+            "rating": "4.9",
+            "rating_count": "47",
+            "price": "$650.00",
+            "old_price": "$820.00",
+            "static_image": "cat-bookshelves.jpg",
+            "link": "/collections/all?filter=storage"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "title": "Grand Persian Entryway Runner Rug with Floral Border",
+            "badge": "SAVE 23%",
+            "badge_style": "gold",
+            "sku": "SKU: RG-9940",
+            "rating": "4.9",
+            "rating_count": "81",
+            "price": "$499.00",
+            "old_price": "$650.00",
+            "static_image": "cat-runner-rugs.jpg",
+            "link": "/collections/all?filter=entryway-runner"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "title": "Executive 2-Door Solid Walnut Filing & Storage Cabinet",
+            "badge": "SAVE 22%",
+            "badge_style": "red",
+            "sku": "SKU: FN-3011",
+            "rating": "4.8",
+            "rating_count": "62",
+            "price": "$540.00",
+            "old_price": "$690.00",
+            "static_image": "cat-storage.jpg",
+            "link": "/collections/all?filter=storage"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

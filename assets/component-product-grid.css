@@ -1,0 +1,363 @@
+/* ============================================================
+   Component: Product Grid (10 Featured Deals)
+   Full-width #FFF8F0 background, 1240px max-width container,
+   Desktop 80px/20px padding, Tablet/Mobile 50px/20px padding.
+   5-column desktop responsive grid (2 rows of 5 = 10 products),
+   custom cards with discount badge, wishlist heart, star rating,
+   2-line clamped title, dual price, and Buy Now button.
+   ============================================================ */
+
+.section-product-grid-wrapper {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+}
+
+.section-product-grid {
+  background-color: #FFF8F0;
+  width: 100%;
+  padding: 80px 0;
+  box-sizing: border-box;
+}
+
+.product-grid__container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   Section Header
+   ======================================== */
+.product-grid__header {
+  margin-bottom: 3.2rem;
+  text-align: left;
+}
+
+.product-grid__heading {
+  font-family: var(--font-heading-family);
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #000000;
+  margin: 0 0 0.6rem 0;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.product-grid__subheading {
+  font-size: 1.5rem;
+  color: rgba(0, 0, 0, 0.65);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ========================================
+   10-Product Responsive Grid
+   Desktop: 5 Columns (2 rows of 5)
+   ======================================== */
+.product-grid__items {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ========================================
+   Product Card UI
+   ======================================== */
+.deal-grid-card {
+  background-color: #ffffff;
+  border-radius: 1.6rem;
+  padding: 1.6rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border: 0.1rem solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0.4rem 1.6rem rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+  text-decoration: none;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+  will-change: transform, box-shadow;
+}
+
+.deal-grid-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 1.2rem 2.8rem rgba(153, 122, 81, 0.16);
+  border-color: rgba(153, 122, 81, 0.35);
+}
+
+/* Top: Badge + Wishlist Heart */
+.deal-grid-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  top: 1.2rem;
+  left: 1.2rem;
+  right: 1.2rem;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.deal-grid-card__badge {
+  background-color: #E05A47;
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 0.3rem 0.8rem;
+  border-radius: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  box-shadow: 0 2px 6px rgba(224, 90, 71, 0.25);
+  pointer-events: auto;
+}
+
+.deal-grid-card__badge--gold {
+  background-color: var(--color-highlight, #997A51);
+  box-shadow: 0 2px 6px rgba(153, 122, 81, 0.25);
+}
+
+.deal-grid-card__wishlist {
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 0.1rem solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+  pointer-events: auto;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.deal-grid-card__wishlist:hover {
+  transform: scale(1.1);
+  border-color: #E05A47;
+  background-color: #FFF5F5;
+}
+
+.deal-grid-card__wishlist svg {
+  width: 1.7rem;
+  height: 1.7rem;
+  stroke: #000000;
+  fill: none;
+  stroke-width: 2;
+  transition: all 0.2s ease;
+}
+
+.deal-grid-card__wishlist:hover svg,
+.deal-grid-card__wishlist.is-active svg {
+  stroke: #E05A47;
+  fill: #E05A47;
+}
+
+/* Image Wrapper */
+.deal-grid-card__media {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #FAFAFA;
+  border-radius: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.2rem;
+  margin-top: 0.8rem;
+  margin-bottom: 1.2rem;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.deal-grid-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.deal-grid-card:hover .deal-grid-card__image {
+  transform: scale(1.08);
+}
+
+/* Meta: SKU + Rating */
+.deal-grid-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+
+.deal-grid-card__sku {
+  font-size: 1.15rem;
+  color: rgba(0, 0, 0, 0.45);
+  font-weight: 500;
+}
+
+.deal-grid-card__rating {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-highlight, #997A51);
+}
+
+.deal-grid-card__rating svg {
+  width: 1.3rem;
+  height: 1.3rem;
+  fill: var(--color-highlight, #997A51);
+  stroke: var(--color-highlight, #997A51);
+}
+
+/* Title (2-Line Limit) */
+.deal-grid-card__title {
+  font-family: var(--font-heading-family);
+  font-size: 1.45rem;
+  font-weight: 600;
+  color: #000000;
+  line-height: 1.35;
+  margin: 0 0 1rem 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 3.9rem;
+  transition: color 0.2s ease;
+}
+
+.deal-grid-card:hover .deal-grid-card__title {
+  color: var(--color-highlight, #997A51);
+}
+
+/* Pricing Row */
+.deal-grid-card__pricing {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-bottom: 1.4rem;
+}
+
+.deal-grid-card__price {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #000000;
+}
+
+.deal-grid-card__old-price {
+  font-size: 1.3rem;
+  color: rgba(0, 0, 0, 0.4);
+  text-decoration: line-through;
+}
+
+/* Buy Now Button */
+.deal-grid-card__btn {
+  width: 100%;
+  margin-top: auto;
+  padding: 1.1rem 1.4rem;
+  background-color: var(--color-highlight, #997A51);
+  color: #ffffff;
+  font-family: var(--font-heading-family);
+  font-size: 1.35rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  text-decoration: none;
+  box-sizing: border-box;
+  transition: all 0.25s ease;
+}
+
+.deal-grid-card__btn:hover {
+  background-color: #806440;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(153, 122, 81, 0.35);
+}
+
+.deal-grid-card__btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.deal-grid-card__btn svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ========================================
+   Responsive Breakpoints
+   ======================================== */
+@media screen and (max-width: 1200px) {
+  .product-grid__items {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.8rem;
+  }
+}
+
+@media screen and (max-width: 989px) {
+  .section-product-grid {
+    padding: 50px 0;
+  }
+
+  .product-grid__container {
+    padding: 0 20px;
+  }
+
+  .product-grid__heading {
+    font-size: 2.4rem;
+  }
+
+  .product-grid__subheading {
+    font-size: 1.35rem;
+  }
+
+  .product-grid__items {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.6rem;
+  }
+
+  .deal-grid-card {
+    padding: 1.4rem;
+    border-radius: 1.4rem;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .product-grid__items {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.2rem;
+  }
+
+  .deal-grid-card {
+    padding: 1.2rem 1rem;
+  }
+
+  .deal-grid-card__title {
+    font-size: 1.3rem;
+    min-height: 3.5rem;
+  }
+
+  .deal-grid-card__price {
+    font-size: 1.6rem;
+  }
+
+  .deal-grid-card__btn {
+    padding: 1rem 0.8rem;
+    font-size: 1.25rem;
+  }
+}
