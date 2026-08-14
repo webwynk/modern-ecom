@@ -1,9 +1,11 @@
 {% comment %}
   Custom Modern Blog Carousel Section
   Matching Reference Design:
-  - Header with "More articles" button and circular nav arrows
+  - Header with circular nav arrows
   - 4-Card layout on desktop, swipeable carousel on mobile
-  - Category overlay badges, date meta, bold clamped titles, and "Read more >"
+  - Brand Gold compact category overlay badges (#997A51)
+  - Date meta, bold clamped titles, and "Read more >"
+  - Valid collection URLs on all cards
   - Interactive slider script with dot pagination
 {% endcomment %}
 
@@ -33,7 +35,7 @@
       <div class="blog__slider-track" id="blogSliderTrack-{{ section.id }}">
         
         <!-- Article 1 -->
-        <article class="blog-card">
+        <a href="/collections/all?filter=handmade-rugs" class="blog-card">
           <div class="blog-card__media">
             <span class="blog-card__category">Heritage</span>
             <img src="{{ 'cat-handmade-rugs.jpg' | asset_url }}" alt="The Master Art of Silk & Wool Knot Density" class="blog-card__image" loading="lazy">
@@ -44,15 +46,15 @@
               <span>March 2, 2026</span>
             </div>
             <h3 class="blog-card__title">The Master Art of Silk & Wool Knot Density in Persian Weaving</h3>
-            <a href="/blogs/news" class="blog-card__read-more">
+            <span class="blog-card__read-more">
               <span>Read more</span>
               <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-            </a>
+            </span>
           </div>
-        </article>
+        </a>
 
         <!-- Article 2 -->
-        <article class="blog-card">
+        <a href="/collections/all?filter=desks" class="blog-card">
           <div class="blog-card__media">
             <span class="blog-card__category">Executive Space</span>
             <img src="{{ 'cat-executive-desks.jpg' | asset_url }}" alt="Creating the Ultimate Productive Executive Sanctuary" class="blog-card__image" loading="lazy">
@@ -63,15 +65,15 @@
               <span>March 2, 2026</span>
             </div>
             <h3 class="blog-card__title">Creating the Ultimate Productive Workspace with Solid Walnut Desks</h3>
-            <a href="/blogs/news" class="blog-card__read-more">
+            <span class="blog-card__read-more">
               <span>Read more</span>
               <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-            </a>
+            </span>
           </div>
-        </article>
+        </a>
 
         <!-- Article 3 -->
-        <article class="blog-card">
+        <a href="/collections/all?filter=chairs" class="blog-card">
           <div class="blog-card__media">
             <span class="blog-card__category">Ergonomics</span>
             <img src="{{ 'cat-ergonomic-chairs.jpg' | asset_url }}" alt="Executive Seating Science & Posture Alignment" class="blog-card__image" loading="lazy">
@@ -82,15 +84,15 @@
               <span>March 2, 2026</span>
             </div>
             <h3 class="blog-card__title">Executive Seating: Ergonomic Support and Top-Grain Leather Craft</h3>
-            <a href="/blogs/news" class="blog-card__read-more">
+            <span class="blog-card__read-more">
               <span>Read more</span>
               <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-            </a>
+            </span>
           </div>
-        </article>
+        </a>
 
         <!-- Article 4 -->
-        <article class="blog-card">
+        <a href="/collections/all?filter=bokhara-rugs" class="blog-card">
           <div class="blog-card__media">
             <span class="blog-card__category">Care Guide</span>
             <img src="{{ 'cat-bokhara-rugs.jpg' | asset_url }}" alt="How to Clean and Preserve Antique Wool Rugs" class="blog-card__image" loading="lazy">
@@ -101,15 +103,15 @@
               <span>March 2, 2026</span>
             </div>
             <h3 class="blog-card__title">How to Preserve Vegetable-Dyed Wool & Antique Rug Heirlooms</h3>
-            <a href="/blogs/news" class="blog-card__read-more">
+            <span class="blog-card__read-more">
               <span>Read more</span>
               <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-            </a>
+            </span>
           </div>
-        </article>
+        </a>
 
         <!-- Article 5 -->
-        <article class="blog-card">
+        <a href="/collections/all?filter=tables" class="blog-card">
           <div class="blog-card__media">
             <span class="blog-card__category">Design Trends</span>
             <img src="{{ 'cat-artisan-tables.jpg' | asset_url }}" alt="2026 Luxury Interior Design & Architectural Tables" class="blog-card__image" loading="lazy">
@@ -120,15 +122,15 @@
               <span>March 2, 2026</span>
             </div>
             <h3 class="blog-card__title">Modernize Your Living Sanctuary with Architectural Solid Oak Tables</h3>
-            <a href="/blogs/news" class="blog-card__read-more">
+            <span class="blog-card__read-more">
               <span>Read more</span>
               <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-            </a>
+            </span>
           </div>
-        </article>
+        </a>
 
         <!-- Article 6 -->
-        <article class="blog-card">
+        <a href="/collections/all?filter=storage" class="blog-card">
           <div class="blog-card__media">
             <span class="blog-card__category">Styling</span>
             <img src="{{ 'cat-storage-cabinets.jpg' | asset_url }}" alt="Minimalist Modular Storage for Executive Suites" class="blog-card__image" loading="lazy">
@@ -139,12 +141,12 @@
               <span>March 2, 2026</span>
             </div>
             <h3 class="blog-card__title">Minimalist Modular Storage & Credenzas for Executive Boardrooms</h3>
-            <a href="/blogs/news" class="blog-card__read-more">
+            <span class="blog-card__read-more">
               <span>Read more</span>
               <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-            </a>
+            </span>
           </div>
-        </article>
+        </a>
 
       </div>
     </div>

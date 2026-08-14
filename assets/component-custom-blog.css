@@ -1,9 +1,9 @@
 /* ============================================================
    Component: Custom Blog Carousel Section
    - Matching Reference Design
-   - Header with "More articles" pill & circular navigation buttons
    - 4-Column Card Carousel on Desktop
-   - Image overlay category tag, calendar date, 2-line title, and "Read more >"
+   - Brand Gold Category Badge (#997A51) with compact modern styling
+   - Valid collection links on all cards
    - Bottom dot pagination indicators
    - Store Branding: Gold (#997A51), Black (#1A1815)
    ============================================================ */
@@ -39,7 +39,6 @@
   display: flex;
   align-items: center;
   gap: 1.6rem;
-  flex-wrap: wrap;
 }
 
 .blog__heading {
@@ -50,26 +49,6 @@
   margin: 0;
   line-height: 1.15;
   letter-spacing: -0.02em;
-}
-
-.blog__more-link {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.5rem 1.4rem;
-  border: 0.12rem solid rgba(0, 0, 0, 0.16);
-  border-radius: 0.8rem;
-  font-size: 1.35rem;
-  font-weight: 600;
-  color: #1A1815;
-  text-decoration: none;
-  background-color: #ffffff;
-  transition: all 0.25s ease;
-}
-
-.blog__more-link:hover {
-  border-color: var(--color-highlight, #997A51);
-  color: var(--color-highlight, #997A51);
-  background-color: #FAF5EE;
 }
 
 /* Navigation Arrow Buttons */
@@ -142,6 +121,7 @@
   text-decoration: none;
   box-sizing: border-box;
   transition: transform 0.3s ease;
+  cursor: pointer;
 }
 
 /* Image Container */
@@ -168,20 +148,20 @@
   transform: scale(1.06);
 }
 
-/* Category Badge Overlay */
+/* Modern & Compact Brand Gold Badge */
 .blog-card__category {
   position: absolute;
   top: 1.2rem;
   left: 1.2rem;
-  background-color: rgba(26, 24, 21, 0.85);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: linear-gradient(135deg, #997A51 0%, #836742 100%);
   color: #ffffff;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  padding: 0.4rem 1.1rem;
-  border-radius: 0.8rem;
-  letter-spacing: 0.02em;
+  padding: 0.35rem 0.95rem;
+  border-radius: 0.6rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(153, 122, 81, 0.35);
   z-index: 2;
 }
 
