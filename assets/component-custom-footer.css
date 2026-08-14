@@ -343,27 +343,14 @@
 .footer-payments-list {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  flex-wrap: wrap;
 }
 
-.payment-badge-pill {
-  background-color: #ffffff;
-  border-radius: 0.6rem;
-  padding: 0.35rem 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 2.6rem;
-  box-sizing: border-box;
-}
-
-.payment-badge-pill svg,
-.payment-badge-pill span {
-  font-size: 1.1rem;
-  font-weight: 800;
-  color: #1A1815;
-  text-transform: uppercase;
+.footer-payments-svg {
+  height: 2.5rem;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 /* Back to Top Floating Button */

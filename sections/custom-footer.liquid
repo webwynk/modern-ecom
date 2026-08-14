@@ -204,17 +204,16 @@
           Copyright &copy; {{ 'now' | date: '%Y' }} {{ section.settings.copyright_name | default: 'The Golden Rug & Furniture Co.' }}. All Rights Reserved.
         </p>
 
-        <!-- Right: Payment Badges -->
+        <!-- Right: Payment Badges SVG -->
         <div class="footer-payments-list">
-          <div class="payment-badge-pill"><span>VISA</span></div>
-          <div class="payment-badge-pill"><span>DINERS</span></div>
-          <div class="payment-badge-pill"><span>AMEX</span></div>
-          <div class="payment-badge-pill"><span>DISCOVER</span></div>
-          <div class="payment-badge-pill"><span>MASTERCARD</span></div>
-          <div class="payment-badge-pill"><span>STRIPE</span></div>
-          <div class="payment-badge-pill"><span>PAYPAL</span></div>
-          <div class="payment-badge-pill"><span>GPAY</span></div>
-          <div class="payment-badge-pill"><span>APPLE PAY</span></div>
+          <img 
+            src="{{ 'payments.svg' | asset_url }}" 
+            alt="Accepted Payment Methods: Visa, Diners, Amex, Discover, Mastercard, Stripe, PayPal, GPay, Apple Pay" 
+            class="footer-payments-svg" 
+            width="379" 
+            height="24" 
+            loading="lazy"
+          >
         </div>
 
       </div>
