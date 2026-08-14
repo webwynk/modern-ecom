@@ -6,7 +6,7 @@
    ============================================================ */
 
 .section-category-slider {
-  padding: 4.8rem 0 2.4rem 0;
+  padding: 80px 0 0 0;
   max-width: 100%;
   box-sizing: border-box;
   overflow: hidden;
@@ -215,11 +215,13 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 989px) {
   .section-category-slider {
-    padding: 3.6rem 0 1.6rem 0;
+    padding: 50px 0 0 0;
   }
+}
 
+@media screen and (max-width: 768px) {
   .category-slider__container {
     width: calc(100% - 30px);
   }
