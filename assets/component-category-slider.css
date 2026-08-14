@@ -12,7 +12,7 @@
 
 .section-category-slider {
   margin: 0 !important;
-  padding: 50px 0 0 0 !important;
+  padding: 50px 0 50px 0 !important;
   max-width: 100%;
   box-sizing: border-box;
   overflow: hidden;
@@ -223,7 +223,7 @@
 
 @media screen and (max-width: 989px) {
   .section-category-slider {
-    padding: 36px 0 0 0 !important;
+    padding: 36px 0 50px 0 !important;
   }
 }
 
