@@ -160,21 +160,24 @@
     "promo_banner_deals": {
       "type": "custom-promo-banner",
       "settings": {
-        "default_banner_asset": "discount-banner-16x9.jpg",
+        "default_desktop_asset": "discount-banner-16x9.jpg",
+        "default_mobile_asset": "discount-banner-4x2.jpg",
         "alt_text": "Special Collection Deals Discount"
       }
     },
     "promo_banner_bento": {
       "type": "custom-promo-banner",
       "settings": {
-        "default_banner_asset": "discount-banner-4x2.jpg",
+        "default_desktop_asset": "discount-banner-16x9.jpg",
+        "default_mobile_asset": "discount-banner-4x2.jpg",
         "alt_text": "Curated Collections Discount"
       }
     },
     "promo_banner_bottom": {
       "type": "custom-promo-banner",
       "settings": {
-        "default_banner_asset": "discount-banner-16x9.jpg",
+        "default_desktop_asset": "discount-banner-16x9.jpg",
+        "default_mobile_asset": "discount-banner-4x2.jpg",
         "alt_text": "Exclusive Season Clearance Banner"
       }
     },

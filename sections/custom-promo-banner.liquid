@@ -1,6 +1,8 @@
 {% comment %}
   Custom 1240px Promo Discount Banner Section
-  - Renders a 1240px wide discount banner with smooth rounded corners and link
+  - Responsive <picture> tag:
+    - 16x9 for Desktop & Tablet (≥750px)
+    - 4x2 for Mobile (<750px)
 {% endcomment %}
 
 {{ 'component-promo-banner.css' | asset_url | stylesheet_tag }}
@@ -8,24 +10,36 @@
 <div class="section-promo-banner" id="PromoBanner-{{ section.id }}">
   <div class="promo-banner__container">
     <a href="{{ section.settings.link | default: '/collections/all' }}" class="promo-banner__link">
-      {% if section.settings.image != blank %}
-        <img 
-          src="{{ section.settings.image | image_url: width: 1240 }}" 
-          alt="{{ section.settings.alt_text | default: 'Special Discount Banner' | escape }}" 
-          class="promo-banner__image"
-          loading="lazy"
-          width="1240"
-        >
-      {% else %}
-        {% assign fallback_banner = section.settings.default_banner_asset | default: 'discount-banner-16x9.jpg' %}
-        <img 
-          src="{{ fallback_banner | asset_url }}" 
-          alt="Special Discount Banner" 
-          class="promo-banner__image"
-          loading="lazy"
-          width="1240"
-        >
-      {% endif %}
+      <picture>
+        <!-- Mobile: 4x2 Aspect Ratio Image (<750px) -->
+        {% if section.settings.image_mobile != blank %}
+          <source media="(max-width: 749px)" srcset="{{ section.settings.image_mobile | image_url: width: 750 }}">
+        {% else %}
+          {% assign mobile_fallback = section.settings.default_mobile_asset | default: 'discount-banner-4x2.jpg' %}
+          <source media="(max-width: 749px)" srcset="{{ mobile_fallback | asset_url }}">
+        {% endif %}
+
+        <!-- Desktop & Tablet: 16x9 Aspect Ratio Image (≥750px) -->
+        {% if section.settings.image_desktop != blank %}
+          <source media="(min-width: 750px)" srcset="{{ section.settings.image_desktop | image_url: width: 1240 }}">
+          <img 
+            src="{{ section.settings.image_desktop | image_url: width: 1240 }}" 
+            alt="{{ section.settings.alt_text | default: 'Special Discount Banner' | escape }}" 
+            class="promo-banner__image"
+            loading="lazy"
+            width="1240"
+          >
+        {% else %}
+          {% assign desktop_fallback = section.settings.default_desktop_asset | default: 'discount-banner-16x9.jpg' %}
+          <img 
+            src="{{ desktop_fallback | asset_url }}" 
+            alt="{{ section.settings.alt_text | default: 'Special Discount Banner' | escape }}" 
+            class="promo-banner__image"
+            loading="lazy"
+            width="1240"
+          >
+        {% endif %}
+      </picture>
     </a>
   </div>
 </div>
@@ -37,15 +51,38 @@
   "class": "section-promo-banner-wrapper",
   "settings": [
     {
+      "type": "header",
+      "content": "Desktop & Tablet Image (16x9)"
+    },
+    {
       "type": "image_picker",
-      "id": "image",
-      "label": "Banner Image"
+      "id": "image_desktop",
+      "label": "Desktop / Tablet Image (16x9)"
     },
     {
       "type": "text",
-      "id": "default_banner_asset",
-      "label": "Asset File Name (Fallback)",
+      "id": "default_desktop_asset",
+      "label": "Desktop Asset Fallback",
       "default": "discount-banner-16x9.jpg"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Image (4x2)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile Image (4x2)"
+    },
+    {
+      "type": "text",
+      "id": "default_mobile_asset",
+      "label": "Mobile Asset Fallback",
+      "default": "discount-banner-4x2.jpg"
+    },
+    {
+      "type": "header",
+      "content": "Banner Link & Alt Text"
     },
     {
       "type": "text",
