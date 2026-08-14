@@ -1,0 +1,721 @@
+{% doc %}
+  Renders a custom dual-tab full-width header drawer menu for mobile and tablet matching Reference Image 2.
+{% enddoc %}
+
+{%- style -%}
+  .menu-drawer-container {
+    display: flex;
+  }
+
+  .header__icon--menu {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.4rem;
+    height: 4.4rem;
+    border: 0.1rem solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.4rem;
+    color: #000000;
+    cursor: pointer;
+    background: transparent;
+  }
+
+  .header__icon--menu svg {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  /* Full Width & Height Slide-Over Drawer */
+  .menu-drawer {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    width: 100% !important;
+    width: 100vw !important;
+    max-width: 100% !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-family: var(--font-body-family) !important;
+    z-index: 1000 !important;
+    transform: translateX(-100%) !important;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease !important;
+    visibility: hidden !important;
+    overflow-y: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  details[open].menu-opening > .menu-drawer,
+  details[open] > .menu-drawer {
+    transform: translateX(0) !important;
+    visibility: visible !important;
+  }
+
+  /* Backdrop Overlay */
+  .menu-drawer__backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    cursor: pointer;
+  }
+
+  details[open].menu-opening .menu-drawer__backdrop,
+  details[open] .menu-drawer__backdrop {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .menu-drawer__inner-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 100%;
+    position: relative;
+    z-index: 1001;
+    background-color: #ffffff;
+  }
+
+  .menu-drawer__navigation-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  /* Drawer Top Greeting Header */
+  .menu-drawer__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.6rem 2rem;
+    border-bottom: 0.1rem solid rgba(0, 0, 0, 0.08);
+    background-color: #ffffff;
+    gap: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .menu-drawer__back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.8rem;
+    height: 3.8rem;
+    border: 0.1rem solid rgba(0, 0, 0, 0.12);
+    border-radius: 0.4rem;
+    background: transparent;
+    color: var(--color-highlight, #997A51);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .menu-drawer__back-btn:hover,
+  .menu-drawer__back-btn:focus {
+    border-color: var(--color-highlight, #997A51);
+    background-color: rgba(153, 122, 81, 0.06);
+  }
+
+  .menu-drawer__back-btn svg {
+    width: 1.8rem;
+    height: 1.8rem;
+    stroke: var(--color-highlight, #997A51);
+  }
+
+  .menu-drawer__user-greeting {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    flex: 1;
+  }
+
+  .menu-drawer__user-avatar {
+    width: 3.8rem;
+    height: 3.8rem;
+    border-radius: 50%;
+    border: 0.15rem solid var(--color-highlight, #997A51);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-highlight, #997A51);
+    background-color: rgba(153, 122, 81, 0.06);
+    flex-shrink: 0;
+  }
+
+  .menu-drawer__user-avatar svg {
+    width: 2rem;
+    height: 2rem;
+    stroke: var(--color-highlight, #997A51);
+  }
+
+  .menu-drawer__user-meta {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+
+  .menu-drawer__user-name {
+    font-family: var(--font-heading-family);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #000000;
+    line-height: 1.2;
+  }
+
+  .menu-drawer__login-link {
+    font-size: 1.2rem;
+    color: rgba(0, 0, 0, 0.6);
+    text-decoration: none;
+    line-height: 1.2;
+    margin-top: 0.2rem;
+    transition: color 0.2s ease;
+  }
+
+  .menu-drawer__login-link:hover {
+    color: var(--color-highlight, #997A51);
+  }
+
+  .menu-drawer__user-action-btn {
+    width: 3.8rem;
+    height: 3.8rem;
+    border: 0.1rem solid rgba(0, 0, 0, 0.12);
+    border-radius: 0.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-highlight, #997A51);
+    text-decoration: none;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .menu-drawer__user-action-btn:hover,
+  .menu-drawer__user-action-btn:focus {
+    border-color: var(--color-highlight, #997A51);
+    background-color: rgba(153, 122, 81, 0.06);
+  }
+
+  .menu-drawer__user-action-btn svg {
+    width: 1.8rem;
+    height: 1.8rem;
+    stroke: var(--color-highlight, #997A51);
+  }
+
+  /* Dual Tabs Navigation */
+  .menu-drawer__tabs {
+    display: flex;
+    border-bottom: 0.1rem solid rgba(0, 0, 0, 0.08);
+    background-color: #f8f9fa;
+    flex-shrink: 0;
+  }
+
+  .menu-drawer__tab-btn {
+    flex: 1;
+    padding: 1.4rem 1.6rem;
+    background: transparent;
+    border: none;
+    font-family: var(--font-heading-family);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease;
+    border-bottom: 0.2rem solid transparent;
+    user-select: none;
+    outline: none;
+  }
+
+  .menu-drawer__tab-btn--active {
+    color: var(--color-highlight, #997A51);
+    background-color: #ffffff;
+    border-bottom: 0.2rem solid var(--color-highlight, #997A51);
+  }
+
+  /* Tab Panels & Menu items */
+  .menu-drawer__tab-panel {
+    display: none;
+    padding: 0;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .menu-drawer__tab-panel--active {
+    display: block;
+  }
+
+  .menu-drawer__custom-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .menu-drawer__custom-item {
+    border-bottom: 0.1rem solid rgba(0, 0, 0, 0.06);
+  }
+
+  .menu-drawer__custom-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.6rem 2rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #000000;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    width: 100%;
+    background: transparent;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .menu-drawer__item-left {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+  }
+
+  .menu-drawer__item-icon {
+    width: 2.2rem;
+    height: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-highlight, #997A51);
+    flex-shrink: 0;
+  }
+
+  .menu-drawer__item-icon svg {
+    width: 2rem;
+    height: 2rem;
+    stroke: var(--color-highlight, #997A51);
+  }
+
+  .menu-drawer__custom-link:hover,
+  .menu-drawer__custom-link:focus {
+    background-color: rgba(0, 0, 0, 0.02);
+    color: var(--color-highlight, #997A51);
+  }
+
+  .menu-drawer__chevron {
+    width: 1.6rem;
+    height: 1.6rem;
+    color: var(--color-highlight, #997A51);
+    stroke: var(--color-highlight, #997A51);
+    flex-shrink: 0;
+  }
+
+  /* Submenu slide-out / nested */
+  .menu-drawer__custom-submenu {
+    padding: 0.6rem 0 0.6rem 3.6rem;
+    background-color: #fafafa;
+    border-top: 0.1rem solid rgba(0, 0, 0, 0.04);
+  }
+
+  .menu-drawer__sub-item {
+    border-bottom: 0.1rem solid rgba(0, 0, 0, 0.03);
+  }
+
+  .menu-drawer__sub-link {
+    display: block;
+    padding: 1.1rem 1.6rem;
+    font-size: 1.4rem;
+    color: rgba(0, 0, 0, 0.75);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .menu-drawer__sub-link:hover {
+    color: var(--color-highlight, #997A51);
+  }
+
+  /* Drawer Footer */
+  .menu-drawer__footer {
+    padding: 2rem;
+    border-top: 0.1rem solid rgba(0, 0, 0, 0.08);
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    flex-shrink: 0;
+    margin-top: auto;
+  }
+
+  .menu-drawer__currency-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 1.4rem;
+    border: 0.1rem solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.4rem;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #000000;
+    background: transparent;
+    text-decoration: none;
+  }
+{%- endstyle -%}
+
+<header-drawer data-breakpoint="tablet">
+  <details id="Details-menu-drawer-container" class="menu-drawer-container">
+    <summary
+      class="header__icon header__icon--menu link focus-inset"
+      aria-label="{{ 'sections.header.menu' | t }}"
+    >
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </span>
+    </summary>
+
+    <!-- Backdrop Overlay -->
+    <div class="menu-drawer__backdrop" onclick="event.stopPropagation(); this.closest('header-drawer').querySelector('summary').click();"></div>
+
+    <div id="menu-drawer" class="gradient menu-drawer motion-reduce color-scheme-1">
+      <div class="menu-drawer__inner-container">
+        <!-- Drawer Header with Guest Greeting (Top of Drawer) -->
+        <div class="menu-drawer__header">
+          <div
+            role="button"
+            tabindex="0"
+            class="menu-drawer__back-btn focus-inset"
+            aria-label="Close menu"
+            onclick="event.stopPropagation(); this.closest('header-drawer').querySelector('summary').click();"
+            onkeydown="if(event.key==='Enter'||event.key===' '){ event.stopPropagation(); this.closest('header-drawer').querySelector('summary').click(); }"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </div>
+
+          <div class="menu-drawer__user-greeting">
+            <div class="menu-drawer__user-avatar" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </div>
+            <div class="menu-drawer__user-meta">
+              <span class="menu-drawer__user-name">
+                {%- if customer -%}
+                  Hello, {{ customer.first_name | default: customer.name }}
+                {%- else -%}
+                  Hello Guest
+                {%- endif -%}
+              </span>
+              {%- if customer -%}
+                <a href="{{ routes.account_url }}" class="menu-drawer__login-link">View account</a>
+              {%- else -%}
+                <a href="{{ routes.account_login_url }}" class="menu-drawer__login-link">For better experience login</a>
+              {%- endif -%}
+            </div>
+          </div>
+
+          <a
+            href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
+            class="menu-drawer__user-action-btn focus-inset"
+            aria-label="Account"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Dual Tab Navigation Switcher (Accessible custom tab elements) -->
+        <div class="menu-drawer__tabs" role="tablist">
+          <div
+            role="tab"
+            tabindex="0"
+            class="menu-drawer__tab-btn menu-drawer__tab-btn--active"
+            id="DrawerTab-Nav"
+            aria-selected="true"
+            onclick="switchDrawerTab('nav', event);"
+            onkeydown="if(event.key==='Enter'||event.key===' ')switchDrawerTab('nav', event);"
+          >
+            Navigation
+          </div>
+          <div
+            role="tab"
+            tabindex="0"
+            class="menu-drawer__tab-btn"
+            id="DrawerTab-Cat"
+            aria-selected="false"
+            onclick="switchDrawerTab('cat', event);"
+            onkeydown="if(event.key==='Enter'||event.key===' ')switchDrawerTab('cat', event);"
+          >
+            Categories
+          </div>
+        </div>
+
+        <div class="menu-drawer__navigation-container">
+          <!-- Tab Panel 1: Navigation Menu with Icons -->
+          <div id="DrawerPanel-Nav" class="menu-drawer__tab-panel menu-drawer__tab-panel--active" role="tabpanel">
+            <ul class="menu-drawer__custom-list" role="list">
+              <!-- 1. Home -->
+              <li class="menu-drawer__custom-item">
+                <a href="{{ routes.root_url }}" class="menu-drawer__custom-link link link--text focus-inset">
+                  <div class="menu-drawer__item-left">
+                    <div class="menu-drawer__item-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                      </svg>
+                    </div>
+                    <span>Home</span>
+                  </div>
+                </a>
+              </li>
+
+              <!-- 2. About Us -->
+              <li class="menu-drawer__custom-item">
+                <a href="/pages/about-us" class="menu-drawer__custom-link link link--text focus-inset">
+                  <div class="menu-drawer__item-left">
+                    <div class="menu-drawer__item-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                      </svg>
+                    </div>
+                    <span>About Us</span>
+                  </div>
+                </a>
+              </li>
+
+              <!-- 3. All Categories (Triggers Tab Switch to Categories) -->
+              <li class="menu-drawer__custom-item">
+                <div
+                  role="button"
+                  tabindex="0"
+                  class="menu-drawer__custom-link link link--text focus-inset"
+                  onclick="switchDrawerTab('cat', event);"
+                  onkeydown="if(event.key==='Enter'||event.key===' ')switchDrawerTab('cat', event);"
+                >
+                  <div class="menu-drawer__item-left">
+                    <div class="menu-drawer__item-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                      </svg>
+                    </div>
+                    <span style="font-weight: 600; color: var(--color-highlight, #997A51);">All Categories</span>
+                  </div>
+                  <svg class="menu-drawer__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </div>
+              </li>
+
+              <!-- 4. Insights -->
+              <li class="menu-drawer__custom-item">
+                <a href="/blogs/news" class="menu-drawer__custom-link link link--text focus-inset">
+                  <div class="menu-drawer__item-left">
+                    <div class="menu-drawer__item-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 18h6"></path>
+                        <path d="M10 22h4"></path>
+                        <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"></path>
+                      </svg>
+                    </div>
+                    <span>Insights</span>
+                  </div>
+                </a>
+              </li>
+
+              <!-- 5. FAQs -->
+              <li class="menu-drawer__custom-item">
+                <a href="/pages/faqs" class="menu-drawer__custom-link link link--text focus-inset">
+                  <div class="menu-drawer__item-left">
+                    <div class="menu-drawer__item-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                      </svg>
+                    </div>
+                    <span>FAQs</span>
+                  </div>
+                </a>
+              </li>
+
+              <!-- 6. Contact Us -->
+              <li class="menu-drawer__custom-item">
+                <a href="/pages/contact" class="menu-drawer__custom-link link link--text focus-inset">
+                  <div class="menu-drawer__item-left">
+                    <div class="menu-drawer__item-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                      </svg>
+                    </div>
+                    <span>Contact Us</span>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Tab Panel 2: Categories Menu (Matching Reference Image 2) -->
+          <div id="DrawerPanel-Cat" class="menu-drawer__tab-panel" role="tabpanel">
+            <ul class="menu-drawer__custom-list" role="list">
+              <!-- 1. All Rugs (with full subcategories) -->
+              <li class="menu-drawer__custom-item">
+                <details>
+                  <summary class="menu-drawer__custom-link focus-inset">
+                    <div class="menu-drawer__item-left">
+                      <div class="menu-drawer__item-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                          <line x1="3" y1="9" x2="21" y2="9"></line>
+                          <line x1="9" y1="21" x2="9" y2="9"></line>
+                        </svg>
+                      </div>
+                      <span>All Rugs</span>
+                    </div>
+                    <svg class="menu-drawer__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                  </summary>
+                  <ul class="menu-drawer__custom-list menu-drawer__custom-submenu" role="list">
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=special-deals" class="menu-drawer__sub-link" style="color: var(--color-highlight, #997A51); font-weight: 600;">Special Deals 🔥</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=small-rugs" class="menu-drawer__sub-link">Small Rugs</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=medium-rugs" class="menu-drawer__sub-link">Medium Rugs</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=large-rugs" class="menu-drawer__sub-link">Large Rugs</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=6x9-rug" class="menu-drawer__sub-link">6x9 Rug</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=8x10-rug" class="menu-drawer__sub-link">8x10 Rug</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=9x12-rug" class="menu-drawer__sub-link">9x12 Rug</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=5x8-rug" class="menu-drawer__sub-link">5x8 Rug</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=handmade-rugs" class="menu-drawer__sub-link">Handmade Rugs</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=kilim-rugs" class="menu-drawer__sub-link">Kilim Rugs</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=bokhara-rugs" class="menu-drawer__sub-link">Bokhara Rugs</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=gabbeh-rugs" class="menu-drawer__sub-link">Gabbeh Rugs</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=tabriz-rugs" class="menu-drawer__sub-link">Tabriz Rugs</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=entryway-runner" class="menu-drawer__sub-link">Entryway Runner Rug</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=ersari-rugs" class="menu-drawer__sub-link">Ersari Rugs</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=baluchi-rugs" class="menu-drawer__sub-link">Baluchi Rugs</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=chobi-ziegler-rugs" class="menu-drawer__sub-link">Chobi Ziegler Rugs</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=heriz-rugs" class="menu-drawer__sub-link">Heriz Rugs</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=oushak-rugs" class="menu-drawer__sub-link">Oushak Rugs</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=overdyed-rugs" class="menu-drawer__sub-link">Overdyed Rugs</a></li>
+                  </ul>
+                </details>
+              </li>
+
+              <!-- 2. All Furniture (with full subcategories) -->
+              <li class="menu-drawer__custom-item">
+                <details>
+                  <summary class="menu-drawer__custom-link focus-inset">
+                    <div class="menu-drawer__item-left">
+                      <div class="menu-drawer__item-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <rect x="2" y="6" width="20" height="8" rx="1"></rect>
+                          <path d="M17 14v7"></path>
+                          <path d="M7 14v7"></path>
+                          <path d="M17 3v3"></path>
+                          <path d="M7 3v3"></path>
+                        </svg>
+                      </div>
+                      <span>All Furniture</span>
+                    </div>
+                    <svg class="menu-drawer__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                  </summary>
+                  <ul class="menu-drawer__custom-list menu-drawer__custom-submenu" role="list">
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=special-deals-furniture" class="menu-drawer__sub-link" style="color: var(--color-highlight, #997A51); font-weight: 600;">Special Deals 🔥</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=desks" class="menu-drawer__sub-link">Desks</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=tables" class="menu-drawer__sub-link">Tables</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=chairs" class="menu-drawer__sub-link">Chairs</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=desk-parts" class="menu-drawer__sub-link">Desk Parts And Accessories</a></li>
+                    <li class="menu-drawer__sub-item"><a href="/collections/all?filter=storage" class="menu-drawer__sub-link">Storage</a></li>
+                  </ul>
+                </details>
+              </li>
+
+              <!-- 3. Special Deals Direct Link -->
+              <li class="menu-drawer__custom-item">
+                <a href="/collections/all?filter=special-deals" class="menu-drawer__custom-link link link--text focus-inset">
+                  <div class="menu-drawer__item-left">
+                    <div class="menu-drawer__item-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                      </svg>
+                    </div>
+                    <span style="font-weight: 600; color: var(--color-highlight, #997A51);">Special Deals 🔥</span>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Drawer Footer with Currency Selector -->
+          <div class="menu-drawer__footer">
+            <div class="menu-drawer__currency-pill">
+              <span>🇺🇸 $ {{ cart.currency.iso_code | default: 'USD' }} ▾</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+</header-drawer>
+
+<script>
+  function switchDrawerTab(tabName, event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    const navBtn = document.getElementById('DrawerTab-Nav');
+    const catBtn = document.getElementById('DrawerTab-Cat');
+    const navPanel = document.getElementById('DrawerPanel-Nav');
+    const catPanel = document.getElementById('DrawerPanel-Cat');
+
+    if (!navBtn || !catBtn || !navPanel || !catPanel) return;
+
+    if (tabName === 'nav') {
+      navBtn.classList.add('menu-drawer__tab-btn--active');
+      navBtn.setAttribute('aria-selected', 'true');
+      catBtn.classList.remove('menu-drawer__tab-btn--active');
+      catBtn.setAttribute('aria-selected', 'false');
+
+      navPanel.classList.add('menu-drawer__tab-panel--active');
+      catPanel.classList.remove('menu-drawer__tab-panel--active');
+      navBtn.focus();
+    } else {
+      catBtn.classList.add('menu-drawer__tab-btn--active');
+      catBtn.setAttribute('aria-selected', 'true');
+      navBtn.classList.remove('menu-drawer__tab-btn--active');
+      navBtn.setAttribute('aria-selected', 'false');
+
+      catPanel.classList.add('menu-drawer__tab-panel--active');
+      navPanel.classList.remove('menu-drawer__tab-panel--active');
+      catBtn.focus();
+    }
+  }
+</script>

@@ -1,0 +1,321 @@
+{% comment %}
+  Renders an interactive 3-column luxury mega menu matching Reference Image 1 with icons, color sync, caret flipping, and dual promo images.
+{% endcomment %}
+
+<nav class="header__inline-menu">
+  <ul class="list-menu list-menu--inline" role="list">
+    <!-- 1. Home -->
+    <li>
+      <a href="{{ routes.root_url }}" class="header__menu-item list-menu__item link link--text focus-inset {% if request.page_type == 'index' %}header__menu-item--active{% endif %}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="header-nav__icon" aria-hidden="true">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        <span class="{% if request.page_type == 'index' %}header__active-menu-item{% endif %}">Home</span>
+      </a>
+    </li>
+
+    <!-- 2. About Us -->
+    <li>
+      <a href="/pages/about-us" class="header__menu-item list-menu__item link link--text focus-inset">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="header-nav__icon" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+        <span>About Us</span>
+      </a>
+    </li>
+
+    <!-- 3. All Categories (Mega Menu with grid icon and flipping caret) -->
+    <li>
+      <header-menu>
+        <details id="Details-HeaderMenu-AllCategories" class="mega-menu">
+          <summary
+            id="HeaderMenu-AllCategories"
+            class="header__menu-item list-menu__item link focus-inset"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="header-nav__icon" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span>All Categories</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="header-nav__caret" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </summary>
+          <div
+            id="MegaMenu-Content-AllCategories"
+            class="mega-menu__content gradient motion-reduce global-settings-popup"
+            tabindex="-1"
+          >
+            <div class="mega-menu__container">
+              <!-- Column 1: Category Switcher Sidebar -->
+              <div class="mega-menu__sidebar" role="tablist">
+                <div
+                  role="tab"
+                  tabindex="0"
+                  class="mega-menu__cat-btn mega-menu__cat-btn--active"
+                  id="MegaCat-Rugs"
+                  aria-selected="true"
+                  onmouseenter="switchMegaCategory('rugs');"
+                  onclick="switchMegaCategory('rugs');"
+                  onkeydown="if(event.key==='Enter'||event.key===' ')switchMegaCategory('rugs');"
+                >
+                  <div class="mega-menu__cat-btn-content">
+                    <svg class="mega-menu__cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="3" y1="9" x2="21" y2="9"></line>
+                      <line x1="9" y1="21" x2="9" y2="9"></line>
+                    </svg>
+                    <span>All Rugs</span>
+                  </div>
+                  <svg class="mega-menu__cat-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </div>
+
+                <div
+                  role="tab"
+                  tabindex="0"
+                  class="mega-menu__cat-btn"
+                  id="MegaCat-Furniture"
+                  aria-selected="false"
+                  onmouseenter="switchMegaCategory('furniture');"
+                  onclick="switchMegaCategory('furniture');"
+                  onkeydown="if(event.key==='Enter'||event.key===' ')switchMegaCategory('furniture');"
+                >
+                  <div class="mega-menu__cat-btn-content">
+                    <svg class="mega-menu__cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="6" width="20" height="8" rx="1"></rect>
+                      <path d="M17 14v7"></path>
+                      <path d="M7 14v7"></path>
+                      <path d="M17 3v3"></path>
+                      <path d="M7 3v3"></path>
+                    </svg>
+                    <span>All Furniture</span>
+                  </div>
+                  <svg class="mega-menu__cat-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Column 2: Subcategory Columns Grid -->
+              <div class="mega-menu__main-grid">
+                <!-- Panel A: All Rugs Subcategories -->
+                <div id="MegaPanel-Rugs" class="mega-menu__panel mega-menu__panel--active" role="tabpanel">
+                  <div class="mega-menu__columns">
+                    <!-- Group 1: Rug Sizes & Deals -->
+                    <div class="mega-menu__col-group">
+                      <h4 class="mega-menu__col-title">Popular Sizes & Deals</h4>
+                      <ul class="mega-menu__sub-list">
+                        <li><a href="/collections/all?filter=special-deals" class="mega-menu__sub-link" style="color: var(--color-highlight, #997A51); font-weight: 600;">Special Deals 🔥</a></li>
+                        <li><a href="/collections/all?filter=small-rugs" class="mega-menu__sub-link">Small Rugs</a></li>
+                        <li><a href="/collections/all?filter=medium-rugs" class="mega-menu__sub-link">Medium Rugs</a></li>
+                        <li><a href="/collections/all?filter=large-rugs" class="mega-menu__sub-link">Large Rugs</a></li>
+                        <li><a href="/collections/all?filter=5x8-rug" class="mega-menu__sub-link">5x8 Rug</a></li>
+                        <li><a href="/collections/all?filter=6x9-rug" class="mega-menu__sub-link">6x9 Rug</a></li>
+                        <li><a href="/collections/all?filter=8x10-rug" class="mega-menu__sub-link">8x10 Rug</a></li>
+                        <li><a href="/collections/all?filter=9x12-rug" class="mega-menu__sub-link">9x12 Rug</a></li>
+                      </ul>
+                      <a href="/collections/all" class="mega-menu__view-all">View all sizes →</a>
+                    </div>
+
+                    <!-- Group 2: Handmade Styles & Weaves -->
+                    <div class="mega-menu__col-group">
+                      <h4 class="mega-menu__col-title">Weaves & Styles</h4>
+                      <ul class="mega-menu__sub-list">
+                        <li><a href="/collections/all?filter=handmade-rugs" class="mega-menu__sub-link">Handmade Rugs</a></li>
+                        <li><a href="/collections/all?filter=kilim-rugs" class="mega-menu__sub-link">Kilim Rugs</a></li>
+                        <li><a href="/collections/all?filter=bokhara-rugs" class="mega-menu__sub-link">Bokhara Rugs</a></li>
+                        <li><a href="/collections/all?filter=gabbeh-rugs" class="mega-menu__sub-link">Gabbeh Rugs</a></li>
+                        <li><a href="/collections/all?filter=tabriz-rugs" class="mega-menu__sub-link">Tabriz Rugs</a></li>
+                        <li><a href="/collections/all?filter=overdyed-rugs" class="mega-menu__sub-link">Overdyed Rugs</a></li>
+                      </ul>
+                      <a href="/collections/all" class="mega-menu__view-all">View all weaves →</a>
+                    </div>
+
+                    <!-- Group 3: Heritage & Runners -->
+                    <div class="mega-menu__col-group">
+                      <h4 class="mega-menu__col-title">Heritage & Runners</h4>
+                      <ul class="mega-menu__sub-list">
+                        <li><a href="/collections/all?filter=entryway-runner" class="mega-menu__sub-link">Entryway Runner Rug</a></li>
+                        <li><a href="/collections/all?filter=ersari-rugs" class="mega-menu__sub-link">Ersari Rugs</a></li>
+                        <li><a href="/collections/all?filter=baluchi-rugs" class="mega-menu__sub-link">Baluchi Rugs</a></li>
+                        <li><a href="/collections/all?filter=chobi-ziegler-rugs" class="mega-menu__sub-link">Chobi Ziegler Rugs</a></li>
+                        <li><a href="/collections/all?filter=heriz-rugs" class="mega-menu__sub-link">Heriz Rugs</a></li>
+                        <li><a href="/collections/all?filter=oushak-rugs" class="mega-menu__sub-link">Oushak Rugs</a></li>
+                      </ul>
+                      <a href="/collections/all" class="mega-menu__view-all">View all heritage →</a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Panel B: All Furniture Subcategories -->
+                <div id="MegaPanel-Furniture" class="mega-menu__panel" role="tabpanel">
+                  <div class="mega-menu__columns">
+                    <!-- Group 1: Desks & Workspaces -->
+                    <div class="mega-menu__col-group">
+                      <h4 class="mega-menu__col-title">Office & Desks</h4>
+                      <ul class="mega-menu__sub-list">
+                        <li><a href="/collections/all?filter=special-deals-furniture" class="mega-menu__sub-link" style="color: var(--color-highlight, #997A51); font-weight: 600;">Special Deals 🔥</a></li>
+                        <li><a href="/collections/all?filter=desks" class="mega-menu__sub-link">Desks</a></li>
+                        <li><a href="/collections/all?filter=desk-parts" class="mega-menu__sub-link">Desk Parts & Accessories</a></li>
+                      </ul>
+                      <a href="/collections/all" class="mega-menu__view-all">View all desks →</a>
+                    </div>
+
+                    <!-- Group 2: Seating & Tables -->
+                    <div class="mega-menu__col-group">
+                      <h4 class="mega-menu__col-title">Living & Seating</h4>
+                      <ul class="mega-menu__sub-list">
+                        <li><a href="/collections/all?filter=tables" class="mega-menu__sub-link">Tables</a></li>
+                        <li><a href="/collections/all?filter=chairs" class="mega-menu__sub-link">Chairs</a></li>
+                      </ul>
+                      <a href="/collections/all" class="mega-menu__view-all">View all seating →</a>
+                    </div>
+
+                    <!-- Group 3: Storage -->
+                    <div class="mega-menu__col-group">
+                      <h4 class="mega-menu__col-title">Storage Solutions</h4>
+                      <ul class="mega-menu__sub-list">
+                        <li><a href="/collections/all?filter=storage" class="mega-menu__sub-link">Storage & Cabinets</a></li>
+                        <li><a href="/collections/all?filter=accessories" class="mega-menu__sub-link">Desk Parts And Accessories</a></li>
+                      </ul>
+                      <a href="/collections/all" class="mega-menu__view-all">View all storage →</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Column 3: Promo Card (Matching Reference Image 1) -->
+              <div class="mega-menu__promo-container">
+                <!-- Promo Card for Rugs (Image 1: Rug) -->
+                <div id="MegaPromo-Rugs" class="mega-menu__promo-card">
+                  <span class="mega-menu__promo-badge">Special Deal</span>
+                  <h3 class="mega-menu__promo-title">Hand-Knotted Heritage Rugs</h3>
+                  <p class="mega-menu__promo-price">From <strong>$499.00</strong></p>
+                  <a href="/collections/all" class="mega-menu__promo-btn">
+                    <span>Shop now</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.4rem; height: 1.4rem;">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </a>
+                  <div class="mega-menu__promo-img-wrapper">
+                    <img
+                      src="{{ 'promo-rug.jpg' | asset_url }}"
+                      alt="Handmade Rug Special Deal"
+                      class="mega-menu__promo-img"
+                      loading="lazy"
+                      width="300"
+                      height="200"
+                    >
+                  </div>
+                </div>
+
+                <!-- Promo Card for Furniture (Image 2: Modern Furniture Desk) -->
+                <div id="MegaPromo-Furniture" class="mega-menu__promo-card" style="display: none;">
+                  <span class="mega-menu__promo-badge">New Arrival</span>
+                  <h3 class="mega-menu__promo-title">Executive Solid Wood Desks</h3>
+                  <p class="mega-menu__promo-price">From <strong>$349.00</strong></p>
+                  <a href="/collections/all" class="mega-menu__promo-btn">
+                    <span>Shop now</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.4rem; height: 1.4rem;">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </a>
+                  <div class="mega-menu__promo-img-wrapper">
+                    <img
+                      src="{{ 'promo-furniture.jpg' | asset_url }}"
+                      alt="Executive Furniture Special Deal"
+                      class="mega-menu__promo-img"
+                      loading="lazy"
+                      width="300"
+                      height="200"
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+      </header-menu>
+    </li>
+
+    <!-- 4. Insights -->
+    <li>
+      <a href="/blogs/news" class="header__menu-item list-menu__item link link--text focus-inset">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="header-nav__icon" aria-hidden="true">
+          <path d="M9 18h6"></path>
+          <path d="M10 22h4"></path>
+          <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"></path>
+        </svg>
+        <span>Insights</span>
+      </a>
+    </li>
+
+    <!-- 5. FAQs -->
+    <li>
+      <a href="/pages/faqs" class="header__menu-item list-menu__item link link--text focus-inset">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="header-nav__icon" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+        <span>FAQs</span>
+      </a>
+    </li>
+
+    <!-- 6. Contact Us -->
+    <li>
+      <a href="/pages/contact" class="header__menu-item list-menu__item link link--text focus-inset">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="header-nav__icon" aria-hidden="true">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <span>Contact Us</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<script>
+  function switchMegaCategory(category) {
+    const rugsBtn = document.getElementById('MegaCat-Rugs');
+    const furnitureBtn = document.getElementById('MegaCat-Furniture');
+    const rugsPanel = document.getElementById('MegaPanel-Rugs');
+    const furniturePanel = document.getElementById('MegaPanel-Furniture');
+    const rugsPromo = document.getElementById('MegaPromo-Rugs');
+    const furniturePromo = document.getElementById('MegaPromo-Furniture');
+
+    if (!rugsBtn || !furnitureBtn) return;
+
+    if (category === 'rugs') {
+      rugsBtn.classList.add('mega-menu__cat-btn--active');
+      rugsBtn.setAttribute('aria-selected', 'true');
+      furnitureBtn.classList.remove('mega-menu__cat-btn--active');
+      furnitureBtn.setAttribute('aria-selected', 'false');
+
+      if (rugsPanel) rugsPanel.classList.add('mega-menu__panel--active');
+      if (furniturePanel) furniturePanel.classList.remove('mega-menu__panel--active');
+
+      if (rugsPromo) rugsPromo.style.display = 'flex';
+      if (furniturePromo) furniturePromo.style.display = 'none';
+    } else {
+      furnitureBtn.classList.add('mega-menu__cat-btn--active');
+      furnitureBtn.setAttribute('aria-selected', 'true');
+      rugsBtn.classList.remove('mega-menu__cat-btn--active');
+      rugsBtn.setAttribute('aria-selected', 'false');
+
+      if (furniturePanel) furniturePanel.classList.add('mega-menu__panel--active');
+      if (rugsPanel) rugsPanel.classList.remove('mega-menu__panel--active');
+
+      if (furniturePromo) furniturePromo.style.display = 'flex';
+      if (rugsPromo) rugsPromo.style.display = 'none';
+    }
+  }
+</script>

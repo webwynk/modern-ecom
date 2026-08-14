@@ -1,0 +1,70 @@
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "settings": {
+        "color_scheme": "scheme-3",
+        "show_line_separator": false,
+        "padding_top": 12,
+        "padding_bottom": 12,
+        "enable_country_selector": true,
+        "enable_account_link": true
+      },
+      "blocks": {
+        "trust-shipping": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "shipping",
+            "text": "Shipping to over 200 countries",
+            "link": ""
+          }
+        },
+        "trust-support": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "support",
+            "text": "Outstanding Worldwide Support",
+            "link": ""
+          }
+        },
+        "trust-security": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "security",
+            "text": "100% Secure Checkout",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "trust-shipping",
+        "trust-support",
+        "trust-security"
+      ]
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "logo_text": "The Golden Rug",
+        "phone_number": "(+1 888-795-8816)",
+        "phone_label": "Sales & Service Support",
+        "search_placeholder": "What are you looking for?",
+        "menu": "main-menu",
+        "menu_type_desktop": "mega",
+        "sticky_header_type": "on-scroll-up",
+        "color_scheme": "scheme-1",
+        "show_wishlist": true,
+        "padding_top": 15,
+        "padding_bottom": 15,
+        "nav_padding_top": 12,
+        "nav_padding_bottom": 12
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
+}
