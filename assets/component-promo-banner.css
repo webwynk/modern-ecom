@@ -1,0 +1,66 @@
+/* ============================================================
+   Component: Custom Promo Discount Banner
+   - 1240px max-width container matching store spacing
+   - Smooth 2rem border radius, subtle border, and shadow
+   - Full responsiveness across desktop, tablet, and mobile
+   ============================================================ */
+
+.section-promo-banner {
+  padding: 40px 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.promo-banner__container {
+  width: calc(100% - 40px);
+  max-width: calc(var(--page-width, 1240px) - 40px);
+  margin: 0 auto;
+  position: relative;
+}
+
+.promo-banner__link {
+  display: block;
+  width: 100%;
+  border-radius: 2rem;
+  overflow: hidden;
+  border: 0.12rem solid rgba(153, 122, 81, 0.2);
+  box-shadow: 0 0.8rem 2.8rem rgba(0, 0, 0, 0.08);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.3s ease;
+  position: relative;
+  text-decoration: none;
+}
+
+.promo-banner__link:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 1.4rem 3.6rem rgba(153, 122, 81, 0.22);
+  border-color: var(--color-highlight, #997A51);
+}
+
+.promo-banner__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 2rem;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.promo-banner__link:hover .promo-banner__image {
+  transform: scale(1.02);
+}
+
+@media screen and (max-width: 768px) {
+  .section-promo-banner {
+    padding: 28px 0;
+  }
+
+  .promo-banner__container {
+    width: calc(100% - 30px);
+  }
+
+  .promo-banner__link,
+  .promo-banner__image {
+    border-radius: 1.6rem;
+  }
+}

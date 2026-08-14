@@ -1,0 +1,68 @@
+{% comment %}
+  Custom 1240px Promo Discount Banner Section
+  - Renders a 1240px wide discount banner with smooth rounded corners and link
+{% endcomment %}
+
+{{ 'component-promo-banner.css' | asset_url | stylesheet_tag }}
+
+<div class="section-promo-banner" id="PromoBanner-{{ section.id }}">
+  <div class="promo-banner__container">
+    <a href="{{ section.settings.link | default: '/collections/all' }}" class="promo-banner__link">
+      {% if section.settings.image != blank %}
+        <img 
+          src="{{ section.settings.image | image_url: width: 1240 }}" 
+          alt="{{ section.settings.alt_text | default: 'Special Discount Banner' | escape }}" 
+          class="promo-banner__image"
+          loading="lazy"
+          width="1240"
+        >
+      {% else %}
+        {% assign fallback_banner = section.settings.default_banner_asset | default: 'discount-banner-16x9.jpg' %}
+        <img 
+          src="{{ fallback_banner | asset_url }}" 
+          alt="Special Discount Banner" 
+          class="promo-banner__image"
+          loading="lazy"
+          width="1240"
+        >
+      {% endif %}
+    </a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Promo Discount Banner",
+  "tag": "section",
+  "class": "section-promo-banner-wrapper",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Banner Image"
+    },
+    {
+      "type": "text",
+      "id": "default_banner_asset",
+      "label": "Asset File Name (Fallback)",
+      "default": "discount-banner-16x9.jpg"
+    },
+    {
+      "type": "text",
+      "id": "alt_text",
+      "label": "Alt Text",
+      "default": "Exclusive Discount Offer"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Banner Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promo Discount Banner"
+    }
+  ]
+}
+{% endschema %}

@@ -157,6 +157,27 @@
         "offer_old_price": "$1,899.00"
       }
     },
+    "promo_banner_deals": {
+      "type": "custom-promo-banner",
+      "settings": {
+        "default_banner_asset": "discount-banner-16x9.jpg",
+        "alt_text": "Special Collection Deals Discount"
+      }
+    },
+    "promo_banner_bento": {
+      "type": "custom-promo-banner",
+      "settings": {
+        "default_banner_asset": "discount-banner-4x2.jpg",
+        "alt_text": "Curated Collections Discount"
+      }
+    },
+    "promo_banner_bottom": {
+      "type": "custom-promo-banner",
+      "settings": {
+        "default_banner_asset": "discount-banner-16x9.jpg",
+        "alt_text": "Exclusive Season Clearance Banner"
+      }
+    },
     "featured_deals_grid": {
       "type": "custom-product-grid",
       "blocks": {
@@ -333,7 +354,10 @@
     "hero_slider",
     "category_slider",
     "featured_deals_grid",
+    "promo_banner_deals",
     "bento_grid",
-    "special_offer_grid"
+    "promo_banner_bento",
+    "special_offer_grid",
+    "promo_banner_bottom"
   ]
 }
