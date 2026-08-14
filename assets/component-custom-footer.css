@@ -1,0 +1,532 @@
+/* ============================================================
+   Component: Custom Multi-Tiered Luxury Footer
+   - Tier 1: Top Trust Badges Bar (Warm #FAF5EE background)
+   - Tier 2: Main Footer Navigation & Trustpilot Review Widget
+   - Tier 3: Contact Phone Support & Colorful Social Badges
+   - Tier 4: Bottom Copyright & Payment Pills Bar (#141311 Dark)
+   - Store Brand Palette: Gold (#997A51), Black (#1A1815), White (#FFFFFF)
+   ============================================================ */
+
+.custom-footer {
+  width: 100%;
+  background-color: #ffffff;
+  font-family: var(--font-body-family);
+  color: #1A1815;
+  border-top: 0.1rem solid rgba(153, 122, 81, 0.15);
+}
+
+.custom-footer__container {
+  width: calc(100% - 40px);
+  max-width: calc(var(--page-width, 1240px) - 40px);
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   TIER 1: Top Trust Badges Bar
+   ======================================== */
+.footer-trust-bar {
+  background-color: #FAF5EE;
+  border-bottom: 0.1rem solid rgba(153, 122, 81, 0.12);
+  padding: 2.2rem 0;
+}
+
+.footer-trust-bar__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  align-items: center;
+}
+
+.trust-badge-item {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+.trust-badge-icon {
+  width: 3.8rem;
+  height: 3.8rem;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 0.1rem solid rgba(153, 122, 81, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-highlight, #997A51);
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(153, 122, 81, 0.08);
+}
+
+.trust-badge-icon svg {
+  width: 2rem;
+  height: 2rem;
+  stroke: currentColor;
+  fill: none;
+}
+
+.trust-badge-text {
+  font-family: var(--font-heading-family);
+  font-size: 1.45rem;
+  font-weight: 600;
+  color: #1A1815;
+  line-height: 1.25;
+}
+
+/* ========================================
+   TIER 2: Main Footer Body
+   ======================================== */
+.footer-main-body {
+  padding: 6rem 0 4rem 0;
+}
+
+.footer-main-grid {
+  display: grid;
+  grid-template-columns: 28rem 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+/* Left: Brand Logo & Trustpilot Widget */
+.footer-brand-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+}
+
+.footer-brand-logo {
+  text-decoration: none;
+  display: inline-block;
+}
+
+.footer-brand-logo__text {
+  font-family: var(--font-heading-family);
+  font-size: 3rem;
+  font-weight: 800;
+  color: #1A1815;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.footer-brand-logo__text span {
+  color: var(--color-highlight, #997A51);
+}
+
+/* Trustpilot Review Box */
+.footer-trustpilot-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.trustpilot-header {
+  font-family: var(--font-heading-family);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #1A1815;
+  letter-spacing: -0.01em;
+}
+
+.trustpilot-stars {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.tp-star {
+  width: 2.6rem;
+  height: 2.6rem;
+  background-color: #00B67A;
+  border-radius: 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+}
+
+.tp-star--grey {
+  background-color: #DCD6CD;
+}
+
+.tp-star svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: #ffffff;
+}
+
+.trustpilot-subtext {
+  font-size: 1.3rem;
+  color: rgba(0, 0, 0, 0.6);
+  font-weight: 500;
+}
+
+/* Right: Navigation Links (5 Columns) */
+.footer-links-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2.4rem;
+}
+
+.footer-link-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-group-title {
+  font-family: var(--font-heading-family);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1A1815;
+  margin: 0 0 1.6rem 0;
+  line-height: 1.2;
+}
+
+.footer-links-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.footer-link-item a {
+  font-size: 1.4rem;
+  color: rgba(0, 0, 0, 0.65);
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+  display: inline-block;
+}
+
+.footer-link-item a:hover {
+  color: var(--color-highlight, #997A51);
+  transform: translateX(3px);
+}
+
+/* ========================================
+   TIER 3: Contact Phone & Social Bar
+   ======================================== */
+.footer-contact-bar {
+  padding: 3rem 0;
+  border-top: 0.1rem solid rgba(0, 0, 0, 0.08);
+}
+
+.footer-contact-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.4rem;
+}
+
+/* Left: Phone Support */
+.footer-phone-box {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.footer-phone-icon {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background-color: #FAF5EE;
+  border: 0.12rem solid rgba(153, 122, 81, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-highlight, #997A51);
+  flex-shrink: 0;
+}
+
+.footer-phone-icon svg {
+  width: 2.4rem;
+  height: 2.4rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.footer-phone-number {
+  font-family: var(--font-heading-family);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #1A1815;
+  margin: 0 0 0.2rem 0;
+  line-height: 1.15;
+  text-decoration: none;
+  display: block;
+}
+
+.footer-phone-hours {
+  font-size: 1.3rem;
+  color: rgba(0, 0, 0, 0.5);
+  margin: 0;
+}
+
+/* Right: Follow Us & Social Icons */
+.footer-social-box {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.footer-social-label {
+  font-family: var(--font-heading-family);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1A1815;
+}
+
+.footer-social-icons {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.social-circle-btn {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.social-circle-btn:hover {
+  transform: translateY(-3px) scale(1.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.social-circle-btn svg {
+  width: 1.9rem;
+  height: 1.9rem;
+  fill: currentColor;
+}
+
+/* Colorful Social Brand Colors */
+.social--mail { background-color: #4A4A4A; }
+.social--facebook { background-color: #3B5998; }
+.social--instagram { background: linear-gradient(45deg, #F09433 0%, #E6683C 25%, #DC2743 50%, #CC2366 75%, #BC1888 100%); }
+.social--linkedin { background-color: #0077B5; }
+.social--messenger { background-color: #0084FF; }
+.social--telegram { background-color: #0088CC; }
+.social--tiktok { background-color: #00F2FE; color: #000000; }
+
+/* ========================================
+   TIER 4: Bottom Copyright & Payment Bar
+   ======================================== */
+.footer-bottom-bar {
+  background-color: #141311;
+  color: #ffffff;
+  padding: 2rem 0;
+  border-top: 0.1rem solid rgba(153, 122, 81, 0.2);
+  position: relative;
+}
+
+.footer-bottom-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.footer-copyright-text {
+  font-size: 1.35rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+.footer-payments-list {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.payment-badge-pill {
+  background-color: #ffffff;
+  border-radius: 0.6rem;
+  padding: 0.35rem 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.6rem;
+  box-sizing: border-box;
+}
+
+.payment-badge-pill svg,
+.payment-badge-pill span {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #1A1815;
+  text-transform: uppercase;
+}
+
+/* Back to Top Floating Button */
+.footer-scroll-top-btn {
+  position: fixed;
+  bottom: 2.4rem;
+  right: 2.4rem;
+  width: 4.8rem;
+  height: 4.8rem;
+  background-color: #ffffff;
+  border: 0.12rem solid rgba(153, 122, 81, 0.3);
+  border-radius: 1.2rem;
+  color: #1A1815;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0.8rem 2.4rem rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  z-index: 99;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.footer-scroll-top-btn:hover {
+  background-color: var(--color-highlight, #997A51);
+  color: #ffffff;
+  border-color: var(--color-highlight, #997A51);
+  transform: translateY(-3px);
+}
+
+.footer-scroll-top-btn svg {
+  width: 1.6rem;
+  height: 1.6rem;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  fill: none;
+}
+
+.footer-scroll-top-text {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-top: 0.2rem;
+}
+
+/* ========================================
+   Responsive Breakpoints (Mobile Matching Image 2)
+   ======================================== */
+@media screen and (max-width: 1024px) {
+  .footer-trust-bar__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.6rem;
+  }
+
+  .footer-main-grid {
+    grid-template-columns: 1fr;
+    gap: 3.6rem;
+  }
+
+  .footer-links-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.4rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .custom-footer__container {
+    width: calc(100% - 30px);
+  }
+
+  .footer-trust-bar {
+    padding: 1.8rem 0;
+  }
+
+  .footer-trust-bar__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+  }
+
+  .trust-badge-text {
+    font-size: 1.25rem;
+  }
+
+  .footer-main-body {
+    padding: 4rem 0 3rem 0;
+  }
+
+  /* Centered Brand Logo & Trustpilot on Mobile */
+  .footer-brand-col {
+    align-items: center;
+    text-align: center;
+    gap: 1.6rem;
+  }
+
+  .footer-trustpilot-box {
+    align-items: center;
+  }
+
+  .footer-links-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.6rem;
+  }
+
+  .footer-group-title {
+    font-size: 1.45rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .footer-link-item a {
+    font-size: 1.3rem;
+  }
+
+  /* Contact Bar on Mobile (Matching Image 2) */
+  .footer-contact-flex {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2.4rem;
+  }
+
+  .footer-phone-box {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .footer-phone-number {
+    font-size: 1.9rem;
+  }
+
+  .footer-social-box {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.2rem;
+  }
+
+  .footer-social-icons {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .social-circle-btn {
+    width: 3.6rem;
+    height: 3.6rem;
+  }
+
+  /* Bottom Bar Centered on Mobile */
+  .footer-bottom-flex {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.4rem;
+  }
+
+  .footer-payments-list {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .footer-links-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}

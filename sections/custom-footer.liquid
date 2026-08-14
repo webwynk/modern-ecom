@@ -1,0 +1,317 @@
+{% comment %}
+  Custom Multi-Tiered Luxury Footer
+  Matching reference design with store branding:
+  - Tier 1: Top Trust Badges Bar
+  - Tier 2: Main Body with Logo, Trustpilot Widget & 5 Link Columns
+  - Tier 3: Contact Phone Support & Colorful Social Media Circles
+  - Tier 4: Bottom Copyright & Payment Pills Bar + Back to Top Button
+{% endcomment %}
+
+{{ 'component-custom-footer.css' | asset_url | stylesheet_tag }}
+
+<footer class="custom-footer">
+  
+  <!-- ========================================
+       TIER 1: Top Trust Badges Bar
+       ======================================== -->
+  <div class="footer-trust-bar">
+    <div class="custom-footer__container">
+      <div class="footer-trust-bar__grid">
+        
+        <div class="trust-badge-item">
+          <div class="trust-badge-icon">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18H3c-.6 0-1-.4-1-1V7c0-.6.4-1 1-1h10c.6 0 1 .4 1 1v11"/><path d="M14 9h4l4 4v4c0 .6-.4 1-1 1h-2"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+          </div>
+          <span class="trust-badge-text">{{ section.settings.trust_1_text | default: 'Shipping to Over 200 countries' }}</span>
+        </div>
+
+        <div class="trust-badge-item">
+          <div class="trust-badge-icon">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+          </div>
+          <span class="trust-badge-text">{{ section.settings.trust_2_text | default: 'Outstanding Worldwide Support' }}</span>
+        </div>
+
+        <div class="trust-badge-item">
+          <div class="trust-badge-icon">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+          </div>
+          <span class="trust-badge-text">{{ section.settings.trust_3_text | default: '100% Secure Checkout' }}</span>
+        </div>
+
+        <div class="trust-badge-item">
+          <div class="trust-badge-icon">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <span class="trust-badge-text">{{ section.settings.trust_4_text | default: 'Over 9,000 Genuine reviews' }}</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================
+       TIER 2: Main Footer Body
+       ======================================== -->
+  <div class="footer-main-body">
+    <div class="custom-footer__container">
+      <div class="footer-main-grid">
+        
+        <!-- Left: Brand Logo & Trustpilot Box -->
+        <div class="footer-brand-col">
+          <a href="/" class="footer-brand-logo">
+            <div class="footer-brand-logo__text">
+              {% if section.settings.logo_text != blank %}
+                {{ section.settings.logo_text }}
+              {% else %}
+                Lumera<span>.</span>
+              {% endif %}
+            </div>
+          </a>
+
+          <div class="footer-trustpilot-box">
+            <span class="trustpilot-header">Trustpilot</span>
+            <div class="trustpilot-stars" aria-label="4.5 out of 5 stars">
+              <div class="tp-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              <div class="tp-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              <div class="tp-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              <div class="tp-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              <div class="tp-star tp-star--grey"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            </div>
+            <span class="trustpilot-subtext">{{ section.settings.trustpilot_text | default: 'Trustscore 4.0 | 9,000 Reviews' }}</span>
+          </div>
+        </div>
+
+        <!-- Right: 5 Navigation Columns -->
+        <div class="footer-links-grid">
+          
+          <div class="footer-link-group">
+            <h4 class="footer-group-title">Company</h4>
+            <ul class="footer-links-list">
+              <li class="footer-link-item"><a href="/pages/about-us">About</a></li>
+              <li class="footer-link-item"><a href="/pages/careers">Careers</a></li>
+              <li class="footer-link-item"><a href="/pages/security">Security</a></li>
+              <li class="footer-link-item"><a href="/pages/privacy-policy">Privacy</a></li>
+              <li class="footer-link-item"><a href="/pages/terms">Terms</a></li>
+              <li class="footer-link-item"><a href="/pages/charges">Charges</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-link-group">
+            <h4 class="footer-group-title">Product</h4>
+            <ul class="footer-links-list">
+              <li class="footer-link-item"><a href="/collections/all">Learn</a></li>
+              <li class="footer-link-item"><a href="/collections/all">Plugins</a></li>
+              <li class="footer-link-item"><a href="/collections/all">Agencies</a></li>
+              <li class="footer-link-item"><a href="/collections/all">Startups</a></li>
+              <li class="footer-link-item"><a href="/collections/all">Freelancers</a></li>
+              <li class="footer-link-item"><a href="/collections/all">Business</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-link-group">
+            <h4 class="footer-group-title">Resources</h4>
+            <ul class="footer-links-list">
+              <li class="footer-link-item"><a href="/pages/apps">Desktop Apps</a></li>
+              <li class="footer-link-item"><a href="/pages/partners">Partners</a></li>
+              <li class="footer-link-item"><a href="/pages/experts">Experts</a></li>
+              <li class="footer-link-item"><a href="/pages/figma-plugin">Figma Plugin</a></li>
+              <li class="footer-link-item"><a href="/blogs/news">Helpful Tips</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-link-group">
+            <h4 class="footer-group-title">Account</h4>
+            <ul class="footer-links-list">
+              <li class="footer-link-item"><a href="/account">Dashboard</a></li>
+              <li class="footer-link-item"><a href="/pages/wishlist">Wishlist</a></li>
+              <li class="footer-link-item"><a href="/account">Orders</a></li>
+              <li class="footer-link-item"><a href="/account">History</a></li>
+              <li class="footer-link-item"><a href="/account">Account details</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-link-group">
+            <h4 class="footer-group-title">Legal</h4>
+            <ul class="footer-links-list">
+              <li class="footer-link-item"><a href="/policies/terms-of-service">Terms</a></li>
+              <li class="footer-link-item"><a href="/policies/privacy-policy">Privacy</a></li>
+              <li class="footer-link-item"><a href="/pages/cookies">Cookies</a></li>
+              <li class="footer-link-item"><a href="/pages/licenses">Licenses</a></li>
+              <li class="footer-link-item"><a href="/pages/settings">Settings</a></li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================
+       TIER 3: Contact Phone & Social Bar
+       ======================================== -->
+  <div class="footer-contact-bar">
+    <div class="custom-footer__container">
+      <div class="footer-contact-flex">
+        
+        <!-- Left: Phone Support Block -->
+        <div class="footer-phone-box">
+          <div class="footer-phone-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div>
+            <a href="tel:{{ section.settings.phone_number | default: '(213) 555-1234' }}" class="footer-phone-number">{{ section.settings.phone_number | default: '(213) 555-1234' }}</a>
+            <p class="footer-phone-hours">{{ section.settings.phone_hours | default: 'Working hours: 09:00am - 18:00pm' }}</p>
+          </div>
+        </div>
+
+        <!-- Right: Follow Us Social Icons -->
+        <div class="footer-social-box">
+          <span class="footer-social-label">Follow us</span>
+          <div class="footer-social-icons">
+            <a href="mailto:support@lumera.com" class="social-circle-btn social--mail" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+            <a href="https://facebook.com" target="_blank" rel="noopener" class="social-circle-btn social--facebook" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="https://instagram.com" target="_blank" rel="noopener" class="social-circle-btn social--instagram" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="social-circle-btn social--linkedin" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+            <a href="https://messenger.com" target="_blank" rel="noopener" class="social-circle-btn social--messenger" aria-label="Messenger"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.03 2 11c0 2.87 1.48 5.43 3.8 7.04V22l3.74-2.05c.78.22 1.61.34 2.46.34 5.52 0 10-4.03 10-9s-4.48-9-10-9zm1.06 12.15l-2.67-2.85-5.21 2.85 5.73-6.08 2.74 2.85 5.14-2.85-5.73 6.08z"/></svg></a>
+            <a href="https://telegram.org" target="_blank" rel="noopener" class="social-circle-btn social--telegram" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="M21.93 3.12a1.35 1.35 0 0 0-1.42-.25L2.68 10.38a1.35 1.35 0 0 0 .08 2.52l4.8 1.5 1.85 5.86a1.35 1.35 0 0 0 2.27.46l2.8-2.73 4.9 3.6a1.35 1.35 0 0 0 2.12-.76l3.2-16.14a1.35 1.35 0 0 0-.77-1.57z"/></svg></a>
+            <a href="https://tiktok.com" target="_blank" rel="noopener" class="social-circle-btn social--tiktok" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.14 1.18 2.05 2.32 2.26.92.17 1.9-.04 2.66-.6.76-.55 1.22-1.44 1.27-2.38.06-3.86.03-7.72.04-11.58.02-2.33 0-4.66 0-7z"/></svg></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================
+       TIER 4: Bottom Copyright & Payments Bar
+       ======================================== -->
+  <div class="footer-bottom-bar">
+    <div class="custom-footer__container">
+      <div class="footer-bottom-flex">
+        
+        <!-- Left: Copyright -->
+        <p class="footer-copyright-text">
+          Copyright &copy; {{ 'now' | date: '%Y' }} {{ section.settings.copyright_name | default: 'Lumera' }}. All Rights Reserved
+        </p>
+
+        <!-- Right: Payment Badges -->
+        <div class="footer-payments-list">
+          <div class="payment-badge-pill"><span>VISA</span></div>
+          <div class="payment-badge-pill"><span>DINERS</span></div>
+          <div class="payment-badge-pill"><span>AMEX</span></div>
+          <div class="payment-badge-pill"><span>DISCOVER</span></div>
+          <div class="payment-badge-pill"><span>MASTERCARD</span></div>
+          <div class="payment-badge-pill"><span>STRIPE</span></div>
+          <div class="payment-badge-pill"><span>PAYPAL</span></div>
+          <div class="payment-badge-pill"><span>GPAY</span></div>
+          <div class="payment-badge-pill"><span>APPLE PAY</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Scroll To Top Button -->
+  <a href="#top" class="footer-scroll-top-btn" id="footerScrollTop" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+    <span class="footer-scroll-top-text">Top</span>
+  </a>
+
+</footer>
+
+<script>
+  (function() {
+    var scrollBtn = document.getElementById('footerScrollTop');
+    if (scrollBtn) {
+      scrollBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 400) {
+          scrollBtn.style.opacity = '1';
+          scrollBtn.style.visibility = 'visible';
+        } else {
+          scrollBtn.style.opacity = '0';
+          scrollBtn.style.visibility = 'hidden';
+        }
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Custom Luxury Footer",
+  "tag": "section",
+  "class": "section-custom-footer-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo Text",
+      "default": "Lumera"
+    },
+    {
+      "type": "text",
+      "id": "trustpilot_text",
+      "label": "Trustpilot Rating Subtext",
+      "default": "Trustscore 4.0 | 9,000 Reviews"
+    },
+    {
+      "type": "text",
+      "id": "phone_number",
+      "label": "Support Phone Number",
+      "default": "(213) 555-1234"
+    },
+    {
+      "type": "text",
+      "id": "phone_hours",
+      "label": "Working Hours",
+      "default": "Working hours: 09:00am - 18:00pm"
+    },
+    {
+      "type": "text",
+      "id": "copyright_name",
+      "label": "Copyright Brand Name",
+      "default": "Lumera"
+    },
+    {
+      "type": "header",
+      "content": "Trust Badges"
+    },
+    {
+      "type": "text",
+      "id": "trust_1_text",
+      "label": "Badge 1 Text",
+      "default": "Shipping to Over 200 countries"
+    },
+    {
+      "type": "text",
+      "id": "trust_2_text",
+      "label": "Badge 2 Text",
+      "default": "Outstanding Worldwide Support"
+    },
+    {
+      "type": "text",
+      "id": "trust_3_text",
+      "label": "Badge 3 Text",
+      "default": "100% Secure Checkout"
+    },
+    {
+      "type": "text",
+      "id": "trust_4_text",
+      "label": "Badge 4 Text",
+      "default": "Over 9,000 Genuine reviews"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Luxury Footer"
+    }
+  ]
+}
+{% endschema %}
