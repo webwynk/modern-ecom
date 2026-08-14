@@ -165,14 +165,6 @@
         "alt_text": "Special Collection Deals Discount"
       }
     },
-    "promo_banner_bento": {
-      "type": "custom-promo-banner",
-      "settings": {
-        "default_desktop_asset": "discount-banner-16x9.jpg",
-        "default_mobile_asset": "discount-banner-4x2.jpg",
-        "alt_text": "Curated Collections Discount"
-      }
-    },
     "featured_deals_grid": {
       "type": "custom-product-grid",
       "blocks": {
@@ -351,7 +343,6 @@
     "featured_deals_grid",
     "promo_banner_deals",
     "bento_grid",
-    "promo_banner_bento",
     "special_offer_grid"
   ]
 }
