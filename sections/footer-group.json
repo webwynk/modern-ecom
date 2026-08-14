@@ -5,15 +5,15 @@
     "custom_footer": {
       "type": "custom-footer",
       "settings": {
-        "logo_text": "Lumera",
-        "trustpilot_text": "Trustscore 4.0 | 9,000 Reviews",
+        "logo_text": "The Golden Rug",
+        "trustpilot_text": "TrustScore 4.9 | 9,000+ Reviews",
         "phone_number": "(213) 555-1234",
-        "phone_hours": "Working hours: 09:00am - 18:00pm",
-        "copyright_name": "Lumera",
-        "trust_1_text": "Shipping to Over 200 countries",
-        "trust_2_text": "Outstanding Worldwide Support",
-        "trust_3_text": "100% Secure Checkout",
-        "trust_4_text": "Over 9,000 Genuine reviews"
+        "phone_hours": "Mon - Fri: 09:00am - 18:00pm EST",
+        "copyright_name": "The Golden Rug & Furniture Co.",
+        "trust_1_text": "Free Worldwide Insured Shipping",
+        "trust_2_text": "Dedicated Artisan Concierge",
+        "trust_3_text": "100% Certificate of Authenticity",
+        "trust_4_text": "Over 9,000 Verified 5-Star Reviews"
       }
     }
   },

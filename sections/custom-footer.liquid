@@ -1,8 +1,8 @@
 {% comment %}
   Custom Multi-Tiered Luxury Footer
-  Matching reference design with store branding:
-  - Tier 1: Top Trust Badges Bar
-  - Tier 2: Main Body with Logo, Trustpilot Widget & 5 Link Columns
+  Handcrafted Rugs & Executive Office Furniture:
+  - Tier 1: Top Trust Badges Bar (Shipping, Concierge, 100% Authentic, 9,000 Reviews)
+  - Tier 2: Main Body with Store Brand (The Golden Rug), Trustpilot Widget & 5 Link Columns
   - Tier 3: Contact Phone Support & Colorful Social Media Circles
   - Tier 4: Bottom Copyright & Payment Pills Bar + Back to Top Button
 {% endcomment %}
@@ -22,28 +22,28 @@
           <div class="trust-badge-icon">
             <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18H3c-.6 0-1-.4-1-1V7c0-.6.4-1 1-1h10c.6 0 1 .4 1 1v11"/><path d="M14 9h4l4 4v4c0 .6-.4 1-1 1h-2"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
           </div>
-          <span class="trust-badge-text">{{ section.settings.trust_1_text | default: 'Shipping to Over 200 countries' }}</span>
+          <span class="trust-badge-text">{{ section.settings.trust_1_text | default: 'Free Worldwide Insured Shipping' }}</span>
         </div>
 
         <div class="trust-badge-item">
           <div class="trust-badge-icon">
             <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
           </div>
-          <span class="trust-badge-text">{{ section.settings.trust_2_text | default: 'Outstanding Worldwide Support' }}</span>
+          <span class="trust-badge-text">{{ section.settings.trust_2_text | default: 'Dedicated Artisan Concierge' }}</span>
         </div>
 
         <div class="trust-badge-item">
           <div class="trust-badge-icon">
             <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
           </div>
-          <span class="trust-badge-text">{{ section.settings.trust_3_text | default: '100% Secure Checkout' }}</span>
+          <span class="trust-badge-text">{{ section.settings.trust_3_text | default: '100% Certificate of Authenticity' }}</span>
         </div>
 
         <div class="trust-badge-item">
           <div class="trust-badge-icon">
             <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           </div>
-          <span class="trust-badge-text">{{ section.settings.trust_4_text | default: 'Over 9,000 Genuine reviews' }}</span>
+          <span class="trust-badge-text">{{ section.settings.trust_4_text | default: 'Over 9,000 Verified 5-Star Reviews' }}</span>
         </div>
 
       </div>
@@ -57,88 +57,96 @@
     <div class="custom-footer__container">
       <div class="footer-main-grid">
         
-        <!-- Left: Brand Logo & Trustpilot Box -->
+        <!-- Left: Store Brand Logo & Trustpilot Box -->
         <div class="footer-brand-col">
           <a href="/" class="footer-brand-logo">
             <div class="footer-brand-logo__text">
               {% if section.settings.logo_text != blank %}
                 {{ section.settings.logo_text }}
               {% else %}
-                Lumera<span>.</span>
+                The Golden Rug<span>.</span>
               {% endif %}
             </div>
           </a>
 
           <div class="footer-trustpilot-box">
             <span class="trustpilot-header">Trustpilot</span>
-            <div class="trustpilot-stars" aria-label="4.5 out of 5 stars">
+            <div class="trustpilot-stars" aria-label="4.8 out of 5 stars">
               <div class="tp-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
               <div class="tp-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
               <div class="tp-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
               <div class="tp-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-              <div class="tp-star tp-star--grey"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              <div class="tp-star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
             </div>
-            <span class="trustpilot-subtext">{{ section.settings.trustpilot_text | default: 'Trustscore 4.0 | 9,000 Reviews' }}</span>
+            <span class="trustpilot-subtext">{{ section.settings.trustpilot_text | default: 'TrustScore 4.9 | 9,000+ Reviews' }}</span>
           </div>
         </div>
 
         <!-- Right: 5 Navigation Columns -->
         <div class="footer-links-grid">
           
+          <!-- Column 1: Handcrafted Rugs -->
           <div class="footer-link-group">
-            <h4 class="footer-group-title">Company</h4>
+            <h4 class="footer-group-title">Handcrafted Rugs</h4>
             <ul class="footer-links-list">
-              <li class="footer-link-item"><a href="/pages/about-us">About</a></li>
-              <li class="footer-link-item"><a href="/pages/careers">Careers</a></li>
-              <li class="footer-link-item"><a href="/pages/security">Security</a></li>
-              <li class="footer-link-item"><a href="/pages/privacy-policy">Privacy</a></li>
-              <li class="footer-link-item"><a href="/pages/terms">Terms</a></li>
-              <li class="footer-link-item"><a href="/pages/charges">Charges</a></li>
+              <li class="footer-link-item"><a href="/collections/all?filter=handmade-rugs">Silk & Wool Rugs</a></li>
+              <li class="footer-link-item"><a href="/collections/all?filter=bokhara-rugs">Royal Bokhara</a></li>
+              <li class="footer-link-item"><a href="/collections/all?filter=kilim-rugs">Vintage Kilims</a></li>
+              <li class="footer-link-item"><a href="/collections/all?filter=oushak-rugs">Turkish Oushak</a></li>
+              <li class="footer-link-item"><a href="/collections/all?filter=entryway-runner">Entryway Runners</a></li>
+              <li class="footer-link-item"><a href="/collections/all?filter=tribal-rugs">Tribal Flatweaves</a></li>
             </ul>
           </div>
 
+          <!-- Column 2: Executive Furniture -->
           <div class="footer-link-group">
-            <h4 class="footer-group-title">Product</h4>
+            <h4 class="footer-group-title">Executive Furniture</h4>
             <ul class="footer-links-list">
-              <li class="footer-link-item"><a href="/collections/all">Learn</a></li>
-              <li class="footer-link-item"><a href="/collections/all">Plugins</a></li>
-              <li class="footer-link-item"><a href="/collections/all">Agencies</a></li>
-              <li class="footer-link-item"><a href="/collections/all">Startups</a></li>
-              <li class="footer-link-item"><a href="/collections/all">Freelancers</a></li>
-              <li class="footer-link-item"><a href="/collections/all">Business</a></li>
+              <li class="footer-link-item"><a href="/collections/all?filter=desks">Solid Walnut Desks</a></li>
+              <li class="footer-link-item"><a href="/collections/all?filter=chairs">Ergonomic Chairs</a></li>
+              <li class="footer-link-item"><a href="/collections/all?filter=tables">Artisan Round Tables</a></li>
+              <li class="footer-link-item"><a href="/collections/all?filter=bookshelves">Open Bookshelves</a></li>
+              <li class="footer-link-item"><a href="/collections/all?filter=storage">Filing & Storage</a></li>
+              <li class="footer-link-item"><a href="/collections/all?filter=accessories">Desk Accessories</a></li>
             </ul>
           </div>
 
+          <!-- Column 3: Customer Care -->
           <div class="footer-link-group">
-            <h4 class="footer-group-title">Resources</h4>
+            <h4 class="footer-group-title">Customer Care</h4>
             <ul class="footer-links-list">
-              <li class="footer-link-item"><a href="/pages/apps">Desktop Apps</a></li>
-              <li class="footer-link-item"><a href="/pages/partners">Partners</a></li>
-              <li class="footer-link-item"><a href="/pages/experts">Experts</a></li>
-              <li class="footer-link-item"><a href="/pages/figma-plugin">Figma Plugin</a></li>
-              <li class="footer-link-item"><a href="/blogs/news">Helpful Tips</a></li>
+              <li class="footer-link-item"><a href="/pages/contact">Concierge Support</a></li>
+              <li class="footer-link-item"><a href="/pages/track-order">Track My Order</a></li>
+              <li class="footer-link-item"><a href="/pages/bespoke-rugs">Custom Rug Sizing</a></li>
+              <li class="footer-link-item"><a href="/pages/rug-care">Rug Care & Cleaning</a></li>
+              <li class="footer-link-item"><a href="/pages/trade-program">Interior Trade Program</a></li>
+              <li class="footer-link-item"><a href="/pages/faq">Frequently Asked Questions</a></li>
             </ul>
           </div>
 
+          <!-- Column 4: About Us -->
           <div class="footer-link-group">
-            <h4 class="footer-group-title">Account</h4>
+            <h4 class="footer-group-title">About Us</h4>
             <ul class="footer-links-list">
-              <li class="footer-link-item"><a href="/account">Dashboard</a></li>
-              <li class="footer-link-item"><a href="/pages/wishlist">Wishlist</a></li>
-              <li class="footer-link-item"><a href="/account">Orders</a></li>
-              <li class="footer-link-item"><a href="/account">History</a></li>
-              <li class="footer-link-item"><a href="/account">Account details</a></li>
+              <li class="footer-link-item"><a href="/pages/about-us">Our Heritage</a></li>
+              <li class="footer-link-item"><a href="/pages/artisans">Master Weavers Guild</a></li>
+              <li class="footer-link-item"><a href="/pages/sustainability">Sustainable Wool & Silk</a></li>
+              <li class="footer-link-item"><a href="/pages/showrooms">Our Showrooms</a></li>
+              <li class="footer-link-item"><a href="/pages/press">Press & Editorial</a></li>
+              <li class="footer-link-item"><a href="/blogs/news">Artisan Stories Blog</a></li>
             </ul>
           </div>
 
+          <!-- Column 5: Legal & Trust -->
           <div class="footer-link-group">
-            <h4 class="footer-group-title">Legal</h4>
+            <h4 class="footer-group-title">Legal & Security</h4>
             <ul class="footer-links-list">
-              <li class="footer-link-item"><a href="/policies/terms-of-service">Terms</a></li>
-              <li class="footer-link-item"><a href="/policies/privacy-policy">Privacy</a></li>
-              <li class="footer-link-item"><a href="/pages/cookies">Cookies</a></li>
-              <li class="footer-link-item"><a href="/pages/licenses">Licenses</a></li>
-              <li class="footer-link-item"><a href="/pages/settings">Settings</a></li>
+              <li class="footer-link-item"><a href="/policies/privacy-policy">Privacy Policy</a></li>
+              <li class="footer-link-item"><a href="/policies/terms-of-service">Terms of Service</a></li>
+              <li class="footer-link-item"><a href="/policies/shipping-policy">Shipping & Delivery</a></li>
+              <li class="footer-link-item"><a href="/policies/refund-policy">Returns & Refunds</a></li>
+              <li class="footer-link-item"><a href="/pages/authenticity">Authenticity Guarantee</a></li>
+              <li class="footer-link-item"><a href="/pages/warranty">Lifetime Warranty</a></li>
             </ul>
           </div>
 
@@ -162,7 +170,7 @@
           </div>
           <div>
             <a href="tel:{{ section.settings.phone_number | default: '(213) 555-1234' }}" class="footer-phone-number">{{ section.settings.phone_number | default: '(213) 555-1234' }}</a>
-            <p class="footer-phone-hours">{{ section.settings.phone_hours | default: 'Working hours: 09:00am - 18:00pm' }}</p>
+            <p class="footer-phone-hours">{{ section.settings.phone_hours | default: 'Mon - Fri: 09:00am - 18:00pm EST' }}</p>
           </div>
         </div>
 
@@ -170,7 +178,7 @@
         <div class="footer-social-box">
           <span class="footer-social-label">Follow us</span>
           <div class="footer-social-icons">
-            <a href="mailto:support@lumera.com" class="social-circle-btn social--mail" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+            <a href="mailto:concierge@thegoldenrug.com" class="social-circle-btn social--mail" aria-label="Email Concierge"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
             <a href="https://facebook.com" target="_blank" rel="noopener" class="social-circle-btn social--facebook" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
             <a href="https://instagram.com" target="_blank" rel="noopener" class="social-circle-btn social--instagram" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
             <a href="https://linkedin.com" target="_blank" rel="noopener" class="social-circle-btn social--linkedin" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
@@ -193,7 +201,7 @@
         
         <!-- Left: Copyright -->
         <p class="footer-copyright-text">
-          Copyright &copy; {{ 'now' | date: '%Y' }} {{ section.settings.copyright_name | default: 'Lumera' }}. All Rights Reserved
+          Copyright &copy; {{ 'now' | date: '%Y' }} {{ section.settings.copyright_name | default: 'The Golden Rug & Furniture Co.' }}. All Rights Reserved.
         </p>
 
         <!-- Right: Payment Badges -->
@@ -253,13 +261,13 @@
       "type": "text",
       "id": "logo_text",
       "label": "Logo Text",
-      "default": "Lumera"
+      "default": "The Golden Rug"
     },
     {
       "type": "text",
       "id": "trustpilot_text",
       "label": "Trustpilot Rating Subtext",
-      "default": "Trustscore 4.0 | 9,000 Reviews"
+      "default": "TrustScore 4.9 | 9,000+ Reviews"
     },
     {
       "type": "text",
@@ -271,13 +279,13 @@
       "type": "text",
       "id": "phone_hours",
       "label": "Working Hours",
-      "default": "Working hours: 09:00am - 18:00pm"
+      "default": "Mon - Fri: 09:00am - 18:00pm EST"
     },
     {
       "type": "text",
       "id": "copyright_name",
       "label": "Copyright Brand Name",
-      "default": "Lumera"
+      "default": "The Golden Rug & Furniture Co."
     },
     {
       "type": "header",
@@ -287,25 +295,25 @@
       "type": "text",
       "id": "trust_1_text",
       "label": "Badge 1 Text",
-      "default": "Shipping to Over 200 countries"
+      "default": "Free Worldwide Insured Shipping"
     },
     {
       "type": "text",
       "id": "trust_2_text",
       "label": "Badge 2 Text",
-      "default": "Outstanding Worldwide Support"
+      "default": "Dedicated Artisan Concierge"
     },
     {
       "type": "text",
       "id": "trust_3_text",
       "label": "Badge 3 Text",
-      "default": "100% Secure Checkout"
+      "default": "100% Certificate of Authenticity"
     },
     {
       "type": "text",
       "id": "trust_4_text",
       "label": "Badge 4 Text",
-      "default": "Over 9,000 Genuine reviews"
+      "default": "Over 9,000 Verified 5-Star Reviews"
     }
   ],
   "presets": [
