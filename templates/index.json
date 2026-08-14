@@ -157,6 +157,38 @@
         "offer_old_price": "$1,899.00"
       }
     },
+    "brand_logos": {
+      "type": "custom-brand-logos",
+      "blocks": {
+        "b1": { "type": "brand", "settings": { "brand_name": "HERMAN MILLER" } },
+        "b2": { "type": "brand", "settings": { "brand_name": "STEELCASE" } },
+        "b3": { "type": "brand", "settings": { "brand_name": "KNOLL" } },
+        "b4": { "type": "brand", "settings": { "brand_name": "SAFAVIEH" } },
+        "b5": { "type": "brand", "settings": { "brand_name": "JAIPUR RUGS" } },
+        "b6": { "type": "brand", "settings": { "brand_name": "SURYA" } },
+        "b7": { "type": "brand", "settings": { "brand_name": "VITRA" } },
+        "b8": { "type": "brand", "settings": { "brand_name": "HAWORTH" } },
+        "b9": { "type": "brand", "settings": { "brand_name": "HAY" } },
+        "b10": { "type": "brand", "settings": { "brand_name": "LOLOI RUGS" } },
+        "b11": { "type": "brand", "settings": { "brand_name": "HUMANSCALE" } },
+        "b12": { "type": "brand", "settings": { "brand_name": "MUUTO" } },
+        "b13": { "type": "brand", "settings": { "brand_name": "RH MODERN" } },
+        "b14": { "type": "brand", "settings": { "brand_name": "WEST ELM" } },
+        "b15": { "type": "brand", "settings": { "brand_name": "CB2" } },
+        "b16": { "type": "brand", "settings": { "brand_name": "KARASTAN" } },
+        "b17": { "type": "brand", "settings": { "brand_name": "NOURISON" } },
+        "b18": { "type": "brand", "settings": { "brand_name": "ETHAN ALLEN" } }
+      },
+      "block_order": [
+        "b1", "b2", "b3", "b4", "b5", "b6",
+        "b7", "b8", "b9", "b10", "b11", "b12",
+        "b13", "b14", "b15", "b16", "b17", "b18"
+      ],
+      "settings": {
+        "heading": "Top Brands",
+        "subheading": "Discover handcrafted excellence from world-renowned makers"
+      }
+    },
     "promo_banner_deals": {
       "type": "custom-promo-banner",
       "settings": {
@@ -343,6 +375,7 @@
     "featured_deals_grid",
     "promo_banner_deals",
     "special_offer_grid",
-    "bento_grid"
+    "bento_grid",
+    "brand_logos"
   ]
 }

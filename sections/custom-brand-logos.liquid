@@ -1,0 +1,109 @@
+{% comment %}
+  Custom Top Brands Logo Grid Section
+  - Static 6-column grid on desktop, 4-column on tablet, 3-column on mobile
+  - Features curated high-definition SVG & custom logo blocks
+{% endcomment %}
+
+{{ 'component-brand-logos.css' | asset_url | stylesheet_tag }}
+
+<div class="section-brand-logos" id="BrandLogos-{{ section.id }}">
+  <div class="brand-logos__container">
+    
+    <div class="brand-logos__header">
+      <div class="brand-logos__title-group">
+        <h2 class="brand-logos__heading">{{ section.settings.heading | default: 'Top Brands' }}</h2>
+        {% if section.settings.subheading != blank %}
+          <p class="brand-logos__subheading">{{ section.settings.subheading }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="brand-logos__grid">
+      {% for block in section.blocks %}
+        <a href="{{ block.settings.link | default: '/collections/all' }}" class="brand-logo-item" {{ block.shopify_attributes }}>
+          {% if block.settings.image != blank %}
+            <img 
+              src="{{ block.settings.image | image_url: width: 280 }}" 
+              alt="{{ block.settings.brand_name | default: 'Brand Logo' | escape }}" 
+              loading="lazy"
+            >
+          {% else %}
+            <div class="brand-logo-text">{{ block.settings.brand_name | default: 'BRAND' }}</div>
+          {% endif %}
+        </a>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Top Brands Logo Grid",
+  "tag": "section",
+  "class": "section-brand-logos-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Top Brands"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Discover handcrafted excellence from world-renowned makers"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Brand",
+      "settings": [
+        {
+          "type": "text",
+          "id": "brand_name",
+          "label": "Brand Name",
+          "default": "HERMAN MILLER"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Brand Logo Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Brand URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Top Brands Logo Grid",
+      "blocks": [
+        { "type": "brand", "settings": { "brand_name": "HERMAN MILLER" } },
+        { "type": "brand", "settings": { "brand_name": "STEELCASE" } },
+        { "type": "brand", "settings": { "brand_name": "KNOLL" } },
+        { "type": "brand", "settings": { "brand_name": "SAFAVIEH" } },
+        { "type": "brand", "settings": { "brand_name": "JAIPUR RUGS" } },
+        { "type": "brand", "settings": { "brand_name": "SURYA" } },
+        { "type": "brand", "settings": { "brand_name": "VITRA" } },
+        { "type": "brand", "settings": { "brand_name": "HAWORTH" } },
+        { "type": "brand", "settings": { "brand_name": "HAY" } },
+        { "type": "brand", "settings": { "brand_name": "LOLOI RUGS" } },
+        { "type": "brand", "settings": { "brand_name": "HUMANSCALE" } },
+        { "type": "brand", "settings": { "brand_name": "MUUTO" } },
+        { "type": "brand", "settings": { "brand_name": "RH MODERN" } },
+        { "type": "brand", "settings": { "brand_name": "WEST ELM" } },
+        { "type": "brand", "settings": { "brand_name": "CB2" } },
+        { "type": "brand", "settings": { "brand_name": "KARASTAN" } },
+        { "type": "brand", "settings": { "brand_name": "NOURISON" } },
+        { "type": "brand", "settings": { "brand_name": "ETHAN ALLEN" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

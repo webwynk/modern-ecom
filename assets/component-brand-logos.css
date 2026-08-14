@@ -1,0 +1,185 @@
+/* ============================================================
+   Component: Top Brands Logo Grid (Static Multi-Row Layout)
+   - 6 Columns on Desktop (1240px container)
+   - 4 Columns on Tablet
+   - 3 Columns on Mobile
+   ============================================================ */
+
+.section-brand-logos {
+  padding: 50px 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.brand-logos__container {
+  width: calc(100% - 40px);
+  max-width: calc(var(--page-width, 1240px) - 40px);
+  margin: 0 auto;
+  position: relative;
+}
+
+.brand-logos__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 2.8rem;
+}
+
+.brand-logos__title-group {
+  flex: 1;
+}
+
+.brand-logos__heading {
+  font-family: var(--font-heading-family);
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #000000;
+  margin: 0 0 0.4rem 0;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.brand-logos__subheading {
+  font-size: 1.45rem;
+  color: rgba(0, 0, 0, 0.55);
+  margin: 0;
+  font-weight: 400;
+}
+
+/* 6-Column Grid */
+.brand-logos__grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1.6rem;
+}
+
+.brand-logo-item {
+  background-color: #ffffff;
+  border: 0.12rem solid rgba(153, 122, 81, 0.18);
+  border-radius: 1.6rem;
+  height: 10.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.4rem 2rem;
+  box-sizing: border-box;
+  text-decoration: none;
+  box-shadow: 0 0.4rem 1.6rem rgba(0, 0, 0, 0.03);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.brand-logo-item:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-highlight, #997A51);
+  box-shadow: 0 1rem 2.6rem rgba(153, 122, 81, 0.18);
+}
+
+.brand-logo-item svg {
+  max-width: 85%;
+  max-height: 4.8rem;
+  height: auto;
+  fill: currentColor;
+  color: #1A1815;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.brand-logo-item img {
+  max-width: 85%;
+  max-height: 4.8rem;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  transition: transform 0.3s ease;
+}
+
+.brand-logo-item:hover svg {
+  color: var(--color-highlight, #997A51);
+  transform: scale(1.06);
+}
+
+.brand-logo-item:hover img {
+  transform: scale(1.06);
+}
+
+/* Brand Text Badge Fallback */
+.brand-logo-text {
+  font-family: var(--font-heading-family);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #1A1815;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.2;
+  transition: color 0.3s ease;
+}
+
+.brand-logo-item:hover .brand-logo-text {
+  color: var(--color-highlight, #997A51);
+}
+
+/* ========================================
+   Responsive Breakpoints
+   ======================================== */
+@media screen and (max-width: 1024px) {
+  .brand-logos__grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.4rem;
+  }
+
+  .brand-logo-item {
+    height: 9.5rem;
+    padding: 1.2rem 1.6rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .section-brand-logos {
+    padding: 36px 0;
+  }
+
+  .brand-logos__container {
+    width: calc(100% - 30px);
+  }
+
+  .brand-logos__heading {
+    font-size: 2.2rem;
+  }
+
+  .brand-logos__subheading {
+    font-size: 1.3rem;
+  }
+
+  .brand-logos__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+  }
+
+  .brand-logo-item {
+    height: 8.5rem;
+    padding: 1rem 1.2rem;
+    border-radius: 1.4rem;
+  }
+
+  .brand-logo-text {
+    font-size: 1.35rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .brand-logos__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.9rem;
+  }
+
+  .brand-logo-item {
+    height: 7.6rem;
+    padding: 0.8rem;
+    border-radius: 1.2rem;
+  }
+
+  .brand-logo-text {
+    font-size: 1.2rem;
+    letter-spacing: 0.04em;
+  }
+}
