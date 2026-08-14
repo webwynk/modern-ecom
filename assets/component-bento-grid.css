@@ -2,9 +2,7 @@
    Component: 7-Card Bento Promo Grid (Brand Palette)
    Asymmetrical 3-Column layout with Luxury Brand Palette:
    - Gold (#997A51), Rich Black (#000000 / #1A1815), Warm Beige (#FFF8F0 / #F8F3EC)
-   - Left: 1 Wide Card (top) + 2 Square Cards (bottom)
-   - Center: 1 Tall Hero Card with floating Gold "SHOP NOW" Badge
-   - Right: 2 Square Cards (top) + 1 Wide Card (bottom)
+   - Zero white box artifacts via mix-blend-mode: multiply & integrated white frames.
    ============================================================ */
 
 .section-bento-grid {
@@ -54,20 +52,21 @@
   overflow: hidden;
   text-decoration: none;
   display: flex;
-  border: 0.1rem solid rgba(153, 122, 81, 0.15);
+  border: 0.1rem solid rgba(153, 122, 81, 0.18);
+  box-shadow: 0 0.4rem 1.6rem rgba(153, 122, 81, 0.06);
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
   box-sizing: border-box;
 }
 
 .bento-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 1.2rem 2.8rem rgba(153, 122, 81, 0.16);
-  border-color: rgba(153, 122, 81, 0.4);
+  box-shadow: 0 1.2rem 2.8rem rgba(153, 122, 81, 0.18);
+  border-color: rgba(153, 122, 81, 0.45);
 }
 
 /* ========================================
    1. Wide Landscape Cards (Top-Left & Bottom-Right)
-   Warm Brand Tint (#FFF8F0 / #F8F3EC)
+   Warm Luxury Background (#FFF8F0 / #F8F3EC)
    ======================================== */
 .bento-card--wide {
   flex: 1.15;
@@ -142,6 +141,7 @@
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+  mix-blend-mode: multiply; /* Seamless transparent blend */
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -225,7 +225,22 @@
   max-width: 90%;
   max-height: 10rem;
   object-fit: contain;
+  mix-blend-mode: multiply; /* Seamless transparent blend */
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bento-card--square-dark .bento-card__square-media {
+  background-color: #ffffff;
+  border-radius: 1.2rem;
+  padding: 0.8rem;
+  margin-top: 0.8rem;
+  height: 9.5rem;
+  box-sizing: border-box;
+}
+
+.bento-card--square-dark .bento-card__square-media img {
+  mix-blend-mode: normal;
+  max-height: 100%;
 }
 
 .bento-card:hover .bento-card__square-media img {
@@ -294,19 +309,24 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  background-color: #ffffff;
+  border-radius: 1.4rem 1.4rem 0 0;
+  padding: 1.2rem 1.2rem 0 1.2rem;
+  box-sizing: border-box;
+  overflow: hidden;
   z-index: 1;
 }
 
 .bento-card__hero-media img {
   width: 100%;
   max-height: 100%;
-  object-fit: cover;
-  border-radius: 1rem 1rem 0 0;
+  object-fit: contain;
+  mix-blend-mode: multiply;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .bento-card--hero:hover .bento-card__hero-media img {
-  transform: scale(1.04);
+  transform: scale(1.06);
 }
 
 /* Floating Circular Brand Gold "SHOP NOW" Badge */
