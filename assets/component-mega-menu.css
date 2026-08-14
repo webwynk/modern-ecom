@@ -213,98 +213,43 @@
   text-decoration: underline;
 }
 
-/* Column 3: Compact Luxury Promo Card (Matching Reference Image 1) */
+/* Column 3: Compact Luxury Promo Image Banner Only */
+.mega-menu__promo-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
 .mega-menu__promo-card {
-  background: #f8f9fa;
-  border-radius: 1rem;
-  padding: 1.8rem 1.6rem;
-  display: flex;
-  flex-direction: column;
-  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 28rem;
+  border-radius: 1.2rem;
   overflow: hidden;
-  border: 0.1rem solid rgba(0, 0, 0, 0.06);
-  box-shadow: 0 0.4rem 1.6rem rgba(0, 0, 0, 0.03);
-}
-
-.mega-menu__promo-badge {
-  display: inline-flex;
-  align-items: center;
-  background-color: var(--color-highlight, #997A51);
-  color: #ffffff;
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  padding: 0.3rem 0.8rem;
-  border-radius: 0.4rem;
-  width: fit-content;
-  margin-bottom: 1rem;
-}
-
-.mega-menu__promo-title {
-  font-family: var(--font-heading-family);
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #000000;
-  line-height: 1.2;
-  margin: 0 0 0.5rem 0;
-}
-
-.mega-menu__promo-price {
-  font-size: 1.3rem;
-  color: rgba(0, 0, 0, 0.6);
-  margin-bottom: 1.2rem;
-}
-
-.mega-menu__promo-price strong {
-  font-weight: 700;
-  color: #000000;
-  font-size: 1.5rem;
-}
-
-.mega-menu__promo-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  background-color: var(--color-highlight, #997A51);
-  color: #ffffff;
-  font-family: var(--font-heading-family);
-  font-size: 1.3rem;
-  font-weight: 600;
-  padding: 0.8rem 1.6rem;
-  border-radius: 0.5rem;
+  position: relative;
+  box-shadow: 0 0.4rem 1.6rem rgba(0, 0, 0, 0.06);
+  border: 0.1rem solid rgba(0, 0, 0, 0.08);
   text-decoration: none;
-  width: fit-content;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-  z-index: 2;
-  margin-bottom: 1.2rem;
+  background: #f4f5f7;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
-.mega-menu__promo-btn:hover {
-  background-color: #806440;
-  transform: translateY(-1px);
-}
-
-.mega-menu__promo-img-wrapper {
-  margin-top: auto;
-  border-radius: 0.6rem;
-  overflow: hidden;
-  height: 13rem;
-  position: relative;
-  background: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.mega-menu__promo-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.8rem 2.4rem rgba(0, 0, 0, 0.1);
+  border-color: rgba(153, 122, 81, 0.3);
 }
 
 .mega-menu__promo-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  object-position: center;
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .mega-menu__promo-card:hover .mega-menu__promo-img {
-  transform: scale(1.04);
+  transform: scale(1.03);
 }

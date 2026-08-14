@@ -191,55 +191,31 @@
                 </div>
               </div>
 
-              <!-- Column 3: Promo Card (Matching Reference Image 1) -->
+              <!-- Column 3: Promo Banner Image Only -->
               <div class="mega-menu__promo-container">
-                <!-- Promo Card for Rugs (Image 1: Rug) -->
-                <div id="MegaPromo-Rugs" class="mega-menu__promo-card">
-                  <span class="mega-menu__promo-badge">Special Deal</span>
-                  <h3 class="mega-menu__promo-title">Hand-Knotted Heritage Rugs</h3>
-                  <p class="mega-menu__promo-price">From <strong>$499.00</strong></p>
-                  <a href="/collections/all" class="mega-menu__promo-btn">
-                    <span>Shop now</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.4rem; height: 1.4rem;">
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                      <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                  </a>
-                  <div class="mega-menu__promo-img-wrapper">
-                    <img
-                      src="{{ 'promo-rug.jpg' | asset_url }}"
-                      alt="Handmade Rug Special Deal"
-                      class="mega-menu__promo-img"
-                      loading="lazy"
-                      width="300"
-                      height="200"
-                    >
-                  </div>
-                </div>
+                <!-- Promo Image for Rugs -->
+                <a href="/collections/all" id="MegaPromo-Rugs" class="mega-menu__promo-card" aria-label="Shop Handmade Rugs">
+                  <img
+                    src="{{ 'promo-rug.jpg' | asset_url }}"
+                    alt="Handmade Rugs Special Deal"
+                    class="mega-menu__promo-img"
+                    loading="lazy"
+                    width="300"
+                    height="380"
+                  >
+                </a>
 
-                <!-- Promo Card for Furniture (Image 2: Modern Furniture Desk) -->
-                <div id="MegaPromo-Furniture" class="mega-menu__promo-card" style="display: none;">
-                  <span class="mega-menu__promo-badge">New Arrival</span>
-                  <h3 class="mega-menu__promo-title">Executive Solid Wood Desks</h3>
-                  <p class="mega-menu__promo-price">From <strong>$349.00</strong></p>
-                  <a href="/collections/all" class="mega-menu__promo-btn">
-                    <span>Shop now</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.4rem; height: 1.4rem;">
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                      <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                  </a>
-                  <div class="mega-menu__promo-img-wrapper">
-                    <img
-                      src="{{ 'promo-furniture.jpg' | asset_url }}"
-                      alt="Executive Furniture Special Deal"
-                      class="mega-menu__promo-img"
-                      loading="lazy"
-                      width="300"
-                      height="200"
-                    >
-                  </div>
-                </div>
+                <!-- Promo Image for Furniture -->
+                <a href="/collections/all" id="MegaPromo-Furniture" class="mega-menu__promo-card" style="display: none;" aria-label="Shop Executive Furniture">
+                  <img
+                    src="{{ 'promo-furniture.jpg' | asset_url }}"
+                    alt="Executive Furniture Special Deal"
+                    class="mega-menu__promo-img"
+                    loading="lazy"
+                    width="300"
+                    height="380"
+                  >
+                </a>
               </div>
             </div>
           </div>
