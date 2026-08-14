@@ -2,13 +2,14 @@
    Component: Category Slider Carousel
    Horizontal card slider with smooth scroll-snap, 
    warm luxury card background (#FFF8F0), glassmorphism arrows,
-   and responsive card sizing.
+   zero-clipping hover effects, and responsive card sizing.
    ============================================================ */
 
 .section-category-slider {
   padding: 4.8rem 0 2.4rem 0;
   max-width: 100%;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .category-slider__container {
@@ -25,7 +26,7 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  margin-bottom: 2.4rem;
+  margin-bottom: 2rem;
   gap: 1.6rem;
 }
 
@@ -98,11 +99,10 @@
 }
 
 /* ========================================
-   Slider Track & Scroll Snap
+   Slider Track & Scroll Snap (No Clipping)
    ======================================== */
 .category-slider__wrapper {
   position: relative;
-  overflow: hidden;
 }
 
 .category-slider__track {
@@ -113,8 +113,9 @@
   scroll-behavior: smooth;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE/Edge */
-  padding: 0.8rem 0.4rem 1.6rem 0.4rem;
-  margin: -0.8rem -0.4rem 0 -0.4rem;
+  padding: 1.4rem 0.8rem 2.4rem 0.8rem;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 .category-slider__track::-webkit-scrollbar {
@@ -137,15 +138,19 @@
   text-align: center;
   text-decoration: none;
   border: 0.1rem solid rgba(153, 122, 81, 0.18);
-  box-shadow: 0 0.4rem 1.4rem rgba(153, 122, 81, 0.06);
+  box-shadow: 0 0.4rem 1.4rem rgba(153, 122, 81, 0.08);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
   box-sizing: border-box;
+  will-change: transform, box-shadow;
+  position: relative;
+  z-index: 1;
 }
 
 .category-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
   border-color: var(--color-highlight, #997A51);
-  box-shadow: 0 1rem 2.4rem rgba(153, 122, 81, 0.16);
+  box-shadow: 0 1.2rem 2.8rem rgba(153, 122, 81, 0.2);
+  z-index: 5;
 }
 
 .category-card__image-wrapper {
@@ -156,7 +161,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.2rem;
+  padding: 1rem;
   margin-bottom: 1.2rem;
   overflow: hidden;
   box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.04);
@@ -172,7 +177,7 @@
 }
 
 .category-card:hover .category-card__image {
-  transform: scale(1.08);
+  transform: scale(1.06);
 }
 
 .category-card__title {
@@ -229,6 +234,7 @@
 
   .category-slider__track {
     gap: 1.2rem;
+    padding: 1rem 0.4rem 2rem 0.4rem;
   }
 
   .category-card {
