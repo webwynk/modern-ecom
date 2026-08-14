@@ -15,10 +15,7 @@
     <!-- Section Header -->
     <div class="blog__header">
       <div class="blog__title-group">
-        <h2 class="blog__heading">{{ section.settings.heading | default: 'Discover What’s New in Luxury Interiors' }}</h2>
-        <a href="{{ section.settings.more_link_url | default: '/blogs/news' }}" class="blog__more-link">
-          {{ section.settings.more_link_text | default: 'More articles' }}
-        </a>
+        <h2 class="blog__heading">{{ section.settings.heading | default: 'Our Latest Blog & News' }}</h2>
       </div>
 
       <div class="blog__nav-buttons">
@@ -225,18 +222,7 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Discover What’s New in Luxury Interiors"
-    },
-    {
-      "type": "text",
-      "id": "more_link_text",
-      "label": "More Link Text",
-      "default": "More articles"
-    },
-    {
-      "type": "url",
-      "id": "more_link_url",
-      "label": "More Link URL"
+      "default": "Our Latest Blog & News"
     }
   ],
   "presets": [

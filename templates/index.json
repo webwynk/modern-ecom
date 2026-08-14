@@ -174,8 +174,7 @@
     "blog_posts": {
       "type": "custom-blog",
       "settings": {
-        "heading": "Discover What’s New in Luxury Interiors",
-        "more_link_text": "More articles"
+        "heading": "Our Latest Blog & News"
       }
     },
     "promo_banner_deals": {
