@@ -204,11 +204,11 @@
   font-weight: 500;
 }
 
-/* Right: Navigation Links (5 Columns) */
+/* Right: Navigation Links (4 Columns) */
 .footer-links-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 2.4rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.8rem;
 }
 
 .footer-link-group {
@@ -495,8 +495,8 @@
   }
 
   .footer-links-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.6rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.2rem;
   }
 
   .footer-group-title {
