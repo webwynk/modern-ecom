@@ -1,5 +1,6 @@
 /* ============================================================
    Component: Modern Vertical Auto-Scrolling Testimonials Wall
+   - Store Branding Palette: Gold (#997A51), Black (#1A1815), Warm (#FAF5EE)
    - 3 Columns on Desktop with bidirectional vertical auto-slides
    - Column 1: Scrolls UP
    - Column 2: Scrolls DOWN
@@ -13,12 +14,14 @@
   max-width: 100%;
   box-sizing: border-box;
   overflow: hidden;
-  background-color: #FAFAFA;
+  background-color: #FAF6F0;
   background-image: 
-    linear-gradient(rgba(153, 122, 81, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(153, 122, 81, 0.08) 1px, transparent 1px);
+    linear-gradient(rgba(153, 122, 81, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(153, 122, 81, 0.09) 1px, transparent 1px);
   background-size: 40px 40px;
   position: relative;
+  border-top: 0.1rem solid rgba(153, 122, 81, 0.15);
+  border-bottom: 0.1rem solid rgba(153, 122, 81, 0.15);
 }
 
 .testimonials__container {
@@ -31,25 +34,30 @@
 /* Header */
 .testimonials__header {
   text-align: center;
-  max-width: 70rem;
-  margin: 0 auto 4.5rem auto;
+  max-width: 72rem;
+  margin: 0 auto 4.8rem auto;
 }
 
 .testimonials__heading {
   font-family: var(--font-heading-family);
   font-size: 3.2rem;
   font-weight: 800;
-  color: #000000;
+  color: #1A1815;
   margin: 0 0 0.8rem 0;
   line-height: 1.15;
   letter-spacing: -0.02em;
 }
 
+.testimonials__heading span {
+  color: var(--color-highlight, #997A51);
+}
+
 .testimonials__subheading {
   font-size: 1.55rem;
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(26, 24, 21, 0.65);
   margin: 0;
   line-height: 1.5;
+  font-weight: 400;
 }
 
 /* ========================================
@@ -97,22 +105,22 @@
 }
 
 /* ========================================
-   Card Styling (Matching Exact Reference)
+   Card Styling (Luxury Store Brand Aesthetics)
    ======================================== */
 .testimonial-card {
   background-color: #ffffff;
-  border: 0.12rem solid rgba(153, 122, 81, 0.18);
+  border: 0.12rem solid rgba(153, 122, 81, 0.2);
   border-radius: 2rem;
   padding: 2.4rem;
   box-sizing: border-box;
-  box-shadow: 0 0.6rem 2rem rgba(0, 0, 0, 0.03);
+  box-shadow: 0 0.6rem 2rem rgba(153, 122, 81, 0.06);
   transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
   user-select: none;
 }
 
 .testimonial-card:hover {
   border-color: var(--color-highlight, #997A51);
-  box-shadow: 0 1rem 2.8rem rgba(153, 122, 81, 0.15);
+  box-shadow: 0 1rem 2.8rem rgba(153, 122, 81, 0.18);
 }
 
 /* Card Header */
@@ -129,25 +137,27 @@
   gap: 1.2rem;
 }
 
-/* Avatars with Distinct Friendly Backgrounds */
+/* Avatars with Warm Brand Luxury Tones */
 .testimonial-avatar {
-  width: 4.4rem;
-  height: 4.4rem;
+  width: 4.6rem;
+  height: 4.6rem;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 2.2rem;
   flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  background-color: #FAF5EE;
+  border: 0.1rem solid rgba(153, 122, 81, 0.25);
+  box-shadow: 0 2px 8px rgba(153, 122, 81, 0.08);
 }
 
-.avatar-bg-1 { background-color: #DCD6FD; }
-.avatar-bg-2 { background-color: #C7EED8; }
-.avatar-bg-3 { background-color: #FBE2CD; }
-.avatar-bg-4 { background-color: #D4F1FA; }
-.avatar-bg-5 { background-color: #FDD2DE; }
-.avatar-bg-6 { background-color: #D6F5E3; }
+.avatar-bg-1 { background-color: #F8F1E7; }
+.avatar-bg-2 { background-color: #EFE6D8; }
+.avatar-bg-3 { background-color: #FBF7F0; }
+.avatar-bg-4 { background-color: #F4ECE1; }
+.avatar-bg-5 { background-color: #EBDDCB; }
+.avatar-bg-6 { background-color: #F5EEE4; }
 
 .testimonial-name {
   font-family: var(--font-heading-family);
@@ -160,17 +170,17 @@
 
 .testimonial-handle {
   font-size: 1.25rem;
-  color: rgba(0, 0, 0, 0.45);
-  font-weight: 500;
+  color: var(--color-highlight, #997A51);
+  font-weight: 600;
   margin: 0;
 }
 
-/* Star Rating */
+/* Gold Star Rating */
 .testimonial-rating {
   display: flex;
   align-items: center;
   gap: 0.45rem;
-  color: #E8A800;
+  color: var(--color-highlight, #997A51);
   font-family: var(--font-heading-family);
   font-weight: 800;
   font-size: 1.45rem;
@@ -179,14 +189,29 @@
 .testimonial-rating svg {
   width: 1.6rem;
   height: 1.6rem;
-  fill: #E8A800;
+  fill: var(--color-highlight, #997A51);
+}
+
+/* Product Tag Pill */
+.testimonial-product-tag {
+  display: inline-block;
+  background-color: #FAF5EE;
+  border: 0.1rem solid rgba(153, 122, 81, 0.2);
+  border-radius: 0.6rem;
+  padding: 0.25rem 0.8rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1A1815;
+  margin-bottom: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 /* Quote Text */
 .testimonial-quote {
   font-size: 1.4rem;
   line-height: 1.6;
-  color: rgba(0, 0, 0, 0.72);
+  color: rgba(26, 24, 21, 0.78);
   margin: 0;
   font-weight: 400;
 }
