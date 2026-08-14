@@ -91,7 +91,7 @@
         "cat_10": {
           "type": "category_card",
           "settings": {
-            "title": "Bookshelves & Units",
+            "title": "Bookshelves",
             "count": "15+ Items",
             "static_image": "cat-bookshelves.jpg",
             "link": "/collections/all?filter=storage"
