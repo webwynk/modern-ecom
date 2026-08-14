@@ -301,9 +301,9 @@
 }
 
 .social-circle-btn svg {
-  width: 1.9rem;
-  height: 1.9rem;
-  fill: currentColor;
+  width: 2rem;
+  height: 2rem;
+  display: block;
 }
 
 /* Colorful Social Brand Colors */
