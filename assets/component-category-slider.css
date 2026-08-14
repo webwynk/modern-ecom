@@ -232,12 +232,42 @@
     width: calc(100% - 30px);
   }
 
+  .category-slider__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .category-slider__title-group {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
   .category-slider__heading {
     font-size: 2.2rem;
   }
 
   .category-slider__subheading {
     font-size: 1.3rem;
+  }
+
+  .category-slider__controls {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+  }
+
+  .category-slider__arrow {
+    width: 3.6rem;
+    height: 3.6rem;
+  }
+
+  .category-slider__arrow svg {
+    width: 1.5rem;
+    height: 1.5rem;
   }
 
   .category-slider__track {
