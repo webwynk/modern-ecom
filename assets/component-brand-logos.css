@@ -1,8 +1,9 @@
 /* ============================================================
-   Component: Top Brands Logo Grid (Static Multi-Row Layout)
-   - 6 Columns on Desktop (1240px container)
-   - 4 Columns on Tablet
-   - 3 Columns on Mobile
+   Component: Top Brands Dual-Row Smooth Bidirectional Marquee
+   - Row 1: Smooth continuous animation scrolling to the RIGHT
+   - Row 2: Smooth continuous animation scrolling to the LEFT
+   - Interactive hover pause
+   - Luxury edge gradient fade masks
    ============================================================ */
 
 .section-brand-logos {
@@ -47,92 +48,109 @@
   font-weight: 400;
 }
 
-/* 6-Column Grid */
-.brand-logos__grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
+/* ========================================
+   Dual-Row Marquee Container & Edge Mask
+   ======================================== */
+.brand-marquee-wrapper {
+  display: flex;
+  flex-direction: column;
   gap: 1.6rem;
+  width: 100%;
+  position: relative;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
 }
 
-.brand-logo-item {
+.brand-marquee-row {
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+
+.brand-marquee-track {
+  display: flex;
+  gap: 1.6rem;
+  width: max-content;
+  will-change: transform;
+}
+
+/* Row 1: Moves Smoothly to the RIGHT */
+.brand-marquee-row--right .brand-marquee-track {
+  animation: marquee-scroll-right 32s linear infinite;
+}
+
+/* Row 2: Moves Smoothly to the LEFT */
+.brand-marquee-row--left .brand-marquee-track {
+  animation: marquee-scroll-left 32s linear infinite;
+}
+
+/* Pause Animation on Hover */
+.brand-marquee-track:hover {
+  animation-play-state: paused !important;
+}
+
+/* ========================================
+   Brand Logo Card Styling
+   ======================================== */
+.brand-logo-card {
+  flex: 0 0 17rem;
+  height: 10rem;
   background-color: #ffffff;
   border: 0.12rem solid rgba(153, 122, 81, 0.18);
   border-radius: 1.6rem;
-  height: 10.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.4rem 2rem;
+  padding: 1.4rem 1.8rem;
   box-sizing: border-box;
   text-decoration: none;
   box-shadow: 0 0.4rem 1.6rem rgba(0, 0, 0, 0.03);
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.3s ease;
 }
 
-.brand-logo-item:hover {
+.brand-logo-card:hover {
   transform: translateY(-4px);
   border-color: var(--color-highlight, #997A51);
-  box-shadow: 0 1rem 2.6rem rgba(153, 122, 81, 0.18);
+  box-shadow: 0 1rem 2.6rem rgba(153, 122, 81, 0.2);
 }
 
-.brand-logo-item svg {
+.brand-logo-card img {
   max-width: 85%;
-  max-height: 4.8rem;
-  height: auto;
-  fill: currentColor;
-  color: #1A1815;
-  transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.brand-logo-item img {
-  max-width: 85%;
-  max-height: 4.8rem;
+  max-height: 5.5rem;
   object-fit: contain;
   mix-blend-mode: multiply;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.brand-logo-item:hover svg {
-  color: var(--color-highlight, #997A51);
-  transform: scale(1.06);
+.brand-logo-card:hover img {
+  transform: scale(1.08);
 }
 
-.brand-logo-item:hover img {
-  transform: scale(1.06);
+/* ========================================
+   Keyframe Animations for Seamless Looping
+   ======================================== */
+@keyframes marquee-scroll-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
 }
 
-/* Brand Text Badge Fallback */
-.brand-logo-text {
-  font-family: var(--font-heading-family);
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: #1A1815;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-align: center;
-  line-height: 1.2;
-  transition: color 0.3s ease;
-}
-
-.brand-logo-item:hover .brand-logo-text {
-  color: var(--color-highlight, #997A51);
+@keyframes marquee-scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 /* ========================================
    Responsive Breakpoints
    ======================================== */
-@media screen and (max-width: 1024px) {
-  .brand-logos__grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.4rem;
-  }
-
-  .brand-logo-item {
-    height: 9.5rem;
-    padding: 1.2rem 1.6rem;
-  }
-}
-
 @media screen and (max-width: 768px) {
   .section-brand-logos {
     padding: 36px 0;
@@ -150,36 +168,32 @@
     font-size: 1.3rem;
   }
 
-  .brand-logos__grid {
-    grid-template-columns: repeat(3, 1fr);
+  .brand-marquee-wrapper {
+    gap: 1.2rem;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%);
+  }
+
+  .brand-marquee-track {
     gap: 1.2rem;
   }
 
-  .brand-logo-item {
-    height: 8.5rem;
+  .brand-logo-card {
+    flex: 0 0 13.5rem;
+    height: 8rem;
     padding: 1rem 1.2rem;
     border-radius: 1.4rem;
   }
 
-  .brand-logo-text {
-    font-size: 1.35rem;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .brand-logos__grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.9rem;
+  .brand-logo-card img {
+    max-height: 4.2rem;
   }
 
-  .brand-logo-item {
-    height: 7.6rem;
-    padding: 0.8rem;
-    border-radius: 1.2rem;
+  .brand-marquee-row--right .brand-marquee-track {
+    animation-duration: 24s;
   }
 
-  .brand-logo-text {
-    font-size: 1.2rem;
-    letter-spacing: 0.04em;
+  .brand-marquee-row--left .brand-marquee-track {
+    animation-duration: 24s;
   }
 }

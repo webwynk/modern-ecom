@@ -1,7 +1,8 @@
 {% comment %}
-  Custom Top Brands Logo Grid Section
-  - Static 6-column grid on desktop, 4-column on tablet, 3-column on mobile
-  - Features curated high-definition SVG & custom logo blocks
+  Custom Top Brands Dual-Row Animated Marquee Section
+  - Row 1: 10 logos scrolling smoothly to the RIGHT
+  - Row 2: 10 logos scrolling smoothly to the LEFT
+  - Interactive hover pause
 {% endcomment %}
 
 {{ 'component-brand-logos.css' | asset_url | stylesheet_tag }}
@@ -18,20 +19,70 @@
       </div>
     </div>
 
-    <div class="brand-logos__grid">
-      {% for block in section.blocks %}
-        <a href="{{ block.settings.link | default: '/collections/all' }}" class="brand-logo-item" {{ block.shopify_attributes }}>
-          {% if block.settings.image != blank %}
-            <img 
-              src="{{ block.settings.image | image_url: width: 280 }}" 
-              alt="{{ block.settings.brand_name | default: 'Brand Logo' | escape }}" 
-              loading="lazy"
-            >
-          {% else %}
-            <div class="brand-logo-text">{{ block.settings.brand_name | default: 'BRAND' }}</div>
-          {% endif %}
-        </a>
-      {% endfor %}
+    <div class="brand-marquee-wrapper">
+      
+      <!-- ========================================
+           ROW 1: Auto Smooth Animation to the RIGHT
+           ======================================== -->
+      <div class="brand-marquee-row brand-marquee-row--right" aria-label="Brands Carousel Row 1">
+        <div class="brand-marquee-track">
+          <!-- Set 1 -->
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ '232-140x140-0.jpg' | asset_url }}" alt="HP" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'TORK_LOGO-140x140-0.jpg' | asset_url }}" alt="Tork" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'DIALCOMPLETE_LOGO-140x140-0.jpg' | asset_url }}" alt="Dial" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'DART_LOGO-140x140-0.jpg' | asset_url }}" alt="Dart" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'SWIFFER_LOGO_1-140x140-0.jpg' | asset_url }}" alt="Swiffer" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'BOARDWALK_LOGO-140x140-0.jpg' | asset_url }}" alt="Boardwalk" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'KLEENEX_LOGO-140x140-0.jpg' | asset_url }}" alt="Kleenex" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'WYPALL_1_LOGO-140x140-0.jpg' | asset_url }}" alt="WypAll" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'PURELL_LOGO-140x140-0.jpg' | asset_url }}" alt="Purell" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'MRCLEAN_LOGO-140x140-0.jpg' | asset_url }}" alt="Mr Clean" loading="lazy"></a>
+
+          <!-- Duplicate Set for Seamless Infinite Loop -->
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ '232-140x140-0.jpg' | asset_url }}" alt="HP" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'TORK_LOGO-140x140-0.jpg' | asset_url }}" alt="Tork" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'DIALCOMPLETE_LOGO-140x140-0.jpg' | asset_url }}" alt="Dial" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'DART_LOGO-140x140-0.jpg' | asset_url }}" alt="Dart" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'SWIFFER_LOGO_1-140x140-0.jpg' | asset_url }}" alt="Swiffer" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'BOARDWALK_LOGO-140x140-0.jpg' | asset_url }}" alt="Boardwalk" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'KLEENEX_LOGO-140x140-0.jpg' | asset_url }}" alt="Kleenex" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'WYPALL_1_LOGO-140x140-0.jpg' | asset_url }}" alt="WypAll" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'PURELL_LOGO-140x140-0.jpg' | asset_url }}" alt="Purell" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'MRCLEAN_LOGO-140x140-0.jpg' | asset_url }}" alt="Mr Clean" loading="lazy"></a>
+        </div>
+      </div>
+
+      <!-- ========================================
+           ROW 2: Auto Smooth Animation to the LEFT
+           ======================================== -->
+      <div class="brand-marquee-row brand-marquee-row--left" aria-label="Brands Carousel Row 2">
+        <div class="brand-marquee-track">
+          <!-- Set 1 -->
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'CLOROX_LOGO-140x140-0.jpg' | asset_url }}" alt="Clorox" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'RUBBERMAID_LOGO-140x140-0.jpg' | asset_url }}" alt="Rubbermaid" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'DAWNPRO_LOGO-140x140-0.jpg' | asset_url }}" alt="Dawn" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'BROTHER_LOGO-140x140-0.jpg' | asset_url }}" alt="Brother" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'GOJO_LOGO-140x140-0.jpg' | asset_url }}" alt="Gojo" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'WINDEX_LOGO-140x140-0.jpg' | asset_url }}" alt="Windex" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'SCOTT_1_LOGO-140x140-0.jpg' | asset_url }}" alt="Scott" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'AVERY_LOGO-140x140-0.jpg' | asset_url }}" alt="Avery" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'LYSOL_LOGO-140x140-0.jpg' | asset_url }}" alt="Lysol" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'BOUNTY_LOGO-140x140-0.jpg' | asset_url }}" alt="Bounty" loading="lazy"></a>
+
+          <!-- Duplicate Set for Seamless Infinite Loop -->
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'CLOROX_LOGO-140x140-0.jpg' | asset_url }}" alt="Clorox" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'RUBBERMAID_LOGO-140x140-0.jpg' | asset_url }}" alt="Rubbermaid" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'DAWNPRO_LOGO-140x140-0.jpg' | asset_url }}" alt="Dawn" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'BROTHER_LOGO-140x140-0.jpg' | asset_url }}" alt="Brother" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'GOJO_LOGO-140x140-0.jpg' | asset_url }}" alt="Gojo" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'WINDEX_LOGO-140x140-0.jpg' | asset_url }}" alt="Windex" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'SCOTT_1_LOGO-140x140-0.jpg' | asset_url }}" alt="Scott" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'AVERY_LOGO-140x140-0.jpg' | asset_url }}" alt="Avery" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'LYSOL_LOGO-140x140-0.jpg' | asset_url }}" alt="Lysol" loading="lazy"></a>
+          <a href="/collections/all" class="brand-logo-card"><img src="{{ 'BOUNTY_LOGO-140x140-0.jpg' | asset_url }}" alt="Bounty" loading="lazy"></a>
+        </div>
+      </div>
+
     </div>
 
   </div>
@@ -39,7 +90,7 @@
 
 {% schema %}
 {
-  "name": "Top Brands Logo Grid",
+  "name": "Top Brands Animated",
   "tag": "section",
   "class": "section-brand-logos-wrapper",
   "settings": [
@@ -53,56 +104,12 @@
       "type": "text",
       "id": "subheading",
       "label": "Subheading",
-      "default": "Discover handcrafted excellence from world-renowned makers"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "brand",
-      "name": "Brand",
-      "settings": [
-        {
-          "type": "text",
-          "id": "brand_name",
-          "label": "Brand Name",
-          "default": "HERMAN MILLER"
-        },
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Brand Logo Image"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Brand URL"
-        }
-      ]
+      "default": "Trusted by industry leaders and global enterprise partners"
     }
   ],
   "presets": [
     {
-      "name": "Top Brands Logo Grid",
-      "blocks": [
-        { "type": "brand", "settings": { "brand_name": "HERMAN MILLER" } },
-        { "type": "brand", "settings": { "brand_name": "STEELCASE" } },
-        { "type": "brand", "settings": { "brand_name": "KNOLL" } },
-        { "type": "brand", "settings": { "brand_name": "SAFAVIEH" } },
-        { "type": "brand", "settings": { "brand_name": "JAIPUR RUGS" } },
-        { "type": "brand", "settings": { "brand_name": "SURYA" } },
-        { "type": "brand", "settings": { "brand_name": "VITRA" } },
-        { "type": "brand", "settings": { "brand_name": "HAWORTH" } },
-        { "type": "brand", "settings": { "brand_name": "HAY" } },
-        { "type": "brand", "settings": { "brand_name": "LOLOI RUGS" } },
-        { "type": "brand", "settings": { "brand_name": "HUMANSCALE" } },
-        { "type": "brand", "settings": { "brand_name": "MUUTO" } },
-        { "type": "brand", "settings": { "brand_name": "RH MODERN" } },
-        { "type": "brand", "settings": { "brand_name": "WEST ELM" } },
-        { "type": "brand", "settings": { "brand_name": "CB2" } },
-        { "type": "brand", "settings": { "brand_name": "KARASTAN" } },
-        { "type": "brand", "settings": { "brand_name": "NOURISON" } },
-        { "type": "brand", "settings": { "brand_name": "ETHAN ALLEN" } }
-      ]
+      "name": "Top Brands Animated"
     }
   ]
 }
