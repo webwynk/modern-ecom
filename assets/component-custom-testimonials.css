@@ -14,14 +14,14 @@
   max-width: 100%;
   box-sizing: border-box;
   overflow: hidden;
-  background-color: #FAF6F0;
+  background-color: #FDFCF9;
   background-image: 
-    linear-gradient(rgba(153, 122, 81, 0.09) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(153, 122, 81, 0.09) 1px, transparent 1px);
-  background-size: 40px 40px;
+    linear-gradient(rgba(153, 122, 81, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(153, 122, 81, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
   position: relative;
-  border-top: 0.1rem solid rgba(153, 122, 81, 0.15);
-  border-bottom: 0.1rem solid rgba(153, 122, 81, 0.15);
+  border-top: 0.1rem solid rgba(153, 122, 81, 0.08);
+  border-bottom: 0.1rem solid rgba(153, 122, 81, 0.08);
 }
 
 .testimonials__container {
@@ -54,7 +54,7 @@
 
 .testimonials__subheading {
   font-size: 1.55rem;
-  color: rgba(26, 24, 21, 0.65);
+  color: rgba(26, 24, 21, 0.6);
   margin: 0;
   line-height: 1.5;
   font-weight: 400;
@@ -109,18 +109,18 @@
    ======================================== */
 .testimonial-card {
   background-color: #ffffff;
-  border: 0.12rem solid rgba(153, 122, 81, 0.2);
+  border: 0.1rem solid rgba(153, 122, 81, 0.14);
   border-radius: 2rem;
   padding: 2.4rem;
   box-sizing: border-box;
-  box-shadow: 0 0.6rem 2rem rgba(153, 122, 81, 0.06);
+  box-shadow: 0 0.6rem 2.4rem rgba(0, 0, 0, 0.025);
   transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
   user-select: none;
 }
 
 .testimonial-card:hover {
   border-color: var(--color-highlight, #997A51);
-  box-shadow: 0 1rem 2.8rem rgba(153, 122, 81, 0.18);
+  box-shadow: 0 1rem 2.8rem rgba(153, 122, 81, 0.14);
 }
 
 /* Card Header */
@@ -148,16 +148,16 @@
   font-size: 2.2rem;
   flex-shrink: 0;
   background-color: #FAF5EE;
-  border: 0.1rem solid rgba(153, 122, 81, 0.25);
-  box-shadow: 0 2px 8px rgba(153, 122, 81, 0.08);
+  border: 0.1rem solid rgba(153, 122, 81, 0.2);
+  box-shadow: 0 2px 8px rgba(153, 122, 81, 0.06);
 }
 
-.avatar-bg-1 { background-color: #F8F1E7; }
-.avatar-bg-2 { background-color: #EFE6D8; }
-.avatar-bg-3 { background-color: #FBF7F0; }
-.avatar-bg-4 { background-color: #F4ECE1; }
-.avatar-bg-5 { background-color: #EBDDCB; }
-.avatar-bg-6 { background-color: #F5EEE4; }
+.avatar-bg-1 { background-color: #FAF6EE; }
+.avatar-bg-2 { background-color: #F4EDE2; }
+.avatar-bg-3 { background-color: #FBF8F2; }
+.avatar-bg-4 { background-color: #F5EFE5; }
+.avatar-bg-5 { background-color: #EFE3D4; }
+.avatar-bg-6 { background-color: #F6EFE6; }
 
 .testimonial-name {
   font-family: var(--font-heading-family);
@@ -195,8 +195,8 @@
 /* Product Tag Pill */
 .testimonial-product-tag {
   display: inline-block;
-  background-color: #FAF5EE;
-  border: 0.1rem solid rgba(153, 122, 81, 0.2);
+  background-color: #FAF7F2;
+  border: 0.1rem solid rgba(153, 122, 81, 0.16);
   border-radius: 0.6rem;
   padding: 0.25rem 0.8rem;
   font-size: 1.15rem;
