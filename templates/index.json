@@ -171,6 +171,13 @@
         "subheading": "Real reviews and experiences from our valued customers worldwide"
       }
     },
+    "blog_posts": {
+      "type": "custom-blog",
+      "settings": {
+        "heading": "Discover What’s New in Luxury Interiors",
+        "more_link_text": "More articles"
+      }
+    },
     "promo_banner_deals": {
       "type": "custom-promo-banner",
       "settings": {
@@ -359,6 +366,7 @@
     "special_offer_grid",
     "bento_grid",
     "brand_logos",
-    "testimonials"
+    "testimonials",
+    "blog_posts"
   ]
 }
