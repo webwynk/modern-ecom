@@ -4,6 +4,97 @@
       "type": "custom-hero-slider",
       "settings": {}
     },
+    "category_slider": {
+      "type": "custom-category-slider",
+      "blocks": {
+        "cat_1": {
+          "type": "category_card",
+          "settings": {
+            "title": "Handmade Rugs",
+            "count": "50+ Items",
+            "static_image": "cat-handmade-rugs.jpg",
+            "link": "/collections/all?filter=handmade-rugs"
+          }
+        },
+        "cat_2": {
+          "type": "category_card",
+          "settings": {
+            "title": "Kilim Rugs",
+            "count": "32+ Items",
+            "static_image": "cat-kilim-rugs.jpg",
+            "link": "/collections/all?filter=kilim-rugs"
+          }
+        },
+        "cat_3": {
+          "type": "category_card",
+          "settings": {
+            "title": "Bokhara Rugs",
+            "count": "24+ Items",
+            "static_image": "cat-bokhara-rugs.jpg",
+            "link": "/collections/all?filter=bokhara-rugs"
+          }
+        },
+        "cat_4": {
+          "type": "category_card",
+          "settings": {
+            "title": "Runner Rugs",
+            "count": "45+ Items",
+            "static_image": "cat-runner-rugs.jpg",
+            "link": "/collections/all?filter=entryway-runner"
+          }
+        },
+        "cat_5": {
+          "type": "category_card",
+          "settings": {
+            "title": "Oushak Rugs",
+            "count": "18+ Items",
+            "static_image": "cat-oushak-rugs.jpg",
+            "link": "/collections/all?filter=oushak-rugs"
+          }
+        },
+        "cat_6": {
+          "type": "category_card",
+          "settings": {
+            "title": "Executive Desks",
+            "count": "28+ Items",
+            "static_image": "cat-executive-desks.jpg",
+            "link": "/collections/all?filter=desks"
+          }
+        },
+        "cat_7": {
+          "type": "category_card",
+          "settings": {
+            "title": "Office Chairs",
+            "count": "35+ Items",
+            "static_image": "cat-chairs.jpg",
+            "link": "/collections/all?filter=chairs"
+          }
+        },
+        "cat_8": {
+          "type": "category_card",
+          "settings": {
+            "title": "Artisan Tables",
+            "count": "20+ Items",
+            "static_image": "cat-tables.jpg",
+            "link": "/collections/all?filter=tables"
+          }
+        }
+      },
+      "block_order": [
+        "cat_1",
+        "cat_2",
+        "cat_3",
+        "cat_4",
+        "cat_5",
+        "cat_6",
+        "cat_7",
+        "cat_8"
+      ],
+      "settings": {
+        "heading": "Explore Popular Categories",
+        "subheading": "Discover handcrafted rugs & artisan furniture curated for modern living"
+      }
+    },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
@@ -35,6 +126,7 @@
   },
   "order": [
     "hero_slider",
+    "category_slider",
     "featured_collection"
   ]
 }

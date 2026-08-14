@@ -1,0 +1,254 @@
+{% comment %}
+  Custom Category Slider Carousel
+  Features: Card slider with #FFF8F0 background, studio cutout images,
+  item count badges, smooth arrow navigation, touch scroll-snap.
+{% endcomment %}
+
+{{ 'component-category-slider.css' | asset_url | stylesheet_tag }}
+
+<div class="section-category-slider" id="CategorySlider-{{ section.id }}">
+  <div class="category-slider__container">
+    <!-- Header: Title + Navigation Arrows -->
+    <div class="category-slider__header">
+      <div class="category-slider__title-group">
+        <h2 class="category-slider__heading">{{ section.settings.heading | default: 'Explore Popular Categories' }}</h2>
+        {% if section.settings.subheading != blank %}
+          <p class="category-slider__subheading">{{ section.settings.subheading }}</p>
+        {% endif %}
+      </div>
+
+      <div class="category-slider__controls">
+        <button
+          type="button"
+          class="category-slider__arrow category-slider__arrow--prev"
+          aria-label="Previous categories"
+          id="CatPrev-{{ section.id }}"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="category-slider__arrow category-slider__arrow--next"
+          aria-label="Next categories"
+          id="CatNext-{{ section.id }}"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Category Slider Track -->
+    <div class="category-slider__wrapper">
+      <div class="category-slider__track" id="CatTrack-{{ section.id }}" role="region" aria-label="Categories Carousel">
+        {% for block in section.blocks %}
+          <a
+            href="{{ block.settings.link | default: '/collections/all' }}"
+            class="category-card"
+            {{ block.shopify_attributes }}
+          >
+            <div class="category-card__image-wrapper">
+              {% if block.settings.image != blank %}
+                <img
+                  src="{{ block.settings.image | image_url: width: 320 }}"
+                  alt="{{ block.settings.title | escape }}"
+                  class="category-card__image"
+                  loading="lazy"
+                  width="160"
+                  height="160"
+                >
+              {% elsif block.settings.static_image != blank %}
+                <img
+                  src="{{ block.settings.static_image | asset_url }}"
+                  alt="{{ block.settings.title | escape }}"
+                  class="category-card__image"
+                  loading="lazy"
+                  width="160"
+                  height="160"
+                >
+              {% else %}
+                {{ 'product-1' | placeholder_svg_tag: 'category-card__image' }}
+              {% endif %}
+            </div>
+            <h3 class="category-card__title">{{ block.settings.title }}</h3>
+            {% if block.settings.count != blank %}
+              <span class="category-card__count">{{ block.settings.count }}</span>
+            {% endif %}
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    'use strict';
+    var sectionId = '{{ section.id }}';
+    var track = document.getElementById('CatTrack-' + sectionId);
+    var prevBtn = document.getElementById('CatPrev-' + sectionId);
+    var nextBtn = document.getElementById('CatNext-' + sectionId);
+
+    if (!track || !prevBtn || !nextBtn) return;
+
+    function getScrollStep() {
+      var firstCard = track.querySelector('.category-card');
+      if (firstCard) {
+        var style = window.getComputedStyle(track);
+        var gap = parseFloat(style.gap) || 16;
+        return (firstCard.offsetWidth + gap) * 2;
+      }
+      return 350;
+    }
+
+    prevBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      track.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
+    });
+
+    nextBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      track.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Category Slider",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Explore Popular Categories"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Discover handcrafted rugs & artisan furniture curated for modern living"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category_card",
+      "name": "Category Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom Image"
+        },
+        {
+          "type": "text",
+          "id": "static_image",
+          "label": "Asset Image Filename (Fallback)",
+          "default": "cat-handmade-rugs.jpg"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category Title",
+          "default": "Handmade Rugs"
+        },
+        {
+          "type": "text",
+          "id": "count",
+          "label": "Item Count",
+          "default": "50+ Items"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Category Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Category Slider",
+      "blocks": [
+        {
+          "type": "category_card",
+          "settings": {
+            "title": "Handmade Rugs",
+            "count": "50+ Items",
+            "static_image": "cat-handmade-rugs.jpg",
+            "link": "/collections/all?filter=handmade-rugs"
+          }
+        },
+        {
+          "type": "category_card",
+          "settings": {
+            "title": "Kilim Rugs",
+            "count": "32+ Items",
+            "static_image": "cat-kilim-rugs.jpg",
+            "link": "/collections/all?filter=kilim-rugs"
+          }
+        },
+        {
+          "type": "category_card",
+          "settings": {
+            "title": "Bokhara Rugs",
+            "count": "24+ Items",
+            "static_image": "cat-bokhara-rugs.jpg",
+            "link": "/collections/all?filter=bokhara-rugs"
+          }
+        },
+        {
+          "type": "category_card",
+          "settings": {
+            "title": "Runner Rugs",
+            "count": "45+ Items",
+            "static_image": "cat-runner-rugs.jpg",
+            "link": "/collections/all?filter=entryway-runner"
+          }
+        },
+        {
+          "type": "category_card",
+          "settings": {
+            "title": "Oushak Rugs",
+            "count": "18+ Items",
+            "static_image": "cat-oushak-rugs.jpg",
+            "link": "/collections/all?filter=oushak-rugs"
+          }
+        },
+        {
+          "type": "category_card",
+          "settings": {
+            "title": "Executive Desks",
+            "count": "28+ Items",
+            "static_image": "cat-executive-desks.jpg",
+            "link": "/collections/all?filter=desks"
+          }
+        },
+        {
+          "type": "category_card",
+          "settings": {
+            "title": "Office Chairs",
+            "count": "35+ Items",
+            "static_image": "cat-chairs.jpg",
+            "link": "/collections/all?filter=chairs"
+          }
+        },
+        {
+          "type": "category_card",
+          "settings": {
+            "title": "Artisan Tables",
+            "count": "20+ Items",
+            "static_image": "cat-tables.jpg",
+            "link": "/collections/all?filter=tables"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

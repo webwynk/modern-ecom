@@ -1,0 +1,255 @@
+/* ============================================================
+   Component: Category Slider Carousel
+   Horizontal card slider with smooth scroll-snap, 
+   warm luxury card background (#FFF8F0), glassmorphism arrows,
+   and responsive card sizing.
+   ============================================================ */
+
+.section-category-slider {
+  padding: 4.8rem 0 2.4rem 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.category-slider__container {
+  width: calc(100% - 40px);
+  max-width: calc(var(--page-width, 1240px) - 40px);
+  margin: 0 auto;
+  position: relative;
+}
+
+/* ========================================
+   Section Header (Title + Controls)
+   ======================================== */
+.category-slider__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 2.4rem;
+  gap: 1.6rem;
+}
+
+.category-slider__title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.category-slider__heading {
+  font-family: var(--font-heading-family);
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: #000000;
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.category-slider__subheading {
+  font-size: 1.45rem;
+  color: rgba(0, 0, 0, 0.6);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.category-slider__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-shrink: 0;
+}
+
+.category-slider__arrow {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  border: 0.1rem solid rgba(0, 0, 0, 0.12);
+  background-color: #ffffff;
+  color: #000000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.category-slider__arrow:hover {
+  background-color: var(--color-highlight, #997A51);
+  border-color: var(--color-highlight, #997A51);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(153, 122, 81, 0.3);
+}
+
+.category-slider__arrow:active {
+  transform: translateY(0) scale(0.94);
+}
+
+.category-slider__arrow svg {
+  width: 1.8rem;
+  height: 1.8rem;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ========================================
+   Slider Track & Scroll Snap
+   ======================================== */
+.category-slider__wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.category-slider__track {
+  display: flex;
+  gap: 1.6rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  padding: 0.8rem 0.4rem 1.6rem 0.4rem;
+  margin: -0.8rem -0.4rem 0 -0.4rem;
+}
+
+.category-slider__track::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+/* ========================================
+   Category Card UI (#FFF8F0 Background)
+   ======================================== */
+.category-card {
+  flex: 0 0 calc((100% - (1.6rem * 5)) / 6);
+  min-width: 17rem;
+  scroll-snap-align: start;
+  background-color: #FFF8F0;
+  border-radius: 1.6rem;
+  padding: 1.6rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  border: 0.1rem solid rgba(153, 122, 81, 0.18);
+  box-shadow: 0 0.4rem 1.4rem rgba(153, 122, 81, 0.06);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-highlight, #997A51);
+  box-shadow: 0 1rem 2.4rem rgba(153, 122, 81, 0.16);
+}
+
+.category-card__image-wrapper {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #ffffff;
+  border-radius: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.2rem;
+  margin-bottom: 1.2rem;
+  overflow: hidden;
+  box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+}
+
+.category-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.category-card:hover .category-card__image {
+  transform: scale(1.08);
+}
+
+.category-card__title {
+  font-family: var(--font-heading-family);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #000000;
+  margin: 0 0 0.4rem 0;
+  line-height: 1.25;
+  transition: color 0.2s ease;
+}
+
+.category-card:hover .category-card__title {
+  color: var(--color-highlight, #997A51);
+}
+
+.category-card__count {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-highlight, #997A51);
+  margin: 0;
+  background: rgba(153, 122, 81, 0.1);
+  padding: 0.2rem 0.8rem;
+  border-radius: 1rem;
+  display: inline-block;
+}
+
+/* ========================================
+   Responsive Breakpoints
+   ======================================== */
+@media screen and (max-width: 1100px) {
+  .category-card {
+    flex: 0 0 calc((100% - (1.6rem * 3)) / 4);
+    min-width: 16rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .section-category-slider {
+    padding: 3.6rem 0 1.6rem 0;
+  }
+
+  .category-slider__container {
+    width: calc(100% - 30px);
+  }
+
+  .category-slider__heading {
+    font-size: 2.2rem;
+  }
+
+  .category-slider__subheading {
+    font-size: 1.3rem;
+  }
+
+  .category-slider__track {
+    gap: 1.2rem;
+  }
+
+  .category-card {
+    flex: 0 0 calc((100% - (1.2rem * 2)) / 3);
+    min-width: 14rem;
+    border-radius: 1.4rem;
+    padding: 1.2rem 1rem;
+  }
+
+  .category-card__title {
+    font-size: 1.3rem;
+  }
+
+  .category-card__count {
+    font-size: 1.15rem;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .category-card {
+    flex: 0 0 calc((100% - 1.2rem) / 2.25);
+    min-width: 13rem;
+  }
+}
