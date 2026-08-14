@@ -417,11 +417,17 @@
 @media screen and (max-width: 1100px) {
   .special-offer-grid__layout {
     grid-template-columns: 1fr;
+    gap: 2.8rem;
   }
 
   .special-offer-card {
-    max-width: 44rem;
-    margin: 0 auto 2rem auto;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 0 1rem 0;
+  }
+
+  .special-offer-tabs {
+    justify-content: center;
   }
 }
 
@@ -430,16 +436,21 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .grid-product-card:nth-child(4n) {
+  .grid-product-card {
     border-right: 0.1rem solid rgba(0, 0, 0, 0.08);
+    border-bottom: 0.1rem solid rgba(0, 0, 0, 0.08);
   }
 
   .grid-product-card:nth-child(2n) {
-    border-right: none;
+    border-right: none !important;
+  }
+
+  .grid-product-card:nth-child(2n+1) {
+    border-right: 0.1rem solid rgba(0, 0, 0, 0.08) !important;
   }
 
   .grid-product-card:nth-last-child(-n+2) {
-    border-bottom: none;
+    border-bottom: none !important;
   }
 }
 
@@ -450,14 +461,106 @@
 
   .special-offer-grid__container {
     width: calc(100% - 30px);
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  .special-offer-card {
+    padding: 2rem 1.6rem;
+    border-radius: 1.8rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .special-offer-card__title-label {
+    font-size: 2rem;
+  }
+
+  .special-offer-card__badge {
+    width: 5.6rem;
+    height: 5.6rem;
+    font-size: 1.1rem;
+  }
+
+  .special-offer-card__product-title {
+    font-size: 1.5rem;
+    margin: 0.6rem 0 0.8rem 0;
+  }
+
+  .special-offer-card__price {
+    font-size: 2.1rem;
+  }
+
+  .special-offer-card__old-price {
+    font-size: 1.45rem;
+  }
+
+  .special-offer-card__timer {
+    gap: 0.6rem;
+  }
+
+  .timer-number {
+    width: 4.2rem;
+    height: 4.2rem;
+    font-size: 1.7rem;
+    border-radius: 0.8rem;
+  }
+
+  .timer-separator {
+    font-size: 1.8rem;
+    margin-top: -1rem;
   }
 
   .special-offer-tabs {
     justify-content: center;
-    gap: 1.6rem;
+    gap: 2rem;
+    margin-bottom: 1.6rem;
+    border-bottom: 0.1rem solid rgba(0, 0, 0, 0.1);
   }
 
   .tab-btn {
+    font-size: 1.5rem;
+    padding-bottom: 0.8rem;
+  }
+
+  .tab-content.is-active {
+    border-radius: 1.6rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .grid-product-card {
+    padding: 1.4rem 1.1rem;
+  }
+
+  .grid-product-card__category {
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .grid-product-card__title {
+    font-size: 1.25rem;
+    line-height: 1.25;
+    min-height: 3.1rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .grid-product-card__price {
     font-size: 1.45rem;
+  }
+
+  .grid-product-card__old-price {
+    font-size: 1.1rem;
+  }
+
+  .grid-product-card__cart-btn {
+    width: 3.2rem;
+    height: 3.2rem;
+  }
+
+  .grid-product-card__cart-btn svg {
+    width: 1.4rem;
+    height: 1.4rem;
   }
 }
