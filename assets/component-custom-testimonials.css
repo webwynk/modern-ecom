@@ -1,0 +1,260 @@
+/* ============================================================
+   Component: Modern Vertical Auto-Scrolling Testimonials Wall
+   - 3 Columns on Desktop with bidirectional vertical auto-slides
+   - Column 1: Scrolls UP
+   - Column 2: Scrolls DOWN
+   - Column 3: Scrolls UP
+   - Top & Bottom Vertical Gradient Fade Masks
+   - Subtle geometric grid background pattern
+   ============================================================ */
+
+.section-testimonials {
+  padding: 80px 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  background-color: #FAFAFA;
+  background-image: 
+    linear-gradient(rgba(153, 122, 81, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(153, 122, 81, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+  position: relative;
+}
+
+.testimonials__container {
+  width: calc(100% - 40px);
+  max-width: calc(var(--page-width, 1240px) - 40px);
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Header */
+.testimonials__header {
+  text-align: center;
+  max-width: 70rem;
+  margin: 0 auto 4.5rem auto;
+}
+
+.testimonials__heading {
+  font-family: var(--font-heading-family);
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: #000000;
+  margin: 0 0 0.8rem 0;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.testimonials__subheading {
+  font-size: 1.55rem;
+  color: rgba(0, 0, 0, 0.6);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ========================================
+   Vertical Multi-Column Marquee Track
+   ======================================== */
+.testimonials__marquee-wall {
+  height: 560px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.2rem;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+}
+
+.testimonials__column {
+  overflow: hidden;
+  height: 100%;
+  position: relative;
+}
+
+.testimonials__track {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  will-change: transform;
+}
+
+/* Column 1: Scrolls UP */
+.testimonials__column--up-1 .testimonials__track {
+  animation: vertical-marquee-up 32s linear infinite;
+}
+
+/* Column 2: Scrolls DOWN */
+.testimonials__column--down .testimonials__track {
+  animation: vertical-marquee-down 36s linear infinite;
+}
+
+/* Column 3: Scrolls UP */
+.testimonials__column--up-2 .testimonials__track {
+  animation: vertical-marquee-up 34s linear infinite;
+}
+
+/* ========================================
+   Card Styling (Matching Exact Reference)
+   ======================================== */
+.testimonial-card {
+  background-color: #ffffff;
+  border: 0.12rem solid rgba(153, 122, 81, 0.18);
+  border-radius: 2rem;
+  padding: 2.4rem;
+  box-sizing: border-box;
+  box-shadow: 0 0.6rem 2rem rgba(0, 0, 0, 0.03);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  user-select: none;
+}
+
+.testimonial-card:hover {
+  border-color: var(--color-highlight, #997A51);
+  box-shadow: 0 1rem 2.8rem rgba(153, 122, 81, 0.15);
+}
+
+/* Card Header */
+.testimonial-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.4rem;
+}
+
+.testimonial-user {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+/* Avatars with Distinct Friendly Backgrounds */
+.testimonial-avatar {
+  width: 4.4rem;
+  height: 4.4rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.avatar-bg-1 { background-color: #DCD6FD; }
+.avatar-bg-2 { background-color: #C7EED8; }
+.avatar-bg-3 { background-color: #FBE2CD; }
+.avatar-bg-4 { background-color: #D4F1FA; }
+.avatar-bg-5 { background-color: #FDD2DE; }
+.avatar-bg-6 { background-color: #D6F5E3; }
+
+.testimonial-name {
+  font-family: var(--font-heading-family);
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: #1A1815;
+  margin: 0 0 0.2rem 0;
+  line-height: 1.15;
+}
+
+.testimonial-handle {
+  font-size: 1.25rem;
+  color: rgba(0, 0, 0, 0.45);
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Star Rating */
+.testimonial-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #E8A800;
+  font-family: var(--font-heading-family);
+  font-weight: 800;
+  font-size: 1.45rem;
+}
+
+.testimonial-rating svg {
+  width: 1.6rem;
+  height: 1.6rem;
+  fill: #E8A800;
+}
+
+/* Quote Text */
+.testimonial-quote {
+  font-size: 1.4rem;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.72);
+  margin: 0;
+  font-weight: 400;
+}
+
+/* ========================================
+   Keyframe Animations for Seamless Vertical Marquee
+   ======================================== */
+@keyframes vertical-marquee-up {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes vertical-marquee-down {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+/* ========================================
+   Responsive Breakpoints
+   ======================================== */
+@media screen and (max-width: 1024px) {
+  .testimonials__marquee-wall {
+    grid-template-columns: repeat(2, 1fr);
+    height: 500px;
+    gap: 1.8rem;
+  }
+
+  .testimonials__column:last-child {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .section-testimonials {
+    padding: 50px 0;
+  }
+
+  .testimonials__container {
+    width: calc(100% - 30px);
+  }
+
+  .testimonials__heading {
+    font-size: 2.4rem;
+  }
+
+  .testimonials__subheading {
+    font-size: 1.35rem;
+  }
+
+  .testimonials__marquee-wall {
+    grid-template-columns: 1fr;
+    height: 460px;
+  }
+
+  .testimonials__column:nth-child(2) {
+    display: none;
+  }
+
+  .testimonial-card {
+    padding: 1.8rem;
+    border-radius: 1.6rem;
+  }
+}

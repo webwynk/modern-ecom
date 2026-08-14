@@ -164,6 +164,13 @@
         "subheading": "Trusted by industry leaders and global enterprise partners"
       }
     },
+    "testimonials": {
+      "type": "custom-testimonials",
+      "settings": {
+        "heading": "What Our Collectors & Designers Say",
+        "subheading": "Verified testimonials from interior designers, collectors, and corporate suites worldwide"
+      }
+    },
     "promo_banner_deals": {
       "type": "custom-promo-banner",
       "settings": {
@@ -351,6 +358,7 @@
     "promo_banner_deals",
     "special_offer_grid",
     "bento_grid",
-    "brand_logos"
+    "brand_logos",
+    "testimonials"
   ]
 }

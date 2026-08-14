@@ -1,0 +1,425 @@
+{% comment %}
+  Custom Modern Vertical Auto-Scrolling Testimonials Wall
+  - 3 Columns with bidirectional continuous vertical motion
+  - Column 1: Scrolls UP
+  - Column 2: Scrolls DOWN
+  - Column 3: Scrolls UP
+  - Top & Bottom Vertical Gradient Fade Masks
+{% endcomment %}
+
+{{ 'component-custom-testimonials.css' | asset_url | stylesheet_tag }}
+
+<section class="section-testimonials" id="Testimonials-{{ section.id }}">
+  <div class="testimonials__container">
+    
+    <!-- Section Header -->
+    <div class="testimonials__header">
+      <h2 class="testimonials__heading">{{ section.settings.heading | default: 'What Our Collectors & Designers Say' }}</h2>
+      {% if section.settings.subheading != blank %}
+        <p class="testimonials__subheading">{{ section.settings.subheading }}</p>
+      {% endif %}
+    </div>
+
+    <!-- 3-Column Vertical Marquee Wall with Top & Bottom Fade -->
+    <div class="testimonials__marquee-wall">
+      
+      <!-- ========================================
+           COLUMN 1 (Scrolls UP)
+           ======================================== -->
+      <div class="testimonials__column testimonials__column--up-1">
+        <div class="testimonials__track">
+          <!-- Set 1 -->
+          <div class="testimonial-card">
+            <div class="testimonial-card__header">
+              <div class="testimonial-user">
+                <div class="testimonial-avatar avatar-bg-1">🤠</div>
+                <div>
+                  <h3 class="testimonial-name">Devon Lane</h3>
+                  <p class="testimonial-handle">@devonla</p>
+                </div>
+              </div>
+              <div class="testimonial-rating">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>5.0</span>
+              </div>
+            </div>
+            <p class="testimonial-quote">
+              The hand-knotted Silk & Wool Persian rug exceeded every expectation. The intricate knot density and rich luster reflect true master artisan heritage.
+            </p>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-card__header">
+              <div class="testimonial-user">
+                <div class="testimonial-avatar avatar-bg-4">🧢</div>
+                <div>
+                  <h3 class="testimonial-name">Robert Fox</h3>
+                  <p class="testimonial-handle">@robfox</p>
+                </div>
+              </div>
+              <div class="testimonial-rating">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>5.0</span>
+              </div>
+            </div>
+            <p class="testimonial-quote">
+              Our executive solid walnut desk arrived with flawless brass joinery. It anchors our penthouse executive suite with timeless sophistication.
+            </p>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-card__header">
+              <div class="testimonial-user">
+                <div class="testimonial-avatar avatar-bg-3">👩‍🎨</div>
+                <div>
+                  <h3 class="testimonial-name">Sophia Martinez</h3>
+                  <p class="testimonial-handle">@sophiam</p>
+                </div>
+              </div>
+              <div class="testimonial-rating">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>5.0</span>
+              </div>
+            </div>
+            <p class="testimonial-quote">
+              As an interior designer in Manhattan, I rely on their authentic provenance certificates. My luxury clients are continually spellbound.
+            </p>
+          </div>
+
+          <!-- Duplicate Set for Seamless Loop -->
+          <div class="testimonial-card">
+            <div class="testimonial-card__header">
+              <div class="testimonial-user">
+                <div class="testimonial-avatar avatar-bg-1">🤠</div>
+                <div>
+                  <h3 class="testimonial-name">Devon Lane</h3>
+                  <p class="testimonial-handle">@devonla</p>
+                </div>
+              </div>
+              <div class="testimonial-rating">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>5.0</span>
+              </div>
+            </div>
+            <p class="testimonial-quote">
+              The hand-knotted Silk & Wool Persian rug exceeded every expectation. The intricate knot density and rich luster reflect true master artisan heritage.
+            </p>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-card__header">
+              <div class="testimonial-user">
+                <div class="testimonial-avatar avatar-bg-4">🧢</div>
+                <div>
+                  <h3 class="testimonial-name">Robert Fox</h3>
+                  <p class="testimonial-handle">@robfox</p>
+                </div>
+              </div>
+              <div class="testimonial-rating">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>5.0</span>
+              </div>
+            </div>
+            <p class="testimonial-quote">
+              Our executive solid walnut desk arrived with flawless brass joinery. It anchors our penthouse executive suite with timeless sophistication.
+            </p>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-card__header">
+              <div class="testimonial-user">
+                <div class="testimonial-avatar avatar-bg-3">👩‍🎨</div>
+                <div>
+                  <h3 class="testimonial-name">Sophia Martinez</h3>
+                  <p class="testimonial-handle">@sophiam</p>
+                </div>
+              </div>
+              <div class="testimonial-rating">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>5.0</span>
+              </div>
+            </div>
+            <p class="testimonial-quote">
+              As an interior designer in Manhattan, I rely on their authentic provenance certificates. My luxury clients are continually spellbound.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================
+           COLUMN 2 (Scrolls DOWN)
+           ======================================== -->
+      <div class="testimonials__column testimonials__column--down">
+        <div class="testimonials__track">
+          <!-- Set 1 -->
+          <div class="testimonial-card">
+            <div class="testimonial-card__header">
+              <div class="testimonial-user">
+                <div class="testimonial-avatar avatar-bg-2">👒</div>
+                <div>
+                  <h3 class="testimonial-name">Jane Cooper</h3>
+                  <p class="testimonial-handle">@janecoop</p>
+                </div>
+              </div>
+              <div class="testimonial-rating">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>5.0</span>
+              </div>
+            </div>
+            <p class="testimonial-quote">
+              The Royal Bokhara rug transformed our dining room. The ruby vegetable dyes and soft hand-spun wool feel incredible beneath our feet.
+            </p>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-card__header">
+              <div class="testimonial-user">
+                <div class="testimonial-avatar avatar-bg-5">👩‍🦱</div>
+                <div>
+                  <h3 class="testimonial-name">Leslie Alexander</h3>
+                  <p class="testimonial-handle">@leslielex</p>
+                </div>
+              </div>
+              <div class="testimonial-rating">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>5.0</span>
+              </div>
+            </div>
+            <p class="testimonial-quote">
+              From the bespoke concierge consultation to insured worldwide delivery, the white-glove service was nothing short of perfection.
+            </p>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-card__header">
+              <div class="testimonial-user">
+                <div class="testimonial-avatar avatar-bg-1">👓</div>
+                <div>
+                  <h3 class="testimonial-name">David Chen</h3>
+                  <p class="testimonial-handle">@dchen</p>
+                </div>
+              </div>
+              <div class="testimonial-rating">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>5.0</span>
+              </div>
+            </div>
+            <p class="testimonial-quote">
+              The ergonomic leather executive chair offers sublime lumbar support during long boardroom sessions. Truly five-star build quality.
+            </p>
+          </div>
+
+          <!-- Duplicate Set for Seamless Loop -->
+          <div class="testimonial-card">
+            <div class="testimonial-card__header">
+              <div class="testimonial-user">
+                <div class="testimonial-avatar avatar-bg-2">👒</div>
+                <div>
+                  <h3 class="testimonial-name">Jane Cooper</h3>
+                  <p class="testimonial-handle">@janecoop</p>
+                </div>
+              </div>
+              <div class="testimonial-rating">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>5.0</span>
+              </div>
+            </div>
+            <p class="testimonial-quote">
+              The Royal Bokhara rug transformed our dining room. The ruby vegetable dyes and soft hand-spun wool feel incredible beneath our feet.
+            </p>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-card__header">
+              <div class="testimonial-user">
+                <div class="testimonial-avatar avatar-bg-5">👩‍🦱</div>
+                <div>
+                  <h3 class="testimonial-name">Leslie Alexander</h3>
+                  <p class="testimonial-handle">@leslielex</p>
+                </div>
+              </div>
+              <div class="testimonial-rating">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>5.0</span>
+              </div>
+            </div>
+            <p class="testimonial-quote">
+              From the bespoke concierge consultation to insured worldwide delivery, the white-glove service was nothing short of perfection.
+            </p>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-card__header">
+              <div class="testimonial-user">
+                <div class="testimonial-avatar avatar-bg-1">👓</div>
+                <div>
+                  <h3 class="testimonial-name">David Chen</h3>
+                  <p class="testimonial-handle">@dchen</p>
+                </div>
+              </div>
+              <div class="testimonial-rating">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>5.0</span>
+              </div>
+            </div>
+            <p class="testimonial-quote">
+              The ergonomic leather executive chair offers sublime lumbar support during long boardroom sessions. Truly five-star build quality.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================
+           COLUMN 3 (Scrolls UP)
+           ======================================== -->
+      <div class="testimonials__column testimonials__column--up-2">
+        <div class="testimonials__track">
+          <!-- Set 1 -->
+          <div class="testimonial-card">
+            <div class="testimonial-card__header">
+              <div class="testimonial-user">
+                <div class="testimonial-avatar avatar-bg-3">👒</div>
+                <div>
+                  <h3 class="testimonial-name">Eleanor Pena</h3>
+                  <p class="testimonial-handle">@eleanorp</p>
+                </div>
+              </div>
+              <div class="testimonial-rating">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>5.0</span>
+              </div>
+            </div>
+            <p class="testimonial-quote">
+              The Turkish Oushak rug has the most delicate antique palette. It feels like having a museum-grade treasure right in our living room.
+            </p>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-card__header">
+              <div class="testimonial-user">
+                <div class="testimonial-avatar avatar-bg-6">🧔‍♂️</div>
+                <div>
+                  <h3 class="testimonial-name">Jerome Bell</h3>
+                  <p class="testimonial-handle">@jerbell</p>
+                </div>
+              </div>
+              <div class="testimonial-rating">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>5.0</span>
+              </div>
+            </div>
+            <p class="testimonial-quote">
+              The bespoke rug sizing service was remarkably precise. They crafted a 16-foot runner that fits our architectural gallery hallway seamlessly.
+            </p>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-card__header">
+              <div class="testimonial-user">
+                <div class="testimonial-avatar avatar-bg-5">👑</div>
+                <div>
+                  <h3 class="testimonial-name">Victoria Sterling</h3>
+                  <p class="testimonial-handle">@vsterling</p>
+                </div>
+              </div>
+              <div class="testimonial-rating">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>5.0</span>
+              </div>
+            </div>
+            <p class="testimonial-quote">
+              Unrivaled luxury, heritage materials, and prompt insured delivery. The Golden Rug is our go-to boutique for all premier residential projects.
+            </p>
+          </div>
+
+          <!-- Duplicate Set for Seamless Loop -->
+          <div class="testimonial-card">
+            <div class="testimonial-card__header">
+              <div class="testimonial-user">
+                <div class="testimonial-avatar avatar-bg-3">👒</div>
+                <div>
+                  <h3 class="testimonial-name">Eleanor Pena</h3>
+                  <p class="testimonial-handle">@eleanorp</p>
+                </div>
+              </div>
+              <div class="testimonial-rating">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>5.0</span>
+              </div>
+            </div>
+            <p class="testimonial-quote">
+              The Turkish Oushak rug has the most delicate antique palette. It feels like having a museum-grade treasure right in our living room.
+            </p>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-card__header">
+              <div class="testimonial-user">
+                <div class="testimonial-avatar avatar-bg-6">🧔‍♂️</div>
+                <div>
+                  <h3 class="testimonial-name">Jerome Bell</h3>
+                  <p class="testimonial-handle">@jerbell</p>
+                </div>
+              </div>
+              <div class="testimonial-rating">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>5.0</span>
+              </div>
+            </div>
+            <p class="testimonial-quote">
+              The bespoke rug sizing service was remarkably precise. They crafted a 16-foot runner that fits our architectural gallery hallway seamlessly.
+            </p>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-card__header">
+              <div class="testimonial-user">
+                <div class="testimonial-avatar avatar-bg-5">👑</div>
+                <div>
+                  <h3 class="testimonial-name">Victoria Sterling</h3>
+                  <p class="testimonial-handle">@vsterling</p>
+                </div>
+              </div>
+              <div class="testimonial-rating">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>5.0</span>
+              </div>
+            </div>
+            <p class="testimonial-quote">
+              Unrivaled luxury, heritage materials, and prompt insured delivery. The Golden Rug is our go-to boutique for all premier residential projects.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom Testimonials Wall",
+  "tag": "section",
+  "class": "section-custom-testimonials-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What Our Collectors & Designers Say"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Verified testimonials from interior designers, collectors, and corporate suites worldwide"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Testimonials Wall"
+    }
+  ]
+}
+{% endschema %}
