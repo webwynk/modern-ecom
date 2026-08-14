@@ -147,6 +147,16 @@
         "card_7_link_text": "Stock Up"
       }
     },
+    "special_offer_grid": {
+      "type": "custom-special-offer-grid",
+      "settings": {
+        "offer_label": "Special Offer",
+        "offer_save_amount": "$400",
+        "offer_title": "Royal Isfahan Masterpiece Silk & Wool Area Rug",
+        "offer_price": "$1,499.00",
+        "offer_old_price": "$1,899.00"
+      }
+    },
     "featured_deals_grid": {
       "type": "custom-product-grid",
       "blocks": {
@@ -323,6 +333,7 @@
     "hero_slider",
     "category_slider",
     "featured_deals_grid",
-    "bento_grid"
+    "bento_grid",
+    "special_offer_grid"
   ]
 }

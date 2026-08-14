@@ -1,0 +1,463 @@
+/* ============================================================
+   Component: Special Offer Deal & Tabbed Product Grid
+   - Left: Special Offer Box with Brand Gold (#997A51) border,
+     discount badge, and real-time countdown timer.
+   - Right: Interactive Tabs (Featured / On Sale / Top Rated)
+     with 4-Column × 2-Row Product Grid.
+   ============================================================ */
+
+.section-special-offer-grid {
+  padding: 50px 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.special-offer-grid__container {
+  width: calc(100% - 40px);
+  max-width: calc(var(--page-width, 1240px) - 40px);
+  margin: 0 auto;
+  position: relative;
+}
+
+/* ========================================
+   Main Layout: Left Deal + Right Grid
+   ======================================== */
+.special-offer-grid__layout {
+  display: grid;
+  grid-template-columns: 34rem 1fr;
+  gap: 2.4rem;
+  align-items: stretch;
+}
+
+/* ========================================
+   1. Left Column: Special Offer Box
+   ======================================== */
+.special-offer-card {
+  background-color: #ffffff;
+  border: 0.22rem solid var(--color-highlight, #997A51);
+  border-radius: 2rem;
+  padding: 2.6rem 2.2rem 2.2rem 2.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 0.8rem 2.8rem rgba(153, 122, 81, 0.14);
+  box-sizing: border-box;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.special-offer-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 1.2rem 3.4rem rgba(153, 122, 81, 0.22);
+}
+
+.special-offer-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+  text-align: left;
+}
+
+.special-offer-card__title-label {
+  font-family: var(--font-heading-family);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #000000;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.special-offer-card__badge {
+  width: 6.4rem;
+  height: 6.4rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #B59367 0%, #997A51 100%);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading-family);
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.15;
+  text-transform: uppercase;
+  box-shadow: 0 4px 14px rgba(153, 122, 81, 0.4);
+  flex-shrink: 0;
+}
+
+.special-offer-card__media {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.special-offer-card__media img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  border-radius: 1.4rem;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.special-offer-card:hover .special-offer-card__media img {
+  transform: scale(1.06);
+}
+
+.special-offer-card__product-title {
+  font-family: var(--font-heading-family);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #000000;
+  margin: 0.8rem 0 1rem 0;
+  line-height: 1.35;
+  transition: color 0.2s ease;
+}
+
+.special-offer-card:hover .special-offer-card__product-title {
+  color: var(--color-highlight, #997A51);
+}
+
+.special-offer-card__pricing {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.4rem;
+}
+
+.special-offer-card__price {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #E05A47;
+}
+
+.special-offer-card__old-price {
+  font-size: 1.6rem;
+  color: rgba(0, 0, 0, 0.4);
+  text-decoration: line-through;
+}
+
+/* Countdown Block */
+.special-offer-card__countdown {
+  padding-top: 1.4rem;
+  border-top: 0.1rem solid rgba(0, 0, 0, 0.08);
+}
+
+.special-offer-card__countdown-text {
+  font-size: 1.3rem;
+  color: rgba(0, 0, 0, 0.6);
+  margin: 0 0 0.8rem 0;
+  font-weight: 500;
+}
+
+.special-offer-card__timer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.timer-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timer-number {
+  width: 4.8rem;
+  height: 4.8rem;
+  background-color: #FAF4EB;
+  border: 0.1rem solid rgba(153, 122, 81, 0.2);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading-family);
+  font-size: 2rem;
+  font-weight: 800;
+  color: #000000;
+  box-shadow: inset 0 2px 4px rgba(153, 122, 81, 0.06);
+}
+
+.timer-separator {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--color-highlight, #997A51);
+  margin-top: -1.4rem;
+}
+
+.timer-label {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+  margin-top: 0.4rem;
+  letter-spacing: 0.06em;
+}
+
+/* ========================================
+   2. Right Column: Tabbed Product Grid
+   ======================================== */
+.special-offer-grid__content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tab Bar */
+.special-offer-tabs {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2.4rem;
+  border-bottom: 0.1rem solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.8rem;
+  padding-bottom: 0.2rem;
+}
+
+.tab-btn {
+  font-family: var(--font-heading-family);
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.5);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 0 1rem 0;
+  position: relative;
+  transition: color 0.2s ease;
+  outline: none;
+}
+
+.tab-btn:hover {
+  color: #000000;
+}
+
+.tab-btn.is-active {
+  color: #000000;
+  font-weight: 800;
+}
+
+.tab-btn.is-active::after {
+  content: '';
+  position: absolute;
+  bottom: -0.1rem;
+  left: 0;
+  width: 100%;
+  height: 0.25rem;
+  background-color: var(--color-highlight, #997A51);
+  border-radius: 0.2rem;
+}
+
+/* 4-Column × 2-Row Product Grid */
+.tab-content {
+  display: none;
+}
+
+.tab-content.is-active {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 0.1rem solid rgba(0, 0, 0, 0.08);
+  border-radius: 1.8rem;
+  overflow: hidden;
+  background-color: #ffffff;
+  box-shadow: 0 0.4rem 1.6rem rgba(0, 0, 0, 0.04);
+}
+
+.grid-product-card {
+  padding: 1.8rem 1.4rem;
+  border-right: 0.1rem solid rgba(0, 0, 0, 0.08);
+  border-bottom: 0.1rem solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none;
+  background-color: #ffffff;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.grid-product-card:nth-child(4n) {
+  border-right: none;
+}
+
+.grid-product-card:nth-last-child(-n+4) {
+  border-bottom: none;
+}
+
+.grid-product-card:hover {
+  background-color: #FFFDFB;
+  box-shadow: inset 0 0 0 1.5px var(--color-highlight, #997A51);
+  z-index: 2;
+}
+
+.grid-product-card__category {
+  font-size: 1.15rem;
+  color: rgba(0, 0, 0, 0.45);
+  font-weight: 500;
+  margin: 0 0 0.4rem 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.grid-product-card__title {
+  font-family: var(--font-heading-family);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #000000;
+  line-height: 1.3;
+  margin: 0 0 1rem 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 3.5rem;
+  transition: color 0.2s ease;
+}
+
+.grid-product-card:hover .grid-product-card__title {
+  color: var(--color-highlight, #997A51);
+}
+
+.grid-product-card__media {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.6rem 0 1.2rem 0;
+  overflow: hidden;
+}
+
+.grid-product-card__media img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.grid-product-card:hover .grid-product-card__media img {
+  transform: scale(1.08);
+}
+
+/* Bottom Price & Quick Cart */
+.grid-product-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.grid-product-card__pricing {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.grid-product-card__price {
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: #000000;
+}
+
+.grid-product-card__price--sale {
+  color: #E05A47;
+}
+
+.grid-product-card__old-price {
+  font-size: 1.2rem;
+  color: rgba(0, 0, 0, 0.38);
+  text-decoration: line-through;
+}
+
+.grid-product-card__cart-btn {
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
+  background-color: #F4EFEA;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000000;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+}
+
+.grid-product-card__cart-btn:hover {
+  background-color: var(--color-highlight, #997A51);
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+.grid-product-card__cart-btn svg {
+  width: 1.6rem;
+  height: 1.6rem;
+  fill: currentColor;
+}
+
+/* ========================================
+   Responsive Breakpoints
+   ======================================== */
+@media screen and (max-width: 1100px) {
+  .special-offer-grid__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .special-offer-card {
+    max-width: 44rem;
+    margin: 0 auto 2rem auto;
+  }
+}
+
+@media screen and (max-width: 860px) {
+  .tab-content.is-active {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-product-card:nth-child(4n) {
+    border-right: 0.1rem solid rgba(0, 0, 0, 0.08);
+  }
+
+  .grid-product-card:nth-child(2n) {
+    border-right: none;
+  }
+
+  .grid-product-card:nth-last-child(-n+2) {
+    border-bottom: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .section-special-offer-grid {
+    padding: 36px 0;
+  }
+
+  .special-offer-grid__container {
+    width: calc(100% - 30px);
+  }
+
+  .special-offer-tabs {
+    justify-content: center;
+    gap: 1.6rem;
+  }
+
+  .tab-btn {
+    font-size: 1.45rem;
+  }
+}
