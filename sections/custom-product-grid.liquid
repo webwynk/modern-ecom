@@ -88,6 +88,22 @@
                 assign slug6 = block.settings.title | replace: ' ', '' | handleize
                 assign col = collections[slug6]
               endif
+              if col == blank or col.title == blank
+                assign slug_sing = block.settings.collection | replace: '-rugs', '-rug'
+                assign col = collections[slug_sing]
+              endif
+              if col == blank or col.title == blank
+                assign slug_plur = block.settings.collection | replace: '-rug', '-rugs'
+                assign col = collections[slug_plur]
+              endif
+              if col == blank or col.title == blank
+                for c in collections
+                  if c.title == block.settings.title or c.title == '3x5 Rugs'
+                    assign col = c
+                    break
+                  endif
+                endfor
+              endif
 
               assign tab_title = block.settings.title
               if tab_title == blank and col != blank and col.title != blank
@@ -116,7 +132,7 @@
         {% endfor %}
       {% else %}
         <!-- Default Store Collection Tabs -->
-        {%- assign default_tab_handles = "special-collection,handmade-rugs,4-x-6-rugs,3x5-rugs,executive-desks,office-chairs,small-rugs,storage,table" | split: "," -%}
+        {%- assign default_tab_handles = "special-collection,handmade-rugs,4-x-6-rugs,3x5-rug,3x5-rugs,executive-desks,office-chairs,small-rugs,storage,table" | split: "," -%}
         {% for handle in default_tab_handles %}
           {%- liquid
             assign col = collections[handle]
@@ -179,6 +195,22 @@
               if col == blank or col.title == blank
                 assign slug6 = block.settings.title | replace: ' ', '' | handleize
                 assign col = collections[slug6]
+              endif
+              if col == blank or col.title == blank
+                assign slug_sing = block.settings.collection | replace: '-rugs', '-rug'
+                assign col = collections[slug_sing]
+              endif
+              if col == blank or col.title == blank
+                assign slug_plur = block.settings.collection | replace: '-rug', '-rugs'
+                assign col = collections[slug_plur]
+              endif
+              if col == blank or col.title == blank
+                for c in collections
+                  if c.title == block.settings.title or c.title == '3x5 Rugs'
+                    assign col = c
+                    break
+                  endif
+                endfor
               endif
 
               if col == blank or col.title == blank
@@ -669,7 +701,7 @@
         {
           "type": "collection_tab",
           "settings": {
-            "collection": "3x5-rugs",
+            "collection": "3x5-rug",
             "title": "3x5 Rugs"
           }
         },

@@ -74,6 +74,22 @@
               assign slug6 = block.settings.title | replace: ' ', '' | handleize
               assign col = collections[slug6]
             endif
+            if col == blank or col.title == blank
+              assign slug_sing = block.settings.collection | replace: '-rugs', '-rug'
+              assign col = collections[slug_sing]
+            endif
+            if col == blank or col.title == blank
+              assign slug_plur = block.settings.collection | replace: '-rug', '-rugs'
+              assign col = collections[slug_plur]
+            endif
+            if col == blank or col.title == blank
+              for c in collections
+                if c.title == block.settings.title or c.title == '3x5 Rugs'
+                  assign col = c
+                  break
+                endif
+              endfor
+            endif
 
             assign card_title = block.settings.title
             if card_title == blank and col != blank and col.title != blank
@@ -252,7 +268,7 @@
         {
           "type": "category_card",
           "settings": {
-            "collection": "3x5-rugs"
+            "collection": "3x5-rug"
           }
         },
         {
