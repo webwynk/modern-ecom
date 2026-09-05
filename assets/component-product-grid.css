@@ -456,27 +456,37 @@
 
 @media screen and (max-width: 768px) {
   .product-grid__header {
-    flex-wrap: wrap;
-    align-items: center;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: nowrap;
     gap: 1.2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.6rem;
   }
 
   .product-grid__title-group {
     flex: 1 1 auto;
+    min-width: 0;
+    padding-right: 0.4rem;
   }
 
   .product-grid__heading {
     font-size: 2.2rem;
+    line-height: 1.2;
   }
 
   .product-grid__subheading {
     font-size: 1.3rem;
+    line-height: 1.4;
   }
 
-  .product-grid__view-all-btn {
-    padding: 0.8rem 1.6rem;
-    font-size: 1.3rem;
+  .product-grid__controls {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+    align-self: flex-end;
+    margin-bottom: 0.2rem;
   }
 }
 
@@ -742,14 +752,20 @@
 }
 
 @media screen and (max-width: 749px) {
+  .product-grid__header {
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    margin-bottom: 1.6rem;
+  }
+
   .product-grid__arrow {
     width: 3.6rem;
     height: 3.6rem;
   }
 
   .product-grid__arrow svg {
-    width: 1.6rem;
-    height: 1.6rem;
+    width: 1.5rem;
+    height: 1.5rem;
   }
 
   .deal-tabs-wrapper {
