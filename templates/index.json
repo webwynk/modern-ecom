@@ -146,11 +146,72 @@
     },
     "featured_deals_grid": {
       "type": "custom-product-grid",
+      "blocks": {
+        "tab_special": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "special-collection",
+            "title": "Special Collection"
+          }
+        },
+        "tab_handmade_rugs": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "handmade-rugs",
+            "title": "Handmade Rugs"
+          }
+        },
+        "tab_executive_desks": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "executive-desks",
+            "title": "Executive Desks"
+          }
+        },
+        "tab_office_chairs": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "office-chairs",
+            "title": "Office Chairs"
+          }
+        },
+        "tab_small_rugs": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "small-rugs",
+            "title": "Small Rugs"
+          }
+        },
+        "tab_storage": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "storage",
+            "title": "Storage"
+          }
+        },
+        "tab_tables": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "table",
+            "title": "Tables"
+          }
+        }
+      },
+      "block_order": [
+        "tab_special",
+        "tab_handmade_rugs",
+        "tab_executive_desks",
+        "tab_office_chairs",
+        "tab_small_rugs",
+        "tab_storage",
+        "tab_tables"
+      ],
       "settings": {
-        "collection": "special-collection",
-        "products_to_show": 10,
         "heading": "Special Collection Deals",
         "subheading": "Curated selection of handcrafted rugs and premium executive office furniture",
+        "collection": "special-collection",
+        "products_per_page": 10,
+        "enable_pagination": true,
         "show_view_all": true,
         "view_all_text": "View All",
         "view_all_link": ""

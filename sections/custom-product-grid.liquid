@@ -1,11 +1,26 @@
 {% comment %}
-  Custom 10-Product Deals Grid
-  Features: Full-width #FFF8F0 background, 1240px container,
-  80px/50px padding, custom card with discount badge, wishlist heart,
-  star rating, 2-line title clamp, sale/old price, and Buy Now button.
+  Custom Product Grid with Collection Tabs & Interactive Numbered Pagination
+  Features:
+    - Full-width #FFF8F0 luxury background, 1240px container
+    - Responsive Collection Tab Navigation Bar
+    - Modular deal-grid-card snippet rendering
+    - Instant 0ms client-side pagination with numbered pills & Prev/Next
+    - Automated discount badges, star ratings, wishlist toggles
+    - Fallback showcase cards when zero products are in inventory
 {% endcomment %}
 
 {{ 'component-product-grid.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign per_page = section.settings.products_per_page | default: 10
+  assign has_tab_blocks = false
+  for block in section.blocks
+    if block.type == 'collection_tab'
+      assign has_tab_blocks = true
+      break
+    endif
+  endfor
+-%}
 
 <div class="section-product-grid" id="ProductGrid-{{ section.id }}">
   <div class="product-grid__container">
@@ -27,7 +42,7 @@
       {% endif %}
 
       {% if section.settings.show_view_all %}
-        <a href="{{ view_all_target }}" class="product-grid__view-all-btn">
+        <a href="{{ view_all_target }}" class="product-grid__view-all-btn" id="dealViewAllBtn-{{ section.id }}">
           <span>{{ section.settings.view_all_text | default: 'View All' }}</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -37,517 +52,267 @@
       {% endif %}
     </div>
 
-    <!-- 10-Product Grid -->
-    <ul class="product-grid__items" role="list">
-      {%- liquid
-        assign featured_collection = section.settings.collection
-        if featured_collection.title == blank and section.settings.collection != blank
-          assign featured_collection = collections[section.settings.collection]
-        endif
-        if featured_collection == blank or featured_collection.title == blank
-          assign featured_collection = collections['special-collection']
-        endif
-        if featured_collection == blank or featured_collection.all_products_count == 0
-          assign featured_collection = collections['all']
-        endif
-      -%}
-      {%- if featured_collection != blank and featured_collection.products.size > 0 -%}
-        {%- for product in featured_collection.products limit: section.settings.products_to_show -%}
-          <li class="deal-grid-card" data-product-id="{{ product.id }}">
-            <!-- Top Row: Badge + Wishlist Button -->
-            <div class="deal-grid-card__top">
-              {%- if product.compare_at_price > product.price -%}
-                {%- assign save_percent = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round -%}
-                <span class="deal-grid-card__badge">
-                  SAVE {{ save_percent }}%
-                </span>
-              {%- elsif product.tags contains 'HOT' or product.tags contains 'Hot' or product.tags contains 'hot' -%}
-                <span class="deal-grid-card__badge">HOT!</span>
-              {%- elsif product.tags contains 'NEW' or product.tags contains 'New' or product.tags contains 'new' -%}
-                <span class="deal-grid-card__badge deal-grid-card__badge--gold">NEW</span>
-              {%- else -%}
-                <span></span>
-              {%- endif -%}
-
-              <button
-                type="button"
-                class="deal-grid-card__wishlist"
-                aria-label="Add {{ product.title | escape }} to wishlist"
-                onclick="toggleDealWishlist(this, '{{ product.id }}');"
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                </svg>
-              </button>
-            </div>
-
-            <!-- Product Image -->
-            <a href="{{ product.url }}" class="deal-grid-card__media" aria-label="{{ product.title | escape }}">
-              {%- if product.featured_media != blank -%}
-                <img
-                  src="{{ product.featured_media | image_url: width: 400 }}"
-                  alt="{{ product.featured_media.alt | default: product.title | escape }}"
-                  class="deal-grid-card__image"
-                  loading="lazy"
-                  width="200"
-                  height="200"
-                >
-              {%- elsif product.featured_image != blank -%}
-                <img
-                  src="{{ product.featured_image | image_url: width: 400 }}"
-                  alt="{{ product.title | escape }}"
-                  class="deal-grid-card__image"
-                  loading="lazy"
-                  width="200"
-                  height="200"
-                >
-              {%- else -%}
-                <img
-                  src="{{ 'cat-handmade-rugs.jpg' | asset_url }}"
-                  alt="{{ product.title | escape }}"
-                  class="deal-grid-card__image"
-                  loading="lazy"
-                  width="200"
-                  height="200"
-                >
-              {%- endif -%}
-            </a>
-
-            <!-- Meta: SKU + Rating -->
-            <div class="deal-grid-card__meta">
-              <span class="deal-grid-card__sku">
-                {%- if product.selected_or_first_available_variant.sku != blank -%}
-                  SKU: {{ product.selected_or_first_available_variant.sku }}
-                {%- else -%}
-                  SKU: PR-{{ product.id | slice: -4, 4 }}
-                {%- endif -%}
-              </span>
-              <div class="deal-grid-card__rating">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                </svg>
-                <span>
-                  {%- if product.metafields.reviews.rating.value != blank -%}
-                    {{ product.metafields.reviews.rating.value | round: 1 }} ({{ product.metafields.reviews.rating_count | default: 1 }})
-                  {%- else -%}
-                    4.9 ({{ product.id | slice: -2, 2 | plus: 20 }})
-                  {%- endif -%}
-                </span>
-              </div>
-            </div>
-
-            <!-- Title (2-Line Limit) -->
-            <a href="{{ product.url }}" style="text-decoration: none;">
-              <h3 class="deal-grid-card__title">{{ product.title }}</h3>
-            </a>
-
-            <!-- Pricing -->
-            <div class="deal-grid-card__pricing">
-              <span class="deal-grid-card__price">{{ product.price | money }}</span>
-              {%- if product.compare_at_price > product.price -%}
-                <span class="deal-grid-card__old-price">{{ product.compare_at_price | money }}</span>
-              {%- endif -%}
-            </div>
-
-            <!-- Buy Now CTA -->
-            <a href="{{ product.url }}" class="deal-grid-card__btn">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-              </svg>
-              <span>Buy Now</span>
-            </a>
-          </li>
-        {%- endfor -%}
-      {%- elsif section.blocks.size > 0 -%}
+    <!-- ========================================
+         Collection Tabs Bar (Above Product Grid)
+         ======================================== -->
+    <div class="deal-tabs-wrapper" role="tablist" aria-label="Product Collections Filter" id="dealTabs-{{ section.id }}">
+      {% if has_tab_blocks %}
         {% for block in section.blocks %}
-          <li class="deal-grid-card" {{ block.shopify_attributes }}>
-            <!-- Top Row: Badge + Wishlist Button -->
-            <div class="deal-grid-card__top">
-              {% if block.settings.badge != blank %}
-                <span class="deal-grid-card__badge {% if block.settings.badge_style == 'gold' %}deal-grid-card__badge--gold{% endif %}">
-                  {{ block.settings.badge }}
-                </span>
-              {% else %}
-                <span></span>
+          {% if block.type == 'collection_tab' %}
+            {%- liquid
+              assign col = block.settings.collection
+              if col.title == blank and block.settings.collection != blank
+                assign col = collections[block.settings.collection]
+              endif
+              assign tab_title = block.settings.title
+              if tab_title == blank and col != blank
+                assign tab_title = col.title
+              endif
+              if tab_title == blank
+                assign tab_title = 'Collection ' | append: forloop.index
+              endif
+              assign col_count = col.all_products_count | default: col.products.size
+            -%}
+            <button
+              type="button"
+              class="deal-tab-btn {% if forloop.first %}is-active{% endif %}"
+              data-tab-target="deal-tab-{{ section.id }}-{{ forloop.index }}"
+              data-collection-url="{{ col.url | default: '/collections/all' }}"
+              role="tab"
+              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              {{ block.shopify_attributes }}
+            >
+              <span>{{ tab_title }}</span>
+              {% if col_count > 0 %}
+                <span class="deal-tab-btn__count">({{ col_count }})</span>
               {% endif %}
-
-              <button
-                type="button"
-                class="deal-grid-card__wishlist"
-                aria-label="Add {{ block.settings.title | escape }} to wishlist"
-                onclick="toggleDealWishlist(this, '{{ block.id }}');"
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                </svg>
-              </button>
-            </div>
-
-            <!-- Product Image -->
-            <a href="{{ block.settings.link | default: '/collections/all' }}" class="deal-grid-card__media" aria-label="{{ block.settings.title | escape }}">
-              {% if block.settings.image != blank %}
-                <img
-                  src="{{ block.settings.image | image_url: width: 400 }}"
-                  alt="{{ block.settings.title | escape }}"
-                  class="deal-grid-card__image"
-                  loading="lazy"
-                  width="200"
-                  height="200"
-                >
-              {% elsif block.settings.static_image != blank %}
-                <img
-                  src="{{ block.settings.static_image | asset_url }}"
-                  alt="{{ block.settings.title | escape }}"
-                  class="deal-grid-card__image"
-                  loading="lazy"
-                  width="200"
-                  height="200"
-                >
-              {% else %}
-                {{ 'product-1' | placeholder_svg_tag: 'deal-grid-card__image' }}
-              {% endif %}
-            </a>
-
-            <!-- Meta: SKU + Rating -->
-            <div class="deal-grid-card__meta">
-              <span class="deal-grid-card__sku">{{ block.settings.sku | default: 'SKU: GR-8820' }}</span>
-              <div class="deal-grid-card__rating">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                </svg>
-                <span>{{ block.settings.rating | default: '4.9' }} ({{ block.settings.rating_count | default: '128' }})</span>
-              </div>
-            </div>
-
-            <!-- Title (2-Line Limit) -->
-            <a href="{{ block.settings.link | default: '/collections/all' }}" style="text-decoration: none;">
-              <h3 class="deal-grid-card__title">{{ block.settings.title }}</h3>
-            </a>
-
-            <!-- Pricing -->
-            <div class="deal-grid-card__pricing">
-              <span class="deal-grid-card__price">{{ block.settings.price | default: '$499.00' }}</span>
-              {% if block.settings.old_price != blank %}
-                <span class="deal-grid-card__old-price">{{ block.settings.old_price }}</span>
-              {% endif %}
-            </div>
-
-            <!-- Buy Now CTA -->
-            <a href="{{ block.settings.link | default: '/collections/all' }}" class="deal-grid-card__btn">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-              </svg>
-              <span>Buy Now</span>
-            </a>
-          </li>
+            </button>
+          {% endif %}
         {% endfor %}
-      {%- else -%}
-        <!-- Curated Fallback Deal Cards (Shown if live collection returns 0 published products) -->
-        <li class="deal-grid-card" data-product-id="fallback-1">
-          <div class="deal-grid-card__top">
-            <span class="deal-grid-card__badge">SAVE 25%</span>
-            <button type="button" class="deal-grid-card__wishlist" aria-label="Add to wishlist" onclick="toggleDealWishlist(this, 'fallback-1');">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-            </button>
-          </div>
-          <a href="/collections/special-collection" class="deal-grid-card__media">
-            <img src="{{ 'cat-handmade-rugs.jpg' | asset_url }}" alt="Hand-Knotted Isfahan Wool & Silk Medallion Rug" class="deal-grid-card__image" loading="lazy" width="200" height="200">
-          </a>
-          <div class="deal-grid-card__meta">
-            <span class="deal-grid-card__sku">SKU: RG-8812</span>
-            <div class="deal-grid-card__rating">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-              <span>4.9 (142)</span>
-            </div>
-          </div>
-          <a href="/collections/special-collection" style="text-decoration: none;">
-            <h3 class="deal-grid-card__title">Hand-Knotted Isfahan Wool & Silk Medallion Rug</h3>
-          </a>
-          <div class="deal-grid-card__pricing">
-            <span class="deal-grid-card__price">$899.00</span>
-            <span class="deal-grid-card__old-price">$1,199.00</span>
-          </div>
-          <a href="/collections/special-collection" class="deal-grid-card__btn">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-            <span>Buy Now</span>
-          </a>
-        </li>
+      {% else %}
+        <!-- Default Store Collection Tabs -->
+        {%- assign default_tab_handles = "special-collection,handmade-rugs,executive-desks,office-chairs,small-rugs,storage,table" | split: "," -%}
+        {% for handle in default_tab_handles %}
+          {%- liquid
+            assign col = collections[handle]
+            assign tab_title = col.title | default: handle | replace: '-', ' ' | capitalize
+            assign col_count = col.all_products_count | default: col.products.size
+          -%}
+          <button
+            type="button"
+            class="deal-tab-btn {% if forloop.first %}is-active{% endif %}"
+            data-tab-target="deal-tab-{{ section.id }}-{{ forloop.index }}"
+            data-collection-url="{{ col.url | default: '/collections/all' }}"
+            role="tab"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          >
+            <span>{{ tab_title }}</span>
+            {% if col_count > 0 %}
+              <span class="deal-tab-btn__count">({{ col_count }})</span>
+            {% endif %}
+          </button>
+        {% endfor %}
+      {% endif %}
+    </div>
 
-        <li class="deal-grid-card" data-product-id="fallback-2">
-          <div class="deal-grid-card__top">
-            <span class="deal-grid-card__badge deal-grid-card__badge--gold">SAVE 22%</span>
-            <button type="button" class="deal-grid-card__wishlist" aria-label="Add to wishlist" onclick="toggleDealWishlist(this, 'fallback-2');">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-            </button>
-          </div>
-          <a href="/collections/special-collection" class="deal-grid-card__media">
-            <img src="{{ 'cat-executive-desks.jpg' | asset_url }}" alt="Executive Solid Walnut Office Desk with Brass Trim" class="deal-grid-card__image" loading="lazy" width="200" height="200">
-          </a>
-          <div class="deal-grid-card__meta">
-            <span class="deal-grid-card__sku">SKU: FN-4021</span>
-            <div class="deal-grid-card__rating">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-              <span>5.0 (89)</span>
-            </div>
-          </div>
-          <a href="/collections/special-collection" style="text-decoration: none;">
-            <h3 class="deal-grid-card__title">Executive Solid Walnut Office Desk with Brass Trim</h3>
-          </a>
-          <div class="deal-grid-card__pricing">
-            <span class="deal-grid-card__price">$1,249.00</span>
-            <span class="deal-grid-card__old-price">$1,599.00</span>
-          </div>
-          <a href="/collections/special-collection" class="deal-grid-card__btn">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-            <span>Buy Now</span>
-          </a>
-        </li>
+    <!-- ========================================
+         Tab Panels & Paginated Product Grids
+         ======================================== -->
+    <div class="deal-tab-panels-wrapper" id="dealPanels-{{ section.id }}">
+      {% if has_tab_blocks %}
+        {% for block in section.blocks %}
+          {% if block.type == 'collection_tab' %}
+            {%- liquid
+              assign col = block.settings.collection
+              if col.title == blank and block.settings.collection != blank
+                assign col = collections[block.settings.collection]
+              endif
+              if col == blank or col.title == blank
+                assign col = collections['special-collection']
+              endif
+              if col == blank or col.all_products_count == 0
+                assign col = collections['all']
+              endif
 
-        <li class="deal-grid-card" data-product-id="fallback-3">
-          <div class="deal-grid-card__top">
-            <span class="deal-grid-card__badge">SAVE 22%</span>
-            <button type="button" class="deal-grid-card__wishlist" aria-label="Add to wishlist" onclick="toggleDealWishlist(this, 'fallback-3');">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-            </button>
-          </div>
-          <a href="/collections/special-collection" class="deal-grid-card__media">
-            <img src="{{ 'cat-kilim-rugs.jpg' | asset_url }}" alt="Tribal Geometric Kilim Flatweave Bohemian Rug" class="deal-grid-card__image" loading="lazy" width="200" height="200">
-          </a>
-          <div class="deal-grid-card__meta">
-            <span class="deal-grid-card__sku">SKU: RG-3390</span>
-            <div class="deal-grid-card__rating">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-              <span>4.8 (67)</span>
-            </div>
-          </div>
-          <a href="/collections/special-collection" style="text-decoration: none;">
-            <h3 class="deal-grid-card__title">Tribal Geometric Kilim Flatweave Bohemian Rug</h3>
-          </a>
-          <div class="deal-grid-card__pricing">
-            <span class="deal-grid-card__price">$349.00</span>
-            <span class="deal-grid-card__old-price">$449.00</span>
-          </div>
-          <a href="/collections/special-collection" class="deal-grid-card__btn">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-            <span>Buy Now</span>
-          </a>
-        </li>
+              assign prod_count = col.products.size
+              assign total_pages = prod_count | times: 1.0 | divided_by: per_page | ceil
+            -%}
+            <div
+              class="deal-tab-panel {% if forloop.first %}is-active{% endif %}"
+              id="deal-tab-{{ section.id }}-{{ forloop.index }}"
+              data-total-pages="{{ total_pages }}"
+              data-current-page="1"
+              role="tabpanel"
+            >
+              <ul class="product-grid__items" role="list">
+                {% if prod_count > 0 %}
+                  {% for product in col.products limit: 50 %}
+                    {% assign page_num = forloop.index0 | divided_by: per_page | plus: 1 %}
+                    {% render 'deal-grid-card', product: product, page_num: page_num %}
+                  {% endfor %}
+                {% else %}
+                  <!-- Fallback showcase cards when zero live products are in inventory -->
+                  {% for i in (1..10) %}
+                    {% assign page_num = forloop.index0 | divided_by: per_page | plus: 1 %}
+                    <li class="deal-grid-card {% if page_num == 1 %}is-page-visible{% endif %}" data-page="{{ page_num }}" data-product-id="fb-{{ i }}">
+                      <div class="deal-grid-card__top">
+                        <span class="deal-grid-card__badge">SAVE 25%</span>
+                        <button type="button" class="deal-grid-card__wishlist" aria-label="Add to wishlist" onclick="toggleDealWishlist(this, 'fb-{{ i }}');">
+                          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </button>
+                      </div>
+                      <a href="/collections/special-collection" class="deal-grid-card__media">
+                        <img src="{{ 'cat-handmade-rugs.jpg' | asset_url }}" alt="Handcrafted Product Deal" class="deal-grid-card__image" loading="lazy" width="200" height="200">
+                      </a>
+                      <div class="deal-grid-card__meta">
+                        <span class="deal-grid-card__sku">SKU: SP-0{{ i }}</span>
+                        <div class="deal-grid-card__rating">
+                          <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                          <span>4.9 (12{{ i }})</span>
+                        </div>
+                      </div>
+                      <a href="/collections/special-collection" style="text-decoration: none;">
+                        <h3 class="deal-grid-card__title">Special Handcrafted Collection Piece #{{ i }}</h3>
+                      </a>
+                      <div class="deal-grid-card__pricing">
+                        <span class="deal-grid-card__price">$899.00</span>
+                        <span class="deal-grid-card__old-price">$1,199.00</span>
+                      </div>
+                      <a href="/collections/special-collection" class="deal-grid-card__btn">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                        <span>Buy Now</span>
+                      </a>
+                    </li>
+                  {% endfor %}
+                {% endif %}
+              </ul>
 
-        <li class="deal-grid-card" data-product-id="fallback-4">
-          <div class="deal-grid-card__top">
-            <span class="deal-grid-card__badge">HOT!</span>
-            <button type="button" class="deal-grid-card__wishlist" aria-label="Add to wishlist" onclick="toggleDealWishlist(this, 'fallback-4');">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-            </button>
-          </div>
-          <a href="/collections/special-collection" class="deal-grid-card__media">
-            <img src="{{ 'cat-chairs.jpg' | asset_url }}" alt="Ergonomic High-Back Leather Executive Swivel Chair" class="deal-grid-card__image" loading="lazy" width="200" height="200">
-          </a>
-          <div class="deal-grid-card__meta">
-            <span class="deal-grid-card__sku">SKU: FN-5510</span>
-            <div class="deal-grid-card__rating">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-              <span>4.9 (114)</span>
+              <!-- Pagination Controls for this Tab Panel -->
+              {% if section.settings.enable_pagination and total_pages > 1 %}
+                <div class="deal-pagination" aria-label="Pagination">
+                  <button type="button" class="deal-pagination__nav-btn deal-pagination__prev" disabled aria-label="Previous page">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <span>Prev</span>
+                  </button>
+                  <div class="deal-pagination__pages">
+                    {% for p in (1..total_pages) %}
+                      <button
+                        type="button"
+                        class="deal-pagination__page-btn {% if forloop.first %}is-active{% endif %}"
+                        data-page-target="{{ p }}"
+                        aria-label="Go to page {{ p }}"
+                        {% if forloop.first %}aria-current="page"{% endif %}
+                      >
+                        {{ p }}
+                      </button>
+                    {% endfor %}
+                  </div>
+                  <button type="button" class="deal-pagination__nav-btn deal-pagination__next" aria-label="Next page">
+                    <span>Next</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                  </button>
+                </div>
+              {% endif %}
             </div>
-          </div>
-          <a href="/collections/special-collection" style="text-decoration: none;">
-            <h3 class="deal-grid-card__title">Ergonomic High-Back Leather Executive Swivel Chair</h3>
-          </a>
-          <div class="deal-grid-card__pricing">
-            <span class="deal-grid-card__price">$589.00</span>
-            <span class="deal-grid-card__old-price">$749.00</span>
-          </div>
-          <a href="/collections/special-collection" class="deal-grid-card__btn">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-            <span>Buy Now</span>
-          </a>
-        </li>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        <!-- Default Panels for Store Collections -->
+        {%- assign default_tab_handles = "special-collection,handmade-rugs,executive-desks,office-chairs,small-rugs,storage,table" | split: "," -%}
+        {% for handle in default_tab_handles %}
+          {%- liquid
+            assign col = collections[handle]
+            if col == blank or col.all_products_count == 0
+              if forloop.first
+                assign col = collections['all']
+              endif
+            endif
 
-        <li class="deal-grid-card" data-product-id="fallback-5">
-          <div class="deal-grid-card__top">
-            <span class="deal-grid-card__badge deal-grid-card__badge--gold">SAVE 21%</span>
-            <button type="button" class="deal-grid-card__wishlist" aria-label="Add to wishlist" onclick="toggleDealWishlist(this, 'fallback-5');">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-            </button>
-          </div>
-          <a href="/collections/special-collection" class="deal-grid-card__media">
-            <img src="{{ 'cat-bokhara-rugs.jpg' | asset_url }}" alt="Royal Bokhara Deep Ruby Red Wool Area Rug" class="deal-grid-card__image" loading="lazy" width="200" height="200">
-          </a>
-          <div class="deal-grid-card__meta">
-            <span class="deal-grid-card__sku">SKU: RG-2094</span>
-            <div class="deal-grid-card__rating">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-              <span>4.9 (95)</span>
-            </div>
-          </div>
-          <a href="/collections/special-collection" style="text-decoration: none;">
-            <h3 class="deal-grid-card__title">Royal Bokhara Deep Ruby Red Wool Area Rug</h3>
-          </a>
-          <div class="deal-grid-card__pricing">
-            <span class="deal-grid-card__price">$629.00</span>
-            <span class="deal-grid-card__old-price">$799.00</span>
-          </div>
-          <a href="/collections/special-collection" class="deal-grid-card__btn">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-            <span>Buy Now</span>
-          </a>
-        </li>
+            assign prod_count = col.products.size
+            assign total_pages = prod_count | times: 1.0 | divided_by: per_page | ceil
+            if total_pages < 1
+              assign total_pages = 1
+            endif
+          -%}
+          <div
+            class="deal-tab-panel {% if forloop.first %}is-active{% endif %}"
+            id="deal-tab-{{ section.id }}-{{ forloop.index }}"
+            data-total-pages="{{ total_pages }}"
+            data-current-page="1"
+            role="tabpanel"
+          >
+            <ul class="product-grid__items" role="list">
+              {% if prod_count > 0 %}
+                {% for product in col.products limit: 50 %}
+                  {% assign page_num = forloop.index0 | divided_by: per_page | plus: 1 %}
+                  {% render 'deal-grid-card', product: product, page_num: page_num %}
+                {% endfor %}
+              {% else %}
+                {% for i in (1..10) %}
+                  {% assign page_num = forloop.index0 | divided_by: per_page | plus: 1 %}
+                  <li class="deal-grid-card {% if page_num == 1 %}is-page-visible{% endif %}" data-page="{{ page_num }}" data-product-id="def-{{ handle }}-{{ i }}">
+                    <div class="deal-grid-card__top">
+                      <span class="deal-grid-card__badge">SAVE 25%</span>
+                      <button type="button" class="deal-grid-card__wishlist" aria-label="Add to wishlist" onclick="toggleDealWishlist(this, 'def-{{ handle }}-{{ i }}');">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                      </button>
+                    </div>
+                    <a href="{{ col.url | default: '/collections/special-collection' }}" class="deal-grid-card__media">
+                      <img src="{{ 'cat-handmade-rugs.jpg' | asset_url }}" alt="Handcrafted Deal" class="deal-grid-card__image" loading="lazy" width="200" height="200">
+                    </a>
+                    <div class="deal-grid-card__meta">
+                      <span class="deal-grid-card__sku">SKU: {{ handle | slice: 0, 2 | upcase }}-{{ i }}01</span>
+                      <div class="deal-grid-card__rating">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        <span>4.9 (12{{ i }})</span>
+                      </div>
+                    </div>
+                    <a href="{{ col.url | default: '/collections/special-collection' }}" style="text-decoration: none;">
+                      <h3 class="deal-grid-card__title">{{ col.title | default: handle | capitalize }} Showcase Piece #{{ i }}</h3>
+                    </a>
+                    <div class="deal-grid-card__pricing">
+                      <span class="deal-grid-card__price">$899.00</span>
+                      <span class="deal-grid-card__old-price">$1,199.00</span>
+                    </div>
+                    <a href="{{ col.url | default: '/collections/special-collection' }}" class="deal-grid-card__btn">
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                      <span>Buy Now</span>
+                    </a>
+                  </li>
+                {% endfor %}
+              {% endif %}
+            </ul>
 
-        <li class="deal-grid-card" data-product-id="fallback-6">
-          <div class="deal-grid-card__top">
-            <span class="deal-grid-card__badge">SAVE 24%</span>
-            <button type="button" class="deal-grid-card__wishlist" aria-label="Add to wishlist" onclick="toggleDealWishlist(this, 'fallback-6');">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-            </button>
+            <!-- Pagination Controls for Default Panels -->
+            {% if section.settings.enable_pagination and total_pages > 1 %}
+              <div class="deal-pagination" aria-label="Pagination">
+                <button type="button" class="deal-pagination__nav-btn deal-pagination__prev" disabled aria-label="Previous page">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                  <span>Prev</span>
+                </button>
+                <div class="deal-pagination__pages">
+                  {% for p in (1..total_pages) %}
+                    <button
+                      type="button"
+                      class="deal-pagination__page-btn {% if forloop.first %}is-active{% endif %}"
+                      data-page-target="{{ p }}"
+                      aria-label="Go to page {{ p }}"
+                      {% if forloop.first %}aria-current="page"{% endif %}
+                    >
+                      {{ p }}
+                    </button>
+                  {% endfor %}
+                </div>
+                <button type="button" class="deal-pagination__nav-btn deal-pagination__next" aria-label="Next page">
+                  <span>Next</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+              </div>
+            {% endif %}
           </div>
-          <a href="/collections/special-collection" class="deal-grid-card__media">
-            <img src="{{ 'cat-tables.jpg' | asset_url }}" alt="Handcrafted Solid Oak Round Coffee Table" class="deal-grid-card__image" loading="lazy" width="200" height="200">
-          </a>
-          <div class="deal-grid-card__meta">
-            <span class="deal-grid-card__sku">SKU: FN-1084</span>
-            <div class="deal-grid-card__rating">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-              <span>4.8 (53)</span>
-            </div>
-          </div>
-          <a href="/collections/special-collection" style="text-decoration: none;">
-            <h3 class="deal-grid-card__title">Handcrafted Solid Oak Round Coffee Table</h3>
-          </a>
-          <div class="deal-grid-card__pricing">
-            <span class="deal-grid-card__price">$420.00</span>
-            <span class="deal-grid-card__old-price">$550.00</span>
-          </div>
-          <a href="/collections/special-collection" class="deal-grid-card__btn">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-            <span>Buy Now</span>
-          </a>
-        </li>
-
-        <li class="deal-grid-card" data-product-id="fallback-7">
-          <div class="deal-grid-card__top">
-            <span class="deal-grid-card__badge deal-grid-card__badge--gold">SAVE 21%</span>
-            <button type="button" class="deal-grid-card__wishlist" aria-label="Add to wishlist" onclick="toggleDealWishlist(this, 'fallback-7');">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-            </button>
-          </div>
-          <a href="/collections/special-collection" class="deal-grid-card__media">
-            <img src="{{ 'cat-oushak-rugs.jpg' | asset_url }}" alt="Vintage Pastel Turkish Oushak Hand-Spun Wool Rug" class="deal-grid-card__image" loading="lazy" width="200" height="200">
-          </a>
-          <div class="deal-grid-card__meta">
-            <span class="deal-grid-card__sku">SKU: RG-7721</span>
-            <div class="deal-grid-card__rating">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-              <span>5.0 (38)</span>
-            </div>
-          </div>
-          <a href="/collections/special-collection" style="text-decoration: none;">
-            <h3 class="deal-grid-card__title">Vintage Pastel Turkish Oushak Hand-Spun Wool Rug</h3>
-          </a>
-          <div class="deal-grid-card__pricing">
-            <span class="deal-grid-card__price">$780.00</span>
-            <span class="deal-grid-card__old-price">$990.00</span>
-          </div>
-          <a href="/collections/special-collection" class="deal-grid-card__btn">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-            <span>Buy Now</span>
-          </a>
-        </li>
-
-        <li class="deal-grid-card" data-product-id="fallback-8">
-          <div class="deal-grid-card__top">
-            <span class="deal-grid-card__badge">SAVE 20%</span>
-            <button type="button" class="deal-grid-card__wishlist" aria-label="Add to wishlist" onclick="toggleDealWishlist(this, 'fallback-8');">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-            </button>
-          </div>
-          <a href="/collections/special-collection" class="deal-grid-card__media">
-            <img src="{{ 'cat-bookshelves.jpg' | asset_url }}" alt="Modern Minimalist Open Wood Bookshelf" class="deal-grid-card__image" loading="lazy" width="200" height="200">
-          </a>
-          <div class="deal-grid-card__meta">
-            <span class="deal-grid-card__sku">SKU: FN-6632</span>
-            <div class="deal-grid-card__rating">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-              <span>4.9 (47)</span>
-            </div>
-          </div>
-          <a href="/collections/special-collection" style="text-decoration: none;">
-            <h3 class="deal-grid-card__title">Modern Minimalist Open Wood Bookshelf</h3>
-          </a>
-          <div class="deal-grid-card__pricing">
-            <span class="deal-grid-card__price">$650.00</span>
-            <span class="deal-grid-card__old-price">$820.00</span>
-          </div>
-          <a href="/collections/special-collection" class="deal-grid-card__btn">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-            <span>Buy Now</span>
-          </a>
-        </li>
-
-        <li class="deal-grid-card" data-product-id="fallback-9">
-          <div class="deal-grid-card__top">
-            <span class="deal-grid-card__badge deal-grid-card__badge--gold">SAVE 23%</span>
-            <button type="button" class="deal-grid-card__wishlist" aria-label="Add to wishlist" onclick="toggleDealWishlist(this, 'fallback-9');">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-            </button>
-          </div>
-          <a href="/collections/special-collection" class="deal-grid-card__media">
-            <img src="{{ 'cat-runner-rugs.jpg' | asset_url }}" alt="Grand Persian Entryway Runner Rug" class="deal-grid-card__image" loading="lazy" width="200" height="200">
-          </a>
-          <div class="deal-grid-card__meta">
-            <span class="deal-grid-card__sku">SKU: RG-9940</span>
-            <div class="deal-grid-card__rating">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-              <span>4.9 (81)</span>
-            </div>
-          </div>
-          <a href="/collections/special-collection" style="text-decoration: none;">
-            <h3 class="deal-grid-card__title">Grand Persian Entryway Runner Rug</h3>
-          </a>
-          <div class="deal-grid-card__pricing">
-            <span class="deal-grid-card__price">$499.00</span>
-            <span class="deal-grid-card__old-price">$650.00</span>
-          </div>
-          <a href="/collections/special-collection" class="deal-grid-card__btn">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-            <span>Buy Now</span>
-          </a>
-        </li>
-
-        <li class="deal-grid-card" data-product-id="fallback-10">
-          <div class="deal-grid-card__top">
-            <span class="deal-grid-card__badge">SAVE 22%</span>
-            <button type="button" class="deal-grid-card__wishlist" aria-label="Add to wishlist" onclick="toggleDealWishlist(this, 'fallback-10');">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-            </button>
-          </div>
-          <a href="/collections/special-collection" class="deal-grid-card__media">
-            <img src="{{ 'cat-storage.jpg' | asset_url }}" alt="Executive Solid Walnut Filing & Storage Cabinet" class="deal-grid-card__image" loading="lazy" width="200" height="200">
-          </a>
-          <div class="deal-grid-card__meta">
-            <span class="deal-grid-card__sku">SKU: FN-3011</span>
-            <div class="deal-grid-card__rating">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-              <span>4.8 (62)</span>
-            </div>
-          </div>
-          <a href="/collections/special-collection" style="text-decoration: none;">
-            <h3 class="deal-grid-card__title">Executive Solid Walnut Filing & Storage Cabinet</h3>
-          </a>
-          <div class="deal-grid-card__pricing">
-            <span class="deal-grid-card__price">$540.00</span>
-            <span class="deal-grid-card__old-price">$690.00</span>
-          </div>
-          <a href="/collections/special-collection" class="deal-grid-card__btn">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-            <span>Buy Now</span>
-          </a>
-        </li>
-      {%- endif -%}
-    </ul>
+        {% endfor %}
+      {% endif %}
+    </div>
   </div>
 </div>
 
@@ -565,19 +330,160 @@
     } catch(e) {}
   }
 
-  // Restore liked states on page load
-  document.addEventListener('DOMContentLoaded', function() {
-    var buttons = document.querySelectorAll('.deal-grid-card__wishlist');
-    buttons.forEach(function(btn) {
-      var card = btn.closest('.deal-grid-card');
-      if (card) {
-        var id = card.getAttribute('data-product-id') || card.getAttribute('data-block-id');
-        if (id && localStorage.getItem('wishlist_' + id) === 'true') {
-          btn.classList.add('is-active');
+  (function() {
+    function initDealGrid() {
+      var sectionEl = document.getElementById('ProductGrid-{{ section.id }}');
+      if (!sectionEl) return;
+
+      var tabButtons = sectionEl.querySelectorAll('.deal-tab-btn');
+      var panels = sectionEl.querySelectorAll('.deal-tab-panel');
+      var viewAllBtn = document.getElementById('dealViewAllBtn-{{ section.id }}');
+
+      // Tab Switching Handler
+      tabButtons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var targetPanelId = this.getAttribute('data-tab-target');
+          var colUrl = this.getAttribute('data-collection-url');
+
+          tabButtons.forEach(function(b) {
+            b.classList.remove('is-active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          this.classList.add('is-active');
+          this.setAttribute('aria-selected', 'true');
+
+          panels.forEach(function(panel) {
+            if (panel.id === targetPanelId) {
+              panel.classList.add('is-active');
+              setPanelPage(panel, 1, false);
+            } else {
+              panel.classList.remove('is-active');
+            }
+          });
+
+          // Update View All link to point to current tab collection
+          if (viewAllBtn && colUrl) {
+            viewAllBtn.setAttribute('href', colUrl);
+          }
+        });
+      });
+
+      // Pagination Click Handlers
+      panels.forEach(function(panel) {
+        var pagination = panel.querySelector('.deal-pagination');
+        if (!pagination) return;
+
+        var prevBtn = pagination.querySelector('.deal-pagination__prev');
+        var nextBtn = pagination.querySelector('.deal-pagination__next');
+        var pageBtns = pagination.querySelectorAll('.deal-pagination__page-btn');
+
+        pageBtns.forEach(function(pBtn) {
+          pBtn.addEventListener('click', function() {
+            var targetPage = parseInt(this.getAttribute('data-page-target'), 10);
+            setPanelPage(panel, targetPage, true);
+          });
+        });
+
+        if (prevBtn) {
+          prevBtn.addEventListener('click', function() {
+            var curr = parseInt(panel.getAttribute('data-current-page') || '1', 10);
+            if (curr > 1) {
+              setPanelPage(panel, curr - 1, true);
+            }
+          });
+        }
+
+        if (nextBtn) {
+          nextBtn.addEventListener('click', function() {
+            var curr = parseInt(panel.getAttribute('data-current-page') || '1', 10);
+            var total = parseInt(panel.getAttribute('data-total-pages') || '1', 10);
+            if (curr < total) {
+              setPanelPage(panel, curr + 1, true);
+            }
+          });
+        }
+      });
+
+      function setPanelPage(panel, pageNum, doScroll) {
+        panel.setAttribute('data-current-page', pageNum);
+        var totalPages = parseInt(panel.getAttribute('data-total-pages') || '1', 10);
+
+        // Update cards visibility
+        var cards = panel.querySelectorAll('.deal-grid-card[data-page]');
+        cards.forEach(function(card) {
+          var cardPage = parseInt(card.getAttribute('data-page'), 10);
+          if (cardPage === pageNum) {
+            card.classList.add('is-page-visible');
+          } else {
+            card.classList.remove('is-page-visible');
+          }
+        });
+
+        // Update pagination buttons state
+        var pagination = panel.querySelector('.deal-pagination');
+        if (pagination) {
+          var prevBtn = pagination.querySelector('.deal-pagination__prev');
+          var nextBtn = pagination.querySelector('.deal-pagination__next');
+          var pageBtns = pagination.querySelectorAll('.deal-pagination__page-btn');
+
+          if (prevBtn) {
+            prevBtn.disabled = (pageNum <= 1);
+            if (pageNum <= 1) {
+              prevBtn.classList.add('is-disabled');
+            } else {
+              prevBtn.classList.remove('is-disabled');
+            }
+          }
+
+          if (nextBtn) {
+            nextBtn.disabled = (pageNum >= totalPages);
+            if (pageNum >= totalPages) {
+              nextBtn.classList.add('is-disabled');
+            } else {
+              nextBtn.classList.remove('is-disabled');
+            }
+          }
+
+          pageBtns.forEach(function(btn) {
+            var p = parseInt(btn.getAttribute('data-page-target'), 10);
+            if (p === pageNum) {
+              btn.classList.add('is-active');
+              btn.setAttribute('aria-current', 'page');
+            } else {
+              btn.classList.remove('is-active');
+              btn.removeAttribute('aria-current');
+            }
+          });
+        }
+
+        // Smooth scroll to top of section on user pagination click
+        if (doScroll) {
+          var header = sectionEl.querySelector('.product-grid__header');
+          if (header) {
+            header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
         }
       }
-    });
-  });
+
+      // Restore liked states on page load
+      var wishlistButtons = sectionEl.querySelectorAll('.deal-grid-card__wishlist');
+      wishlistButtons.forEach(function(btn) {
+        var card = btn.closest('.deal-grid-card');
+        if (card) {
+          var id = card.getAttribute('data-product-id');
+          if (id && localStorage.getItem('wishlist_' + id) === 'true') {
+            btn.classList.add('is-active');
+          }
+        }
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initDealGrid);
+    } else {
+      initDealGrid();
+    }
+  })();
 </script>
 
 {% schema %}
@@ -586,20 +492,6 @@
   "tag": "section",
   "class": "section-product-grid-wrapper",
   "settings": [
-    {
-      "type": "collection",
-      "id": "collection",
-      "label": "Collection"
-    },
-    {
-      "type": "range",
-      "id": "products_to_show",
-      "min": 2,
-      "max": 25,
-      "step": 1,
-      "default": 10,
-      "label": "Maximum products to show"
-    },
     {
       "type": "text",
       "id": "heading",
@@ -611,6 +503,26 @@
       "id": "subheading",
       "label": "Subheading",
       "default": "Curated selection of handcrafted rugs and premium executive office furniture"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Default Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 5,
+      "max": 25,
+      "step": 5,
+      "default": 10,
+      "label": "Products per page"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_pagination",
+      "label": "Enable Pagination",
+      "default": true
     },
     {
       "type": "checkbox",
@@ -632,42 +544,25 @@
   ],
   "blocks": [
     {
+      "type": "collection_tab",
+      "name": "Collection Tab",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tab Title Override (Optional)"
+        }
+      ]
+    },
+    {
       "type": "product_card",
       "name": "Product Deal Card",
       "settings": [
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Custom Image"
-        },
-        {
-          "type": "text",
-          "id": "static_image",
-          "label": "Asset Image Filename (Fallback)",
-          "default": "cat-handmade-rugs.jpg"
-        },
-        {
-          "type": "text",
-          "id": "badge",
-          "label": "Discount Badge",
-          "default": "SAVE 25%"
-        },
-        {
-          "type": "select",
-          "id": "badge_style",
-          "label": "Badge Color Style",
-          "options": [
-            { "value": "red", "label": "Red Deal" },
-            { "value": "gold", "label": "Gold Highlight" }
-          ],
-          "default": "red"
-        },
-        {
-          "type": "text",
-          "id": "sku",
-          "label": "SKU",
-          "default": "SKU: GR-1082"
-        },
         {
           "type": "text",
           "id": "title",
@@ -676,32 +571,9 @@
         },
         {
           "type": "text",
-          "id": "rating",
-          "label": "Rating Score",
-          "default": "4.9"
-        },
-        {
-          "type": "text",
-          "id": "rating_count",
-          "label": "Rating Count",
-          "default": "128"
-        },
-        {
-          "type": "text",
           "id": "price",
           "label": "Sale Price",
           "default": "$899.00"
-        },
-        {
-          "type": "text",
-          "id": "old_price",
-          "label": "Old Price",
-          "default": "$1,199.00"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Product Link"
         }
       ]
     }
@@ -712,8 +584,60 @@
       "settings": {
         "heading": "Special Collection Deals",
         "subheading": "Curated selection of handcrafted rugs and premium executive office furniture",
-        "products_to_show": 10
-      }
+        "products_per_page": 10,
+        "enable_pagination": true
+      },
+      "blocks": [
+        {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "special-collection",
+            "title": "Special Collection"
+          }
+        },
+        {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "handmade-rugs",
+            "title": "Handmade Rugs"
+          }
+        },
+        {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "executive-desks",
+            "title": "Executive Desks"
+          }
+        },
+        {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "office-chairs",
+            "title": "Office Chairs"
+          }
+        },
+        {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "small-rugs",
+            "title": "Small Rugs"
+          }
+        },
+        {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "storage",
+            "title": "Storage"
+          }
+        },
+        {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "table",
+            "title": "Tables"
+          }
+        }
+      ]
     }
   ]
 }

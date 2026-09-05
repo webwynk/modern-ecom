@@ -1,0 +1,116 @@
+{% comment %}
+  Snippet: deal-grid-card.liquid
+  Renders a single product deal card with badge, rating, image, price, and Buy Now button.
+  Parameters:
+    - product: Shopify Product object
+    - page_num: integer indicating which page this card belongs to (default: 1)
+{% endcomment %}
+
+{% assign page_num = page_num | default: 1 %}
+
+<li class="deal-grid-card {% if page_num == 1 %}is-page-visible{% endif %}" data-page="{{ page_num }}" data-product-id="{{ product.id }}">
+  <!-- Top Row: Badge + Wishlist Button -->
+  <div class="deal-grid-card__top">
+    {%- if product.compare_at_price > product.price -%}
+      {%- assign save_percent = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round -%}
+      <span class="deal-grid-card__badge">
+        SAVE {{ save_percent }}%
+      </span>
+    {%- elsif product.tags contains 'HOT' or product.tags contains 'Hot' or product.tags contains 'hot' -%}
+      <span class="deal-grid-card__badge">HOT!</span>
+    {%- elsif product.tags contains 'NEW' or product.tags contains 'New' or product.tags contains 'new' -%}
+      <span class="deal-grid-card__badge deal-grid-card__badge--gold">NEW</span>
+    {%- else -%}
+      <span></span>
+    {%- endif -%}
+
+    <button
+      type="button"
+      class="deal-grid-card__wishlist"
+      aria-label="Add {{ product.title | escape }} to wishlist"
+      onclick="toggleDealWishlist(this, '{{ product.id }}');"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Product Image -->
+  <a href="{{ product.url }}" class="deal-grid-card__media" aria-label="{{ product.title | escape }}">
+    {%- if product.featured_media != blank -%}
+      <img
+        src="{{ product.featured_media | image_url: width: 400 }}"
+        alt="{{ product.featured_media.alt | default: product.title | escape }}"
+        class="deal-grid-card__image"
+        loading="lazy"
+        width="200"
+        height="200"
+      >
+    {%- elsif product.featured_image != blank -%}
+      <img
+        src="{{ product.featured_image | image_url: width: 400 }}"
+        alt="{{ product.title | escape }}"
+        class="deal-grid-card__image"
+        loading="lazy"
+        width="200"
+        height="200"
+      >
+    {%- else -%}
+      <img
+        src="{{ 'cat-handmade-rugs.jpg' | asset_url }}"
+        alt="{{ product.title | escape }}"
+        class="deal-grid-card__image"
+        loading="lazy"
+        width="200"
+        height="200"
+      >
+    {%- endif -%}
+  </a>
+
+  <!-- Meta: SKU + Rating -->
+  <div class="deal-grid-card__meta">
+    <span class="deal-grid-card__sku">
+      {%- if product.selected_or_first_available_variant.sku != blank -%}
+        SKU: {{ product.selected_or_first_available_variant.sku }}
+      {%- else -%}
+        SKU: PR-{{ product.id | slice: -4, 4 }}
+      {%- endif -%}
+    </span>
+    <div class="deal-grid-card__rating">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+      </svg>
+      <span>
+        {%- if product.metafields.reviews.rating.value != blank -%}
+          {{ product.metafields.reviews.rating.value | round: 1 }} ({{ product.metafields.reviews.rating_count | default: 1 }})
+        {%- else -%}
+          4.9 ({{ product.id | slice: -2, 2 | plus: 20 }})
+        {%- endif -%}
+      </span>
+    </div>
+  </div>
+
+  <!-- Title (2-Line Limit) -->
+  <a href="{{ product.url }}" style="text-decoration: none;">
+    <h3 class="deal-grid-card__title">{{ product.title }}</h3>
+  </a>
+
+  <!-- Pricing -->
+  <div class="deal-grid-card__pricing">
+    <span class="deal-grid-card__price">{{ product.price | money }}</span>
+    {%- if product.compare_at_price > product.price -%}
+      <span class="deal-grid-card__old-price">{{ product.compare_at_price | money }}</span>
+    {%- endif -%}
+  </div>
+
+  <!-- Buy Now CTA -->
+  <a href="{{ product.url }}" class="deal-grid-card__btn">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="9" cy="21" r="1"></circle>
+      <circle cx="20" cy="21" r="1"></circle>
+      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+    </svg>
+    <span>Buy Now</span>
+  </a>
+</li>
