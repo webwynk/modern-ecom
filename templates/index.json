@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero_slider": {
@@ -12,6 +21,22 @@
           "settings": {
             "collection": "handmade-rugs",
             "static_image": "cat-handmade-rugs.jpg"
+          }
+        },
+        "cat_4x6_rugs": {
+          "type": "category_card",
+          "settings": {
+            "collection": "4-x-6-rugs",
+            "title": "4 x 6 Rugs",
+            "static_image": "cat-handmade-rugs.jpg"
+          }
+        },
+        "cat_3x5_rugs": {
+          "type": "category_card",
+          "settings": {
+            "collection": "3x5-rugs",
+            "title": "3x5 Rugs",
+            "static_image": "cat-bokhara-rugs.jpg"
           }
         },
         "cat_executive_desks": {
@@ -59,6 +84,8 @@
       },
       "block_order": [
         "cat_handmade_rugs",
+        "cat_4x6_rugs",
+        "cat_3x5_rugs",
         "cat_executive_desks",
         "cat_small_rugs",
         "cat_office_chairs",
@@ -152,6 +179,20 @@
             "title": "Handmade Rugs"
           }
         },
+        "tab_4x6_rugs": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "4-x-6-rugs",
+            "title": "4 x 6 Rugs"
+          }
+        },
+        "tab_3x5_rugs": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "3x5-rugs",
+            "title": "3x5 Rugs"
+          }
+        },
         "tab_executive_desks": {
           "type": "collection_tab",
           "settings": {
@@ -191,6 +232,8 @@
       "block_order": [
         "tab_special",
         "tab_handmade_rugs",
+        "tab_4x6_rugs",
+        "tab_3x5_rugs",
         "tab_executive_desks",
         "tab_office_chairs",
         "tab_small_rugs",

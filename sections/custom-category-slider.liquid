@@ -50,8 +50,33 @@
             if col.title == blank and block.settings.collection != blank
               assign col = collections[block.settings.collection]
             endif
+            if col == blank or col.title == blank
+              assign slug1 = block.settings.collection | handleize
+              assign col = collections[slug1]
+            endif
+            if col == blank or col.title == blank
+              assign slug2 = block.settings.title | handleize
+              assign col = collections[slug2]
+            endif
+            if col == blank or col.title == blank
+              assign slug3 = block.settings.collection | replace: '-x-', 'x'
+              assign col = collections[slug3]
+            endif
+            if col == blank or col.title == blank
+              assign slug4 = block.settings.collection | replace: 'x', '-x-'
+              assign col = collections[slug4]
+            endif
+            if col == blank or col.title == blank
+              assign slug5 = block.settings.title | replace: ' x ', 'x' | handleize
+              assign col = collections[slug5]
+            endif
+            if col == blank or col.title == blank
+              assign slug6 = block.settings.title | replace: ' ', '' | handleize
+              assign col = collections[slug6]
+            endif
+
             assign card_title = block.settings.title
-            if card_title == blank and col != blank
+            if card_title == blank and col != blank and col.title != blank
               assign card_title = col.title
             endif
             if card_title == blank
@@ -59,7 +84,7 @@
             endif
 
             assign card_url = block.settings.link
-            if card_url == blank and col != blank
+            if card_url == blank and col != blank and col.url != blank
               assign card_url = col.url
             endif
             if card_url == blank
@@ -67,7 +92,7 @@
             endif
 
             assign card_count = block.settings.count
-            if card_count == blank and col != blank
+            if card_count == blank and col != blank and col.all_products_count != blank
               assign card_count = col.all_products_count | append: ' Items'
             endif
 
@@ -216,6 +241,18 @@
           "type": "category_card",
           "settings": {
             "collection": "handmade-rugs"
+          }
+        },
+        {
+          "type": "category_card",
+          "settings": {
+            "collection": "4-x-6-rugs"
+          }
+        },
+        {
+          "type": "category_card",
+          "settings": {
+            "collection": "3x5-rugs"
           }
         },
         {

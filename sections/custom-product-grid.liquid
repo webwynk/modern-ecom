@@ -64,8 +64,33 @@
               if col.title == blank and block.settings.collection != blank
                 assign col = collections[block.settings.collection]
               endif
+              if col == blank or col.title == blank
+                assign slug1 = block.settings.collection | handleize
+                assign col = collections[slug1]
+              endif
+              if col == blank or col.title == blank
+                assign slug2 = block.settings.title | handleize
+                assign col = collections[slug2]
+              endif
+              if col == blank or col.title == blank
+                assign slug3 = block.settings.collection | replace: '-x-', 'x'
+                assign col = collections[slug3]
+              endif
+              if col == blank or col.title == blank
+                assign slug4 = block.settings.collection | replace: 'x', '-x-'
+                assign col = collections[slug4]
+              endif
+              if col == blank or col.title == blank
+                assign slug5 = block.settings.title | replace: ' x ', 'x' | handleize
+                assign col = collections[slug5]
+              endif
+              if col == blank or col.title == blank
+                assign slug6 = block.settings.title | replace: ' ', '' | handleize
+                assign col = collections[slug6]
+              endif
+
               assign tab_title = block.settings.title
-              if tab_title == blank and col != blank
+              if tab_title == blank and col != blank and col.title != blank
                 assign tab_title = col.title
               endif
               if tab_title == blank
@@ -91,10 +116,14 @@
         {% endfor %}
       {% else %}
         <!-- Default Store Collection Tabs -->
-        {%- assign default_tab_handles = "special-collection,handmade-rugs,executive-desks,office-chairs,small-rugs,storage,table" | split: "," -%}
+        {%- assign default_tab_handles = "special-collection,handmade-rugs,4-x-6-rugs,3x5-rugs,executive-desks,office-chairs,small-rugs,storage,table" | split: "," -%}
         {% for handle in default_tab_handles %}
           {%- liquid
             assign col = collections[handle]
+            if col == blank
+              assign alt1 = handle | replace: '-x-', 'x'
+              assign col = collections[alt1]
+            endif
             assign tab_title = col.title | default: handle | replace: '-', ' ' | capitalize
             assign col_count = col.all_products_count | default: col.products.size
           -%}
@@ -128,14 +157,42 @@
                 assign col = collections[block.settings.collection]
               endif
               if col == blank or col.title == blank
+                assign slug1 = block.settings.collection | handleize
+                assign col = collections[slug1]
+              endif
+              if col == blank or col.title == blank
+                assign slug2 = block.settings.title | handleize
+                assign col = collections[slug2]
+              endif
+              if col == blank or col.title == blank
+                assign slug3 = block.settings.collection | replace: '-x-', 'x'
+                assign col = collections[slug3]
+              endif
+              if col == blank or col.title == blank
+                assign slug4 = block.settings.collection | replace: 'x', '-x-'
+                assign col = collections[slug4]
+              endif
+              if col == blank or col.title == blank
+                assign slug5 = block.settings.title | replace: ' x ', 'x' | handleize
+                assign col = collections[slug5]
+              endif
+              if col == blank or col.title == blank
+                assign slug6 = block.settings.title | replace: ' ', '' | handleize
+                assign col = collections[slug6]
+              endif
+
+              if col == blank or col.title == blank
                 assign col = collections['special-collection']
               endif
-              if col == blank or col.all_products_count == 0
+              if col == blank
                 assign col = collections['all']
               endif
 
               assign prod_count = col.products.size
               assign total_pages = prod_count | times: 1.0 | divided_by: per_page | ceil
+              if total_pages < 1
+                assign total_pages = 1
+              endif
             -%}
             <div
               class="deal-tab-panel {% if forloop.first %}is-active{% endif %}"
@@ -600,6 +657,20 @@
           "settings": {
             "collection": "handmade-rugs",
             "title": "Handmade Rugs"
+          }
+        },
+        {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "4-x-6-rugs",
+            "title": "4 x 6 Rugs"
+          }
+        },
+        {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "3x5-rugs",
+            "title": "3x5 Rugs"
           }
         },
         {
