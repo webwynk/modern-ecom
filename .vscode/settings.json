@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    "templates/*.json": "jsonc",
+    "sections/*.json": "jsonc",
+    "config/*.json": "jsonc",
+    "locales/*.json": "jsonc"
+  }
+}
