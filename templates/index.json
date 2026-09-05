@@ -7,118 +7,64 @@
     "category_slider": {
       "type": "custom-category-slider",
       "blocks": {
-        "cat_1": {
+        "cat_handmade_rugs": {
           "type": "category_card",
           "settings": {
-            "title": "Handmade Rugs",
-            "count": "50+ Items",
-            "static_image": "cat-handmade-rugs.jpg",
-            "link": "/collections/all?filter=handmade-rugs"
+            "collection": "handmade-rugs",
+            "static_image": "cat-handmade-rugs.jpg"
           }
         },
-        "cat_2": {
+        "cat_executive_desks": {
           "type": "category_card",
           "settings": {
-            "title": "Executive Desks",
-            "count": "28+ Items",
-            "static_image": "cat-executive-desks.jpg",
-            "link": "/collections/all?filter=desks"
+            "collection": "executive-desks",
+            "static_image": "cat-executive-desks.jpg"
           }
         },
-        "cat_3": {
+        "cat_small_rugs": {
           "type": "category_card",
           "settings": {
-            "title": "Kilim Rugs",
-            "count": "32+ Items",
-            "static_image": "cat-kilim-rugs.jpg",
-            "link": "/collections/all?filter=kilim-rugs"
+            "collection": "small-rugs",
+            "static_image": "cat-kilim-rugs.jpg"
           }
         },
-        "cat_4": {
+        "cat_office_chairs": {
           "type": "category_card",
           "settings": {
-            "title": "Office Chairs",
-            "count": "35+ Items",
-            "static_image": "cat-chairs.jpg",
-            "link": "/collections/all?filter=chairs"
+            "collection": "office-chairs",
+            "static_image": "cat-chairs.jpg"
           }
         },
-        "cat_5": {
+        "cat_storage": {
           "type": "category_card",
           "settings": {
-            "title": "Bokhara Rugs",
-            "count": "24+ Items",
-            "static_image": "cat-bokhara-rugs.jpg",
-            "link": "/collections/all?filter=bokhara-rugs"
+            "collection": "storage",
+            "static_image": "cat-storage.jpg"
           }
         },
-        "cat_6": {
+        "cat_table": {
           "type": "category_card",
           "settings": {
-            "title": "Storage & Cabinets",
-            "count": "18+ Items",
-            "static_image": "cat-storage.jpg",
-            "link": "/collections/all?filter=storage"
+            "collection": "table",
+            "static_image": "cat-tables.jpg"
           }
         },
-        "cat_7": {
+        "cat_special_collection": {
           "type": "category_card",
           "settings": {
-            "title": "Runner Rugs",
-            "count": "45+ Items",
-            "static_image": "cat-runner-rugs.jpg",
-            "link": "/collections/all?filter=entryway-runner"
-          }
-        },
-        "cat_8": {
-          "type": "category_card",
-          "settings": {
-            "title": "Artisan Tables",
-            "count": "20+ Items",
-            "static_image": "cat-tables.jpg",
-            "link": "/collections/all?filter=tables"
-          }
-        },
-        "cat_9": {
-          "type": "category_card",
-          "settings": {
-            "title": "Oushak Rugs",
-            "count": "18+ Items",
-            "static_image": "cat-oushak-rugs.jpg",
-            "link": "/collections/all?filter=oushak-rugs"
-          }
-        },
-        "cat_10": {
-          "type": "category_card",
-          "settings": {
-            "title": "Bookshelves",
-            "count": "15+ Items",
-            "static_image": "cat-bookshelves.jpg",
-            "link": "/collections/all?filter=storage"
-          }
-        },
-        "cat_11": {
-          "type": "category_card",
-          "settings": {
-            "title": "Desk Accessories",
-            "count": "40+ Items",
-            "static_image": "cat-desk-accessories.jpg",
-            "link": "/collections/all?filter=accessories"
+            "collection": "special-collection",
+            "static_image": "cat-bokhara-rugs.jpg"
           }
         }
       },
       "block_order": [
-        "cat_1",
-        "cat_2",
-        "cat_3",
-        "cat_4",
-        "cat_5",
-        "cat_6",
-        "cat_7",
-        "cat_8",
-        "cat_9",
-        "cat_10",
-        "cat_11"
+        "cat_handmade_rugs",
+        "cat_executive_desks",
+        "cat_small_rugs",
+        "cat_office_chairs",
+        "cat_storage",
+        "cat_table",
+        "cat_special_collection"
       ],
       "settings": {
         "heading": "Explore Popular Categories",
@@ -154,7 +100,10 @@
         "offer_save_amount": "$400",
         "offer_title": "Royal Isfahan Masterpiece Silk & Wool Area Rug",
         "offer_price": "$1,499.00",
-        "offer_old_price": "$1,899.00"
+        "offer_old_price": "$1,899.00",
+        "collection_featured": "special-collection",
+        "collection_onsale": "special-collection",
+        "collection_toprated": "handmade-rugs"
       }
     },
     "brand_logos": {
@@ -182,178 +131,20 @@
       "settings": {
         "default_desktop_asset": "discount-banner-16x9.jpg",
         "default_mobile_asset": "discount-banner-4x2.jpg",
-        "alt_text": "Special Collection Deals Discount"
+        "alt_text": "Special Collection Deals Discount",
+        "link": "/collections/special-collection"
       }
     },
     "featured_deals_grid": {
       "type": "custom-product-grid",
-      "blocks": {
-        "deal_1": {
-          "type": "product_card",
-          "settings": {
-            "title": "Hand-Knotted Isfahan Wool & Silk Medallion Rug",
-            "badge": "SAVE 25%",
-            "badge_style": "red",
-            "sku": "SKU: RG-8812",
-            "rating": "4.9",
-            "rating_count": "142",
-            "price": "$899.00",
-            "old_price": "$1,199.00",
-            "static_image": "cat-handmade-rugs.jpg",
-            "link": "/collections/all?filter=handmade-rugs"
-          }
-        },
-        "deal_2": {
-          "type": "product_card",
-          "settings": {
-            "title": "Executive Solid Walnut Office Desk with Brass Trim",
-            "badge": "SAVE 22%",
-            "badge_style": "gold",
-            "sku": "SKU: FN-4021",
-            "rating": "5.0",
-            "rating_count": "89",
-            "price": "$1,249.00",
-            "old_price": "$1,599.00",
-            "static_image": "cat-executive-desks.jpg",
-            "link": "/collections/all?filter=desks"
-          }
-        },
-        "deal_3": {
-          "type": "product_card",
-          "settings": {
-            "title": "Tribal Geometric Kilim Flatweave Bohemian Rug",
-            "badge": "SAVE 22%",
-            "badge_style": "red",
-            "sku": "SKU: RG-3390",
-            "rating": "4.8",
-            "rating_count": "67",
-            "price": "$349.00",
-            "old_price": "$449.00",
-            "static_image": "cat-kilim-rugs.jpg",
-            "link": "/collections/all?filter=kilim-rugs"
-          }
-        },
-        "deal_4": {
-          "type": "product_card",
-          "settings": {
-            "title": "Ergonomic High-Back Leather Executive Swivel Chair",
-            "badge": "HOT!",
-            "badge_style": "red",
-            "sku": "SKU: FN-5510",
-            "rating": "4.9",
-            "rating_count": "114",
-            "price": "$589.00",
-            "old_price": "$749.00",
-            "static_image": "cat-chairs.jpg",
-            "link": "/collections/all?filter=chairs"
-          }
-        },
-        "deal_5": {
-          "type": "product_card",
-          "settings": {
-            "title": "Royal Bokhara Deep Ruby Red Wool Area Rug",
-            "badge": "SAVE 21%",
-            "badge_style": "gold",
-            "sku": "SKU: RG-2094",
-            "rating": "4.9",
-            "rating_count": "95",
-            "price": "$629.00",
-            "old_price": "$799.00",
-            "static_image": "cat-bokhara-rugs.jpg",
-            "link": "/collections/all?filter=bokhara-rugs"
-          }
-        },
-        "deal_6": {
-          "type": "product_card",
-          "settings": {
-            "title": "Handcrafted Solid Oak Round Coffee Table",
-            "badge": "SAVE 24%",
-            "badge_style": "red",
-            "sku": "SKU: FN-1084",
-            "rating": "4.8",
-            "rating_count": "53",
-            "price": "$420.00",
-            "old_price": "$550.00",
-            "static_image": "cat-tables.jpg",
-            "link": "/collections/all?filter=tables"
-          }
-        },
-        "deal_7": {
-          "type": "product_card",
-          "settings": {
-            "title": "Vintage Pastel Turkish Oushak Hand-Spun Wool Rug",
-            "badge": "SAVE 21%",
-            "badge_style": "gold",
-            "sku": "SKU: RG-7721",
-            "rating": "5.0",
-            "rating_count": "38",
-            "price": "$780.00",
-            "old_price": "$990.00",
-            "static_image": "cat-oushak-rugs.jpg",
-            "link": "/collections/all?filter=oushak-rugs"
-          }
-        },
-        "deal_8": {
-          "type": "product_card",
-          "settings": {
-            "title": "Modern Minimalist Open Wood Bookshelf & Display Unit",
-            "badge": "SAVE 20%",
-            "badge_style": "red",
-            "sku": "SKU: FN-6632",
-            "rating": "4.9",
-            "rating_count": "47",
-            "price": "$650.00",
-            "old_price": "$820.00",
-            "static_image": "cat-bookshelves.jpg",
-            "link": "/collections/all?filter=storage"
-          }
-        },
-        "deal_9": {
-          "type": "product_card",
-          "settings": {
-            "title": "Grand Persian Entryway Runner Rug with Floral Border",
-            "badge": "SAVE 23%",
-            "badge_style": "gold",
-            "sku": "SKU: RG-9940",
-            "rating": "4.9",
-            "rating_count": "81",
-            "price": "$499.00",
-            "old_price": "$650.00",
-            "static_image": "cat-runner-rugs.jpg",
-            "link": "/collections/all?filter=entryway-runner"
-          }
-        },
-        "deal_10": {
-          "type": "product_card",
-          "settings": {
-            "title": "Executive 2-Door Solid Walnut Filing & Storage Cabinet",
-            "badge": "SAVE 22%",
-            "badge_style": "red",
-            "sku": "SKU: FN-3011",
-            "rating": "4.8",
-            "rating_count": "62",
-            "price": "$540.00",
-            "old_price": "$690.00",
-            "static_image": "cat-storage.jpg",
-            "link": "/collections/all?filter=storage"
-          }
-        }
-      },
-      "block_order": [
-        "deal_1",
-        "deal_2",
-        "deal_3",
-        "deal_4",
-        "deal_5",
-        "deal_6",
-        "deal_7",
-        "deal_8",
-        "deal_9",
-        "deal_10"
-      ],
       "settings": {
+        "collection": "special-collection",
+        "products_to_show": 10,
         "heading": "Special Collection Deals",
-        "subheading": "Curated selection of handcrafted rugs and premium executive office furniture"
+        "subheading": "Curated selection of handcrafted rugs and premium executive office furniture",
+        "show_view_all": true,
+        "view_all_text": "View All",
+        "view_all_link": ""
       }
     }
   },

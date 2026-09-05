@@ -13,30 +13,62 @@
       <!-- ========================================
            1. Left Column: Special Offer Box
            ======================================== -->
-      <a href="{{ section.settings.offer_link | default: '/collections/all?filter=handmade-rugs' }}" class="special-offer-card">
+      {%- assign offer_prod = section.settings.offer_product -%}
+      {%- assign offer_url = section.settings.offer_link -%}
+      {%- if offer_url == blank and offer_prod != blank -%}
+        {%- assign offer_url = offer_prod.url -%}
+      {%- endif -%}
+      {%- if offer_url == blank -%}
+        {%- assign offer_url = '/collections/special-collection' -%}
+      {%- endif -%}
+
+      {%- assign offer_title = section.settings.offer_title -%}
+      {%- if section.settings.offer_product != blank -%}
+        {%- assign offer_title = offer_prod.title -%}
+      {%- endif -%}
+
+      {%- assign offer_price_str = section.settings.offer_price -%}
+      {%- if offer_prod != blank -%}
+        {%- assign offer_price_str = offer_prod.price | money -%}
+      {%- endif -%}
+
+      {%- assign offer_old_price_str = section.settings.offer_old_price -%}
+      {%- if offer_prod != blank and offer_prod.compare_at_price > offer_prod.price -%}
+        {%- assign offer_old_price_str = offer_prod.compare_at_price | money -%}
+      {%- endif -%}
+
+      <a href="{{ offer_url }}" class="special-offer-card">
         <div>
           <div class="special-offer-card__header">
             <h3 class="special-offer-card__title-label">{{ section.settings.offer_label | default: 'Special Offer' }}</h3>
             <div class="special-offer-card__badge">
               <span>Save</span>
-              <span>{{ section.settings.offer_save_amount | default: '$400' }}</span>
+              <span>
+                {%- if offer_prod != blank and offer_prod.compare_at_price > offer_prod.price -%}
+                  {{ offer_prod.compare_at_price | minus: offer_prod.price | money }}
+                {%- else -%}
+                  {{ section.settings.offer_save_amount | default: '$400' }}
+                {%- endif -%}
+              </span>
             </div>
           </div>
 
           <div class="special-offer-card__media">
             {% if section.settings.offer_image != blank %}
-              <img src="{{ section.settings.offer_image | image_url: width: 500 }}" alt="{{ section.settings.offer_title | escape }}" loading="lazy">
+              <img src="{{ section.settings.offer_image | image_url: width: 500 }}" alt="{{ offer_title | escape }}" loading="lazy">
+            {% elsif offer_prod != blank and offer_prod.featured_media != blank %}
+              <img src="{{ offer_prod.featured_media | image_url: width: 500 }}" alt="{{ offer_title | escape }}" loading="lazy">
             {% else %}
               <img src="{{ 'cat-handmade-rugs.jpg' | asset_url }}" alt="Special Offer Rug" loading="lazy">
             {% endif %}
           </div>
 
-          <h4 class="special-offer-card__product-title">{{ section.settings.offer_title | default: 'Royal Isfahan Masterpiece Silk & Wool Area Rug' }}</h4>
+          <h4 class="special-offer-card__product-title">{{ offer_title | default: 'Royal Isfahan Masterpiece Silk & Wool Area Rug' }}</h4>
 
           <div class="special-offer-card__pricing">
-            <span class="special-offer-card__price">{{ section.settings.offer_price | default: '$1,499.00' }}</span>
-            {% if section.settings.offer_old_price != blank %}
-              <span class="special-offer-card__old-price">{{ section.settings.offer_old_price }}</span>
+            <span class="special-offer-card__price">{{ offer_price_str | default: '$1,499.00' }}</span>
+            {% if offer_old_price_str != blank %}
+              <span class="special-offer-card__old-price">{{ offer_old_price_str }}</span>
             {% endif %}
           </div>
         </div>
@@ -76,414 +108,137 @@
 
         <!-- Tab 1: Featured Products Grid -->
         <div class="tab-content is-active" id="tab-featured-{{ section.id }}" role="tabpanel">
-          
-          <a href="/collections/all?filter=kilim-rugs" class="grid-product-card">
-            <span class="grid-product-card__category">Kilim Rugs, Tribal</span>
-            <h4 class="grid-product-card__title">Tribal Geometric Kilim Flatweave Bohemian Rug</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-kilim-rugs.jpg' | asset_url }}" alt="Kilim Rug" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price">$349.00</span>
+          {%- assign col_featured = section.settings.collection_featured | default: collections['special-collection'] -%}
+          {%- if col_featured != blank and col_featured.products_count > 0 -%}
+            {%- for product in col_featured.products limit: 8 -%}
+              <a href="{{ product.url }}" class="grid-product-card">
+                <span class="grid-product-card__category">{{ product.type | default: col_featured.title }}</span>
+                <h4 class="grid-product-card__title">{{ product.title }}</h4>
+                <div class="grid-product-card__media">
+                  {%- if product.featured_media != blank -%}
+                    <img src="{{ product.featured_media | image_url: width: 300 }}" alt="{{ product.title | escape }}" loading="lazy">
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag }}
+                  {%- endif -%}
+                </div>
+                <div class="grid-product-card__footer">
+                  <div class="grid-product-card__pricing">
+                    <span class="grid-product-card__price {% if product.compare_at_price > product.price %}grid-product-card__price--sale{% endif %}">{{ product.price | money }}</span>
+                    {%- if product.compare_at_price > product.price -%}
+                      <span class="grid-product-card__old-price">{{ product.compare_at_price | money }}</span>
+                    {%- endif -%}
+                  </div>
+                  <button type="button" class="grid-product-card__cart-btn" aria-label="View product">
+                    <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                  </button>
+                </div>
+              </a>
+            {%- endfor -%}
+          {%- else -%}
+            <a href="/collections/special-collection" class="grid-product-card">
+              <span class="grid-product-card__category">Special Collection</span>
+              <h4 class="grid-product-card__title">Handcrafted Artisan Rug</h4>
+              <div class="grid-product-card__media">
+                <img src="{{ 'cat-handmade-rugs.jpg' | asset_url }}" alt="Rug" loading="lazy">
               </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
-
-          <a href="/collections/all?filter=desks" class="grid-product-card">
-            <span class="grid-product-card__category">Office Furniture, Desks</span>
-            <h4 class="grid-product-card__title">Executive Solid Walnut Office Desk with Brass Trim</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-executive-desks.jpg' | asset_url }}" alt="Walnut Desk" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price grid-product-card__price--sale">$1,249.00</span>
-                <span class="grid-product-card__old-price">$1,599.00</span>
+              <div class="grid-product-card__footer">
+                <div class="grid-product-card__pricing"><span class="grid-product-card__price">$349.00</span></div>
+                <button type="button" class="grid-product-card__cart-btn" aria-label="View product">
+                  <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                </button>
               </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
-
-          <a href="/collections/all?filter=chairs" class="grid-product-card">
-            <span class="grid-product-card__category">Executive Seating</span>
-            <h4 class="grid-product-card__title">Ergonomic High-Back Leather Executive Swivel Chair</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-chairs.jpg' | asset_url }}" alt="Executive Chair" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price">$589.00</span>
-              </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
-
-          <a href="/collections/all?filter=bokhara-rugs" class="grid-product-card">
-            <span class="grid-product-card__category">Fine Wool Rugs</span>
-            <h4 class="grid-product-card__title">Royal Bokhara Deep Ruby Red Wool Area Rug</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-bokhara-rugs.jpg' | asset_url }}" alt="Bokhara Rug" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price grid-product-card__price--sale">$629.00</span>
-                <span class="grid-product-card__old-price">$799.00</span>
-              </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
-
-          <a href="/collections/all?filter=tables" class="grid-product-card">
-            <span class="grid-product-card__category">Solid Wood Furniture</span>
-            <h4 class="grid-product-card__title">Handcrafted Solid Oak Round Coffee Table</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-tables.jpg' | asset_url }}" alt="Coffee Table" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price">$420.00</span>
-              </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
-
-          <a href="/collections/all?filter=oushak-rugs" class="grid-product-card">
-            <span class="grid-product-card__category">Vintage Rugs, Wool</span>
-            <h4 class="grid-product-card__title">Vintage Pastel Turkish Oushak Hand-Spun Wool Rug</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-oushak-rugs.jpg' | asset_url }}" alt="Oushak Rug" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price grid-product-card__price--sale">$780.00</span>
-                <span class="grid-product-card__old-price">$990.00</span>
-              </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
-
-          <a href="/collections/all?filter=storage" class="grid-product-card">
-            <span class="grid-product-card__category">Office Shelving</span>
-            <h4 class="grid-product-card__title">Modern Minimalist Open Wood Bookshelf & Display Unit</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-bookshelves.jpg' | asset_url }}" alt="Bookshelf" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price">$650.00</span>
-              </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
-
-          <a href="/collections/all?filter=entryway-runner" class="grid-product-card">
-            <span class="grid-product-card__category">Long Runners, Wool</span>
-            <h4 class="grid-product-card__title">Grand Persian Entryway Runner Rug with Floral Border</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-runner-rugs.jpg' | asset_url }}" alt="Runner Rug" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price grid-product-card__price--sale">$499.00</span>
-                <span class="grid-product-card__old-price">$650.00</span>
-              </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
-
+            </a>
+          {%- endif -%}
         </div>
 
         <!-- Tab 2: On Sale Grid -->
         <div class="tab-content" id="tab-onsale-{{ section.id }}" role="tabpanel">
-          <a href="/collections/all?filter=desks" class="grid-product-card">
-            <span class="grid-product-card__category">Office Furniture, Desks</span>
-            <h4 class="grid-product-card__title">Executive Solid Walnut Office Desk with Brass Trim</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-executive-desks.jpg' | asset_url }}" alt="Walnut Desk" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price grid-product-card__price--sale">$1,249.00</span>
-                <span class="grid-product-card__old-price">$1,599.00</span>
+          {%- assign col_onsale = section.settings.collection_onsale | default: collections['special-collection'] -%}
+          {%- if col_onsale != blank and col_onsale.products_count > 0 -%}
+            {%- for product in col_onsale.products limit: 8 -%}
+              <a href="{{ product.url }}" class="grid-product-card">
+                <span class="grid-product-card__category">{{ product.type | default: col_onsale.title }}</span>
+                <h4 class="grid-product-card__title">{{ product.title }}</h4>
+                <div class="grid-product-card__media">
+                  {%- if product.featured_media != blank -%}
+                    <img src="{{ product.featured_media | image_url: width: 300 }}" alt="{{ product.title | escape }}" loading="lazy">
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag }}
+                  {%- endif -%}
+                </div>
+                <div class="grid-product-card__footer">
+                  <div class="grid-product-card__pricing">
+                    <span class="grid-product-card__price grid-product-card__price--sale">{{ product.price | money }}</span>
+                    {%- if product.compare_at_price > product.price -%}
+                      <span class="grid-product-card__old-price">{{ product.compare_at_price | money }}</span>
+                    {%- endif -%}
+                  </div>
+                  <button type="button" class="grid-product-card__cart-btn" aria-label="View product">
+                    <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                  </button>
+                </div>
+              </a>
+            {%- endfor -%}
+          {%- else -%}
+            <a href="/collections/special-collection" class="grid-product-card">
+              <span class="grid-product-card__category">On Sale</span>
+              <h4 class="grid-product-card__title">Executive Office Furniture</h4>
+              <div class="grid-product-card__media">
+                <img src="{{ 'cat-executive-desks.jpg' | asset_url }}" alt="Furniture" loading="lazy">
               </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
-
-          <a href="/collections/all?filter=bokhara-rugs" class="grid-product-card">
-            <span class="grid-product-card__category">Fine Wool Rugs</span>
-            <h4 class="grid-product-card__title">Royal Bokhara Deep Ruby Red Wool Area Rug</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-bokhara-rugs.jpg' | asset_url }}" alt="Bokhara Rug" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price grid-product-card__price--sale">$629.00</span>
-                <span class="grid-product-card__old-price">$799.00</span>
+              <div class="grid-product-card__footer">
+                <div class="grid-product-card__pricing"><span class="grid-product-card__price grid-product-card__price--sale">$1,249.00</span></div>
+                <button type="button" class="grid-product-card__cart-btn" aria-label="View product">
+                  <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                </button>
               </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
-
-          <a href="/collections/all?filter=oushak-rugs" class="grid-product-card">
-            <span class="grid-product-card__category">Vintage Rugs, Wool</span>
-            <h4 class="grid-product-card__title">Vintage Pastel Turkish Oushak Hand-Spun Wool Rug</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-oushak-rugs.jpg' | asset_url }}" alt="Oushak Rug" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price grid-product-card__price--sale">$780.00</span>
-                <span class="grid-product-card__old-price">$990.00</span>
-              </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
-
-          <a href="/collections/all?filter=entryway-runner" class="grid-product-card">
-            <span class="grid-product-card__category">Long Runners, Wool</span>
-            <h4 class="grid-product-card__title">Grand Persian Entryway Runner Rug with Floral Border</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-runner-rugs.jpg' | asset_url }}" alt="Runner Rug" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price grid-product-card__price--sale">$499.00</span>
-                <span class="grid-product-card__old-price">$650.00</span>
-              </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
-
-          <a href="/collections/all?filter=storage" class="grid-product-card">
-            <span class="grid-product-card__category">Office Cabinets</span>
-            <h4 class="grid-product-card__title">Executive 2-Door Solid Walnut Filing & Storage Cabinet</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-storage.jpg' | asset_url }}" alt="Filing Cabinet" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price grid-product-card__price--sale">$540.00</span>
-                <span class="grid-product-card__old-price">$690.00</span>
-              </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
-
-          <a href="/collections/all?filter=accessories" class="grid-product-card">
-            <span class="grid-product-card__category">Desk Accessories</span>
-            <h4 class="grid-product-card__title">Executive Brass Lamp & Leather Desk Organizer Suite</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-desk-accessories.jpg' | asset_url }}" alt="Desk Set" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price grid-product-card__price--sale">$248.00</span>
-                <span class="grid-product-card__old-price">$320.00</span>
-              </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
-
-          <a href="/collections/all?filter=kilim-rugs" class="grid-product-card">
-            <span class="grid-product-card__category">Kilim Rugs, Tribal</span>
-            <h4 class="grid-product-card__title">Tribal Geometric Kilim Flatweave Bohemian Rug</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-kilim-rugs.jpg' | asset_url }}" alt="Kilim Rug" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price grid-product-card__price--sale">$349.00</span>
-                <span class="grid-product-card__old-price">$449.00</span>
-              </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
-
-          <a href="/collections/all?filter=tables" class="grid-product-card">
-            <span class="grid-product-card__category">Solid Wood Furniture</span>
-            <h4 class="grid-product-card__title">Handcrafted Solid Oak Round Coffee Table</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-tables.jpg' | asset_url }}" alt="Coffee Table" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price grid-product-card__price--sale">$420.00</span>
-                <span class="grid-product-card__old-price">$550.00</span>
-              </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
+            </a>
+          {%- endif -%}
         </div>
 
         <!-- Tab 3: Top Rated Grid -->
         <div class="tab-content" id="tab-toprated-{{ section.id }}" role="tabpanel">
-          <a href="/collections/all?filter=chairs" class="grid-product-card">
-            <span class="grid-product-card__category">Executive Seating</span>
-            <h4 class="grid-product-card__title">Ergonomic High-Back Leather Executive Swivel Chair</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-chairs.jpg' | asset_url }}" alt="Executive Chair" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price">$589.00</span>
+          {%- assign col_toprated = section.settings.collection_toprated | default: collections['handmade-rugs'] -%}
+          {%- if col_toprated != blank and col_toprated.products_count > 0 -%}
+            {%- for product in col_toprated.products limit: 8 -%}
+              <a href="{{ product.url }}" class="grid-product-card">
+                <span class="grid-product-card__category">{{ product.type | default: col_toprated.title }}</span>
+                <h4 class="grid-product-card__title">{{ product.title }}</h4>
+                <div class="grid-product-card__media">
+                  {%- if product.featured_media != blank -%}
+                    <img src="{{ product.featured_media | image_url: width: 300 }}" alt="{{ product.title | escape }}" loading="lazy">
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag }}
+                  {%- endif -%}
+                </div>
+                <div class="grid-product-card__footer">
+                  <div class="grid-product-card__pricing">
+                    <span class="grid-product-card__price {% if product.compare_at_price > product.price %}grid-product-card__price--sale{% endif %}">{{ product.price | money }}</span>
+                    {%- if product.compare_at_price > product.price -%}
+                      <span class="grid-product-card__old-price">{{ product.compare_at_price | money }}</span>
+                    {%- endif -%}
+                  </div>
+                  <button type="button" class="grid-product-card__cart-btn" aria-label="View product">
+                    <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                  </button>
+                </div>
+              </a>
+            {%- endfor -%}
+          {%- else -%}
+            <a href="/collections/handmade-rugs" class="grid-product-card">
+              <span class="grid-product-card__category">Top Rated</span>
+              <h4 class="grid-product-card__title">Royal Bokhara Area Rug</h4>
+              <div class="grid-product-card__media">
+                <img src="{{ 'cat-bokhara-rugs.jpg' | asset_url }}" alt="Rug" loading="lazy">
               </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
-
-          <a href="/collections/all?filter=desks" class="grid-product-card">
-            <span class="grid-product-card__category">Office Furniture, Desks</span>
-            <h4 class="grid-product-card__title">Executive Solid Walnut Office Desk with Brass Trim</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-executive-desks.jpg' | asset_url }}" alt="Walnut Desk" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price grid-product-card__price--sale">$1,249.00</span>
-                <span class="grid-product-card__old-price">$1,599.00</span>
+              <div class="grid-product-card__footer">
+                <div class="grid-product-card__pricing"><span class="grid-product-card__price grid-product-card__price--sale">$629.00</span></div>
+                <button type="button" class="grid-product-card__cart-btn" aria-label="View product">
+                  <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                </button>
               </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
-
-          <a href="/collections/all?filter=handmade-rugs" class="grid-product-card">
-            <span class="grid-product-card__category">Masterpiece Rugs</span>
-            <h4 class="grid-product-card__title">Hand-Knotted Isfahan Wool & Silk Medallion Rug</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-handmade-rugs.jpg' | asset_url }}" alt="Isfahan Rug" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price grid-product-card__price--sale">$899.00</span>
-                <span class="grid-product-card__old-price">$1,199.00</span>
-              </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
-
-          <a href="/collections/all?filter=storage" class="grid-product-card">
-            <span class="grid-product-card__category">Office Shelving</span>
-            <h4 class="grid-product-card__title">Modern Minimalist Open Wood Bookshelf & Display Unit</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-bookshelves.jpg' | asset_url }}" alt="Bookshelf" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price">$650.00</span>
-              </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
-
-          <a href="/collections/all?filter=bokhara-rugs" class="grid-product-card">
-            <span class="grid-product-card__category">Fine Wool Rugs</span>
-            <h4 class="grid-product-card__title">Royal Bokhara Deep Ruby Red Wool Area Rug</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-bokhara-rugs.jpg' | asset_url }}" alt="Bokhara Rug" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price grid-product-card__price--sale">$629.00</span>
-                <span class="grid-product-card__old-price">$799.00</span>
-              </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
-
-          <a href="/collections/all?filter=tables" class="grid-product-card">
-            <span class="grid-product-card__category">Solid Wood Furniture</span>
-            <h4 class="grid-product-card__title">Handcrafted Solid Oak Round Coffee Table</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-tables.jpg' | asset_url }}" alt="Coffee Table" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price">$420.00</span>
-              </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
-
-          <a href="/collections/all?filter=oushak-rugs" class="grid-product-card">
-            <span class="grid-product-card__category">Vintage Rugs, Wool</span>
-            <h4 class="grid-product-card__title">Vintage Pastel Turkish Oushak Hand-Spun Wool Rug</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-oushak-rugs.jpg' | asset_url }}" alt="Oushak Rug" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price grid-product-card__price--sale">$780.00</span>
-                <span class="grid-product-card__old-price">$990.00</span>
-              </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
-
-          <a href="/collections/all?filter=entryway-runner" class="grid-product-card">
-            <span class="grid-product-card__category">Long Runners, Wool</span>
-            <h4 class="grid-product-card__title">Grand Persian Entryway Runner Rug with Floral Border</h4>
-            <div class="grid-product-card__media">
-              <img src="{{ 'cat-runner-rugs.jpg' | asset_url }}" alt="Runner Rug" loading="lazy">
-            </div>
-            <div class="grid-product-card__footer">
-              <div class="grid-product-card__pricing">
-                <span class="grid-product-card__price grid-product-card__price--sale">$499.00</span>
-                <span class="grid-product-card__old-price">$650.00</span>
-              </div>
-              <button type="button" class="grid-product-card__cart-btn" aria-label="Add to cart">
-                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </button>
-            </div>
-          </a>
+            </a>
+          {%- endif -%}
         </div>
 
       </div>
@@ -559,6 +314,11 @@
       "content": "Special Offer Box (Left)"
     },
     {
+      "type": "product",
+      "id": "offer_product",
+      "label": "Offer Product (Auto-populates title, price & image)"
+    },
+    {
       "type": "text",
       "id": "offer_label",
       "label": "Offer Label",
@@ -573,30 +333,49 @@
     {
       "type": "text",
       "id": "offer_title",
-      "label": "Offer Product Title",
+      "label": "Offer Product Title (Fallback if no product chosen)",
       "default": "Royal Isfahan Masterpiece Silk & Wool Area Rug"
     },
     {
       "type": "text",
       "id": "offer_price",
-      "label": "Sale Price",
+      "label": "Sale Price (Fallback)",
       "default": "$1,499.00"
     },
     {
       "type": "text",
       "id": "offer_old_price",
-      "label": "Old Price",
+      "label": "Old Price (Fallback)",
       "default": "$1,899.00"
     },
     {
       "type": "url",
       "id": "offer_link",
-      "label": "Offer Link"
+      "label": "Offer Link (Fallback)"
     },
     {
       "type": "image_picker",
       "id": "offer_image",
-      "label": "Offer Product Image"
+      "label": "Offer Product Image (Fallback)"
+    },
+    {
+      "type": "header",
+      "content": "Tabbed Product Collections (Right)"
+    },
+    {
+      "type": "collection",
+      "id": "collection_featured",
+      "label": "Featured Tab Collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection_onsale",
+      "label": "On Sale Tab Collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection_toprated",
+      "label": "Top Rated Tab Collection"
     }
   ],
   "presets": [

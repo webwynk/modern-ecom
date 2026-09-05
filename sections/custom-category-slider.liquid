@@ -45,16 +45,47 @@
     <div class="category-slider__wrapper">
       <div class="category-slider__track" id="CatTrack-{{ section.id }}" role="region" aria-label="Categories Carousel">
         {% for block in section.blocks %}
+          {%- liquid
+            assign col = block.settings.collection
+            assign card_title = block.settings.title
+            if card_title == blank and col != blank
+              assign card_title = col.title
+            endif
+            if card_title == blank
+              assign card_title = 'Collection'
+            endif
+
+            assign card_url = block.settings.link
+            if card_url == blank and col != blank
+              assign card_url = col.url
+            endif
+            if card_url == blank
+              assign card_url = '/collections/all'
+            endif
+
+            assign card_count = block.settings.count
+            if card_count == blank and col != blank
+              assign card_count = col.all_products_count | append: ' Items'
+            endif
+
+            assign card_image = block.settings.image
+            if card_image == blank and col != blank and col.featured_image != blank
+              assign card_image = col.featured_image
+            endif
+            if card_image == blank and col != blank and col.products.first.featured_image != blank
+              assign card_image = col.products.first.featured_image
+            endif
+          -%}
           <a
-            href="{{ block.settings.link | default: '/collections/all' }}"
+            href="{{ card_url }}"
             class="category-card"
             {{ block.shopify_attributes }}
           >
             <div class="category-card__image-wrapper">
-              {% if block.settings.image != blank %}
+              {% if card_image != blank %}
                 <img
-                  src="{{ block.settings.image | image_url: width: 320 }}"
-                  alt="{{ block.settings.title | escape }}"
+                  src="{{ card_image | image_url: width: 320 }}"
+                  alt="{{ card_title | escape }}"
                   class="category-card__image"
                   loading="lazy"
                   width="160"
@@ -63,19 +94,19 @@
               {% elsif block.settings.static_image != blank %}
                 <img
                   src="{{ block.settings.static_image | asset_url }}"
-                  alt="{{ block.settings.title | escape }}"
+                  alt="{{ card_title | escape }}"
                   class="category-card__image"
                   loading="lazy"
                   width="160"
                   height="160"
                 >
               {% else %}
-                {{ 'product-1' | placeholder_svg_tag: 'category-card__image' }}
+                {{ 'collection-1' | placeholder_svg_tag: 'category-card__image' }}
               {% endif %}
             </div>
-            <h3 class="category-card__title">{{ block.settings.title }}</h3>
-            {% if block.settings.count != blank %}
-              <span class="category-card__count">{{ block.settings.count }}</span>
+            <h3 class="category-card__title">{{ card_title }}</h3>
+            {% if card_count != blank %}
+              <span class="category-card__count">{{ card_count }}</span>
             {% endif %}
           </a>
         {% endfor %}
@@ -141,9 +172,14 @@
       "name": "Category Card",
       "settings": [
         {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
           "type": "image_picker",
           "id": "image",
-          "label": "Custom Image"
+          "label": "Custom Image (Optional Override)"
         },
         {
           "type": "text",
@@ -154,19 +190,17 @@
         {
           "type": "text",
           "id": "title",
-          "label": "Category Title",
-          "default": "Handmade Rugs"
+          "label": "Category Title (Optional Override)"
         },
         {
           "type": "text",
           "id": "count",
-          "label": "Item Count",
-          "default": "50+ Items"
+          "label": "Item Count (Optional Override)"
         },
         {
           "type": "url",
           "id": "link",
-          "label": "Category Link"
+          "label": "Category Link (Optional Override)"
         }
       ]
     }
@@ -178,100 +212,43 @@
         {
           "type": "category_card",
           "settings": {
-            "title": "Handmade Rugs",
-            "count": "50+ Items",
-            "static_image": "cat-handmade-rugs.jpg",
-            "link": "/collections/all?filter=handmade-rugs"
+            "collection": "handmade-rugs"
           }
         },
         {
           "type": "category_card",
           "settings": {
-            "title": "Executive Desks",
-            "count": "28+ Items",
-            "static_image": "cat-executive-desks.jpg",
-            "link": "/collections/all?filter=desks"
+            "collection": "executive-desks"
           }
         },
         {
           "type": "category_card",
           "settings": {
-            "title": "Kilim Rugs",
-            "count": "32+ Items",
-            "static_image": "cat-kilim-rugs.jpg",
-            "link": "/collections/all?filter=kilim-rugs"
+            "collection": "small-rugs"
           }
         },
         {
           "type": "category_card",
           "settings": {
-            "title": "Office Chairs",
-            "count": "35+ Items",
-            "static_image": "cat-chairs.jpg",
-            "link": "/collections/all?filter=chairs"
+            "collection": "office-chairs"
           }
         },
         {
           "type": "category_card",
           "settings": {
-            "title": "Bokhara Rugs",
-            "count": "24+ Items",
-            "static_image": "cat-bokhara-rugs.jpg",
-            "link": "/collections/all?filter=bokhara-rugs"
+            "collection": "storage"
           }
         },
         {
           "type": "category_card",
           "settings": {
-            "title": "Storage & Cabinets",
-            "count": "18+ Items",
-            "static_image": "cat-storage.jpg",
-            "link": "/collections/all?filter=storage"
+            "collection": "table"
           }
         },
         {
           "type": "category_card",
           "settings": {
-            "title": "Runner Rugs",
-            "count": "45+ Items",
-            "static_image": "cat-runner-rugs.jpg",
-            "link": "/collections/all?filter=entryway-runner"
-          }
-        },
-        {
-          "type": "category_card",
-          "settings": {
-            "title": "Artisan Tables",
-            "count": "20+ Items",
-            "static_image": "cat-tables.jpg",
-            "link": "/collections/all?filter=tables"
-          }
-        },
-        {
-          "type": "category_card",
-          "settings": {
-            "title": "Oushak Rugs",
-            "count": "18+ Items",
-            "static_image": "cat-oushak-rugs.jpg",
-            "link": "/collections/all?filter=oushak-rugs"
-          }
-        },
-        {
-          "type": "category_card",
-          "settings": {
-            "title": "Bookshelves",
-            "count": "15+ Items",
-            "static_image": "cat-bookshelves.jpg",
-            "link": "/collections/all?filter=storage"
-          }
-        },
-        {
-          "type": "category_card",
-          "settings": {
-            "title": "Desk Accessories",
-            "count": "40+ Items",
-            "static_image": "cat-desk-accessories.jpg",
-            "link": "/collections/all?filter=accessories"
+            "collection": "special-collection"
           }
         }
       ]
