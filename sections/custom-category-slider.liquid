@@ -47,6 +47,9 @@
         {% for block in section.blocks %}
           {%- liquid
             assign col = block.settings.collection
+            if col.title == blank and block.settings.collection != blank
+              assign col = collections[block.settings.collection]
+            endif
             assign card_title = block.settings.title
             if card_title == blank and col != blank
               assign card_title = col.title

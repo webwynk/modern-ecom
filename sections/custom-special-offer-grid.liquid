@@ -13,7 +13,12 @@
       <!-- ========================================
            1. Left Column: Special Offer Box
            ======================================== -->
-      {%- assign offer_prod = section.settings.offer_product -%}
+      {%- liquid
+        assign offer_prod = section.settings.offer_product
+        if offer_prod.title == blank and section.settings.offer_product != blank
+          assign offer_prod = all_products[section.settings.offer_product]
+        endif
+      -%}
       {%- assign offer_url = section.settings.offer_link -%}
       {%- if offer_url == blank and offer_prod != blank -%}
         {%- assign offer_url = offer_prod.url -%}
@@ -23,7 +28,7 @@
       {%- endif -%}
 
       {%- assign offer_title = section.settings.offer_title -%}
-      {%- if section.settings.offer_product != blank -%}
+      {%- if offer_prod != blank -%}
         {%- assign offer_title = offer_prod.title -%}
       {%- endif -%}
 
@@ -59,24 +64,25 @@
             {% elsif offer_prod != blank and offer_prod.featured_media != blank %}
               <img src="{{ offer_prod.featured_media | image_url: width: 500 }}" alt="{{ offer_title | escape }}" loading="lazy">
             {% else %}
-              <img src="{{ 'cat-handmade-rugs.jpg' | asset_url }}" alt="Special Offer Rug" loading="lazy">
+              <img src="{{ 'cat-handmade-rugs.jpg' | asset_url }}" alt="{{ offer_title | escape }}" loading="lazy">
             {% endif %}
           </div>
 
-          <h4 class="special-offer-card__product-title">{{ offer_title | default: 'Royal Isfahan Masterpiece Silk & Wool Area Rug' }}</h4>
-
-          <div class="special-offer-card__pricing">
-            <span class="special-offer-card__price">{{ offer_price_str | default: '$1,499.00' }}</span>
-            {% if offer_old_price_str != blank %}
-              <span class="special-offer-card__old-price">{{ offer_old_price_str }}</span>
-            {% endif %}
+          <div class="special-offer-card__info">
+            <h4 class="special-offer-card__title">{{ offer_title }}</h4>
+            <div class="special-offer-card__pricing">
+              <span class="special-offer-card__price">{{ offer_price_str }}</span>
+              {% if offer_old_price_str != blank %}
+                <span class="special-offer-card__old-price">{{ offer_old_price_str }}</span>
+              {% endif %}
+            </div>
           </div>
         </div>
 
-        <!-- Live Countdown Timer -->
-        <div class="special-offer-card__countdown">
-          <p class="special-offer-card__countdown-text">Hurry Up! Offer ends in:</p>
-          <div class="special-offer-card__timer" id="offerTimer-{{ section.id }}">
+        <!-- Countdown Timer -->
+        <div class="special-offer-timer">
+          <span class="timer-title">Hurry up! Offer ends in:</span>
+          <div class="timer-countdown" id="specialOfferTimer-{{ section.id }}">
             <div class="timer-block">
               <span class="timer-number timer-hours">08</span>
               <span class="timer-label">Hours</span>
@@ -108,8 +114,19 @@
 
         <!-- Tab 1: Featured Products Grid -->
         <div class="tab-content is-active" id="tab-featured-{{ section.id }}" role="tabpanel">
-          {%- assign col_featured = section.settings.collection_featured | default: collections['special-collection'] -%}
-          {%- if col_featured != blank and col_featured.products_count > 0 -%}
+          {%- liquid
+            assign col_featured = section.settings.collection_featured
+            if col_featured.title == blank and section.settings.collection_featured != blank
+              assign col_featured = collections[section.settings.collection_featured]
+            endif
+            if col_featured == blank or col_featured.title == blank
+              assign col_featured = collections['special-collection']
+            endif
+            if col_featured == blank or col_featured.all_products_count == 0
+              assign col_featured = collections['all']
+            endif
+          -%}
+          {%- if col_featured != blank and col_featured.products.size > 0 -%}
             {%- for product in col_featured.products limit: 8 -%}
               <a href="{{ product.url }}" class="grid-product-card">
                 <span class="grid-product-card__category">{{ product.type | default: col_featured.title }}</span>
@@ -117,8 +134,10 @@
                 <div class="grid-product-card__media">
                   {%- if product.featured_media != blank -%}
                     <img src="{{ product.featured_media | image_url: width: 300 }}" alt="{{ product.title | escape }}" loading="lazy">
+                  {%- elsif product.featured_image != blank -%}
+                    <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title | escape }}" loading="lazy">
                   {%- else -%}
-                    {{ 'product-1' | placeholder_svg_tag }}
+                    <img src="{{ 'cat-handmade-rugs.jpg' | asset_url }}" alt="{{ product.title | escape }}" loading="lazy">
                   {%- endif -%}
                 </div>
                 <div class="grid-product-card__footer">
@@ -153,8 +172,19 @@
 
         <!-- Tab 2: On Sale Grid -->
         <div class="tab-content" id="tab-onsale-{{ section.id }}" role="tabpanel">
-          {%- assign col_onsale = section.settings.collection_onsale | default: collections['special-collection'] -%}
-          {%- if col_onsale != blank and col_onsale.products_count > 0 -%}
+          {%- liquid
+            assign col_onsale = section.settings.collection_onsale
+            if col_onsale.title == blank and section.settings.collection_onsale != blank
+              assign col_onsale = collections[section.settings.collection_onsale]
+            endif
+            if col_onsale == blank or col_onsale.title == blank
+              assign col_onsale = collections['special-collection']
+            endif
+            if col_onsale == blank or col_onsale.all_products_count == 0
+              assign col_onsale = collections['all']
+            endif
+          -%}
+          {%- if col_onsale != blank and col_onsale.products.size > 0 -%}
             {%- for product in col_onsale.products limit: 8 -%}
               <a href="{{ product.url }}" class="grid-product-card">
                 <span class="grid-product-card__category">{{ product.type | default: col_onsale.title }}</span>
@@ -162,8 +192,10 @@
                 <div class="grid-product-card__media">
                   {%- if product.featured_media != blank -%}
                     <img src="{{ product.featured_media | image_url: width: 300 }}" alt="{{ product.title | escape }}" loading="lazy">
+                  {%- elsif product.featured_image != blank -%}
+                    <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title | escape }}" loading="lazy">
                   {%- else -%}
-                    {{ 'product-1' | placeholder_svg_tag }}
+                    <img src="{{ 'cat-executive-desks.jpg' | asset_url }}" alt="{{ product.title | escape }}" loading="lazy">
                   {%- endif -%}
                 </div>
                 <div class="grid-product-card__footer">
@@ -198,8 +230,19 @@
 
         <!-- Tab 3: Top Rated Grid -->
         <div class="tab-content" id="tab-toprated-{{ section.id }}" role="tabpanel">
-          {%- assign col_toprated = section.settings.collection_toprated | default: collections['handmade-rugs'] -%}
-          {%- if col_toprated != blank and col_toprated.products_count > 0 -%}
+          {%- liquid
+            assign col_toprated = section.settings.collection_toprated
+            if col_toprated.title == blank and section.settings.collection_toprated != blank
+              assign col_toprated = collections[section.settings.collection_toprated]
+            endif
+            if col_toprated == blank or col_toprated.title == blank
+              assign col_toprated = collections['handmade-rugs']
+            endif
+            if col_toprated == blank or col_toprated.all_products_count == 0
+              assign col_toprated = collections['all']
+            endif
+          -%}
+          {%- if col_toprated != blank and col_toprated.products.size > 0 -%}
             {%- for product in col_toprated.products limit: 8 -%}
               <a href="{{ product.url }}" class="grid-product-card">
                 <span class="grid-product-card__category">{{ product.type | default: col_toprated.title }}</span>
@@ -207,8 +250,10 @@
                 <div class="grid-product-card__media">
                   {%- if product.featured_media != blank -%}
                     <img src="{{ product.featured_media | image_url: width: 300 }}" alt="{{ product.title | escape }}" loading="lazy">
+                  {%- elsif product.featured_image != blank -%}
+                    <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title | escape }}" loading="lazy">
                   {%- else -%}
-                    {{ 'product-1' | placeholder_svg_tag }}
+                    <img src="{{ 'cat-bokhara-rugs.jpg' | asset_url }}" alt="{{ product.title | escape }}" loading="lazy">
                   {%- endif -%}
                 </div>
                 <div class="grid-product-card__footer">
