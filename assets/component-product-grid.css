@@ -99,6 +99,63 @@
 }
 
 /* ========================================
+   Category Tab Navigation Controls (Arrows)
+   ======================================== */
+.product-grid__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-shrink: 0;
+}
+
+.product-grid__arrow {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  border: 0.1rem solid rgba(0, 0, 0, 0.12);
+  background-color: #ffffff;
+  color: #000000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.product-grid__arrow:hover:not(:disabled) {
+  background-color: var(--color-highlight, #997A51);
+  border-color: var(--color-highlight, #997A51);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(153, 122, 81, 0.3);
+}
+
+.product-grid__arrow:active:not(:disabled) {
+  transform: translateY(0) scale(0.94);
+}
+
+.product-grid__arrow:disabled,
+.product-grid__arrow.is-disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+  box-shadow: none;
+  transform: none;
+}
+
+.product-grid__arrow svg {
+  width: 1.8rem;
+  height: 1.8rem;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+/* ========================================
    10-Product Responsive Grid (Gap 1.2rem Desktop)
    Desktop: 5 Columns (2 rows of 5)
    ======================================== */
@@ -685,6 +742,16 @@
 }
 
 @media screen and (max-width: 749px) {
+  .product-grid__arrow {
+    width: 3.6rem;
+    height: 3.6rem;
+  }
+
+  .product-grid__arrow svg {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+
   .deal-tabs-wrapper {
     gap: 0.8rem;
     margin-bottom: 2rem;

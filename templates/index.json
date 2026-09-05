@@ -246,9 +246,7 @@
         "collection": "special-collection",
         "products_per_page": 10,
         "enable_pagination": true,
-        "show_view_all": true,
-        "view_all_text": "View All",
-        "view_all_link": ""
+        "show_tab_arrows": true
       }
     }
   },

@@ -24,7 +24,7 @@
 
 <div class="section-product-grid" id="ProductGrid-{{ section.id }}">
   <div class="product-grid__container">
-    <!-- Header with Right-Aligned View All Button -->
+    <!-- Header with Right-Aligned Category Tab Navigation Arrows -->
     <div class="product-grid__header">
       <div class="product-grid__title-group">
         <h2 class="product-grid__heading">{{ section.settings.heading | default: 'Special Collection Deals' }}</h2>
@@ -33,22 +33,31 @@
         {% endif %}
       </div>
 
-      {% assign view_all_target = section.settings.view_all_link %}
-      {% if view_all_target == blank and section.settings.collection != blank %}
-        {% assign view_all_target = section.settings.collection.url %}
-      {% endif %}
-      {% if view_all_target == blank %}
-        {% assign view_all_target = '/collections/all' %}
-      {% endif %}
-
-      {% if section.settings.show_view_all %}
-        <a href="{{ view_all_target }}" class="product-grid__view-all-btn" id="dealViewAllBtn-{{ section.id }}">
-          <span>{{ section.settings.view_all_text | default: 'View All' }}</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </a>
+      {% if section.settings.show_tab_arrows != false %}
+        <div class="product-grid__controls" aria-label="Category Tab Navigation">
+          <button
+            type="button"
+            class="product-grid__arrow product-grid__arrow--prev"
+            aria-label="Previous category tab"
+            id="TabPrev-{{ section.id }}"
+            title="Previous collection"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="product-grid__arrow product-grid__arrow--next"
+            aria-label="Next category tab"
+            id="TabNext-{{ section.id }}"
+            title="Next collection"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
       {% endif %}
     </div>
 
@@ -426,13 +435,75 @@
 
       var tabButtons = sectionEl.querySelectorAll('.deal-tab-btn');
       var panels = sectionEl.querySelectorAll('.deal-tab-panel');
-      var viewAllBtn = document.getElementById('dealViewAllBtn-{{ section.id }}');
+      var tabPrevBtn = document.getElementById('TabPrev-{{ section.id }}');
+      var tabNextBtn = document.getElementById('TabNext-{{ section.id }}');
+      var tabsWrapper = sectionEl.querySelector('.deal-tabs-wrapper');
+
+      function getActiveTabIndex() {
+        for (var i = 0; i < tabButtons.length; i++) {
+          if (tabButtons[i].classList.contains('is-active')) {
+            return i;
+          }
+        }
+        return 0;
+      }
+
+      function updateTabArrowStates() {
+        if (!tabPrevBtn || !tabNextBtn || tabButtons.length === 0) return;
+        var activeIdx = getActiveTabIndex();
+
+        tabPrevBtn.disabled = (activeIdx <= 0);
+        if (activeIdx <= 0) {
+          tabPrevBtn.classList.add('is-disabled');
+        } else {
+          tabPrevBtn.classList.remove('is-disabled');
+        }
+
+        tabNextBtn.disabled = (activeIdx >= tabButtons.length - 1);
+        if (activeIdx >= tabButtons.length - 1) {
+          tabNextBtn.classList.add('is-disabled');
+        } else {
+          tabNextBtn.classList.remove('is-disabled');
+        }
+      }
+
+      function activateTabByIndex(index) {
+        if (index < 0 || index >= tabButtons.length) return;
+        var targetBtn = tabButtons[index];
+        if (targetBtn) {
+          targetBtn.click();
+          if (tabsWrapper) {
+            var btnLeft = targetBtn.offsetLeft;
+            var btnWidth = targetBtn.offsetWidth;
+            var wrapperWidth = tabsWrapper.offsetWidth;
+            var scrollPos = btnLeft - (wrapperWidth / 2) + (btnWidth / 2);
+            tabsWrapper.scrollTo({ left: Math.max(0, scrollPos), behavior: 'smooth' });
+          }
+        }
+      }
+
+      if (tabPrevBtn) {
+        tabPrevBtn.addEventListener('click', function() {
+          var curr = getActiveTabIndex();
+          if (curr > 0) {
+            activateTabByIndex(curr - 1);
+          }
+        });
+      }
+
+      if (tabNextBtn) {
+        tabNextBtn.addEventListener('click', function() {
+          var curr = getActiveTabIndex();
+          if (curr < tabButtons.length - 1) {
+            activateTabByIndex(curr + 1);
+          }
+        });
+      }
 
       // Tab Switching Handler
       tabButtons.forEach(function(btn) {
         btn.addEventListener('click', function() {
           var targetPanelId = this.getAttribute('data-tab-target');
-          var colUrl = this.getAttribute('data-collection-url');
 
           tabButtons.forEach(function(b) {
             b.classList.remove('is-active');
@@ -450,12 +521,12 @@
             }
           });
 
-          // Update View All link to point to current tab collection
-          if (viewAllBtn && colUrl) {
-            viewAllBtn.setAttribute('href', colUrl);
-          }
+          updateTabArrowStates();
         });
       });
+
+      // Initialize tab arrows state
+      updateTabArrowStates();
 
       // Pagination Click Handlers
       panels.forEach(function(panel) {
@@ -615,20 +686,9 @@
     },
     {
       "type": "checkbox",
-      "id": "show_view_all",
-      "label": "Show View All Button",
+      "id": "show_tab_arrows",
+      "label": "Show Category Tab Arrows",
       "default": true
-    },
-    {
-      "type": "text",
-      "id": "view_all_text",
-      "label": "View All Button Text",
-      "default": "View All"
-    },
-    {
-      "type": "url",
-      "id": "view_all_link",
-      "label": "View All Link (Leave blank for collection URL)"
     }
   ],
   "blocks": [
