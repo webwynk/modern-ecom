@@ -147,6 +147,8 @@
     "featured_deals_grid": {
       "type": "custom-product-grid",
       "settings": {
+        "collection": "special-collection",
+        "products_to_show": 10,
         "heading": "Special Collection Deals",
         "subheading": "Curated selection of handcrafted rugs and premium executive office furniture",
         "show_view_all": true,
