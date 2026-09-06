@@ -17,10 +17,6 @@
         {{- collection.title | escape -}}
       </h1>
 
-      {%- if section.settings.enable_breadcrumbs -%}
-        {% render 'breadcrumbs' %}
-      {%- endif -%}
-
       {%- if section.settings.show_collection_description -%}
         <div class="collection-hero__description rte">{{ collection.description }}</div>
       {%- endif -%}
@@ -57,12 +53,6 @@
     {
       "type": "paragraph",
       "content": "t:sections.main-collection-banner.settings.paragraph.content"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_breadcrumbs",
-      "default": true,
-      "label": "Show breadcrumbs"
     },
     {
       "type": "checkbox",

@@ -59,16 +59,6 @@
           class="card__inner {% if settings.card_style == 'standard' %}color-{{ settings.card_color_scheme }} gradient{% endif %}{% if card_product.featured_media or settings.card_style == 'standard' %} ratio{% endif %}"
           style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;"
         >
-          <button
-            type="button"
-            class="card__wishlist-btn"
-            aria-label="Add to wishlist"
-            onclick="event.preventDefault(); event.stopPropagation(); this.classList.toggle('active');"
-          >
-            <svg class="icon icon-heart" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-            </svg>
-          </button>
           {%- if card_product.featured_media -%}
             <div class="card__media{% if image_shape and image_shape != 'default' %} shape--{{ image_shape }} color-{{ settings.card_color_scheme }} gradient{% endif %}">
               <div class="media media--transparent media--hover-effect">
@@ -119,25 +109,23 @@
             </div>
           {%- endif -%}
           <div class="card__content">
-            {%- if card_product.featured_media == nil -%}
-              <div class="card__information">
-                <h3
-                  class="card__heading"
-                  {% if card_product.featured_media == null and settings.card_style == 'standard' %}
-                    id="title-{{ section_id }}-{{ card_product.id }}"
-                  {% endif %}
+            <div class="card__information">
+              <h3
+                class="card__heading"
+                {% if card_product.featured_media == null and settings.card_style == 'standard' %}
+                  id="title-{{ section_id }}-{{ card_product.id }}"
+                {% endif %}
+              >
+                <a
+                  href="{{ card_product.url }}"
+                  id="StandardCardNoMediaLink-{{ section_id }}-{{ card_product.id }}"
+                  class="full-unstyled-link"
+                  aria-labelledby="StandardCardNoMediaLink-{{ section_id }}-{{ card_product.id }}{% if card_product.available == false or card_product.compare_at_price > card_product.price %} NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}{% endif %}"
                 >
-                  <a
-                    href="{{ card_product.url }}"
-                    id="StandardCardNoMediaLink-{{ section_id }}-{{ card_product.id }}"
-                    class="full-unstyled-link"
-                    aria-labelledby="StandardCardNoMediaLink-{{ section_id }}-{{ card_product.id }}{% if card_product.available == false or card_product.compare_at_price > card_product.price %} NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}{% endif %}"
-                  >
-                    {{ card_product.title | escape }}
-                  </a>
-                </h3>
-              </div>
-            {%- endif -%}
+                  {{ card_product.title | escape }}
+                </a>
+              </h3>
+            </div>
             <div class="card__badge {{ settings.badge_position }}">
               {%- if card_product.available == false -%}
                 <span
@@ -147,12 +135,11 @@
                   {{- 'products.product.sold_out' | t -}}
                 </span>
               {%- elsif card_product.compare_at_price > card_product.price and card_product.available -%}
-                {%- assign savings_pct = card_product.compare_at_price | minus: card_product.price | times: 100.0 | divided_by: card_product.compare_at_price | round -%}
                 <span
                   id="NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
-                  class="badge card__badge--save"
+                  class="badge badge--bottom-left color-{{ settings.sale_badge_color_scheme }}"
                 >
-                  SAVE {{ savings_pct }}%
+                  {{- 'products.product.on_sale' | t -}}
                 </span>
               {%- endif -%}
             </div>
@@ -160,21 +147,6 @@
         </div>
         <div class="card__content">
           <div class="card__information">
-            {%- assign current_sku = card_product.selected_or_first_available_variant.sku -%}
-            {%- if current_sku == blank -%}
-              {%- assign current_sku = card_product.vendor | default: 'SKU' | append: '-' | append: card_product.id | slice: -8, 8 | upcase -%}
-            {%- endif -%}
-            <div class="card__meta-row">
-              <span class="card__sku">SKU: {{ current_sku }}</span>
-              <div class="card__rating">
-                <svg class="icon icon-star" width="12" height="12" viewBox="0 0 24 24" fill="#C59B27" stroke="#C59B27" stroke-width="1">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                </svg>
-                <span class="card__rating-score">{% if card_product.metafields.reviews.rating.value %}{{ card_product.metafields.reviews.rating.value.rating | round: 1 }}{% else %}4.9{% endif %}</span>
-                <span class="card__rating-count">({% if card_product.metafields.reviews.rating_count %}{{ card_product.metafields.reviews.rating_count }}{% else %}{{ card_product.id | slice: -2, 2 | plus: 25 }}{% endif %})</span>
-              </div>
-            </div>
-
             <h3
               class="card__heading{% if card_product.featured_media or settings.card_style == 'standard' %} h5{% endif %}"
               {% if card_product.featured_media or settings.card_style == 'card' %}
@@ -190,59 +162,51 @@
                 {{ card_product.title | escape }}
               </a>
             </h3>
-            <div class="card__price-row">
-              {%- if card_product.compare_at_price > card_product.price -%}
-                <span class="card__price-sale">{{ card_product.price | money }}</span>
-                <s class="card__price-compare">{{ card_product.compare_at_price | money }}</s>
-              {%- else -%}
-                <span class="card__price-regular">{{ card_product.price | money }}</span>
+            <div class="card-information">
+              {%- if show_vendor -%}
+                <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
+                <div class="caption-with-letter-spacing light">{{ card_product.vendor }}</div>
               {%- endif -%}
-            </div>
 
-            <div class="card__buy-now-wrapper">
-              {%- if card_product.available -%}
-                {%- if card_product.variants_count > 1 -%}
-                  <a href="{{ card_product.url }}" class="card__buy-now-btn button button--full-width">
-                    <svg class="icon icon-cart" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <circle cx="9" cy="21" r="1"></circle>
-                      <circle cx="20" cy="21" r="1"></circle>
-                      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                    </svg>
-                    <span>Buy Now</span>
-                  </a>
-                {%- else -%}
-                  {% assign product_form_id = 'quick-buy-' | append: section_id | append: card_product.id %}
-                  <product-form data-section-id="{{ section.id }}">
-                    {%- form 'product',
-                      card_product,
-                      id: product_form_id,
-                      class: 'form',
-                      novalidate: 'novalidate',
-                      data-type: 'add-to-cart-form'
-                    -%}
-                      <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
-                      <button
-                        type="submit"
-                        name="add"
-                        class="card__buy-now-btn button button--full-width"
-                      >
-                        <svg class="icon icon-cart" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                          <circle cx="9" cy="21" r="1"></circle>
-                          <circle cx="20" cy="21" r="1"></circle>
-                          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                        </svg>
-                        <span>Buy Now</span>
-                        {%- render 'loading-spinner' -%}
-                      </button>
-                    {%- endform -%}
-                  </product-form>
-                {%- endif -%}
-              {%- else -%}
-                <button class="card__buy-now-btn button button--full-width" disabled>
-                  <span>{{ 'products.product.sold_out' | t }}</span>
-                </button>
+              <span class="caption-large light">{{ block.settings.description | escape }}</span>
+
+              {%- if show_rating and card_product.metafields.reviews.rating.value != blank -%}
+                {% liquid
+                  assign rating_decimal = 0
+                  assign decimal = card_product.metafields.reviews.rating.value.rating | modulo: 1
+                  if decimal >= 0.3 and decimal <= 0.7
+                    assign rating_decimal = 0.5
+                  elsif decimal > 0.7
+                    assign rating_decimal = 1
+                  endif
+                %}
+                <div
+                  class="rating"
+                  role="img"
+                  aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: card_product.metafields.reviews.rating.value, rating_max: card_product.metafields.reviews.rating.value.scale_max }}"
+                >
+                  <span
+                    aria-hidden="true"
+                    class="rating-star"
+                    style="--rating: {{ card_product.metafields.reviews.rating.value.rating | floor }}; --rating-max: {{ card_product.metafields.reviews.rating.value.scale_max }}; --rating-decimal: {{ rating_decimal }};"
+                  ></span>
+                </div>
+                <p class="rating-text caption">
+                  <span aria-hidden="true">
+                    {{- card_product.metafields.reviews.rating.value }} /
+                    {{ card_product.metafields.reviews.rating.value.scale_max -}}
+                  </span>
+                </p>
+                <p class="rating-count caption">
+                  <span aria-hidden="true">({{ card_product.metafields.reviews.rating_count }})</span>
+                  <span class="visually-hidden">
+                    {{- card_product.metafields.reviews.rating_count }}
+                    {{ 'accessibility.total_reviews' | t -}}
+                  </span>
+                </p>
               {%- endif -%}
-            </div>
+
+              {% render 'price', product: card_product, price_class: '', show_compare_at_price: true %}
               {%- if card_product.quantity_price_breaks_configured? -%}
                 {% if card_product.variants_count == 1 and quick_add == 'bulk' %}
                   {% liquid
@@ -325,6 +289,7 @@
                 {% endif %}
               {%- endif -%}
             </div>
+          </div>
           {% assign product_form_id = 'quick-add-' | append: section_id | append: card_product.id %}
           {% if quick_add == 'standard' %}
             <div class="quick-add no-js-hidden">
