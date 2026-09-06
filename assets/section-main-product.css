@@ -2393,3 +2393,132 @@ media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail img {
   line-height: 1.7 !important;
   color: rgba(0, 0, 0, 0.8) !important;
 }
+
+/* ==========================================================================
+   10. Trust Badges & Guaranteed Safe Checkout
+   ========================================================================== */
+
+.product__info-container .product-trust {
+  margin: 2rem 0 0 0 !important;
+  width: 100% !important;
+}
+
+/* 1. Perks Container (4 Pillars) */
+.product__info-container .product-trust__perks {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 0.8rem !important;
+  padding: 1.6rem 1rem !important;
+  background-color: #FFFFFF !important;
+  border: 1px solid #E5E7EB !important;
+  border-radius: 12px !important;
+  text-align: center !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+}
+
+.product__info-container .product-trust__perk {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+
+.product__info-container .product-trust__perk-icon {
+  width: 32px !important;
+  height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-bottom: 0.6rem !important;
+}
+
+.product__info-container .product-trust__perk-icon svg {
+  width: 26px !important;
+  height: 26px !important;
+  stroke: #997A51 !important;
+  display: block !important;
+}
+
+.product__info-container .product-trust__perk-text {
+  font-family: inherit !important;
+  font-size: 1.25rem !important;
+  font-weight: 500 !important;
+  line-height: 1.25 !important;
+  color: #111827 !important;
+  text-align: center !important;
+}
+
+@media screen and (max-width: 749px) {
+  .product__info-container .product-trust__perks {
+    padding: 1.2rem 0.5rem !important;
+    gap: 0.4rem !important;
+  }
+
+  .product__info-container .product-trust__perk-icon svg {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  .product__info-container .product-trust__perk-text {
+    font-size: 1.1rem !important;
+  }
+}
+
+/* 2. Guaranteed Safe Checkout Box */
+.product__info-container .product-trust__checkout {
+  margin-top: 1.6rem !important;
+}
+
+.product__info-container .product-trust__checkout-box {
+  margin: 0 !important;
+  padding: 1.4rem 1.6rem 1.2rem !important;
+  border: 1px solid #E5E7EB !important;
+  border-radius: 8px !important;
+  text-align: center !important;
+  background-color: #FFFFFF !important;
+  position: relative !important;
+}
+
+.product__info-container .product-trust__checkout-heading {
+  font-family: inherit !important;
+  font-size: 1.35rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+  color: #111827 !important;
+  padding: 0 1.2rem !important;
+  margin: 0 auto !important;
+  width: max-content !important;
+  float: none !important;
+}
+
+.product__info-container .product-trust__badges-image {
+  margin-top: 0.4rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.product__info-container .product-trust__badges-image img {
+  max-width: 100% !important;
+  width: auto !important;
+  max-height: 42px !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+  margin: 0 auto !important;
+}
+
+@media screen and (max-width: 749px) {
+  .product__info-container .product-trust__checkout-heading {
+    font-size: 1.25rem !important;
+    padding: 0 0.8rem !important;
+  }
+
+  .product__info-container .product-trust__checkout-box {
+    padding: 1.2rem 1rem 1rem !important;
+  }
+
+  .product__info-container .product-trust__badges-image img {
+    max-height: 36px !important;
+  }
+}
