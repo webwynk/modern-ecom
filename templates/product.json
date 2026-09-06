@@ -69,6 +69,8 @@
       "settings": {
         "enable_sticky_info": true,
         "color_scheme": "scheme-1",
+        "media_position": "left",
+        "gallery_layout": "thumbnail_slider",
         "media_size": "large",
         "constrain_to_viewport": true,
         "media_fit": "contain",
@@ -76,6 +78,7 @@
         "mobile_thumbnails": "show",
         "media_position": "left",
         "image_zoom": "lightbox",
+        "mobile_thumbnails": "show",
         "hide_variants": true,
         "enable_video_looping": false,
         "padding_top": 36,
