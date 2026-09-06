@@ -97,3 +97,24 @@
 .collection__view-all a:not(.link) {
   margin-top: 1rem;
 }
+
+/* 5-Column Grid on Collection Page */
+@media screen and (min-width: 990px) {
+  .product-grid.grid--5-col-desktop {
+    column-gap: 1.6rem;
+    row-gap: 2.4rem;
+  }
+
+  .product-grid.grid--5-col-desktop .grid__item {
+    width: calc(20% - 1.6rem * 4 / 5);
+    max-width: calc(20% - 1.6rem * 4 / 5);
+  }
+}
+
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .product-grid.grid--5-col-desktop .grid__item {
+    width: calc(33.333% - var(--grid-desktop-horizontal-spacing) * 2 / 3);
+    max-width: calc(33.333% - var(--grid-desktop-horizontal-spacing) * 2 / 3);
+  }
+}
+
