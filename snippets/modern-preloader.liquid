@@ -2,15 +2,11 @@
   Modern Site Preloader Overlay
   Features:
     - User-specified 8-step radial multi-dot loader in brand highlight #997A51
+    - Guaranteed minimum 800ms display duration so animation is always visible on reload
     - Clean white #FFFFFF backdrop
-    - Butter-smooth fade-out on window.load with 1.2s safety fallback
-    - Zero-dependency inline CSS & JS for instant execution before render
-    - Automatically excluded in Theme Editor (designMode)
+    - Butter-smooth fade-out with safety timeout
+    - Zero-dependency inline CSS (placed first for instant styling before paint)
 {% endcomment %}
-
-<div class="modern-preloader" id="ModernPreloader" aria-hidden="true">
-  <div class="loader"></div>
-</div>
 
 <style>
   .modern-preloader {
@@ -63,25 +59,42 @@
   }
 </style>
 
+<div class="modern-preloader" id="ModernPreloader" aria-hidden="true">
+  <div class="loader"></div>
+</div>
+
 <script>
   (function() {
     var preloader = document.getElementById('ModernPreloader');
     if (!preloader) return;
-    function dismissPreloader() {
-      if (preloader.classList.contains('preloader--hidden')) return;
+
+    var startTime = Date.now();
+    var minDuration = 800; // Guaranteed minimum display time in ms so animation is fully seen
+    var dismissed = false;
+
+    function dismiss() {
+      if (dismissed) return;
+      dismissed = true;
       preloader.classList.add('preloader--hidden');
       setTimeout(function() {
         if (preloader && preloader.parentNode) {
           preloader.parentNode.removeChild(preloader);
         }
-      }, 380);
+      }, 400);
     }
+
+    function scheduleDismiss() {
+      var elapsed = Date.now() - startTime;
+      var remaining = Math.max(0, minDuration - elapsed);
+      setTimeout(dismiss, remaining);
+    }
+
     if (document.readyState === 'complete') {
-      setTimeout(dismissPreloader, 60);
+      scheduleDismiss();
     } else {
-      window.addEventListener('load', dismissPreloader);
-      // Safety timeout: dismiss after 1.2s so user is never blocked on slow network
-      setTimeout(dismissPreloader, 1200);
+      window.addEventListener('load', scheduleDismiss);
+      // Safety fallback: dismiss after 2s so user is never blocked
+      setTimeout(scheduleDismiss, 2000);
     }
   })();
 </script>
