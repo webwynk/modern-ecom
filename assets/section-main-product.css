@@ -1105,7 +1105,7 @@ a.product__text {
     max-height: 520px !important;
     background-color: #FAFAFA !important;
     border-radius: 8px !important;
-    border: 1px solid #F0F0F0 !important;
+    border: 1px solid #E5E5E5 !important;
     overflow: hidden !important;
   }
 
@@ -1326,8 +1326,9 @@ a.product__text {
 
 /* Thumbnail Card borders & active state in Brand Gold #997A51 */
 .product--thumbnail_slider .thumbnail,
-media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail {
-  border: 1.5px solid #E5E5E5 !important;
+media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail,
+.thumbnail-slider .thumbnail {
+  border: 1px solid #E5E5E5 !important;
   border-radius: 6px !important;
   overflow: hidden !important;
   background-color: #FFFFFF !important;
@@ -1335,7 +1336,8 @@ media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail {
 }
 
 .product--thumbnail_slider .thumbnail:hover,
-media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail:hover {
+media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail:hover,
+.thumbnail-slider .thumbnail:hover {
   opacity: 1 !important;
   border-color: #997A51 !important;
 }
@@ -1343,9 +1345,11 @@ media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail:hover {
 .product--thumbnail_slider .thumbnail[aria-current="true"],
 .product--thumbnail_slider .thumbnail[aria-current],
 media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail[aria-current="true"],
-media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail[aria-current] {
-  border: 2px solid #997A51 !important;
-  box-shadow: 0 0 0 1px #997A51 !important;
+media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail[aria-current],
+.thumbnail-slider .thumbnail[aria-current="true"],
+.thumbnail-slider .thumbnail[aria-current] {
+  border: 1px solid #997A51 !important;
+  box-shadow: none !important;
   border-radius: 6px !important;
 }
 
