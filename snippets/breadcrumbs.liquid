@@ -1,10 +1,14 @@
 {%- unless template == 'index' or template == 'cart' or template == 'list-collections' or template == '404' -%}
   {{ 'component-breadcrumbs.css' | asset_url | stylesheet_tag }}
+  {%- assign home_text = 'general.breadcrumbs.home' | t -%}
+  {%- if home_text contains 'Translation missing' or home_text == blank -%}
+    {%- assign home_text = 'Home' -%}
+  {%- endif -%}
   <nav class="breadcrumbs" role="navigation" aria-label="breadcrumbs">
     <ol class="breadcrumbs__list" itemscope itemtype="https://schema.org/BreadcrumbList">
       <li class="breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
         <a class="breadcrumbs__link" href="{{ routes.root_url }}" itemprop="item">
-          <span itemprop="name">{{ 'general.breadcrumbs.home' | t | default: 'Home' }}</span>
+          <span itemprop="name">{{ home_text }}</span>
         </a>
         <meta itemprop="position" content="1">
       </li>
