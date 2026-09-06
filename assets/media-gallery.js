@@ -20,52 +20,24 @@ if (!customElements.get('media-gallery')) {
         });
         if (this.dataset.desktopLayout.includes('thumbnail') && this.mql.matches) this.removeListSemantic();
 
-        // Vertical thumbnail scrolling on tablet and desktop
-        const upBtn = this.elements.thumbnails.querySelector('.gallery-thumbnail-arrow--up') || this.elements.thumbnails.querySelector('button[name="previous"]');
-        const downBtn = this.elements.thumbnails.querySelector('.gallery-thumbnail-arrow--down') || this.elements.thumbnails.querySelector('button[name="next"]');
-        const thumbnailList = this.elements.thumbnails.querySelector('.thumbnail-list');
+        // Main Viewer navigation arrows (bottom-right of product image)
+        const prevMediaBtn = this.querySelector('.product__media-nav-btn--prev');
+        const nextMediaBtn = this.querySelector('.product__media-nav-btn--next');
 
-        if (upBtn && downBtn && thumbnailList) {
-          const updateBoundaryStates = () => {
-            if (this.mql.matches) {
-              const isAtTop = thumbnailList.scrollTop <= 4;
-              const isAtBottom = thumbnailList.scrollTop + thumbnailList.clientHeight >= thumbnailList.scrollHeight - 4;
-              upBtn.classList.toggle('is-disabled', isAtTop);
-              downBtn.classList.toggle('is-disabled', isAtBottom);
-            } else {
-              const slider = this.elements.thumbnails.slider || thumbnailList;
-              const isAtStart = slider.scrollLeft <= 4;
-              const isAtEnd = slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 4;
-              upBtn.classList.toggle('is-disabled', isAtStart);
-              downBtn.classList.toggle('is-disabled', isAtEnd);
-            }
-          };
-
-          upBtn.addEventListener('click', (e) => {
+        if (prevMediaBtn) {
+          prevMediaBtn.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopImmediatePropagation();
-            if (this.mql.matches) {
-              thumbnailList.scrollBy({ top: -140, behavior: 'smooth' });
-            } else {
-              const slider = this.elements.thumbnails.slider || thumbnailList;
-              slider.scrollBy({ left: -100, behavior: 'smooth' });
-            }
+            this.navigateGallery(-1);
           });
+        }
 
-          downBtn.addEventListener('click', (e) => {
+        if (nextMediaBtn) {
+          nextMediaBtn.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopImmediatePropagation();
-            if (this.mql.matches) {
-              thumbnailList.scrollBy({ top: 140, behavior: 'smooth' });
-            } else {
-              const slider = this.elements.thumbnails.slider || thumbnailList;
-              slider.scrollBy({ left: 100, behavior: 'smooth' });
-            }
+            this.navigateGallery(1);
           });
-
-          thumbnailList.addEventListener('scroll', debounce(updateBoundaryStates, 80));
-          window.addEventListener('resize', debounce(updateBoundaryStates, 150));
-          setTimeout(updateBoundaryStates, 300);
         }
 
         // Sync discount badge on variant change
