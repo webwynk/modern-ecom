@@ -475,6 +475,8 @@ a.product__text {
   left: 1.4rem !important;
   top: 1.4rem !important;
   z-index: 2;
+  pointer-events: none;
+  opacity: 1 !important;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease !important;
 }
 
