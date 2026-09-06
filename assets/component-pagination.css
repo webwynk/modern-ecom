@@ -1,82 +1,150 @@
+/* Component: Modern Compact Pagination */
+
 .pagination-wrapper {
-  margin-top: 4rem;
+  margin: 0 auto;
+  padding: 0 0 2rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
-@media screen and (min-width: 990px) {
-  .pagination-wrapper {
-    margin-top: 5rem;
-  }
+.pagination {
+  display: block;
+  width: auto;
 }
 
 .pagination__list {
-  display: flex;
-  flex-wrap: wrap;
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 0.6rem;
+  flex-wrap: wrap;
 }
 
 .pagination__list > li {
-  flex: 1 0 4.4rem;
-  max-width: 4.4rem;
-}
-
-.pagination__list > li:not(:last-child) {
-  margin-right: 1rem;
+  display: inline-flex;
+  margin: 0;
+  padding: 0;
 }
 
 .pagination__item {
-  color: rgb(var(--color-foreground));
   display: inline-flex;
-  justify-content: center;
   align-items: center;
-  position: relative;
-  height: 4.4rem;
-  width: 100%;
-  padding: 0;
+  justify-content: center;
+  min-width: 3.8rem;
+  height: 3.8rem;
+  padding: 0 0.8rem;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 1;
+  color: #374151;
+  background-color: #FFFFFF;
+  border: 1px solid #E5E7EB;
   text-decoration: none;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  position: relative;
+  user-select: none;
 }
 
-a.pagination__item:hover::after {
-  height: 0.1rem;
+.pagination__item:hover:not(.pagination__item--current):not(.pagination__item--ellipsis) {
+  background-color: #FDFBF7;
+  border-color: #997A51;
+  color: #997A51;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(153, 122, 81, 0.18);
 }
 
-.pagination__item .icon-caret {
-  height: 0.6rem;
+.pagination__item:active:not(.pagination__item--current):not(.pagination__item--ellipsis) {
+  transform: translateY(0);
 }
 
-.pagination__item--current::after {
-  height: 0.1rem;
+.pagination__item:focus-visible {
+  outline: 2px solid #997A51;
+  outline-offset: 2px;
 }
 
-.pagination__item--current::after,
-.pagination__item:hover::after {
-  content: '';
+.pagination__item--current {
+  background-color: #997A51 !important;
+  border-color: #997A51 !important;
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 8px rgba(153, 122, 81, 0.35) !important;
+  cursor: default;
+}
+
+.pagination__item-arrow {
+  min-width: 3.8rem;
+  height: 3.8rem;
+  color: #4B5563;
+}
+
+.pagination__item-arrow svg {
+  width: 0.8rem;
+  height: 1.2rem;
   display: block;
-  width: 2rem;
-  position: absolute;
-  bottom: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: currentColor;
+  stroke: currentColor;
+  transition: transform 0.15s ease;
 }
 
-.pagination__item--next .icon {
-  margin-left: -0.2rem;
-  transform: rotate(90deg);
+.pagination__item--prev:hover svg {
+  transform: translateX(-1px);
 }
 
-.pagination__item--next:hover .icon {
-  transform: rotate(90deg) scale(1.07);
+.pagination__item--next:hover svg {
+  transform: translateX(1px);
 }
 
-.pagination__item--prev .icon {
-  margin-right: -0.2rem;
-  transform: rotate(-90deg);
+.pagination__item--ellipsis {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  color: #9CA3AF;
+  min-width: 2.4rem;
+  padding: 0 0.2rem;
+  cursor: default;
 }
 
-.pagination__item--prev:hover .icon {
-  transform: rotate(-90deg) scale(1.07);
+/* Remove any legacy pseudo-elements */
+.pagination__item::after,
+.pagination__item::before {
+  display: none !important;
+  content: none !important;
 }
 
-.pagination__item-arrow:hover::after {
-  display: none;
+/* Mobile Responsive (< 750px) */
+@media screen and (max-width: 749px) {
+  .pagination__list {
+    gap: 0.4rem;
+  }
+
+  .pagination__item {
+    min-width: 3.2rem;
+    height: 3.2rem;
+    padding: 0 0.6rem;
+    font-size: 1.3rem;
+    border-radius: 6px;
+  }
+
+  .pagination__item-arrow {
+    min-width: 3.2rem;
+    height: 3.2rem;
+  }
+
+  .pagination__item-arrow svg {
+    width: 0.7rem;
+    height: 1.1rem;
+  }
+
+  .pagination__item--ellipsis {
+    min-width: 1.8rem;
+    font-size: 1.2rem;
+  }
 }

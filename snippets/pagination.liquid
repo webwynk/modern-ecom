@@ -21,12 +21,12 @@
           <li>
             <a
               href="{{ paginate.previous.url }}{{ anchor }}"
-              class="pagination__item pagination__item--next pagination__item-arrow link motion-reduce"
+              class="pagination__item pagination__item--prev pagination__item-arrow link motion-reduce"
               aria-label="{{ 'general.pagination.previous' | t }}"
             >
-              <span class="svg-wrapper">
-                {{- 'icon-caret.svg' | inline_asset_content -}}
-              </span>
+              <svg class="icon icon-chevron-left" width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path d="M6.5 1.5L2 6l4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </a>
           </li>
         {%- endif -%}
@@ -46,14 +46,14 @@
                 <a
                   role="link"
                   aria-disabled="true"
-                  class="pagination__item pagination__item--current light"
+                  class="pagination__item pagination__item--current"
                   aria-current="page"
                   aria-label="{{ 'general.pagination.page' | t: number: part.title }}"
                 >
                   {{- part.title -}}
                 </a>
               {%- else -%}
-                <span class="pagination__item">{{ part.title }}</span>
+                <span class="pagination__item pagination__item--ellipsis">{{ part.title }}</span>
               {%- endif -%}
             {%- endif -%}
           </li>
@@ -63,12 +63,12 @@
           <li>
             <a
               href="{{ paginate.next.url }}{{ anchor }}"
-              class="pagination__item pagination__item--prev pagination__item-arrow link motion-reduce"
+              class="pagination__item pagination__item--next pagination__item-arrow link motion-reduce"
               aria-label="{{ 'general.pagination.next' | t }}"
             >
-              <span class="svg-wrapper">
-                {{- 'icon-caret.svg' | inline_asset_content -}}
-              </span>
+              <svg class="icon icon-chevron-right" width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path d="M1.5 1.5L6 6l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </a>
           </li>
         {%- endif -%}
