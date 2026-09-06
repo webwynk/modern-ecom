@@ -61,6 +61,44 @@ if (!customElements.get('media-gallery')) {
         this.setActiveThumbnail(thumbnail);
       }
 
+      navigateGallery(direction) {
+        if (this.elements.thumbnails) {
+          const thumbnails = Array.from(this.elements.thumbnails.querySelectorAll('.thumbnail-list__item'));
+          if (thumbnails.length > 1) {
+            const currentActiveBtn = this.elements.thumbnails.querySelector('.thumbnail-list__item button[aria-current="true"]');
+            const currentActiveItem = currentActiveBtn ? currentActiveBtn.closest('.thumbnail-list__item') : thumbnails[0];
+            let currentIndex = thumbnails.indexOf(currentActiveItem);
+            if (currentIndex === -1) currentIndex = 0;
+
+            let targetIndex = currentIndex + direction;
+            if (targetIndex < 0) {
+              targetIndex = thumbnails.length - 1;
+            } else if (targetIndex >= thumbnails.length) {
+              targetIndex = 0;
+            }
+
+            const targetThumbnail = thumbnails[targetIndex];
+            if (targetThumbnail && targetThumbnail.dataset.target) {
+              this.setActiveMedia(targetThumbnail.dataset.target, false);
+              return;
+            }
+          }
+        }
+
+        const mediaItems = Array.from(this.elements.viewer.querySelectorAll('.product__media-item'));
+        if (mediaItems.length <= 1) return;
+        const currentActiveMedia = this.elements.viewer.querySelector('.product__media-item.is-active') || mediaItems[0];
+        let curIdx = mediaItems.indexOf(currentActiveMedia);
+        if (curIdx === -1) curIdx = 0;
+        let tgtIdx = curIdx + direction;
+        if (tgtIdx < 0) tgtIdx = mediaItems.length - 1;
+        else if (tgtIdx >= mediaItems.length) tgtIdx = 0;
+        const targetMedia = mediaItems[tgtIdx];
+        if (targetMedia && targetMedia.dataset.mediaId) {
+          this.setActiveMedia(targetMedia.dataset.mediaId, false);
+        }
+      }
+
       setActiveMedia(mediaId, prepend) {
         const activeMedia =
           this.elements.viewer.querySelector(`[data-media-id="${mediaId}"]`) ||
