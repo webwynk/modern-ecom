@@ -1255,3 +1255,315 @@ input.mobile-facets__checkbox {
     padding: 0 1rem 1rem;
   }
 }
+
+/* ==========================================================================
+   Modern Filter Bar Revamp (Full-Pill Style, Soft Card Container)
+   ========================================================================== */
+
+/* 1. Soft Full-Width Card Container */
+.facets-container {
+  background-color: #FFFFFF !important;
+  border: 1px solid #E5E7EB !important;
+  border-radius: 16px !important;
+  padding: 1.2rem 1.8rem !important;
+  margin-top: 0 !important;
+  margin-bottom: 2rem !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03) !important;
+  display: block !important;
+}
+
+.facets__form {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  gap: 1.2rem 2rem !important;
+  margin-bottom: 0 !important;
+}
+
+.facets__wrapper {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 0.8rem 1rem !important;
+  margin: 0 !important;
+  align-self: center !important;
+}
+
+/* 2. Filter Heading with Clean SVG Icon */
+.facets__heading {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.7rem !important;
+  font-size: 1.35rem !important;
+  font-weight: 600 !important;
+  color: #111827 !important;
+  margin: 0 0.8rem 0 0 !important;
+  letter-spacing: -0.01em !important;
+}
+
+.facets__heading-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #997A51 !important;
+}
+
+.facets__heading-icon svg {
+  width: 1.6rem !important;
+  height: 1.6rem !important;
+  stroke: #997A51 !important;
+}
+
+/* 3. Full Pill Filter Triggers */
+.facets__disclosure {
+  margin: 0 !important;
+  position: relative !important;
+}
+
+.facets__summary {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 9999px !important;
+  background-color: #FFFFFF !important;
+  border: 1px solid #E5E7EB !important;
+  padding: 0.75rem 1.6rem !important;
+  font-size: 1.35rem !important;
+  font-weight: 500 !important;
+  color: #1F2937 !important;
+  cursor: pointer !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  user-select: none !important;
+  margin: 0 !important;
+  height: auto !important;
+  min-height: 3.8rem !important;
+  min-width: auto !important;
+}
+
+.facets__summary span,
+.facets__summary .facets__summary-label {
+  text-decoration: none !important;
+  font-size: 1.35rem !important;
+  color: inherit !important;
+}
+
+.facets__summary > div {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.7rem !important;
+}
+
+.facets__summary .icon-caret {
+  width: 0.8rem !important;
+  height: 0.8rem !important;
+  stroke: #6B7280 !important;
+  position: static !important;
+  margin-left: 0.2rem !important;
+  transition: transform 0.2s ease !important;
+}
+
+.facets__summary:hover {
+  border-color: #997A51 !important;
+  background-color: #FDFBF7 !important;
+  color: #997A51 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 3px 8px rgba(153, 122, 81, 0.15) !important;
+}
+
+.facets__summary:hover span {
+  text-decoration: none !important;
+  color: #997A51 !important;
+}
+
+.facets__disclosure[open] > .facets__summary {
+  border-color: #997A51 !important;
+  background-color: #FDFBF7 !important;
+  color: #997A51 !important;
+  box-shadow: 0 0 0 3px rgba(153, 122, 81, 0.12) !important;
+}
+
+.facets__disclosure[open] > .facets__summary .icon-caret {
+  transform: rotate(180deg) !important;
+  stroke: #997A51 !important;
+}
+
+/* 4. Sort By Full Pill Control */
+.facet-filters.sorting {
+  display: inline-flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.facet-filters__field {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.8rem !important;
+  border-radius: 9999px !important;
+  background-color: #FFFFFF !important;
+  border: 1px solid #E5E7EB !important;
+  padding: 0.55rem 1.4rem !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+  transition: all 0.2s ease !important;
+  min-height: 3.8rem !important;
+}
+
+.facet-filters__field:hover {
+  border-color: #997A51 !important;
+  background-color: #FDFBF7 !important;
+}
+
+.facet-filters__label {
+  margin: 0 !important;
+  color: #6B7280 !important;
+  font-size: 1.35rem !important;
+  font-weight: 400 !important;
+  white-space: nowrap !important;
+}
+
+.facet-filters__field .select {
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+.facet-filters__sort {
+  font-size: 1.35rem !important;
+  font-weight: 600 !important;
+  color: #111827 !important;
+  cursor: pointer !important;
+  padding: 0 1.6rem 0 0 !important;
+  border: none !important;
+  background: transparent !important;
+  outline: none !important;
+}
+
+.facet-filters__sort + .icon-caret {
+  right: 0 !important;
+  width: 0.8rem !important;
+  height: 0.8rem !important;
+}
+
+/* 5. Product Count Pill Badge */
+.product-count {
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  grid-column-start: auto !important;
+}
+
+.product-count__text {
+  margin: 0 !important;
+  font-size: 1.3rem !important;
+  font-weight: 500 !important;
+  color: #4B5563 !important;
+  background-color: #F3F4F6 !important;
+  border-radius: 9999px !important;
+  padding: 0.6rem 1.4rem !important;
+  white-space: nowrap !important;
+  line-height: 1.2 !important;
+}
+
+/* 6. Modern Floating Dropdown Popover */
+.facets__display {
+  border-radius: 14px !important;
+  border: 1px solid #E5E7EB !important;
+  box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.06) !important;
+  background-color: #FFFFFF !important;
+  padding: 1.6rem !important;
+  min-width: 26rem !important;
+  margin-top: 0.8rem !important;
+  top: 100% !important;
+  left: 0 !important;
+}
+
+.facets__header {
+  padding-bottom: 1.2rem !important;
+  border-bottom: 1px solid #F3F4F6 !important;
+  margin-bottom: 1.2rem !important;
+}
+
+.facets__selected {
+  font-size: 1.25rem !important;
+  color: #6B7280 !important;
+}
+
+.facets__reset {
+  font-size: 1.25rem !important;
+  color: #997A51 !important;
+  font-weight: 500 !important;
+}
+
+/* Checkbox inputs */
+.facet-checkbox {
+  padding: 0.7rem 0.4rem !important;
+  border-radius: 6px !important;
+  transition: background-color 0.15s ease !important;
+}
+
+.facet-checkbox:hover {
+  background-color: #F9FAFB !important;
+}
+
+.facet-checkbox input[type='checkbox'] {
+  accent-color: #997A51 !important;
+}
+
+/* 7. Active Filter Chips */
+.active-facets {
+  margin-top: 1.2rem !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 0.6rem !important;
+  align-items: center !important;
+}
+
+.active-facets__button {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.active-facets__button-inner {
+  border-radius: 9999px !important;
+  background-color: #F3F4F6 !important;
+  border: 1px solid #E5E7EB !important;
+  padding: 0.45rem 1.2rem !important;
+  font-size: 1.25rem !important;
+  color: #374151 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.6rem !important;
+  transition: all 0.15s ease !important;
+}
+
+.active-facets__button-inner:hover {
+  background-color: #FEE2E2 !important;
+  border-color: #FECDD3 !important;
+  color: #DC2626 !important;
+}
+
+/* 8. Mobile Drawer Full Pill Button (< 750px) */
+@media screen and (max-width: 749px) {
+  .facets-container {
+    padding: 1rem 1.4rem !important;
+    border-radius: 14px !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .mobile-facets__open {
+    border-radius: 9999px !important;
+    background-color: #FFFFFF !important;
+    border: 1px solid #E5E7EB !important;
+    padding: 0.8rem 1.8rem !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.8rem !important;
+    font-size: 1.35rem !important;
+    font-weight: 600 !important;
+    color: #111827 !important;
+  }
+}
+
