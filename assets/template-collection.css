@@ -97,3 +97,58 @@
 .collection__view-all a:not(.link) {
   margin-top: 1rem;
 }
+
+/* ============================================================
+   5-Column Product Grid on Collection Page
+   ============================================================ */
+#product-grid.product-grid {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  column-gap: 1.6rem !important;
+  row-gap: 2.4rem !important;
+  width: 100% !important;
+  margin: 0 0 4rem 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+#product-grid.product-grid .grid__item {
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block !important;
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+}
+
+#product-grid.product-grid product-component {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+#product-grid.product-grid .product-card-wrapper {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  #product-grid.product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    column-gap: 1.6rem !important;
+    row-gap: 2rem !important;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  #product-grid.product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    column-gap: 1rem !important;
+    row-gap: 1.6rem !important;
+  }
+}
+
