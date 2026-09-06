@@ -10,7 +10,8 @@
 {
   "general": {
     "breadcrumbs": {
-      "home": "Home"
+      "home": "Home",
+      "collections": "Collections"
     },
     "password_page": {
       "login_form_heading": "Enter store using password:",
