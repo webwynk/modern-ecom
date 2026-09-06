@@ -981,7 +981,49 @@ a.product__text {
     flex-shrink: 0 !important;
   }
 
+  [id^="GalleryViewer-"] {
+    height: 380px !important;
+    max-height: 380px !important;
+    background-color: #FAFAFA !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    border: 1px solid #F0F0F0 !important;
+  }
 
+  [id^="GalleryViewer-"] .product__media-list {
+    height: 100% !important;
+    max-height: 380px !important;
+  }
+
+  [id^="GalleryViewer-"] .product__media-item {
+    height: 100% !important;
+    max-height: 380px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  [id^="GalleryViewer-"] .product-media-container,
+  [id^="GalleryViewer-"] .product__modal-opener,
+  [id^="GalleryViewer-"] .media {
+    height: 100% !important;
+    max-height: 380px !important;
+    width: 100% !important;
+    padding-top: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: transparent !important;
+  }
+
+  [id^="GalleryViewer-"] .media img {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 380px !important;
+    object-fit: contain !important;
+    object-position: center !important;
+  }
 }
 
 @media screen and (min-width: 750px) {
@@ -1016,6 +1058,68 @@ a.product__text {
     min-width: 0 !important;
     position: relative !important;
     margin: 0 !important;
+    height: 520px !important;
+    min-height: 520px !important;
+    max-height: 520px !important;
+    background-color: #FAFAFA !important;
+    border-radius: 8px !important;
+    border: 1px solid #F0F0F0 !important;
+    overflow: hidden !important;
+  }
+
+  .product--thumbnail_slider [id^="GalleryViewer-"] .product__media-list,
+  media-gallery[data-desktop-layout="thumbnail_slider"] [id^="GalleryViewer-"] .product__media-list {
+    height: 100% !important;
+    max-height: 520px !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .product--thumbnail_slider [id^="GalleryViewer-"] .product__media-item,
+  media-gallery[data-desktop-layout="thumbnail_slider"] [id^="GalleryViewer-"] .product__media-item {
+    height: 100% !important;
+    max-height: 520px !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .product--thumbnail_slider [id^="GalleryViewer-"] .product-media-container,
+  media-gallery[data-desktop-layout="thumbnail_slider"] [id^="GalleryViewer-"] .product-media-container {
+    height: 100% !important;
+    max-height: 520px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .product--thumbnail_slider [id^="GalleryViewer-"] .product__modal-opener,
+  media-gallery[data-desktop-layout="thumbnail_slider"] [id^="GalleryViewer-"] .product__modal-opener,
+  .product--thumbnail_slider [id^="GalleryViewer-"] .media,
+  media-gallery[data-desktop-layout="thumbnail_slider"] [id^="GalleryViewer-"] .media {
+    height: 100% !important;
+    max-height: 520px !important;
+    width: 100% !important;
+    padding-top: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: transparent !important;
+  }
+
+  .product--thumbnail_slider [id^="GalleryViewer-"] .media img,
+  media-gallery[data-desktop-layout="thumbnail_slider"] [id^="GalleryViewer-"] .media img {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 520px !important;
+    object-fit: contain !important;
+    object-position: center !important;
   }
 
   .product--thumbnail_slider .thumbnail-slider .thumbnail-list.slider--tablet-up,
@@ -1026,7 +1130,8 @@ a.product__text {
     gap: 0.8rem !important;
     padding: 2px !important;
     margin: 0 !important;
-    max-height: 480px !important;
+    height: 520px !important;
+    max-height: 520px !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
     scroll-behavior: smooth !important;
@@ -1047,11 +1152,6 @@ a.product__text {
     padding: 0 !important;
     margin: 0 auto !important;
     flex-shrink: 0 !important;
-  }
-
-  .product--thumbnail_slider .thumbnail-slider .thumbnail-list.slider--tablet-up,
-  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .thumbnail-list {
-    max-height: 520px !important;
   }
 }
 
