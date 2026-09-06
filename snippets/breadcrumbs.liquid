@@ -1,7 +1,8 @@
 {%- unless template == 'index' or template == 'cart' or template == 'list-collections' or template == '404' -%}
   {{ 'component-breadcrumbs.css' | asset_url | stylesheet_tag }}
   {%- assign home_text = 'general.breadcrumbs.home' | t -%}
-  {%- if home_text contains 'Translation missing' or home_text == blank -%}
+  {%- assign home_text_down = home_text | downcase -%}
+  {%- if home_text_down contains 'translation missing' or home_text == blank -%}
     {%- assign home_text = 'Home' -%}
   {%- endif -%}
   <nav class="breadcrumbs" role="navigation" aria-label="breadcrumbs">
