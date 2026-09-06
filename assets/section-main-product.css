@@ -1040,7 +1040,9 @@ a.product__text {
   }
 
   /* Up & Down Circular Buttons in Brand Gold #997A51 */
+  .product--thumbnail_slider .thumbnail-slider .gallery-thumbnail-arrow,
   .product--thumbnail_slider .thumbnail-slider .slider-button,
+  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .gallery-thumbnail-arrow,
   media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .slider-button {
     width: 32px !important;
     height: 32px !important;
@@ -1061,20 +1063,27 @@ a.product__text {
     z-index: 2 !important;
   }
 
-  .product--thumbnail_slider .thumbnail-slider .slider-button:hover,
-  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .slider-button:hover {
+  .product--thumbnail_slider .thumbnail-slider .gallery-thumbnail-arrow:hover:not(.is-disabled),
+  .product--thumbnail_slider .thumbnail-slider .slider-button:hover:not(.is-disabled),
+  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .gallery-thumbnail-arrow:hover:not(.is-disabled),
+  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .slider-button:hover:not(.is-disabled) {
     background-color: #7E6341 !important;
     transform: scale(1.08) !important;
   }
 
-  .product--thumbnail_slider .thumbnail-slider .slider-button[disabled],
-  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .slider-button[disabled] {
-    opacity: 1 !important;
-    cursor: pointer !important;
-    background-color: #997A51 !important;
+  .product--thumbnail_slider .thumbnail-slider .gallery-thumbnail-arrow.is-disabled,
+  .product--thumbnail_slider .thumbnail-slider .slider-button.is-disabled,
+  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .gallery-thumbnail-arrow.is-disabled,
+  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .slider-button.is-disabled {
+    opacity: 0.38 !important;
+    cursor: default !important;
+    pointer-events: none !important;
+    transform: none !important;
   }
 
+  .product--thumbnail_slider .thumbnail-slider .gallery-thumbnail-arrow .svg-wrapper,
   .product--thumbnail_slider .thumbnail-slider .slider-button .svg-wrapper,
+  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .gallery-thumbnail-arrow .svg-wrapper,
   media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .slider-button .svg-wrapper {
     display: flex !important;
     align-items: center !important;
@@ -1084,7 +1093,9 @@ a.product__text {
     color: #FFFFFF !important;
   }
 
+  .product--thumbnail_slider .thumbnail-slider .gallery-thumbnail-arrow svg,
   .product--thumbnail_slider .thumbnail-slider .slider-button svg,
+  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .gallery-thumbnail-arrow svg,
   media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .slider-button svg {
     width: 14px !important;
     height: 14px !important;
@@ -1109,38 +1120,23 @@ a.product__text {
   left: 1.6rem;
   right: 1.6rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   z-index: 6;
   pointer-events: none;
 }
 
-.product__badge-bestseller {
-  background-color: #F2F4F7 !important;
-  color: #1D2939 !important;
-  font-family: inherit;
-  font-size: 1.2rem !important;
-  font-weight: 600 !important;
-  padding: 0.6rem 1.4rem !important;
-  border-radius: 0.6rem !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
-  pointer-events: auto;
-  line-height: 1.2;
-  letter-spacing: 0.01em;
-  display: inline-block;
-}
-
 .product__badge-discount {
-  background-color: #FAF4EB !important;
-  color: #997A51 !important;
-  border: 1.5px solid rgba(153, 122, 81, 0.45) !important;
+  background-color: #E02020 !important;
+  color: #FFFFFF !important;
+  border: none !important;
   font-family: inherit;
   font-size: 1.3rem !important;
   font-weight: 700 !important;
-  padding: 0.6rem 1.4rem !important;
-  border-radius: 0.6rem !important;
-  letter-spacing: 0.02em;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+  padding: 0.6rem 1.6rem !important;
+  border-radius: 9999px !important;
+  letter-spacing: 0.03em;
+  box-shadow: 0 2px 8px rgba(224, 32, 32, 0.3) !important;
   pointer-events: auto;
   line-height: 1.2;
   display: inline-block;
@@ -1154,16 +1150,10 @@ a.product__text {
     right: 1rem;
   }
 
-  .product__badge-bestseller {
-    font-size: 1.1rem;
-    padding: 0.4rem 1rem;
-    border-radius: 0.4rem;
-  }
-
   .product__badge-discount {
-    font-size: 1.15rem;
-    padding: 0.4rem 1rem;
-    border-radius: 0.4rem;
+    font-size: 1.15rem !important;
+    padding: 0.5rem 1.2rem !important;
+    border-radius: 9999px !important;
   }
 }
 
