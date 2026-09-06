@@ -1,11 +1,13 @@
+{%- unless request.design_mode -%}
 {% comment %}
-  Modern Site Preloader Overlay
+  Modern Luxury Site Preloader Overlay
+  Brand: The Golden Rug (#997A51)
   Features:
-    - Prominent 8-step radial multi-dot loader in brand highlight #997A51 (scaled to 8px dots, --d: 35px)
-    - Luxury brand title "The Golden Rug" in DM Sans 600 with letter-spacing 0.18em
+    - 8-step radial multi-dot loader in brand highlight #997A51
+    - Luxury brand title "THE GOLDEN RUG" in DM Sans 600 with letter-spacing 0.18em
     - Clean white #FFFFFF backdrop
-    - Guaranteed 1000ms minimum display duration so the animation is clearly visible on every reload
-    - Butter-smooth fade-out transition
+    - Smooth 800ms minimum display floor with seamless dissolve fade-out
+    - Fully accessible with aria-hidden="true" and reduced motion support
 {% endcomment %}
 
 <style>
@@ -40,19 +42,19 @@
   }
 
   .modern-preloader .loader {
-    --d: 35px;
-    width: 8px;
-    height: 8px;
+    --d: 22px;
+    width: 4px;
+    height: 4px;
     border-radius: 50%;
     color: #997A51;
     box-shadow: 
       calc(1 * var(--d))      calc(0 * var(--d))     0 0   #997A51,
-      calc(0.707 * var(--d))  calc(0.707 * var(--d)) 0 1.5px #997A51,
-      calc(0 * var(--d))      calc(1 * var(--d))     0 3px #997A51,
-      calc(-0.707 * var(--d)) calc(0.707 * var(--d)) 0 4.5px #997A51,
-      calc(-1 * var(--d))     calc(0 * var(--d))     0 6px #997A51,
-      calc(-0.707 * var(--d)) calc(-0.707 * var(--d)) 0 7.5px #997A51,
-      calc(0 * var(--d))      calc(-1 * var(--d))    0 9px #997A51;
+      calc(0.707 * var(--d))  calc(0.707 * var(--d)) 0 1px #997A51,
+      calc(0 * var(--d))      calc(1 * var(--d))     0 2px #997A51,
+      calc(-0.707 * var(--d)) calc(0.707 * var(--d)) 0 3px #997A51,
+      calc(-1 * var(--d))     calc(0 * var(--d))     0 4px #997A51,
+      calc(-0.707 * var(--d)) calc(-0.707 * var(--d)) 0 5px #997A51,
+      calc(0 * var(--d))      calc(-1 * var(--d))    0 6px #997A51;
     animation: l27 1s infinite steps(8);
   }
 
@@ -97,7 +99,7 @@
     if (!preloader) return;
 
     var startTime = Date.now();
-    var minDuration = 1000; // Guaranteed minimum 1000ms display time so full 1s cycle is seen
+    var minDuration = 800; // 800ms display floor for a crisp, visible animation cycle
     var dismissed = false;
 
     function dismiss() {
@@ -117,12 +119,14 @@
       setTimeout(dismiss, remaining);
     }
 
-    if (document.readyState === 'complete') {
+    if (document.readyState === 'interactive' || document.readyState === 'complete') {
       scheduleDismiss();
     } else {
+      document.addEventListener('DOMContentLoaded', scheduleDismiss);
       window.addEventListener('load', scheduleDismiss);
-      // Safety fallback: dismiss after 2.5s so user is never blocked
-      setTimeout(scheduleDismiss, 2500);
+      // Hard fallback after 2s so user is never stuck
+      setTimeout(scheduleDismiss, 2000);
     }
   })();
 </script>
+{%- endunless -%}
