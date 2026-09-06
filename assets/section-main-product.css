@@ -2164,31 +2164,29 @@ media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail img {
   outline-offset: 2px !important;
 }
 
-/* 5. Modern Action Row (Side-by-Side Quantity + Add to Cart) */
+/* 5. Modern Action Row (Single-Row: Quantity + Add to Cart + Buy it Now) */
 .product__info-container .product-form__actions-row {
   display: flex !important;
+  flex-direction: row !important;
   align-items: stretch !important;
-  gap: 1.2rem !important;
+  gap: 1rem !important;
   width: 100% !important;
   margin-bottom: 1.2rem !important;
-}
-
-@media screen and (max-width: 749px) {
-  .product__info-container .product-form__actions-row {
-    gap: 1rem !important;
-  }
 }
 
 /* 6. Quantity Input Modern Full Pill */
 .product__info-container .product-form__actions-row .product-form__quantity {
   margin: 0 !important;
   max-width: none !important;
-  flex: 0 0 130px !important;
+  flex: 0 0 110px !important;
 }
 
 @media screen and (max-width: 749px) {
+  .product__info-container .product-form__actions-row {
+    gap: 0.6rem !important;
+  }
   .product__info-container .product-form__actions-row .product-form__quantity {
-    flex: 0 0 115px !important;
+    flex: 0 0 92px !important;
   }
 }
 
@@ -2211,7 +2209,7 @@ media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail img {
 }
 
 .product__info-container .product-form__actions-row .quantity__button {
-  width: 38px !important;
+  width: 32px !important;
   height: 100% !important;
   background: transparent !important;
   border: none !important;
@@ -2230,8 +2228,8 @@ media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail img {
 }
 
 .product__info-container .product-form__actions-row .quantity__button .svg-wrapper {
-  width: 12px !important;
-  height: 12px !important;
+  width: 11px !important;
+  height: 11px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -2239,7 +2237,7 @@ media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail img {
 
 .product__info-container .product-form__actions-row .quantity__input {
   font-family: inherit !important;
-  font-size: 1.6rem !important;
+  font-size: 1.5rem !important;
   font-weight: 600 !important;
   color: #000000 !important;
   text-align: center !important;
@@ -2252,7 +2250,7 @@ media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail img {
 
 /* 7. Add to Cart Button (Full Pill, Solid Black) */
 .product__info-container .product-form__actions-row .product-form__submit {
-  flex: 1 !important;
+  flex: 1 1 0 !important;
   width: auto !important;
   height: 50px !important;
   min-height: 50px !important;
@@ -2261,9 +2259,11 @@ media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail img {
   color: #FFFFFF !important;
   border: none !important;
   font-family: inherit !important;
-  font-size: 1.5rem !important;
+  font-size: 1.4rem !important;
   font-weight: 600 !important;
-  letter-spacing: 0.04em !important;
+  letter-spacing: 0.03em !important;
+  white-space: nowrap !important;
+  padding: 0 1.2rem !important;
   margin: 0 !important;
   cursor: pointer !important;
   display: flex !important;
@@ -2271,6 +2271,13 @@ media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail img {
   justify-content: center !important;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12) !important;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+@media screen and (max-width: 749px) {
+  .product__info-container .product-form__actions-row .product-form__submit {
+    font-size: 1.2rem !important;
+    padding: 0 0.6rem !important;
+  }
 }
 
 .product__info-container .product-form__actions-row .product-form__submit:before,
@@ -2296,11 +2303,13 @@ media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail img {
 }
 
 /* 8. Dynamic Checkout Button (Buy it Now - Full Pill, #997A51 Highlight) */
-.product__info-container .product-form__dynamic-checkout {
-  width: 100% !important;
+.product__info-container .product-form__actions-row .product-form__dynamic-checkout {
+  flex: 1 1 0 !important;
+  width: auto !important;
+  margin: 0 !important;
 }
 
-.product__info-container .product-form__dynamic-checkout .shopify-payment-button__button {
+.product__info-container .product-form__actions-row .product-form__dynamic-checkout .shopify-payment-button__button {
   width: 100% !important;
   height: 50px !important;
   min-height: 50px !important;
@@ -2309,25 +2318,37 @@ media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail img {
   color: #FFFFFF !important;
   border: none !important;
   font-family: inherit !important;
-  font-size: 1.5rem !important;
+  font-size: 1.4rem !important;
   font-weight: 600 !important;
-  letter-spacing: 0.04em !important;
+  letter-spacing: 0.03em !important;
+  white-space: nowrap !important;
+  padding: 0 1.2rem !important;
   box-shadow: 0 4px 14px rgba(153, 122, 81, 0.22) !important;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
-.product__info-container .product-form__dynamic-checkout .shopify-payment-button__button:before,
-.product__info-container .product-form__dynamic-checkout .shopify-payment-button__button:after {
+@media screen and (max-width: 749px) {
+  .product__info-container .product-form__actions-row .product-form__dynamic-checkout .shopify-payment-button__button {
+    font-size: 1.2rem !important;
+    padding: 0 0.6rem !important;
+  }
+}
+
+.product__info-container .product-form__actions-row .product-form__dynamic-checkout .shopify-payment-button__button:before,
+.product__info-container .product-form__actions-row .product-form__dynamic-checkout .shopify-payment-button__button:after {
   display: none !important;
 }
 
-.product__info-container .product-form__dynamic-checkout .shopify-payment-button__button:hover:not([disabled]) {
+.product__info-container .product-form__actions-row .product-form__dynamic-checkout .shopify-payment-button__button:hover:not([disabled]) {
   filter: brightness(0.92) !important;
   transform: translateY(-1px) !important;
   box-shadow: 0 6px 20px rgba(153, 122, 81, 0.32) !important;
 }
 
-.product__info-container .product-form__dynamic-checkout .shopify-payment-button__button:active:not([disabled]) {
+.product__info-container .product-form__actions-row .product-form__dynamic-checkout .shopify-payment-button__button:active:not([disabled]) {
   transform: translateY(0) !important;
 }
 
