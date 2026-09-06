@@ -1,0 +1,71 @@
+{% comment %}
+  Renders product trust perks and guaranteed safe checkout payment badge.
+  Accepts:
+  - block: {Object} Block object (optional).
+{% endcomment %}
+
+<div class="product-trust" {{ block.shopify_attributes }}>
+  {%- comment -%} 1. Trust Perks (4 Pillars in branding highlight #997A51) {%- endcomment -%}
+  <div class="product-trust__perks">
+    <div class="product-trust__perk">
+      <div class="product-trust__perk-icon">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#997A51" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="1" y="3" width="15" height="13"></rect>
+          <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+          <circle cx="5.5" cy="18.5" r="2.5"></circle>
+          <circle cx="18.5" cy="18.5" r="2.5"></circle>
+        </svg>
+      </div>
+      <span class="product-trust__perk-text">Free<br>Shipping</span>
+    </div>
+
+    <div class="product-trust__perk">
+      <div class="product-trust__perk-icon">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#997A51" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          <path d="M9 12l2 2 4-4"></path>
+        </svg>
+      </div>
+      <span class="product-trust__perk-text">1 Year<br>Warranty</span>
+    </div>
+
+    <div class="product-trust__perk">
+      <div class="product-trust__perk-icon">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#997A51" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m11 17 2 2a1 1 0 0 0 1.4 0l6.6-6.6a2 2 0 0 0 0-2.8l-1.4-1.4a2 2 0 0 0-2.8 0L14 11"></path>
+          <path d="m13 7 1.4-1.4a2 2 0 0 1 2.8 0l1.4 1.4a2 2 0 0 1 0 2.8L16 12.4"></path>
+          <path d="m3 13 6 6"></path>
+          <path d="m2 14 6 6a2 2 0 0 0 2.8 0l2.2-2.2"></path>
+          <path d="M7 17 17 7"></path>
+        </svg>
+      </div>
+      <span class="product-trust__perk-text">Secure<br>payment</span>
+    </div>
+
+    <div class="product-trust__perk">
+      <div class="product-trust__perk-icon">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#997A51" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+          <path d="M3 3v5h5"></path>
+        </svg>
+      </div>
+      <span class="product-trust__perk-text">30 Days<br>Return</span>
+    </div>
+  </div>
+
+  {%- comment -%} 2. Guaranteed Safe Checkout Card with Payment Badge {%- endcomment -%}
+  <div class="product-trust__checkout">
+    <fieldset class="product-trust__checkout-box">
+      <legend class="product-trust__checkout-heading">Guaranteed Safe Checkout</legend>
+      <div class="product-trust__badges-image">
+        <img
+          src="{{ 'trust_badge.png' | asset_url }}"
+          alt="Guaranteed Safe Checkout Payment Badges"
+          width="480"
+          height="45"
+          loading="lazy"
+        >
+      </div>
+    </fieldset>
+  </div>
+</div>
