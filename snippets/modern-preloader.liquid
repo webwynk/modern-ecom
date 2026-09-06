@@ -1,14 +1,14 @@
 {%- unless request.design_mode -%}
 {% comment %}
-  Modern Luxury Site Preloader Overlay
+  Deferred Luxury Site Preloader
   Brand: The Golden Rug (#997A51)
   Features:
     - High-performance, razor-sharp SVG vector 8-step radial multi-dot loader in brand highlight #997A51
-    - Luxury brand title "THE GOLDEN RUG" in DM Sans 600 with letter-spacing 0.18em
-    - Clean white #FFFFFF backdrop
-    - Smooth 800ms minimum display floor with seamless dissolve fade-out
-    - 100% cross-browser reliability (GPU-accelerated vector rotation)
-    - Fully accessible with aria-hidden="true" and reduced motion support
+    - Deferred Debounced Architecture:
+        * Fast Internet (< 250ms): Preloader is cancelled instantly — 0 delay, 0 white screen, 0 flicker.
+        * Slow Internet (> 250ms): Gold spinner smoothly fades in to reassure the visitor, then dissolves away.
+    - Minimalist Luxury: Centered gold radial spinner only, no distracting text.
+    - Fully accessible with aria-hidden="true" and reduced motion support.
 {% endcomment %}
 
 <style>
@@ -23,9 +23,16 @@
     align-items: center;
     justify-content: center;
     z-index: 99999999;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+  }
+
+  .modern-preloader.preloader--visible {
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.4s ease, visibility 0.4s ease;
+    pointer-events: auto;
   }
 
   .modern-preloader.preloader--hidden {
@@ -36,15 +43,13 @@
 
   .modern-preloader__wrapper {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2.8rem;
   }
 
   .modern-preloader__spinner {
-    width: 46px;
-    height: 46px;
+    width: 48px;
+    height: 48px;
     animation: modern-preloader-spin 1s infinite steps(8);
     transform-origin: center center;
     display: block;
@@ -56,23 +61,6 @@
     }
     100% {
       transform: rotate(360deg);
-    }
-  }
-
-  .modern-preloader__title {
-    font-family: var(--font-heading-family, 'DM Sans', sans-serif);
-    font-size: 1.8rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: #000000;
-    margin: 0;
-    text-align: center;
-  }
-
-  @media screen and (min-width: 750px) {
-    .modern-preloader__title {
-      font-size: 2.0rem;
     }
   }
 
@@ -95,7 +83,6 @@
       <circle cx="12.3" cy="12.3" r="4.25" />
       <circle cx="25" cy="7" r="4.75" />
     </svg>
-    <span class="modern-preloader__title">The Golden Rug</span>
   </div>
 </div>
 
@@ -104,34 +91,47 @@
     var preloader = document.getElementById('ModernPreloader');
     if (!preloader) return;
 
-    var startTime = Date.now();
-    var minDuration = 800; // 800ms display floor so a full, crisp animation cycle is visible
-    var dismissed = false;
+    var threshold = 250; // Threshold in ms: only show preloader if page takes longer than 250ms
+    var isShown = false;
+    var isDismissed = false;
 
-    function dismiss() {
-      if (dismissed) return;
-      dismissed = true;
-      preloader.classList.add('preloader--hidden');
-      setTimeout(function() {
-        if (preloader && preloader.parentNode) {
-          preloader.parentNode.removeChild(preloader);
-        }
-      }, 450);
+    // Fast vs Slow branch: schedule fade-in only if network/render is slow
+    var showTimer = setTimeout(function() {
+      if (!isDismissed) {
+        isShown = true;
+        preloader.classList.add('preloader--visible');
+      }
+    }, threshold);
+
+    function cleanRemove() {
+      if (preloader && preloader.parentNode) {
+        preloader.parentNode.removeChild(preloader);
+      }
     }
 
-    function scheduleDismiss() {
-      var elapsed = Date.now() - startTime;
-      var remaining = Math.max(0, minDuration - elapsed);
-      setTimeout(dismiss, remaining);
+    function dismiss() {
+      if (isDismissed) return;
+      isDismissed = true;
+      clearTimeout(showTimer);
+
+      if (!isShown) {
+        // Fast internet: page ready within 250ms, remove immediately without any white flash
+        cleanRemove();
+      } else {
+        // Slow internet: spinner was shown, dissolve smoothly
+        preloader.classList.remove('preloader--visible');
+        preloader.classList.add('preloader--hidden');
+        setTimeout(cleanRemove, 400);
+      }
     }
 
     if (document.readyState === 'interactive' || document.readyState === 'complete') {
-      scheduleDismiss();
+      dismiss();
     } else {
-      document.addEventListener('DOMContentLoaded', scheduleDismiss);
-      window.addEventListener('load', scheduleDismiss);
-      // Hard fallback after 2s so user is never stuck
-      setTimeout(scheduleDismiss, 2000);
+      document.addEventListener('DOMContentLoaded', dismiss);
+      window.addEventListener('load', dismiss);
+      // Hard fallback safety after 2.5s so visitor is never trapped
+      setTimeout(dismiss, 2500);
     }
   })();
 </script>
