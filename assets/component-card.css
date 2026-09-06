@@ -800,8 +800,28 @@
   color: #997A51 !important;
 }
 
-.product-grid .card-information {
-  margin-bottom: 1.2rem !important;
+.card__price-row {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 0.8rem !important;
+  margin: 0.4rem 0 1.2rem 0 !important;
+}
+
+.card__price-sale,
+.card__price-regular {
+  font-size: 2rem !important;
+  font-weight: 800 !important;
+  color: #111827 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.card__price-compare {
+  font-size: 1.45rem !important;
+  font-weight: 400 !important;
+  color: #9CA3AF !important;
+  text-decoration: line-through !important;
+  line-height: 1.2 !important;
 }
 
 .product-grid .price {
@@ -831,8 +851,8 @@
   background-color: #997A51 !important;
   color: #FFFFFF !important;
   border: none !important;
-  border-radius: 8px !important;
-  padding: 1.1rem 1.6rem !important;
+  border-radius: 10px !important;
+  padding: 1.15rem 1.6rem !important;
   font-weight: 600 !important;
   font-size: 1.35rem !important;
   display: flex !important;
