@@ -135,34 +135,32 @@
         {%- endunless -%}
       {%- endfor -%}
     </ul>
-    <div class="slider-buttons quick-add-hidden{% if hide_mobile_slider %} small-hide{% endif %}">
-      <button
-        type="button"
-        class="slider-button slider-button--prev"
-        name="previous"
-        aria-label="{{ 'general.slider.previous_slide' | t }}"
-      >
-        <span class="svg-wrapper">
-          {{- 'icon-caret.svg' | inline_asset_content -}}
-        </span>
-      </button>
-      <div class="slider-counter caption">
-        <span class="slider-counter--current">1</span>
-        <span aria-hidden="true"> / </span>
-        <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
-        <span class="slider-counter--total">{{ media_count }}</span>
+    {%- if media_count > 1 -%}
+      <div class="product__media-nav-buttons quick-add-hidden" aria-label="{{ 'general.slider.name' | t }}">
+        <button
+          type="button"
+          class="product__media-nav-btn product__media-nav-btn--prev"
+          name="gallery-prev"
+          aria-label="{{ 'general.slider.previous_slide' | t }}"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="product__media-nav-btn product__media-nav-btn--next"
+          name="gallery-next"
+          aria-label="{{ 'general.slider.next_slide' | t }}"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
       </div>
-      <button
-        type="button"
-        class="slider-button slider-button--next"
-        name="next"
-        aria-label="{{ 'general.slider.next_slide' | t }}"
-      >
-        <span class="svg-wrapper">
-          {{- 'icon-caret.svg' | inline_asset_content -}}
-        </span>
-      </button>
-    </div>
+    {%- endif -%}
   </slider-component>
   {%- if first_3d_model -%}
     <button
@@ -195,18 +193,7 @@
       id="GalleryThumbnails-{{ section.id }}"
       class="thumbnail-slider slider-mobile-gutter quick-add-hidden{% unless section.settings.gallery_layout contains 'thumbnail' %} medium-hide large-up-hide{% endunless %}{% if section.settings.mobile_thumbnails != 'show' %} small-hide{% endif %}{% if media_count <= 3 %} thumbnail-slider--no-slide{% endif %}"
     >
-      <button
-        type="button"
-        class="gallery-thumbnail-arrow gallery-thumbnail-arrow--up slider-button slider-button--prev{% if media_count <= 3 %} small-hide{% endif %}"
-        data-direction="up"
-        aria-label="{{ 'general.slider.previous_slide' | t }}"
-        aria-controls="GalleryThumbnails-{{ section.id }}"
-      >
-        <span class="svg-wrapper">
-          <svg class="icon-desktop-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"></polyline></svg>
-          <svg class="icon-mobile-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        </span>
-      </button>
+
       <ul
         id="Slider-Thumbnails-{{ section.id }}"
         class="thumbnail-list list-unstyled slider slider--mobile{% if section.settings.gallery_layout == 'thumbnail_slider' %} slider--tablet-up{% endif %}"
@@ -325,18 +312,7 @@
           {%- endunless -%}
         {%- endfor -%}
       </ul>
-      <button
-        type="button"
-        class="gallery-thumbnail-arrow gallery-thumbnail-arrow--down slider-button slider-button--next{% if media_count <= 3 %} small-hide{% endif %}"
-        data-direction="down"
-        aria-label="{{ 'general.slider.next_slide' | t }}"
-        aria-controls="GalleryThumbnails-{{ section.id }}"
-      >
-        <span class="svg-wrapper">
-          <svg class="icon-desktop-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          <svg class="icon-mobile-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </span>
-      </button>
+
     </slider-component>
   {%- endif -%}
 </media-gallery>
