@@ -21,26 +21,41 @@ if (!customElements.get('media-gallery')) {
         if (this.dataset.desktopLayout.includes('thumbnail') && this.mql.matches) this.removeListSemantic();
 
         // Vertical thumbnail scrolling on tablet and desktop
-        const prevBtn = this.elements.thumbnails.querySelector('button[name="previous"]');
-        const nextBtn = this.elements.thumbnails.querySelector('button[name="next"]');
+        const upBtn = this.elements.thumbnails.querySelector('.gallery-thumbnail-arrow--up') || this.elements.thumbnails.querySelector('button[name="previous"]');
+        const downBtn = this.elements.thumbnails.querySelector('.gallery-thumbnail-arrow--down') || this.elements.thumbnails.querySelector('button[name="next"]');
         const thumbnailList = this.elements.thumbnails.querySelector('.thumbnail-list');
 
-        if (prevBtn && nextBtn && thumbnailList) {
-          prevBtn.addEventListener('click', (e) => {
+        if (upBtn && downBtn && thumbnailList) {
+          const updateBoundaryStates = () => {
+            if (!this.mql.matches) return;
+            const isAtTop = thumbnailList.scrollTop <= 4;
+            const isAtBottom = thumbnailList.scrollTop + thumbnailList.clientHeight >= thumbnailList.scrollHeight - 4;
+            upBtn.classList.toggle('is-disabled', isAtTop);
+            downBtn.classList.toggle('is-disabled', isAtBottom);
+          };
+
+          upBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopImmediatePropagation();
             if (this.mql.matches) {
-              e.preventDefault();
-              e.stopImmediatePropagation();
-              thumbnailList.scrollBy({ top: -110, behavior: 'smooth' });
+              thumbnailList.scrollBy({ top: -140, behavior: 'smooth' });
+            } else if (this.elements.thumbnails.slider) {
+              this.elements.thumbnails.slider.scrollBy({ left: -140, behavior: 'smooth' });
             }
           });
 
-          nextBtn.addEventListener('click', (e) => {
+          downBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopImmediatePropagation();
             if (this.mql.matches) {
-              e.preventDefault();
-              e.stopImmediatePropagation();
-              thumbnailList.scrollBy({ top: 110, behavior: 'smooth' });
+              thumbnailList.scrollBy({ top: 140, behavior: 'smooth' });
+            } else if (this.elements.thumbnails.slider) {
+              this.elements.thumbnails.slider.scrollBy({ left: 140, behavior: 'smooth' });
             }
           });
+
+          thumbnailList.addEventListener('scroll', debounce(updateBoundaryStates, 100));
+          setTimeout(updateBoundaryStates, 300);
         }
 
         // Sync discount badge on variant change
