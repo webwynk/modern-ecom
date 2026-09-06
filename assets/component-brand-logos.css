@@ -149,12 +149,32 @@
     width: calc(100% - 30px);
   }
 
+  .brand-logos__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .brand-logos__title-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
   .brand-logos__heading {
     font-size: 2.2rem;
+    text-align: center;
   }
 
   .brand-logos__subheading {
     font-size: 1.3rem;
+    text-align: center;
+    max-width: 90%;
+    margin: 0 auto;
   }
 
   .brand-marquee-wrapper {

@@ -234,30 +234,39 @@
 
   .category-slider__header {
     display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 1.6rem;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.4rem;
+    margin-bottom: 2rem;
   }
 
   .category-slider__title-group {
-    flex: 1 1 auto;
-    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
   }
 
   .category-slider__heading {
     font-size: 2.2rem;
+    text-align: center;
   }
 
   .category-slider__subheading {
     font-size: 1.3rem;
+    text-align: center;
+    max-width: 90%;
+    margin: 0 auto;
   }
 
   .category-slider__controls {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
-    flex-shrink: 0;
+    justify-content: center;
+    width: 100%;
+    gap: 0.8rem;
   }
 
   .category-slider__arrow {
