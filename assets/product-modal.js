@@ -4,6 +4,39 @@ if (!customElements.get('product-modal')) {
     class ProductModal extends ModalDialog {
       constructor() {
         super();
+
+        // Prevent ModalDialog's pointerup listener from closing modal on clicks
+        // to interactive controls (arrows, zoom button, close button, card content).
+        this.addEventListener(
+          'pointerup',
+          (event) => {
+            if (
+              event.target.closest(
+                '.product-media-modal__lightbox-card, .product-media-modal__header, .product-media-modal__nav-btn, .product-media-modal__btn'
+              )
+            ) {
+              event.stopPropagation();
+              event.stopImmediatePropagation();
+            }
+          },
+          true
+        );
+
+        this.addEventListener(
+          'pointerdown',
+          (event) => {
+            if (
+              event.target.closest(
+                '.product-media-modal__lightbox-card, .product-media-modal__header, .product-media-modal__nav-btn, .product-media-modal__btn'
+              )
+            ) {
+              event.stopPropagation();
+              event.stopImmediatePropagation();
+            }
+          },
+          true
+        );
+
         this.initLightbox();
       }
 
@@ -24,21 +57,27 @@ if (!customElements.get('product-modal')) {
 
         if (this.prevBtn) {
           this.prevBtn.addEventListener('click', (e) => {
+            e.preventDefault();
             e.stopPropagation();
+            e.stopImmediatePropagation();
             this.prev();
           });
         }
 
         if (this.nextBtn) {
           this.nextBtn.addEventListener('click', (e) => {
+            e.preventDefault();
             e.stopPropagation();
+            e.stopImmediatePropagation();
             this.next();
           });
         }
 
         if (this.zoomBtn) {
           this.zoomBtn.addEventListener('click', (e) => {
+            e.preventDefault();
             e.stopPropagation();
+            e.stopImmediatePropagation();
             this.toggleZoom();
           });
         }
@@ -48,7 +87,9 @@ if (!customElements.get('product-modal')) {
           this.content.addEventListener('click', (e) => {
             const img = e.target.closest('img');
             if (img) {
+              e.preventDefault();
               e.stopPropagation();
+              e.stopImmediatePropagation();
               this.toggleZoom();
             }
           });
@@ -118,6 +159,7 @@ if (!customElements.get('product-modal')) {
         super.show(opener);
         this.classList.remove('is-zoomed');
         if (this.lightboxCard) this.lightboxCard.classList.remove('is-zoomed');
+        if (this.zoomBtn) this.zoomBtn.classList.remove('is-active');
         this.refreshMediaList();
 
         let targetMediaId = opener?.getAttribute('data-media-id');
@@ -144,6 +186,9 @@ if (!customElements.get('product-modal')) {
         this.classList.remove('is-zoomed');
         if (this.lightboxCard) {
           this.lightboxCard.classList.remove('is-zoomed');
+        }
+        if (this.zoomBtn) {
+          this.zoomBtn.classList.remove('is-active');
         }
         super.hide();
       }
@@ -187,6 +232,9 @@ if (!customElements.get('product-modal')) {
         if (this.lightboxCard) {
           this.lightboxCard.classList.remove('is-zoomed');
         }
+        if (this.zoomBtn) {
+          this.zoomBtn.classList.remove('is-active');
+        }
       }
 
       next() {
@@ -201,6 +249,9 @@ if (!customElements.get('product-modal')) {
         const isZoomed = this.classList.toggle('is-zoomed');
         if (this.lightboxCard) {
           this.lightboxCard.classList.toggle('is-zoomed', isZoomed);
+        }
+        if (this.zoomBtn) {
+          this.zoomBtn.classList.toggle('is-active', isZoomed);
         }
       }
     }
