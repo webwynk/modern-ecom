@@ -986,45 +986,7 @@ a.product__text {
     flex-shrink: 0 !important;
   }
 
-  /* Mobile circular gold arrow buttons */
-  .thumbnail-slider .gallery-thumbnail-arrow,
-  .thumbnail-slider .slider-button {
-    width: 28px !important;
-    height: 28px !important;
-    min-width: 28px !important;
-    min-height: 28px !important;
-    border-radius: 50% !important;
-    background-color: #997A51 !important;
-    color: #FFFFFF !important;
-    border: none !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    cursor: pointer !important;
-    padding: 0 !important;
-    flex-shrink: 0 !important;
-    box-shadow: 0 2px 5px rgba(153, 122, 81, 0.25) !important;
-    z-index: 2 !important;
-  }
 
-  .thumbnail-slider .gallery-thumbnail-arrow.is-disabled,
-  .thumbnail-slider .slider-button.is-disabled {
-    opacity: 0.35 !important;
-    cursor: default !important;
-    pointer-events: none !important;
-  }
-
-  .icon-desktop-arrow {
-    display: none !important;
-  }
-
-  .icon-mobile-arrow {
-    display: block !important;
-    width: 14px !important;
-    height: 14px !important;
-    color: #FFFFFF !important;
-    stroke: #FFFFFF !important;
-  }
 }
 
 @media screen and (min-width: 750px) {
@@ -1092,86 +1054,9 @@ a.product__text {
     flex-shrink: 0 !important;
   }
 
-  /* Up & Down Circular Buttons in Brand Gold #997A51 */
-  .product--thumbnail_slider .thumbnail-slider .gallery-thumbnail-arrow,
-  .product--thumbnail_slider .thumbnail-slider .slider-button,
-  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .gallery-thumbnail-arrow,
-  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .slider-button {
-    width: 32px !important;
-    height: 32px !important;
-    min-width: 32px !important;
-    min-height: 32px !important;
-    border-radius: 50% !important;
-    background-color: #997A51 !important;
-    color: #FFFFFF !important;
-    border: none !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    cursor: pointer !important;
-    padding: 0 !important;
-    opacity: 1 !important;
-    transition: background-color 0.2s ease, transform 0.15s ease, opacity 0.2s ease !important;
-    box-shadow: 0 2px 6px rgba(153, 122, 81, 0.3) !important;
-    z-index: 2 !important;
-  }
-
-  .product--thumbnail_slider .thumbnail-slider .gallery-thumbnail-arrow:hover:not(.is-disabled),
-  .product--thumbnail_slider .thumbnail-slider .slider-button:hover:not(.is-disabled),
-  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .gallery-thumbnail-arrow:hover:not(.is-disabled),
-  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .slider-button:hover:not(.is-disabled) {
-    background-color: #7E6341 !important;
-    transform: scale(1.08) !important;
-  }
-
-  .product--thumbnail_slider .thumbnail-slider .gallery-thumbnail-arrow.is-disabled,
-  .product--thumbnail_slider .thumbnail-slider .slider-button.is-disabled,
-  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .gallery-thumbnail-arrow.is-disabled,
-  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .slider-button.is-disabled {
-    opacity: 0.38 !important;
-    cursor: default !important;
-    pointer-events: none !important;
-    transform: none !important;
-  }
-
-  .product--thumbnail_slider .thumbnail-slider .gallery-thumbnail-arrow .svg-wrapper,
-  .product--thumbnail_slider .thumbnail-slider .slider-button .svg-wrapper,
-  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .gallery-thumbnail-arrow .svg-wrapper,
-  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .slider-button .svg-wrapper {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 100% !important;
-    height: 100% !important;
-    color: #FFFFFF !important;
-  }
-
-  .product--thumbnail_slider .thumbnail-slider .gallery-thumbnail-arrow svg,
-  .product--thumbnail_slider .thumbnail-slider .slider-button svg,
-  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .gallery-thumbnail-arrow svg,
-  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .slider-button svg {
-    width: 14px !important;
-    height: 14px !important;
-    color: #FFFFFF !important;
-    stroke: #FFFFFF !important;
-  }
-
-  .product--thumbnail_slider .thumbnail-slider .gallery-thumbnail-arrow svg.icon-mobile-arrow,
-  .product--thumbnail_slider .thumbnail-slider .slider-button svg.icon-mobile-arrow,
-  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .gallery-thumbnail-arrow svg.icon-mobile-arrow,
-  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .slider-button svg.icon-mobile-arrow {
-    display: none !important;
-  }
-
-  .product--thumbnail_slider .thumbnail-slider .gallery-thumbnail-arrow svg.icon-desktop-arrow,
-  .product--thumbnail_slider .thumbnail-slider .slider-button svg.icon-desktop-arrow,
-  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .gallery-thumbnail-arrow svg.icon-desktop-arrow,
-  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .slider-button svg.icon-desktop-arrow {
-    display: block !important;
-  }
-
-  .product--thumbnail_slider [id^="GalleryViewer-"] .slider-buttons {
-    display: none !important;
+  .product--thumbnail_slider .thumbnail-slider .thumbnail-list.slider--tablet-up,
+  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .thumbnail-list {
+    max-height: 520px !important;
   }
 }
 
@@ -1220,6 +1105,85 @@ a.product__text {
     font-size: 1.15rem !important;
     padding: 0.5rem 1.2rem !important;
     border-radius: 9999px !important;
+  }
+}
+
+/* Main Viewer Navigation Arrows (Bottom-Right, White Circular) */
+.product__media-nav-buttons {
+  position: absolute;
+  bottom: 1.6rem;
+  right: 1.6rem;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  pointer-events: none;
+}
+
+.product__media-nav-btn {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  color: #1D2939;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  pointer-events: auto;
+  outline: none;
+}
+
+.product__media-nav-btn:hover {
+  background-color: #FAF4EB;
+  color: #997A51;
+  border-color: #997A51;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(153, 122, 81, 0.25);
+}
+
+.product__media-nav-btn:active {
+  transform: translateY(0) scale(0.96);
+}
+
+.product__media-nav-btn.is-disabled {
+  opacity: 0.35;
+  cursor: default;
+  pointer-events: none;
+  transform: none;
+}
+
+.product__media-nav-btn svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+  stroke: currentColor;
+  transition: stroke 0.2s ease;
+}
+
+@media screen and (max-width: 749px) {
+  .product__media-nav-buttons {
+    bottom: 1.2rem;
+    right: 1.2rem;
+    gap: 0.6rem;
+  }
+
+  .product__media-nav-btn {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    min-height: 38px;
+  }
+
+  .product__media-nav-btn svg {
+    width: 18px;
+    height: 18px;
   }
 }
 
