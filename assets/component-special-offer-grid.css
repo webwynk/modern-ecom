@@ -149,19 +149,19 @@
 }
 
 /* Countdown Block */
-.special-offer-card__countdown {
+.special-offer-timer {
   padding-top: 1.4rem;
   border-top: 0.1rem solid rgba(0, 0, 0, 0.08);
 }
 
-.special-offer-card__countdown-text {
+.timer-title {
   font-size: 1.3rem;
   color: rgba(0, 0, 0, 0.6);
   margin: 0 0 0.8rem 0;
   font-weight: 500;
 }
 
-.special-offer-card__timer {
+.timer-countdown {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -496,7 +496,7 @@
     font-size: 1.45rem;
   }
 
-  .special-offer-card__timer {
+  .timer-countdown {
     gap: 0.6rem;
   }
 
