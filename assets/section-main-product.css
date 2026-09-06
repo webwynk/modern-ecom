@@ -975,39 +975,227 @@ a.product__text {
 }
 
 @media screen and (min-width: 750px) {
-  .product--thumbnail_slider .thumbnail-slider {
-    display: flex;
-    align-items: center;
+  .product--thumbnail_slider media-gallery,
+  media-gallery[data-desktop-layout="thumbnail_slider"] {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: 1.8rem !important;
   }
 
-  .thumbnail-slider .thumbnail-list.slider--tablet-up {
-    display: flex;
-    padding: 0.5rem;
-    flex: 1;
-    scroll-padding-left: 0.5rem;
+  .product--thumbnail_slider [id^="GalleryThumbnails-"],
+  media-gallery[data-desktop-layout="thumbnail_slider"] [id^="GalleryThumbnails-"] {
+    order: 1 !important;
+    width: 80px !important;
+    min-width: 80px !important;
+    max-width: 80px !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.8rem !important;
+    position: relative !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
 
-  .product__media-wrapper .slider-mobile-gutter .slider-button {
-    display: none;
+  .product--thumbnail_slider [id^="GalleryViewer-"],
+  media-gallery[data-desktop-layout="thumbnail_slider"] [id^="GalleryViewer-"] {
+    order: 2 !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    position: relative !important;
+    margin: 0 !important;
   }
 
-  .thumbnail-list.slider--tablet-up .thumbnail-list__item.slider__slide {
-    width: calc(25% - 0.8rem);
+  .product--thumbnail_slider .thumbnail-slider .thumbnail-list.slider--tablet-up,
+  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .thumbnail-list {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 0.8rem !important;
+    padding: 2px !important;
+    margin: 0 !important;
+    max-height: 480px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    scroll-behavior: smooth !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
   }
 
-  .product--thumbnail_slider .slider-mobile-gutter .slider-button {
-    display: flex;
+  .product--thumbnail_slider .thumbnail-slider .thumbnail-list::-webkit-scrollbar,
+  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .thumbnail-list::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .product--thumbnail_slider .thumbnail-list.slider--tablet-up .thumbnail-list__item.slider__slide,
+  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-list__item.slider__slide {
+    width: 100% !important;
+    max-width: 74px !important;
+    min-width: 74px !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Up & Down Circular Buttons in Brand Gold #997A51 */
+  .product--thumbnail_slider .thumbnail-slider .slider-button,
+  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .slider-button {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    border-radius: 50% !important;
+    background-color: #997A51 !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    opacity: 1 !important;
+    transition: background-color 0.2s ease, transform 0.15s ease, opacity 0.2s ease !important;
+    box-shadow: 0 2px 6px rgba(153, 122, 81, 0.3) !important;
+    z-index: 2 !important;
+  }
+
+  .product--thumbnail_slider .thumbnail-slider .slider-button:hover,
+  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .slider-button:hover {
+    background-color: #7E6341 !important;
+    transform: scale(1.08) !important;
+  }
+
+  .product--thumbnail_slider .thumbnail-slider .slider-button[disabled],
+  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .slider-button[disabled] {
+    opacity: 1 !important;
+    cursor: pointer !important;
+    background-color: #997A51 !important;
+  }
+
+  .product--thumbnail_slider .thumbnail-slider .slider-button .svg-wrapper,
+  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .slider-button .svg-wrapper {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    color: #FFFFFF !important;
+  }
+
+  .product--thumbnail_slider .thumbnail-slider .slider-button svg,
+  media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail-slider .slider-button svg {
+    width: 14px !important;
+    height: 14px !important;
+    color: #FFFFFF !important;
+    stroke: #FFFFFF !important;
+    display: block !important;
+  }
+
+  .product--thumbnail_slider [id^="GalleryViewer-"] .slider-buttons {
+    display: none !important;
   }
 }
 
-@media screen and (min-width: 900px) {
-  .product--small .thumbnail-list.slider--tablet-up .thumbnail-list__item.slider__slide {
-    width: calc(25% - 0.8rem);
+/* Badges overlay on Main Viewer */
+[id^="GalleryViewer-"] {
+  position: relative;
+}
+
+.product__media-badges {
+  position: absolute;
+  top: 1.6rem;
+  left: 1.6rem;
+  right: 1.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.product__badge-bestseller {
+  background-color: #F2F4F7 !important;
+  color: #1D2939 !important;
+  font-family: inherit;
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  padding: 0.6rem 1.4rem !important;
+  border-radius: 0.6rem !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+  pointer-events: auto;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  display: inline-block;
+}
+
+.product__badge-discount {
+  background-color: #FAF4EB !important;
+  color: #997A51 !important;
+  border: 1.5px solid rgba(153, 122, 81, 0.45) !important;
+  font-family: inherit;
+  font-size: 1.3rem !important;
+  font-weight: 700 !important;
+  padding: 0.6rem 1.4rem !important;
+  border-radius: 0.6rem !important;
+  letter-spacing: 0.02em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+  pointer-events: auto;
+  line-height: 1.2;
+  display: inline-block;
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 749px) {
+  .product__media-badges {
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
   }
 
-  .thumbnail-list.slider--tablet-up .thumbnail-list__item.slider__slide {
-    width: calc(20% - 0.8rem);
+  .product__badge-bestseller {
+    font-size: 1.1rem;
+    padding: 0.4rem 1rem;
+    border-radius: 0.4rem;
   }
+
+  .product__badge-discount {
+    font-size: 1.15rem;
+    padding: 0.4rem 1rem;
+    border-radius: 0.4rem;
+  }
+}
+
+/* Thumbnail Card borders & active state in Brand Gold #997A51 */
+.product--thumbnail_slider .thumbnail,
+media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail {
+  border: 1.5px solid #E5E5E5 !important;
+  border-radius: 6px !important;
+  overflow: hidden !important;
+  background-color: #FFFFFF !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.product--thumbnail_slider .thumbnail:hover,
+media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail:hover {
+  opacity: 1 !important;
+  border-color: #997A51 !important;
+}
+
+.product--thumbnail_slider .thumbnail[aria-current="true"],
+.product--thumbnail_slider .thumbnail[aria-current],
+media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail[aria-current="true"],
+media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail[aria-current] {
+  border: 2px solid #997A51 !important;
+  box-shadow: 0 0 0 1px #997A51 !important;
+  border-radius: 6px !important;
+}
+
+.product--thumbnail_slider .thumbnail img,
+media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail img {
+  border-radius: 4px !important;
+  object-fit: cover !important;
 }
 
 .thumbnail {

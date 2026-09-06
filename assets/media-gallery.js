@@ -19,6 +19,42 @@ if (!customElements.get('media-gallery')) {
             .addEventListener('click', this.setActiveMedia.bind(this, mediaToSwitch.dataset.target, false));
         });
         if (this.dataset.desktopLayout.includes('thumbnail') && this.mql.matches) this.removeListSemantic();
+
+        // Vertical thumbnail scrolling on tablet and desktop
+        const prevBtn = this.elements.thumbnails.querySelector('button[name="previous"]');
+        const nextBtn = this.elements.thumbnails.querySelector('button[name="next"]');
+        const thumbnailList = this.elements.thumbnails.querySelector('.thumbnail-list');
+
+        if (prevBtn && nextBtn && thumbnailList) {
+          prevBtn.addEventListener('click', (e) => {
+            if (this.mql.matches) {
+              e.preventDefault();
+              e.stopImmediatePropagation();
+              thumbnailList.scrollBy({ top: -110, behavior: 'smooth' });
+            }
+          });
+
+          nextBtn.addEventListener('click', (e) => {
+            if (this.mql.matches) {
+              e.preventDefault();
+              e.stopImmediatePropagation();
+              thumbnailList.scrollBy({ top: 110, behavior: 'smooth' });
+            }
+          });
+        }
+
+        // Sync discount badge on variant change
+        if (typeof subscribe !== 'undefined' && typeof PUB_SUB_EVENTS !== 'undefined' && PUB_SUB_EVENTS.variantChange) {
+          subscribe(PUB_SUB_EVENTS.variantChange, (event) => {
+            if (!event.data || !event.data.html) return;
+            const newBadge = event.data.html.querySelector('.product__badge-discount');
+            const currentBadge = this.querySelector('.product__badge-discount');
+            if (newBadge && currentBadge) {
+              currentBadge.innerHTML = newBadge.innerHTML;
+              currentBadge.style.display = newBadge.style.display;
+            }
+          });
+        }
       }
 
       onSlideChanged(event) {
@@ -77,6 +113,12 @@ if (!customElements.get('media-gallery')) {
           .querySelectorAll('button')
           .forEach((element) => element.removeAttribute('aria-current'));
         thumbnail.querySelector('button').setAttribute('aria-current', true);
+
+        if (this.mql.matches) {
+          thumbnail.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+          return;
+        }
+
         if (this.elements.thumbnails.isSlideVisible(thumbnail, 10)) return;
 
         this.elements.thumbnails.slider.scrollTo({ left: thumbnail.offsetLeft });
