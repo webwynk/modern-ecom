@@ -1272,16 +1272,19 @@ input.mobile-facets__checkbox {
   display: block !important;
 }
 
+/* Horizontal Filter Form Grid Layout: 3 Columns on Single Row */
 .facets__form {
-  display: flex !important;
+  display: grid !important;
+  grid-template-columns: 1fr auto auto !important;
   align-items: center !important;
-  justify-content: space-between !important;
-  flex-wrap: wrap !important;
-  gap: 1.2rem 2rem !important;
+  gap: 1.2rem 1.6rem !important;
   margin-bottom: 0 !important;
+  width: 100% !important;
 }
 
 .facets__wrapper {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
   display: flex !important;
   align-items: center !important;
   flex-wrap: wrap !important;
@@ -1390,11 +1393,15 @@ input.mobile-facets__checkbox {
 }
 
 /* 4. Sort By Full Pill Control */
-.facet-filters.sorting {
+.facets__form .facet-filters.sorting {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
   display: inline-flex !important;
   align-items: center !important;
   margin: 0 !important;
   padding: 0 !important;
+  align-self: center !important;
+  white-space: nowrap !important;
 }
 
 .facet-filters__field {
@@ -1447,11 +1454,14 @@ input.mobile-facets__checkbox {
 }
 
 /* 5. Product Count Pill Badge */
-.product-count {
-  margin: 0 !important;
+.facets__form .product-count {
+  grid-column: 3 !important;
+  grid-row: 1 !important;
   display: inline-flex !important;
   align-items: center !important;
-  grid-column-start: auto !important;
+  margin: 0 !important;
+  align-self: center !important;
+  white-space: nowrap !important;
 }
 
 .product-count__text {
@@ -1464,6 +1474,15 @@ input.mobile-facets__checkbox {
   padding: 0.6rem 1.4rem !important;
   white-space: nowrap !important;
   line-height: 1.2 !important;
+}
+
+/* Explicitly hide duplicate mobile product count on desktop and tablet */
+@media screen and (min-width: 750px) {
+  .facets-container > .product-count,
+  .facets-container > .product-count.medium-hide,
+  .facets-container > .product-count.large-up-hide {
+    display: none !important;
+  }
 }
 
 /* 6. Modern Floating Dropdown Popover */
@@ -1512,12 +1531,22 @@ input.mobile-facets__checkbox {
 }
 
 /* 7. Active Filter Chips */
-.active-facets {
-  margin-top: 1.2rem !important;
+.facets__form .active-facets {
+  grid-column: 1 / -1 !important;
+  grid-row: 2 !important;
+  width: 100% !important;
+  margin-top: 0.8rem !important;
   display: flex !important;
   flex-wrap: wrap !important;
   gap: 0.6rem !important;
   align-items: center !important;
+}
+
+.active-facets:empty {
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 0 !important;
 }
 
 .active-facets__button {
@@ -1547,9 +1576,17 @@ input.mobile-facets__checkbox {
 /* 8. Mobile Drawer Full Pill Button (< 750px) */
 @media screen and (max-width: 749px) {
   .facets-container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
     padding: 1rem 1.4rem !important;
     border-radius: 14px !important;
     margin-bottom: 1.5rem !important;
+  }
+
+  .facets-container > .product-count {
+    display: inline-flex !important;
+    margin: 0 !important;
   }
 
   .mobile-facets__open {
