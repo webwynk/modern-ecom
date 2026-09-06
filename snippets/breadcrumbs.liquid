@@ -48,6 +48,16 @@
           <span class="breadcrumbs__current" aria-current="page" itemprop="name" title="{{ product.title | escape }}">{{ product.title }}</span>
           <meta itemprop="position" content="{{ position }}">
         </li>
+      {%- elsif template contains 'collection' and collection.title -%}
+        <li class="breadcrumbs__separator" aria-hidden="true">
+          <svg class="icon icon-chevron-right" width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.5 1L6.5 6L1.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </li>
+        <li class="breadcrumbs__item breadcrumbs__item--active" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <span class="breadcrumbs__current" aria-current="page" itemprop="name" title="{{ collection.title | escape }}">{{ collection.title }}</span>
+          <meta itemprop="position" content="2">
+        </li>
       {%- endif -%}
     </ol>
   </nav>
