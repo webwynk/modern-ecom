@@ -1,0 +1,49 @@
+{%- unless template == 'index' or template == 'cart' or template == 'list-collections' or template == '404' -%}
+  {{ 'component-breadcrumbs.css' | asset_url | stylesheet_tag }}
+  <nav class="breadcrumbs" role="navigation" aria-label="breadcrumbs">
+    <ol class="breadcrumbs__list" itemscope itemtype="https://schema.org/BreadcrumbList">
+      <li class="breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a class="breadcrumbs__link" href="{{ routes.root_url }}" itemprop="item">
+          <span itemprop="name">{{ 'general.breadcrumbs.home' | t | default: 'Home' }}</span>
+        </a>
+        <meta itemprop="position" content="1">
+      </li>
+
+      {%- if template contains 'product' -%}
+        {%- assign primary_collection = null -%}
+        {%- if collection -%}
+          {%- assign primary_collection = collection -%}
+        {%- elsif product.collections.size > 0 -%}
+          {%- assign primary_collection = product.collections.first -%}
+        {%- endif -%}
+
+        {%- if primary_collection -%}
+          <li class="breadcrumbs__separator" aria-hidden="true">
+            <svg class="icon icon-chevron-right" width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1.5 1L6.5 6L1.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </li>
+          <li class="breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a class="breadcrumbs__link" href="{{ primary_collection.url }}" itemprop="item">
+              <span itemprop="name">{{ primary_collection.title }}</span>
+            </a>
+            <meta itemprop="position" content="2">
+          </li>
+          {%- assign position = 3 -%}
+        {%- else -%}
+          {%- assign position = 2 -%}
+        {%- endif -%}
+
+        <li class="breadcrumbs__separator" aria-hidden="true">
+          <svg class="icon icon-chevron-right" width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.5 1L6.5 6L1.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </li>
+        <li class="breadcrumbs__item breadcrumbs__item--active" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <span class="breadcrumbs__current" aria-current="page" itemprop="name" title="{{ product.title | escape }}">{{ product.title }}</span>
+          <meta itemprop="position" content="{{ position }}">
+        </li>
+      {%- endif -%}
+    </ol>
+  </nav>
+{%- endunless -%}
