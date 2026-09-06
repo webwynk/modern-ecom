@@ -782,24 +782,14 @@ a.product__text {
 }
 
 .product-media-modal__lightbox-card.is-zoomed img {
-  transform: scale(1.8) !important;
+  transform: scale(2) !important;
   cursor: zoom-out !important;
   transform-origin: center center !important;
 }
 
-/* Hide navigation arrows and zoom button when in zoom mode */
-.product-media-modal.is-zoomed .product-media-modal__nav-btn {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-  transform: translateY(-50%) scale(0.8) !important;
-}
-
-.product-media-modal.is-zoomed .product-media-modal__btn--zoom {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-  transform: scale(0.8) !important;
+.product-media-modal__btn--zoom.is-active {
+  background-color: rgba(255, 255, 255, 0.25) !important;
+  opacity: 1 !important;
 }
 
 .product-media-modal__content {
