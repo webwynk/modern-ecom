@@ -1,5 +1,5 @@
 {% comment %}
-  Renders a product media modal. Also see 'product-media-gallery'
+  Renders a modern centered product media lightbox modal per reference image. Also see 'product-media-gallery'
 
   Accepts:
   - product: {Object} Product liquid object
@@ -11,47 +11,115 @@
 
 <product-modal id="ProductModal-{{ section.id }}" class="product-media-modal media-modal">
   <div
-    class="product-media-modal__dialog color-{{ section.settings.color_scheme }} gradient"
+    class="product-media-modal__dialog"
     role="dialog"
     aria-label="{{ 'products.modal.label' | t }}"
     aria-modal="true"
     tabindex="-1"
   >
-    <button
-      id="ModalClose-{{ section.id }}"
-      type="button"
-      class="product-media-modal__toggle"
-      aria-label="{{ 'accessibility.close' | t }}"
-    >
-      {{ 'icon-close.svg' | inline_asset_content }}
-    </button>
+    <!-- Top Bar: Counter (Left) and Action Controls (Right) -->
+    <div class="product-media-modal__header">
+      <div class="product-media-modal__counter" aria-live="polite">
+        <span class="product-media-modal__counter-current">1</span> / <span class="product-media-modal__counter-total">{{ product.media.size }}</span>
+      </div>
 
-    <div
-      class="product-media-modal__content color-{{ section.settings.color_scheme }} gradient"
-      role="document"
-      aria-label="{{ 'products.modal.label' | t }}"
-      tabindex="0"
-    >
-      {%- liquid
-        if product.selected_or_first_available_variant.featured_media != null
-          assign media = product.selected_or_first_available_variant.featured_media
-          render 'product-media', media: media, loop: section.settings.enable_video_looping, variant_image: section.settings.hide_variants
-        endif
-      -%}
+      <div class="product-media-modal__actions">
+        <button
+          type="button"
+          class="product-media-modal__btn product-media-modal__btn--zoom"
+          aria-label="Toggle zoom"
+          title="Toggle zoom"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <line x1="11" y1="8" x2="11" y2="14"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+        </button>
 
-      {%- for media in product.media -%}
-        {%- liquid
-          if section.settings.hide_variants and variant_images contains media.src or variant_images contains media.id
-            assign variant_image = true
-          else
-            assign variant_image = false
-          endif
+        <button
+          type="button"
+          class="product-media-modal__btn product-media-modal__btn--fullscreen"
+          aria-label="Toggle fullscreen"
+          title="Toggle fullscreen"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+          </svg>
+        </button>
 
-          unless media.id == product.selected_or_first_available_variant.featured_media.id
-            render 'product-media', media: media, loop: section.settings.enable_video_looping, variant_image: variant_image
-          endunless
-        -%}
-      {%- endfor -%}
+        <button
+          id="ModalClose-{{ section.id }}"
+          type="button"
+          class="product-media-modal__btn product-media-modal__toggle"
+          aria-label="{{ 'accessibility.close' | t }}"
+          title="{{ 'accessibility.close' | t }}"
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Floating Navigation Chevrons on Dark Overlay -->
+    {%- if product.media.size > 1 -%}
+      <button
+        type="button"
+        class="product-media-modal__nav-btn product-media-modal__nav-btn--prev"
+        aria-label="{{ 'general.slider.previous_slide' | t }}"
+        title="{{ 'general.slider.previous_slide' | t }}"
+      >
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+
+      <button
+        type="button"
+        class="product-media-modal__nav-btn product-media-modal__nav-btn--next"
+        aria-label="{{ 'general.slider.next_slide' | t }}"
+        title="{{ 'general.slider.next_slide' | t }}"
+      >
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    {%- endif -%}
+
+    <!-- Centered White Lightbox Card Wrapper -->
+    <div class="product-media-modal__lightbox-container" id="ProductMediaModalContainer-{{ section.id }}">
+      <div class="product-media-modal__lightbox-card" id="ProductMediaModalCard-{{ section.id }}">
+        <div
+          class="product-media-modal__content"
+          role="document"
+          aria-label="{{ 'products.modal.label' | t }}"
+          tabindex="0"
+        >
+          {%- liquid
+            if product.selected_or_first_available_variant.featured_media != null
+              assign media = product.selected_or_first_available_variant.featured_media
+              render 'product-media', media: media, loop: section.settings.enable_video_looping, variant_image: section.settings.hide_variants
+            endif
+          -%}
+
+          {%- for media in product.media -%}
+            {%- liquid
+              if section.settings.hide_variants and variant_images contains media.src or variant_images contains media.id
+                assign variant_image = true
+              else
+                assign variant_image = false
+              endif
+
+              unless media.id == product.selected_or_first_available_variant.featured_media.id
+                render 'product-media', media: media, loop: section.settings.enable_video_looping, variant_image: variant_image
+              endunless
+            -%}
+          {%- endfor -%}
+        </div>
+      </div>
     </div>
   </div>
 </product-modal>
