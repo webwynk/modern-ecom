@@ -13,7 +13,6 @@ if (!customElements.get('product-modal')) {
         this.prevBtn = this.querySelector('.product-media-modal__nav-btn--prev');
         this.nextBtn = this.querySelector('.product-media-modal__nav-btn--next');
         this.zoomBtn = this.querySelector('.product-media-modal__btn--zoom');
-        this.fullscreenBtn = this.querySelector('.product-media-modal__btn--fullscreen');
         this.lightboxContainer = this.querySelector('.product-media-modal__lightbox-container');
         this.lightboxCard = this.querySelector('.product-media-modal__lightbox-card');
         this.content = this.querySelector('.product-media-modal__content');
@@ -44,10 +43,14 @@ if (!customElements.get('product-modal')) {
           });
         }
 
-        if (this.fullscreenBtn) {
-          this.fullscreenBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.toggleFullscreen();
+        // Clicking the image inside the lightbox card toggles zoom in/out
+        if (this.content) {
+          this.content.addEventListener('click', (e) => {
+            const img = e.target.closest('img');
+            if (img) {
+              e.stopPropagation();
+              this.toggleZoom();
+            }
           });
         }
 
@@ -70,7 +73,12 @@ if (!customElements.get('product-modal')) {
             e.preventDefault();
             this.next();
           } else if (e.key === 'Escape') {
-            this.hide();
+            if (this.classList.contains('is-zoomed')) {
+              e.preventDefault();
+              this.toggleZoom();
+            } else {
+              this.hide();
+            }
           }
         });
 
@@ -96,6 +104,7 @@ if (!customElements.get('product-modal')) {
       }
 
       handleSwipe() {
+        if (this.classList.contains('is-zoomed')) return;
         const threshold = 40;
         const diff = this.touchEndX - this.touchStartX;
         if (diff > threshold) {
@@ -107,14 +116,23 @@ if (!customElements.get('product-modal')) {
 
       show(opener) {
         super.show(opener);
+        this.classList.remove('is-zoomed');
+        if (this.lightboxCard) this.lightboxCard.classList.remove('is-zoomed');
         this.refreshMediaList();
 
-        const targetMediaId = opener?.getAttribute('data-media-id');
+        let targetMediaId = opener?.getAttribute('data-media-id');
+        if (!targetMediaId) {
+          const activePageMedia = document.querySelector('media-gallery .product__media-item.is-active [data-media-id]');
+          if (activePageMedia) {
+            targetMediaId = activePageMedia.getAttribute('data-media-id');
+          }
+        }
         let initialIndex = 0;
 
         if (targetMediaId) {
           const matchIdx = this.mediaItems.findIndex(
-            (el) => el.getAttribute('data-media-id') === targetMediaId
+            (el) => el.getAttribute('data-media-id') === targetMediaId ||
+                    el.getAttribute('data-media-id') === targetMediaId.split('-').pop()
           );
           if (matchIdx !== -1) initialIndex = matchIdx;
         }
@@ -123,11 +141,9 @@ if (!customElements.get('product-modal')) {
       }
 
       hide() {
+        this.classList.remove('is-zoomed');
         if (this.lightboxCard) {
           this.lightboxCard.classList.remove('is-zoomed');
-        }
-        if (document.fullscreenElement) {
-          document.exitFullscreen().catch(() => {});
         }
         super.hide();
       }
@@ -167,6 +183,7 @@ if (!customElements.get('product-modal')) {
           this.counterCurrent.textContent = this.currentIndex + 1;
         }
 
+        this.classList.remove('is-zoomed');
         if (this.lightboxCard) {
           this.lightboxCard.classList.remove('is-zoomed');
         }
@@ -181,15 +198,9 @@ if (!customElements.get('product-modal')) {
       }
 
       toggleZoom() {
-        if (!this.lightboxCard) return;
-        this.lightboxCard.classList.toggle('is-zoomed');
-      }
-
-      toggleFullscreen() {
-        if (!document.fullscreenElement) {
-          this.requestFullscreen().catch(() => {});
-        } else {
-          document.exitFullscreen().catch(() => {});
+        const isZoomed = this.classList.toggle('is-zoomed');
+        if (this.lightboxCard) {
+          this.lightboxCard.classList.toggle('is-zoomed', isZoomed);
         }
       }
     }
