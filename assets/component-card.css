@@ -598,6 +598,12 @@
    Modern Product Card Revamp (Matching Collection Design Reference)
    ========================================================================== */
 
+.product-grid .grid__item {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+}
+
 .product-grid .card-wrapper {
   height: 100%;
 }
@@ -628,6 +634,21 @@
   border: none !important;
   border-radius: 12px !important;
   overflow: hidden;
+}
+
+.product-grid .card__inner .media {
+  background-color: #F9FAFB !important;
+  border-radius: 10px !important;
+}
+
+.product-grid .card__inner .media img {
+  object-fit: contain !important;
+  padding: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.product-grid .card:hover .card__inner .media img {
+  transform: scale(1.04);
 }
 
 .card__wishlist-btn {
