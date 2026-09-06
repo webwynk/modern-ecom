@@ -847,10 +847,20 @@
   padding-top: 0.6rem;
 }
 
+.card__buy-now-btn::before,
+.card__buy-now-btn::after {
+  display: none !important;
+  content: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
 .card__buy-now-btn {
+  position: relative;
   background-color: #997A51 !important;
   color: #FFFFFF !important;
   border: none !important;
+  outline: none !important;
   border-radius: 10px !important;
   padding: 1.15rem 1.6rem !important;
   font-weight: 600 !important;
@@ -865,6 +875,32 @@
   box-shadow: 0 2px 6px rgba(153, 122, 81, 0.25) !important;
   transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease !important;
   letter-spacing: 0.02em;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.card__buy-now-btn:focus,
+.card__buy-now-btn:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px #997A51 !important;
+}
+
+.card__buy-now-btn.loading > .loading__spinner {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.card__buy-now-btn.loading > .loading__spinner .spinner {
+  width: fit-content;
+}
+
+.card__buy-now-btn.loading > .loading__spinner .path {
+  stroke: #FFFFFF;
 }
 
 .card__buy-now-btn:hover {

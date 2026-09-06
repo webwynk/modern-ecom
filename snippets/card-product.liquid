@@ -202,7 +202,7 @@
             <div class="card__buy-now-wrapper">
               {%- if card_product.available -%}
                 {%- if card_product.variants_count > 1 -%}
-                  <a href="{{ card_product.url }}" class="card__buy-now-btn button button--full-width">
+                  <a href="{{ card_product.url }}" class="card__buy-now-btn">
                     <svg class="icon icon-cart" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <circle cx="9" cy="21" r="1"></circle>
                       <circle cx="20" cy="21" r="1"></circle>
@@ -224,7 +224,7 @@
                       <button
                         type="submit"
                         name="add"
-                        class="card__buy-now-btn button button--full-width"
+                        class="card__buy-now-btn"
                       >
                         <svg class="icon icon-cart" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                           <circle cx="9" cy="21" r="1"></circle>
@@ -238,7 +238,7 @@
                   </product-form>
                 {%- endif -%}
               {%- else -%}
-                <button class="card__buy-now-btn button button--full-width" disabled>
+                <button class="card__buy-now-btn" disabled>
                   <span>{{ 'products.product.sold_out' | t }}</span>
                 </button>
               {%- endif -%}
