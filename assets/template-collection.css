@@ -98,6 +98,11 @@
   margin-top: 1rem;
 }
 
+/* Remove section-to-section gap between collection banner and product grid */
+.template-collection .section + .section {
+  margin-top: 0 !important;
+}
+
 /* ============================================================
    5-Column Product Grid on Collection Page
    ============================================================ */
