@@ -53,6 +53,21 @@
 >
   <div id="GalleryStatus-{{ section.id }}" class="visually-hidden" role="status"></div>
   <slider-component id="GalleryViewer-{{ section.id }}" class="slider-mobile-gutter">
+    <div class="product__media-badges" aria-hidden="true">
+      {%- if product.tags contains 'best-seller' or product.tags contains 'Best Seller' or product.tags contains 'bestseller' or product.compare_at_price > product.price -%}
+        <span class="product__badge-bestseller">Best Seller</span>
+      {%- else -%}
+        <span></span>
+      {%- endif -%}
+      {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+        {%- assign savings_amount = product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price -%}
+        <span class="product__badge-discount" id="ProductDiscountBadge-{{ section.id }}">
+          {{ savings_amount | money }} OFF
+        </span>
+      {%- else -%}
+        <span class="product__badge-discount" id="ProductDiscountBadge-{{ section.id }}" style="display: none;"></span>
+      {%- endif -%}
+    </div>
     <a class="skip-to-content-link button visually-hidden quick-add-hidden" href="#ProductInfo-{{ section.id }}">
       {{ 'accessibility.skip_to_product_info' | t }}
     </a>
@@ -187,7 +202,7 @@
     >
       <button
         type="button"
-        class="slider-button slider-button--prev{% if media_count <= 3 %} small-hide{% endif %}{% if media_count <= 4 %} medium-hide large-up-hide{% endif %}"
+        class="slider-button slider-button--prev{% if media_count <= 3 %} small-hide{% endif %}"
         name="previous"
         aria-label="{{ 'general.slider.previous_slide' | t }}"
         aria-controls="GalleryThumbnails-{{ section.id }}"
@@ -317,7 +332,7 @@
       </ul>
       <button
         type="button"
-        class="slider-button slider-button--next{% if media_count <= 3 %} small-hide{% endif %}{% if media_count <= 4 %} medium-hide large-up-hide{% endif %}"
+        class="slider-button slider-button--next{% if media_count <= 3 %} small-hide{% endif %}"
         name="next"
         aria-label="{{ 'general.slider.next_slide' | t }}"
         aria-controls="GalleryThumbnails-{{ section.id }}"
