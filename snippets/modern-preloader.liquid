@@ -1,11 +1,11 @@
 {% comment %}
   Modern Site Preloader Overlay
   Features:
-    - User-specified 8-step radial multi-dot loader in brand highlight #997A51
-    - Guaranteed minimum 1000ms (1 full second) display duration so animation is always seen on reload
-    - Explicit #997A51 shadow colors for bulletproof rendering across all browsers
+    - Prominent 8-step radial multi-dot loader in brand highlight #997A51 (scaled to 8px dots, --d: 35px)
+    - Luxury brand title "The Golden Rug" in DM Sans 600 with letter-spacing 0.18em
     - Clean white #FFFFFF backdrop
-    - Butter-smooth fade-out with safety timeout
+    - Guaranteed 1000ms minimum display duration so the animation is clearly visible on every reload
+    - Butter-smooth fade-out transition
 {% endcomment %}
 
 <style>
@@ -31,25 +31,50 @@
     pointer-events: none;
   }
 
+  .modern-preloader__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3.2rem;
+  }
+
   .modern-preloader .loader {
-    --d: 22px;
-    width: 4px;
-    height: 4px;
+    --d: 35px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     color: #997A51;
     box-shadow: 
       calc(1 * var(--d))      calc(0 * var(--d))     0 0   #997A51,
-      calc(0.707 * var(--d))  calc(0.707 * var(--d)) 0 1px #997A51,
-      calc(0 * var(--d))      calc(1 * var(--d))     0 2px #997A51,
-      calc(-0.707 * var(--d)) calc(0.707 * var(--d)) 0 3px #997A51,
-      calc(-1 * var(--d))     calc(0 * var(--d))     0 4px #997A51,
-      calc(-0.707 * var(--d)) calc(-0.707 * var(--d)) 0 5px #997A51,
-      calc(0 * var(--d))      calc(-1 * var(--d))    0 6px #997A51;
+      calc(0.707 * var(--d))  calc(0.707 * var(--d)) 0 1.5px #997A51,
+      calc(0 * var(--d))      calc(1 * var(--d))     0 3px #997A51,
+      calc(-0.707 * var(--d)) calc(0.707 * var(--d)) 0 4.5px #997A51,
+      calc(-1 * var(--d))     calc(0 * var(--d))     0 6px #997A51,
+      calc(-0.707 * var(--d)) calc(-0.707 * var(--d)) 0 7.5px #997A51,
+      calc(0 * var(--d))      calc(-1 * var(--d))    0 9px #997A51;
     animation: l27 1s infinite steps(8);
   }
 
   @keyframes l27 {
     100% { transform: rotate(1turn); }
+  }
+
+  .modern-preloader__title {
+    font-family: var(--font-heading-family, 'DM Sans', sans-serif);
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #000000;
+    margin: 0;
+    text-align: center;
+  }
+
+  @media screen and (min-width: 750px) {
+    .modern-preloader__title {
+      font-size: 2.0rem;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -60,7 +85,10 @@
 </style>
 
 <div class="modern-preloader" id="ModernPreloader" aria-hidden="true">
-  <div class="loader"></div>
+  <div class="modern-preloader__wrapper">
+    <div class="loader"></div>
+    <span class="modern-preloader__title">The Golden Rug</span>
+  </div>
 </div>
 
 <script>
