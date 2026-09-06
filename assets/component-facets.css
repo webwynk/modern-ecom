@@ -1358,7 +1358,8 @@ input.mobile-facets__checkbox {
   gap: 0.7rem !important;
 }
 
-.facets__summary .icon-caret {
+.facets__summary .icon-caret,
+.facet-filters__summary .icon-caret {
   width: 0.8rem !important;
   height: 0.8rem !important;
   stroke: #6B7280 !important;
@@ -1392,7 +1393,7 @@ input.mobile-facets__checkbox {
   stroke: #997A51 !important;
 }
 
-/* 4. Sort By Full Pill Control */
+/* 4. Sort By Custom Popover Dropdown */
 .facets__form .facet-filters.sorting {
   grid-column: 2 !important;
   grid-row: 1 !important;
@@ -1402,55 +1403,113 @@ input.mobile-facets__checkbox {
   padding: 0 !important;
   align-self: center !important;
   white-space: nowrap !important;
+  position: relative !important;
 }
 
-.facet-filters__field {
+.facet-filters__disclosure {
+  position: relative !important;
+  margin: 0 !important;
+}
+
+.facet-filters__summary {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 0.8rem !important;
+  justify-content: center !important;
   border-radius: 9999px !important;
   background-color: #FFFFFF !important;
   border: 1px solid #E5E7EB !important;
-  padding: 0.55rem 1.4rem !important;
+  padding: 0.75rem 1.6rem !important;
+  font-size: 1.35rem !important;
+  font-weight: 500 !important;
+  color: #1F2937 !important;
+  cursor: pointer !important;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
-  transition: all 0.2s ease !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  user-select: none !important;
+  margin: 0 !important;
   min-height: 3.8rem !important;
 }
 
-.facet-filters__field:hover {
-  border-color: #997A51 !important;
-  background-color: #FDFBF7 !important;
-}
-
-.facet-filters__label {
-  margin: 0 !important;
+.facet-filters__label-prefix {
   color: #6B7280 !important;
-  font-size: 1.35rem !important;
   font-weight: 400 !important;
-  white-space: nowrap !important;
-}
-
-.facet-filters__field .select {
-  margin: 0 !important;
-  display: inline-flex !important;
-  align-items: center !important;
-}
-
-.facet-filters__sort {
   font-size: 1.35rem !important;
-  font-weight: 600 !important;
+  margin-right: 0.35rem !important;
+}
+
+.facet-filters__selected-sort {
   color: #111827 !important;
-  cursor: pointer !important;
-  padding: 0 1.6rem 0 0 !important;
+  font-weight: 600 !important;
+  font-size: 1.35rem !important;
+}
+
+.facet-filters__sort-display {
+  position: absolute !important;
+  top: calc(100% + 0.8rem) !important;
+  right: 0 !important;
+  left: auto !important;
+  min-width: 24rem !important;
+  border-radius: 14px !important;
+  background-color: #FFFFFF !important;
+  border: 1px solid #E5E7EB !important;
+  box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.06) !important;
+  padding: 0.8rem !important;
+  z-index: 100 !important;
+  animation: animateMenuOpen 0.2s ease !important;
+}
+
+.facet-filters__sort-list {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.3rem !important;
+}
+
+.facet-filters__sort-item {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.facet-filters__sort-button {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0.9rem 1.2rem !important;
+  border-radius: 8px !important;
   border: none !important;
   background: transparent !important;
-  outline: none !important;
+  font-family: inherit !important;
+  font-size: 1.35rem !important;
+  font-weight: 500 !important;
+  color: #374151 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  text-align: left !important;
+  line-height: 1.3 !important;
 }
 
-.facet-filters__sort + .icon-caret {
-  right: 0 !important;
-  width: 0.8rem !important;
-  height: 0.8rem !important;
+.facet-filters__sort-button:hover {
+  background-color: #FDFBF7 !important;
+  color: #997A51 !important;
+  transform: translateX(2px) !important;
+}
+
+.facet-filters__sort-item.is-selected .facet-filters__sort-button {
+  background-color: #FDFBF7 !important;
+  color: #997A51 !important;
+  font-weight: 600 !important;
+}
+
+.facet-filters__sort-check {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #997A51 !important;
+  margin-left: 1rem !important;
+  flex-shrink: 0 !important;
 }
 
 /* 5. Product Count Pill Badge */
@@ -1499,6 +1558,9 @@ input.mobile-facets__checkbox {
 }
 
 .facets__header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
   padding-bottom: 1.2rem !important;
   border-bottom: 1px solid #F3F4F6 !important;
   margin-bottom: 1.2rem !important;
@@ -1507,27 +1569,131 @@ input.mobile-facets__checkbox {
 .facets__selected {
   font-size: 1.25rem !important;
   color: #6B7280 !important;
+  font-weight: 500 !important;
 }
 
 .facets__reset {
   font-size: 1.25rem !important;
   color: #997A51 !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  padding: 0.35rem 0.8rem !important;
+  border-radius: 6px !important;
+  transition: all 0.15s ease !important;
+}
+
+.facets__reset:hover {
+  background-color: #FDFBF7 !important;
+  color: #7D633E !important;
+  text-decoration: none !important;
+}
+
+/* Price Filter Modern Inputs */
+.facets__price {
+  display: flex !important;
+  align-items: center !important;
+  gap: 1.2rem !important;
+  padding: 1.2rem 0 0.4rem !important;
+  border: none !important;
+}
+
+.facets__price .field {
+  position: relative !important;
+  flex: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+}
+
+.facets__price .field-currency {
+  position: absolute !important;
+  left: 1.2rem !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  color: #9CA3AF !important;
+  font-size: 1.35rem !important;
   font-weight: 500 !important;
+  z-index: 2 !important;
+  margin: 0 !important;
+  pointer-events: none !important;
+}
+
+.facets__price .field__input {
+  border-radius: 10px !important;
+  border: 1px solid #E5E7EB !important;
+  background-color: #F9FAFB !important;
+  padding: 0.85rem 1rem 0.85rem 2.5rem !important;
+  font-size: 1.35rem !important;
+  font-weight: 500 !important;
+  color: #111827 !important;
+  height: 4.2rem !important;
+  min-height: 4.2rem !important;
+  transition: all 0.2s ease !important;
+  width: 100% !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+}
+
+.facets__price .field__input:focus {
+  border-color: #997A51 !important;
+  background-color: #FFFFFF !important;
+  box-shadow: 0 0 0 3px rgba(153, 122, 81, 0.12) !important;
+  outline: none !important;
+}
+
+.facets__price .field__label {
+  display: none !important;
 }
 
 /* Checkbox inputs */
+.facets__list {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.3rem !important;
+}
+
+.facets__item {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 .facet-checkbox {
-  padding: 0.7rem 0.4rem !important;
-  border-radius: 6px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0.85rem 1rem !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
   transition: background-color 0.15s ease !important;
+  font-size: 1.35rem !important;
+  color: #374151 !important;
+  user-select: none !important;
 }
 
 .facet-checkbox:hover {
   background-color: #F9FAFB !important;
+  color: #111827 !important;
 }
 
 .facet-checkbox input[type='checkbox'] {
+  width: 1.8rem !important;
+  height: 1.8rem !important;
+  border-radius: 5px !important;
   accent-color: #997A51 !important;
+  cursor: pointer !important;
+  margin: 0 1rem 0 0 !important;
+  position: static !important;
+  opacity: 1 !important;
+  flex-shrink: 0 !important;
+}
+
+.facet-checkbox--disabled {
+  opacity: 0.45 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
 }
 
 /* 7. Active Filter Chips */
@@ -1538,7 +1704,7 @@ input.mobile-facets__checkbox {
   margin-top: 0.8rem !important;
   display: flex !important;
   flex-wrap: wrap !important;
-  gap: 0.6rem !important;
+  gap: 0.8rem !important;
   align-items: center !important;
 }
 
@@ -1552,48 +1718,86 @@ input.mobile-facets__checkbox {
 .active-facets__button {
   margin: 0 !important;
   padding: 0 !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
 }
 
 .active-facets__button-inner {
   border-radius: 9999px !important;
   background-color: #F3F4F6 !important;
   border: 1px solid #E5E7EB !important;
-  padding: 0.45rem 1.2rem !important;
+  padding: 0.5rem 1.3rem !important;
   font-size: 1.25rem !important;
-  color: #374151 !important;
+  font-weight: 500 !important;
+  color: #1F2937 !important;
   display: inline-flex !important;
   align-items: center !important;
-  gap: 0.6rem !important;
+  gap: 0.7rem !important;
+  text-decoration: none !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02) !important;
   transition: all 0.15s ease !important;
+  line-height: 1.3 !important;
 }
 
 .active-facets__button-inner:hover {
   background-color: #FEE2E2 !important;
   border-color: #FECDD3 !important;
   color: #DC2626 !important;
+  text-decoration: none !important;
+}
+
+.active-facets__button-inner svg {
+  width: 1rem !important;
+  height: 1rem !important;
+  stroke: currentColor !important;
+}
+
+.active-facets__button-remove {
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  color: #997A51 !important;
+  text-decoration: none !important;
+  padding: 0.45rem 0.9rem !important;
+  border-radius: 6px !important;
+  transition: all 0.15s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+.active-facets__button-remove:hover {
+  background-color: #FDFBF7 !important;
+  color: #7D633E !important;
+  text-decoration: none !important;
+}
+
+.active-facets * {
+  text-decoration: none !important;
 }
 
 /* 8. Mobile Drawer Full Pill Button (< 750px) */
 @media screen and (max-width: 749px) {
   .facets-container {
     display: flex !important;
+    flex-wrap: wrap !important;
     align-items: center !important;
     justify-content: space-between !important;
-    padding: 1rem 1.4rem !important;
-    border-radius: 14px !important;
-    margin-bottom: 1.5rem !important;
+    padding: 1.2rem 1.6rem !important;
+    border-radius: 16px !important;
+    margin-bottom: 1.8rem !important;
+    gap: 1rem 0 !important;
   }
 
-  .facets-container > .product-count {
-    display: inline-flex !important;
+  .mobile-facets__wrapper {
     margin: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
   }
 
   .mobile-facets__open {
     border-radius: 9999px !important;
     background-color: #FFFFFF !important;
     border: 1px solid #E5E7EB !important;
-    padding: 0.8rem 1.8rem !important;
+    padding: 0.75rem 1.8rem !important;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
     display: inline-flex !important;
     align-items: center !important;
@@ -1601,6 +1805,75 @@ input.mobile-facets__checkbox {
     font-size: 1.35rem !important;
     font-weight: 600 !important;
     color: #111827 !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    line-height: 1.2 !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .mobile-facets__open:hover {
+    border-color: #997A51 !important;
+    background-color: #FDFBF7 !important;
+    color: #997A51 !important;
+    text-decoration: none !important;
+  }
+
+  .mobile-facets__open-icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    color: #997A51 !important;
+  }
+
+  .mobile-facets__open-icon svg {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    stroke: #997A51 !important;
+  }
+
+  .mobile-facets__open-label {
+    white-space: nowrap !important;
+    text-decoration: none !important;
+    font-size: 1.35rem !important;
+    font-weight: 600 !important;
+    color: inherit !important;
+    line-height: 1 !important;
+  }
+
+  .mobile-facets__count-bubble {
+    background-color: #997A51 !important;
+    color: #FFFFFF !important;
+    border-radius: 9999px !important;
+    font-size: 1.15rem !important;
+    font-weight: 700 !important;
+    padding: 0.2rem 0.65rem !important;
+    min-width: 1.9rem !important;
+    text-align: center !important;
+    line-height: 1.2 !important;
+    margin-left: 0.2rem !important;
+  }
+
+  .facets-container > .product-count {
+    display: inline-flex !important;
+    margin: 0 !important;
+    align-self: center !important;
+  }
+
+  .facets-container > .active-facets-mobile {
+    width: 100% !important;
+    margin-top: 0.8rem !important;
+    padding-top: 1rem !important;
+    border-top: 1px solid #F3F4F6 !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 0.6rem !important;
+    align-items: center !important;
+  }
+
+  .facets-container > .active-facets-mobile:empty {
+    display: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
   }
 }
 
