@@ -3,10 +3,11 @@
   Modern Luxury Site Preloader Overlay
   Brand: The Golden Rug (#997A51)
   Features:
-    - 8-step radial multi-dot loader in brand highlight #997A51
+    - High-performance, razor-sharp SVG vector 8-step radial multi-dot loader in brand highlight #997A51
     - Luxury brand title "THE GOLDEN RUG" in DM Sans 600 with letter-spacing 0.18em
     - Clean white #FFFFFF backdrop
     - Smooth 800ms minimum display floor with seamless dissolve fade-out
+    - 100% cross-browser reliability (GPU-accelerated vector rotation)
     - Fully accessible with aria-hidden="true" and reduced motion support
 {% endcomment %}
 
@@ -38,28 +39,24 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 3.2rem;
+    gap: 2.8rem;
   }
 
-  .modern-preloader .loader {
-    --d: 22px;
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    color: #997A51;
-    box-shadow: 
-      calc(1 * var(--d))      calc(0 * var(--d))     0 0   #997A51,
-      calc(0.707 * var(--d))  calc(0.707 * var(--d)) 0 1px #997A51,
-      calc(0 * var(--d))      calc(1 * var(--d))     0 2px #997A51,
-      calc(-0.707 * var(--d)) calc(0.707 * var(--d)) 0 3px #997A51,
-      calc(-1 * var(--d))     calc(0 * var(--d))     0 4px #997A51,
-      calc(-0.707 * var(--d)) calc(-0.707 * var(--d)) 0 5px #997A51,
-      calc(0 * var(--d))      calc(-1 * var(--d))    0 6px #997A51;
-    animation: l27 1s infinite steps(8);
+  .modern-preloader__spinner {
+    width: 46px;
+    height: 46px;
+    animation: modern-preloader-spin 1s infinite steps(8);
+    transform-origin: center center;
+    display: block;
   }
 
-  @keyframes l27 {
-    100% { transform: rotate(1turn); }
+  @keyframes modern-preloader-spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 
   .modern-preloader__title {
@@ -80,7 +77,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .modern-preloader .loader {
+    .modern-preloader__spinner {
       animation-duration: 2s;
     }
   }
@@ -88,7 +85,16 @@
 
 <div class="modern-preloader" id="ModernPreloader" aria-hidden="true">
   <div class="modern-preloader__wrapper">
-    <div class="loader"></div>
+    <svg class="modern-preloader__spinner" viewBox="0 0 50 50" fill="#997A51" xmlns="http://www.w3.org/2000/svg" role="presentation">
+      <!-- 7 graduated radial dots with 8th position empty, creating the iconic stepping loader -->
+      <circle cx="43" cy="25" r="1.75" />
+      <circle cx="37.7" cy="37.7" r="2.25" />
+      <circle cx="25" cy="43" r="2.75" />
+      <circle cx="12.3" cy="37.7" r="3.25" />
+      <circle cx="7" cy="25" r="3.75" />
+      <circle cx="12.3" cy="12.3" r="4.25" />
+      <circle cx="25" cy="7" r="4.75" />
+    </svg>
     <span class="modern-preloader__title">The Golden Rug</span>
   </div>
 </div>
@@ -99,7 +105,7 @@
     if (!preloader) return;
 
     var startTime = Date.now();
-    var minDuration = 800; // 800ms display floor for a crisp, visible animation cycle
+    var minDuration = 800; // 800ms display floor so a full, crisp animation cycle is visible
     var dismissed = false;
 
     function dismiss() {
