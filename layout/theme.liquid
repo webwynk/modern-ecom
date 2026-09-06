@@ -279,6 +279,18 @@
           font-size: 1.6rem;
         }
       }
+
+      /* Prevent flash of predictive search loading spinner on page load / reload */
+      .predictive-search {
+        display: none;
+      }
+      predictive-search[open] .predictive-search,
+      predictive-search[loading] .predictive-search {
+        display: block;
+      }
+      predictive-search:not([loading]) .predictive-search__loading-state {
+        display: none !important;
+      }
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
@@ -325,6 +337,10 @@
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+    {%- unless request.design_mode -%}
+      {%- render 'modern-preloader' -%}
+    {%- endunless -%}
+
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>

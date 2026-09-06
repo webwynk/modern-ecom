@@ -123,6 +123,19 @@
     opacity: 0.9;
   }
 
+  .header-main__search .predictive-search {
+    display: none;
+  }
+
+  predictive-search[open] .header-main__search .predictive-search,
+  predictive-search[loading] .header-main__search .predictive-search {
+    display: block;
+  }
+
+  predictive-search:not([loading]) .predictive-search__loading-state {
+    display: none !important;
+  }
+
   .header-main__support {
     display: flex;
     align-items: center;

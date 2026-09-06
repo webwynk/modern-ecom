@@ -1,0 +1,87 @@
+{% comment %}
+  Modern Site Preloader Overlay
+  Features:
+    - User-specified 8-step radial multi-dot loader in brand highlight #997A51
+    - Clean white #FFFFFF backdrop
+    - Butter-smooth fade-out on window.load with 1.2s safety fallback
+    - Zero-dependency inline CSS & JS for instant execution before render
+    - Automatically excluded in Theme Editor (designMode)
+{% endcomment %}
+
+<div class="modern-preloader" id="ModernPreloader" aria-hidden="true">
+  <div class="loader"></div>
+</div>
+
+<style>
+  .modern-preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999999;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+  }
+
+  .modern-preloader.preloader--hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .modern-preloader .loader {
+    --d: 22px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    color: #997A51;
+    box-shadow: 
+      calc(1*var(--d))      calc(0*var(--d))     0 0,
+      calc(0.707*var(--d))  calc(0.707*var(--d)) 0 1px,
+      calc(0*var(--d))      calc(1*var(--d))     0 2px,
+      calc(-0.707*var(--d)) calc(0.707*var(--d)) 0 3px,
+      calc(-1*var(--d))     calc(0*var(--d))     0 4px,
+      calc(-0.707*var(--d)) calc(-0.707*var(--d))0 5px,
+      calc(0*var(--d))      calc(-1*var(--d))    0 6px;
+    animation: l27 1s infinite steps(8);
+  }
+
+  @keyframes l27 {
+    100% { transform: rotate(1turn); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .modern-preloader .loader {
+      animation-duration: 2s;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    var preloader = document.getElementById('ModernPreloader');
+    if (!preloader) return;
+    function dismissPreloader() {
+      if (preloader.classList.contains('preloader--hidden')) return;
+      preloader.classList.add('preloader--hidden');
+      setTimeout(function() {
+        if (preloader && preloader.parentNode) {
+          preloader.parentNode.removeChild(preloader);
+        }
+      }, 380);
+    }
+    if (document.readyState === 'complete') {
+      setTimeout(dismissPreloader, 60);
+    } else {
+      window.addEventListener('load', dismissPreloader);
+      // Safety timeout: dismiss after 1.2s so user is never blocked on slow network
+      setTimeout(dismissPreloader, 1200);
+    }
+  })();
+</script>
