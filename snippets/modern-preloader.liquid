@@ -2,10 +2,10 @@
   Modern Site Preloader Overlay
   Features:
     - User-specified 8-step radial multi-dot loader in brand highlight #997A51
-    - Guaranteed minimum 800ms display duration so animation is always visible on reload
+    - Guaranteed minimum 1000ms (1 full second) display duration so animation is always seen on reload
+    - Explicit #997A51 shadow colors for bulletproof rendering across all browsers
     - Clean white #FFFFFF backdrop
     - Butter-smooth fade-out with safety timeout
-    - Zero-dependency inline CSS (placed first for instant styling before paint)
 {% endcomment %}
 
 <style>
@@ -22,7 +22,7 @@
     z-index: 99999999;
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.35s ease, visibility 0.35s ease;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
   }
 
   .modern-preloader.preloader--hidden {
@@ -38,13 +38,13 @@
     border-radius: 50%;
     color: #997A51;
     box-shadow: 
-      calc(1*var(--d))      calc(0*var(--d))     0 0,
-      calc(0.707*var(--d))  calc(0.707*var(--d)) 0 1px,
-      calc(0*var(--d))      calc(1*var(--d))     0 2px,
-      calc(-0.707*var(--d)) calc(0.707*var(--d)) 0 3px,
-      calc(-1*var(--d))     calc(0*var(--d))     0 4px,
-      calc(-0.707*var(--d)) calc(-0.707*var(--d))0 5px,
-      calc(0*var(--d))      calc(-1*var(--d))    0 6px;
+      calc(1*var(--d))      calc(0*var(--d))     0 0   #997A51,
+      calc(0.707*var(--d))  calc(0.707*var(--d)) 0 1px #997A51,
+      calc(0*var(--d))      calc(1*var(--d))     0 2px #997A51,
+      calc(-0.707*var(--d)) calc(0.707*var(--d)) 0 3px #997A51,
+      calc(-1*var(--d))     calc(0*var(--d))     0 4px #997A51,
+      calc(-0.707*var(--d)) calc(-0.707*var(--d))0 5px #997A51,
+      calc(0*var(--d))      calc(-1*var(--d))    0 6px #997A51;
     animation: l27 1s infinite steps(8);
   }
 
@@ -69,7 +69,7 @@
     if (!preloader) return;
 
     var startTime = Date.now();
-    var minDuration = 800; // Guaranteed minimum display time in ms so animation is fully seen
+    var minDuration = 1000; // Guaranteed minimum 1000ms display time so full 1s cycle is seen
     var dismissed = false;
 
     function dismiss() {
@@ -80,7 +80,7 @@
         if (preloader && preloader.parentNode) {
           preloader.parentNode.removeChild(preloader);
         }
-      }, 400);
+      }, 450);
     }
 
     function scheduleDismiss() {
@@ -93,8 +93,8 @@
       scheduleDismiss();
     } else {
       window.addEventListener('load', scheduleDismiss);
-      // Safety fallback: dismiss after 2s so user is never blocked
-      setTimeout(scheduleDismiss, 2000);
+      // Safety fallback: dismiss after 2.5s so user is never blocked
+      setTimeout(scheduleDismiss, 2500);
     }
   })();
 </script>
