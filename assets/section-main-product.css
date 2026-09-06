@@ -2177,8 +2177,10 @@ media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail img {
 /* 6. Quantity Input Modern Full Pill */
 .product__info-container .product-form__actions-row .product-form__quantity {
   margin: 0 !important;
-  max-width: none !important;
-  flex: 0 0 110px !important;
+  width: 90px !important;
+  max-width: 90px !important;
+  min-width: 90px !important;
+  flex: 0 0 90px !important;
 }
 
 @media screen and (max-width: 749px) {
@@ -2186,12 +2188,22 @@ media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail img {
     gap: 0.6rem !important;
   }
   .product__info-container .product-form__actions-row .product-form__quantity {
-    flex: 0 0 92px !important;
+    width: 82px !important;
+    max-width: 82px !important;
+    min-width: 82px !important;
+    flex: 0 0 82px !important;
   }
+}
+
+.product__info-container .product-form__actions-row .price-per-item__container {
+  width: 100% !important;
+  max-width: 100% !important;
 }
 
 .product__info-container .product-form__actions-row .quantity {
   width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
   height: 50px !important;
   min-height: 50px !important;
   border-radius: 25px !important;
@@ -2201,6 +2213,7 @@ media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail img {
   overflow: hidden !important;
   display: flex !important;
   align-items: center !important;
+  padding: 0 !important;
 }
 
 .product__info-container .product-form__actions-row .quantity:before,
@@ -2209,7 +2222,8 @@ media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail img {
 }
 
 .product__info-container .product-form__actions-row .quantity__button {
-  width: 32px !important;
+  width: 28px !important;
+  min-width: 28px !important;
   height: 100% !important;
   background: transparent !important;
   border: none !important;
@@ -2222,14 +2236,21 @@ media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail img {
   transition: background-color 0.2s ease, color 0.2s ease !important;
 }
 
+@media screen and (max-width: 749px) {
+  .product__info-container .product-form__actions-row .quantity__button {
+    width: 25px !important;
+    min-width: 25px !important;
+  }
+}
+
 .product__info-container .product-form__actions-row .quantity__button:hover {
   background-color: #F3F4F6 !important;
   color: #997A51 !important;
 }
 
 .product__info-container .product-form__actions-row .quantity__button .svg-wrapper {
-  width: 11px !important;
-  height: 11px !important;
+  width: 10px !important;
+  height: 10px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -2244,8 +2265,10 @@ media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail img {
   border: none !important;
   background: transparent !important;
   padding: 0 !important;
-  flex: 1 !important;
-  width: 100% !important;
+  flex: 1 1 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
 }
 
 /* 7. Add to Cart Button (Full Pill, Solid Black) */
