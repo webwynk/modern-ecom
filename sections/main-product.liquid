@@ -504,6 +504,8 @@
                     show_pickup_availability: true,
                     quantity_block: quantity_block
                   -%}
+                {%- when 'trust_badges' -%}
+                  {%- render 'product-trust-badges', block: block -%}
                 {%- when 'rating' -%}
                   {%- if product.metafields.reviews.rating.value != blank -%}
                     <div class="rating-wrapper">
@@ -947,6 +949,12 @@
           "info": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.info"
         }
       ]
+    },
+    {
+      "type": "trust_badges",
+      "name": "Trust Badges & Security",
+      "limit": 1,
+      "settings": []
     },
     {
       "type": "description",
