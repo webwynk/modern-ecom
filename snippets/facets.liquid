@@ -417,7 +417,7 @@
               <details id="Details-SortBy-{{ section.id }}" class="facets__disclosure facet-filters__disclosure disclosure-has-popup">
                 <summary class="facets__summary facet-filters__summary focus-offset">
                   <div>
-                    <span class="facet-filters__label-prefix">{{ 'products.facets.sort_by_label' | t }}:</span>
+                    <span class="facet-filters__label-prefix">{{ 'products.facets.sort_by_label' | t }}</span>
                     <strong class="facet-filters__selected-sort">
                       {%- for option in results.sort_options -%}
                         {%- if option.value == sort_by -%}{{ option.name | escape }}{%- endif -%}
