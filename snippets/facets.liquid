@@ -19,6 +19,14 @@
 {%- liquid
   assign sort_by = results.sort_by | default: results.default_sort_by
   assign total_active_values = 0
+  for filter in results.filters
+    assign total_active_values = total_active_values | plus: filter.active_values.size
+    if filter.type == 'price_range'
+      if filter.min_value.value != null or filter.max_value.value != null
+        assign total_active_values = total_active_values | plus: 1
+      endif
+    endif
+  endfor
   assign default_presentation = 'text'
   if results.url
     assign results_url = results.url
@@ -405,34 +413,71 @@
           {% comment %} Sorting and product count are the last elements when filter type is horizontal {% endcomment %}
           {%- if enable_sorting -%}
             <div class="facet-filters sorting caption">
-              <div class="facet-filters__field">
-                <h2 class="facet-filters__label caption-large text-body">
-                  <label for="SortBy">{{ 'products.facets.sort_by_label' | t }}</label>
-                </h2>
-                <div class="select">
-                  {%- assign sort_by = results.sort_by | default: results.default_sort_by -%}
-                  <select
-                    name="sort_by"
-                    class="facet-filters__sort select__select caption-large"
-                    id="SortBy"
-                    aria-describedby="a11y-refresh-page-message"
-                  >
+              {%- assign sort_by = results.sort_by | default: results.default_sort_by -%}
+              <details id="Details-SortBy-{{ section.id }}" class="facets__disclosure facet-filters__disclosure disclosure-has-popup">
+                <summary class="facets__summary facet-filters__summary focus-offset">
+                  <div>
+                    <span class="facet-filters__label-prefix">{{ 'products.facets.sort_by_label' | t }}:</span>
+                    <strong class="facet-filters__selected-sort">
+                      {%- for option in results.sort_options -%}
+                        {%- if option.value == sort_by -%}{{ option.name | escape }}{%- endif -%}
+                      {%- endfor -%}
+                    </strong>
+                    <span class="svg-wrapper">
+                      {{- 'icon-caret.svg' | inline_asset_content -}}
+                    </span>
+                  </div>
+                </summary>
+                <div id="Facet-SortBy-{{ section.id }}" class="facets__display facet-filters__sort-display">
+                  <ul class="facet-filters__sort-list list-unstyled" role="list">
                     {%- for option in results.sort_options -%}
-                      <option
-                        value="{{ option.value | escape }}"
-                        {% if option.value == sort_by %}
-                          selected="selected"
-                        {% endif %}
-                      >
-                        {{ option.name | escape }}
-                      </option>
+                      <li class="facet-filters__sort-item{% if option.value == sort_by %} is-selected{% endif %}" role="listitem">
+                        <button
+                          type="button"
+                          class="facet-filters__sort-button"
+                          data-value="{{ option.value | escape }}"
+                          onclick="
+                            const form = this.closest('form');
+                            const select = form.querySelector('#SortBy');
+                            if (select && select.value !== this.dataset.value) {
+                              select.value = this.dataset.value;
+                              select.dispatchEvent(new Event('input', { bubbles: true }));
+                            }
+                            this.closest('details').removeAttribute('open');
+                          "
+                        >
+                          <span class="facet-filters__sort-name">{{ option.name | escape }}</span>
+                          {%- if option.value == sort_by -%}
+                            <span class="facet-filters__sort-check" aria-hidden="true">
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                              </svg>
+                            </span>
+                          {%- endif -%}
+                        </button>
+                      </li>
                     {%- endfor -%}
-                  </select>
-                  <span class="svg-wrapper">
-                    {{- 'icon-caret.svg' | inline_asset_content -}}
-                  </span>
+                  </ul>
                 </div>
-              </div>
+              </details>
+              <select
+                name="sort_by"
+                class="facet-filters__sort select__select visually-hidden"
+                id="SortBy"
+                aria-describedby="a11y-refresh-page-message"
+                tabindex="-1"
+              >
+                {%- for option in results.sort_options -%}
+                  <option
+                    value="{{ option.value | escape }}"
+                    {% if option.value == sort_by %}
+                      selected="selected"
+                    {% endif %}
+                  >
+                    {{ option.name | escape }}
+                  </option>
+                {%- endfor -%}
+              </select>
             </div>
           {%- endif -%}
           <div class="product-count light" role="status">
@@ -464,10 +509,20 @@
     <details class="mobile-facets__disclosure disclosure-has-popup">
       <summary class="mobile-facets__open-wrapper focus-offset">
         <span class="mobile-facets__open{% if filter_type == 'drawer' and enable_filtering == false %} medium-hide large-up-hide{% endif %}">
-          <span class="svg-wrapper">
-            {{- 'icon-filter.svg' | inline_asset_content -}}
+          <span class="mobile-facets__open-icon" aria-hidden="true">
+            <svg class="icon icon-filter-sliders" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="4" y1="21" x2="4" y2="14"></line>
+              <line x1="4" y1="10" x2="4" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12" y2="3"></line>
+              <line x1="20" y1="21" x2="20" y2="16"></line>
+              <line x1="20" y1="12" x2="20" y2="3"></line>
+              <line x1="1" y1="14" x2="7" y2="14"></line>
+              <line x1="9" y1="8" x2="15" y2="8"></line>
+              <line x1="17" y1="16" x2="23" y2="16"></line>
+            </svg>
           </span>
-          <span class="mobile-facets__open-label button-label medium-hide large-up-hide">
+          <span class="mobile-facets__open-label">
             {%- if enable_filtering and enable_sorting -%}
               {{ 'products.facets.filter_and_sort' | t }}
             {%- elsif enable_filtering -%}
@@ -476,11 +531,9 @@
               {{ 'products.facets.sort_button' | t }}
             {%- endif -%}
           </span>
-          <span class="mobile-facets__open-label button-label small-hide">
-            {%- if enable_filtering -%}
-              {{ 'products.facets.filter_button' | t }}
-            {%- endif -%}
-          </span>
+          {%- if total_active_values > 0 -%}
+            <span class="mobile-facets__count-bubble">{{ total_active_values }}</span>
+          {%- endif -%}
         </span>
         <span tabindex="0" class="mobile-facets__close">
           <span class="svg-wrapper">
