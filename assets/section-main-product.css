@@ -2005,3 +2005,347 @@ media-gallery[data-desktop-layout="thumbnail_slider"] .thumbnail img {
     border: none;
   }
 }
+
+/* ==========================================================================
+   Modern Product Buy Box (Vendor, Title, Price, Variants, Quantity, CTAs)
+   ========================================================================== */
+
+/* 1. Vendor styling */
+.product__info-container .product__text.caption-with-letter-spacing {
+  font-family: inherit;
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #997A51;
+  margin-bottom: 0.8rem;
+  display: block;
+}
+
+/* 2. Product Title */
+.product__info-container .product__title h1 {
+  font-family: inherit;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: #000000;
+  margin: 0 0 1.2rem 0;
+}
+
+@media screen and (min-width: 990px) {
+  .product__info-container .product__title h1 {
+    font-size: 30px;
+  }
+}
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .product__info-container .product__title h1 {
+    font-size: 28px;
+  }
+}
+@media screen and (max-width: 749px) {
+  .product__info-container .product__title h1 {
+    font-size: 25px;
+  }
+}
+
+/* 3. Price & Badges */
+.product__info-container .price {
+  margin-bottom: 2rem;
+}
+
+.product__info-container .price .price__container {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.product__info-container .price--on-sale .price__sale {
+  display: inline-flex !important;
+  align-items: baseline !important;
+  gap: 1.2rem !important;
+}
+
+.product__info-container .price--on-sale .price-item--regular {
+  color: rgba(0, 0, 0, 0.45) !important;
+  font-size: 1.6rem !important;
+  font-weight: 400 !important;
+  text-decoration: line-through !important;
+  order: 1;
+}
+
+.product__info-container .price--on-sale .price-item--sale {
+  color: #000000 !important;
+  font-size: 2.6rem !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.02em !important;
+  order: 2;
+}
+
+@media screen and (max-width: 749px) {
+  .product__info-container .price--on-sale .price-item--sale {
+    font-size: 2.2rem !important;
+  }
+}
+
+.product__info-container .price .price__badge-sale {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: #997A51 !important;
+  color: #FFFFFF !important;
+  border-radius: 20px !important;
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  padding: 0.4rem 1.2rem !important;
+  margin-left: 0.6rem !important;
+  border: none !important;
+  vertical-align: middle !important;
+}
+
+/* 4. Variant Picker (Pills) */
+.product__info-container .product-form__input--pill {
+  margin-bottom: 2rem;
+  max-width: 100%;
+}
+
+.product__info-container .product-form__input--pill .form__label {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #000000;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.product__info-container .product-form__selected-value {
+  font-weight: 600;
+  color: #000000;
+  margin-left: 0.2rem;
+}
+
+.product__info-container .product-form__input--pill input[type='radio'] + label {
+  border: 1.5px solid #E5E7EB !important;
+  background-color: #FFFFFF !important;
+  color: #000000 !important;
+  border-radius: 20px !important;
+  font-size: 1.4rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.02em !important;
+  padding: 0.8rem 2rem !important;
+  margin: 0 0.8rem 0.8rem 0 !important;
+  min-height: 44px !important;
+  min-width: 48px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.product__info-container .product-form__input--pill input[type='radio'] + label:before {
+  display: none !important;
+}
+
+.product__info-container .product-form__input--pill input[type='radio'] + label:hover {
+  border-color: #000000 !important;
+  background-color: #F9FAFB !important;
+}
+
+.product__info-container .product-form__input--pill input[type='radio']:checked + label {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+  border-color: #000000 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
+}
+
+.product__info-container .product-form__input--pill input[type='radio']:focus-visible + label {
+  outline: 2px solid #997A51 !important;
+  outline-offset: 2px !important;
+}
+
+/* 5. Modern Action Row (Side-by-Side Quantity + Add to Cart) */
+.product__info-container .product-form__actions-row {
+  display: flex !important;
+  align-items: stretch !important;
+  gap: 1.2rem !important;
+  width: 100% !important;
+  margin-bottom: 1.2rem !important;
+}
+
+@media screen and (max-width: 749px) {
+  .product__info-container .product-form__actions-row {
+    gap: 1rem !important;
+  }
+}
+
+/* 6. Quantity Input Modern Full Pill */
+.product__info-container .product-form__actions-row .product-form__quantity {
+  margin: 0 !important;
+  max-width: none !important;
+  flex: 0 0 130px !important;
+}
+
+@media screen and (max-width: 749px) {
+  .product__info-container .product-form__actions-row .product-form__quantity {
+    flex: 0 0 115px !important;
+  }
+}
+
+.product__info-container .product-form__actions-row .quantity {
+  width: 100% !important;
+  height: 50px !important;
+  min-height: 50px !important;
+  border-radius: 25px !important;
+  border: 1.5px solid #E5E7EB !important;
+  background-color: #FFFFFF !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.product__info-container .product-form__actions-row .quantity:before,
+.product__info-container .product-form__actions-row .quantity:after {
+  display: none !important;
+}
+
+.product__info-container .product-form__actions-row .quantity__button {
+  width: 38px !important;
+  height: 100% !important;
+  background: transparent !important;
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #000000 !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  transition: background-color 0.2s ease, color 0.2s ease !important;
+}
+
+.product__info-container .product-form__actions-row .quantity__button:hover {
+  background-color: #F3F4F6 !important;
+  color: #997A51 !important;
+}
+
+.product__info-container .product-form__actions-row .quantity__button .svg-wrapper {
+  width: 12px !important;
+  height: 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.product__info-container .product-form__actions-row .quantity__input {
+  font-family: inherit !important;
+  font-size: 1.6rem !important;
+  font-weight: 600 !important;
+  color: #000000 !important;
+  text-align: center !important;
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  flex: 1 !important;
+  width: 100% !important;
+}
+
+/* 7. Add to Cart Button (Full Pill, Solid Black) */
+.product__info-container .product-form__actions-row .product-form__submit {
+  flex: 1 !important;
+  width: auto !important;
+  height: 50px !important;
+  min-height: 50px !important;
+  border-radius: 25px !important;
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  font-family: inherit !important;
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12) !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.product__info-container .product-form__actions-row .product-form__submit:before,
+.product__info-container .product-form__actions-row .product-form__submit:after {
+  display: none !important;
+}
+
+.product__info-container .product-form__actions-row .product-form__submit:hover:not([disabled]) {
+  background-color: #1F2937 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2) !important;
+}
+
+.product__info-container .product-form__actions-row .product-form__submit:active:not([disabled]) {
+  transform: translateY(0) !important;
+}
+
+.product__info-container .product-form__actions-row .product-form__submit[disabled] {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+  background-color: #6B7280 !important;
+  box-shadow: none !important;
+}
+
+/* 8. Dynamic Checkout Button (Buy it Now - Full Pill, #997A51 Highlight) */
+.product__info-container .product-form__dynamic-checkout {
+  width: 100% !important;
+}
+
+.product__info-container .product-form__dynamic-checkout .shopify-payment-button__button {
+  width: 100% !important;
+  height: 50px !important;
+  min-height: 50px !important;
+  border-radius: 25px !important;
+  background-color: #997A51 !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  font-family: inherit !important;
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em !important;
+  box-shadow: 0 4px 14px rgba(153, 122, 81, 0.22) !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.product__info-container .product-form__dynamic-checkout .shopify-payment-button__button:before,
+.product__info-container .product-form__dynamic-checkout .shopify-payment-button__button:after {
+  display: none !important;
+}
+
+.product__info-container .product-form__dynamic-checkout .shopify-payment-button__button:hover:not([disabled]) {
+  filter: brightness(0.92) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 20px rgba(153, 122, 81, 0.32) !important;
+}
+
+.product__info-container .product-form__dynamic-checkout .shopify-payment-button__button:active:not([disabled]) {
+  transform: translateY(0) !important;
+}
+
+.product__info-container .shopify-payment-button__more-options {
+  font-family: inherit !important;
+  font-size: 1.3rem !important;
+  color: #997A51 !important;
+  margin: 1.2rem 0 0 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+  text-align: center !important;
+}
+
+/* 9. Refined Description Spacing & Divider */
+.product__info-container .product__description {
+  margin-top: 2.8rem !important;
+  padding-top: 2.4rem !important;
+  border-top: 1px solid #F3F4F6 !important;
+  line-height: 1.7 !important;
+  color: rgba(0, 0, 0, 0.8) !important;
+}
