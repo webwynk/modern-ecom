@@ -698,48 +698,74 @@ a.product__text {
   position: absolute !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
-  background: transparent !important;
-  border: none !important;
-  color: #FFFFFF !important;
-  width: 54px !important;
-  height: 64px !important;
+  background-color: #FFFFFF !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: 100% !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
+  color: #1A1A1A !important;
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  min-height: 48px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   cursor: pointer !important;
   z-index: 15 !important;
-  opacity: 0.75 !important;
-  transition: opacity 0.2s ease, transform 0.2s ease, background-color 0.2s ease !important;
-  border-radius: 6px !important;
+  opacity: 0.92 !important;
+  transition: opacity 0.2s ease, transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
   padding: 0 !important;
+  outline: none !important;
+}
+
+.product-media-modal__nav-btn svg {
+  width: 22px !important;
+  height: 22px !important;
+  display: block !important;
+  stroke: currentColor !important;
+  transition: stroke 0.2s ease !important;
 }
 
 .product-media-modal__nav-btn:hover {
   opacity: 1 !important;
-  background-color: rgba(255, 255, 255, 0.12) !important;
+  background-color: #FAF4EB !important;
+  color: #997A51 !important;
+  border-color: #997A51 !important;
   transform: translateY(-50%) scale(1.08) !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35) !important;
+}
+
+.product-media-modal__nav-btn:active {
+  transform: translateY(-50%) scale(0.95) !important;
 }
 
 .product-media-modal__nav-btn--prev {
-  left: 20px !important;
+  left: 24px !important;
 }
 
 .product-media-modal__nav-btn--next {
-  right: 20px !important;
+  right: 24px !important;
 }
 
 @media screen and (max-width: 749px) {
   .product-media-modal__nav-btn {
-    width: 42px !important;
-    height: 52px !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+  }
+
+  .product-media-modal__nav-btn svg {
+    width: 18px !important;
+    height: 18px !important;
   }
 
   .product-media-modal__nav-btn--prev {
-    left: 6px !important;
+    left: 10px !important;
   }
 
   .product-media-modal__nav-btn--next {
-    right: 6px !important;
+    right: 10px !important;
   }
 }
 
