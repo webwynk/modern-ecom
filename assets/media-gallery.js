@@ -27,11 +27,18 @@ if (!customElements.get('media-gallery')) {
 
         if (upBtn && downBtn && thumbnailList) {
           const updateBoundaryStates = () => {
-            if (!this.mql.matches) return;
-            const isAtTop = thumbnailList.scrollTop <= 4;
-            const isAtBottom = thumbnailList.scrollTop + thumbnailList.clientHeight >= thumbnailList.scrollHeight - 4;
-            upBtn.classList.toggle('is-disabled', isAtTop);
-            downBtn.classList.toggle('is-disabled', isAtBottom);
+            if (this.mql.matches) {
+              const isAtTop = thumbnailList.scrollTop <= 4;
+              const isAtBottom = thumbnailList.scrollTop + thumbnailList.clientHeight >= thumbnailList.scrollHeight - 4;
+              upBtn.classList.toggle('is-disabled', isAtTop);
+              downBtn.classList.toggle('is-disabled', isAtBottom);
+            } else {
+              const slider = this.elements.thumbnails.slider || thumbnailList;
+              const isAtStart = slider.scrollLeft <= 4;
+              const isAtEnd = slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 4;
+              upBtn.classList.toggle('is-disabled', isAtStart);
+              downBtn.classList.toggle('is-disabled', isAtEnd);
+            }
           };
 
           upBtn.addEventListener('click', (e) => {
@@ -39,8 +46,9 @@ if (!customElements.get('media-gallery')) {
             e.stopImmediatePropagation();
             if (this.mql.matches) {
               thumbnailList.scrollBy({ top: -140, behavior: 'smooth' });
-            } else if (this.elements.thumbnails.slider) {
-              this.elements.thumbnails.slider.scrollBy({ left: -140, behavior: 'smooth' });
+            } else {
+              const slider = this.elements.thumbnails.slider || thumbnailList;
+              slider.scrollBy({ left: -100, behavior: 'smooth' });
             }
           });
 
@@ -49,12 +57,14 @@ if (!customElements.get('media-gallery')) {
             e.stopImmediatePropagation();
             if (this.mql.matches) {
               thumbnailList.scrollBy({ top: 140, behavior: 'smooth' });
-            } else if (this.elements.thumbnails.slider) {
-              this.elements.thumbnails.slider.scrollBy({ left: 140, behavior: 'smooth' });
+            } else {
+              const slider = this.elements.thumbnails.slider || thumbnailList;
+              slider.scrollBy({ left: 100, behavior: 'smooth' });
             }
           });
 
-          thumbnailList.addEventListener('scroll', debounce(updateBoundaryStates, 100));
+          thumbnailList.addEventListener('scroll', debounce(updateBoundaryStates, 80));
+          window.addEventListener('resize', debounce(updateBoundaryStates, 150));
           setTimeout(updateBoundaryStates, 300);
         }
 
