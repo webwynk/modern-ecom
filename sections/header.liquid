@@ -15,10 +15,23 @@
 <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
 
 {%- style -%}
+  .section-header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 500 !important;
+  }
+
   .header-wrapper {
-    position: relative;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 500 !important;
     background-color: rgb(var(--color-background));
     border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.08);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  }
+
+  .header-mobile__top {
+    display: none !important;
   }
 
   .header-main {
@@ -323,21 +336,24 @@
     height: 1.8rem;
   }
 
-  .header-nav__cart-count {
-    background-color: var(--color-highlight, #997A51);
-    color: #ffffff;
-    font-size: 1.1rem;
-    font-weight: 600;
-    min-width: 1.8rem;
-    height: 1.8rem;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 0.4rem;
-    line-height: 1;
-    position: relative;
-    top: -0.2rem;
+  .header-nav__cart-count,
+  .header-nav__cart-btn .cart-count-bubble {
+    background-color: var(--color-highlight, #997A51) !important;
+    color: #ffffff !important;
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    min-width: 1.8rem !important;
+    height: 1.8rem !important;
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 0.4rem !important;
+    line-height: 1 !important;
+    position: relative !important;
+    top: -0.2rem !important;
+    left: auto !important;
+    bottom: auto !important;
   }
 
   /* Mobile Header Layout */
@@ -371,23 +387,455 @@
   }
 
   @media screen and (max-width: 989px) {
-    .header-main {
-      padding-top: 12px;
-      padding-bottom: 12px;
+    .header-main,
+    .header-nav-wrapper {
+      display: none !important;
     }
 
-    .header-main__search,
-    .header-main__support,
-    .header-nav-wrapper {
+    .header-mobile__top {
+      display: flex !important;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px 8px 16px;
+      box-sizing: border-box;
+      width: 100%;
+      max-width: var(--page-width, 1240px);
+      margin: 0 auto;
+      gap: 12px;
+    }
+
+    .header-mobile__left {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 12px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .header-mobile__left .header__icon--menu {
+      width: 3.6rem;
+      height: 3.6rem;
+      border: none;
+      background: transparent;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .header-mobile__left .header__icon--menu svg {
+      width: 2.4rem;
+      height: 2.4rem;
+      stroke: #111111;
+    }
+
+    .header-mobile__logo-link {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      min-width: 0;
+    }
+
+    .header-mobile__heading-logo {
+      max-height: 36px;
+      width: auto;
+      max-width: 160px;
+      object-fit: contain;
+    }
+
+    .header-mobile__logo-text {
+      font-family: var(--font-heading-family);
+      font-size: 2rem;
+      font-weight: 700;
+      white-space: nowrap;
+      letter-spacing: -0.02em;
+      color: #111111;
+      line-height: 1.2;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .header-mobile__actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .header-mobile__action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 3.8rem;
+      height: 3.8rem;
+      border-radius: 50%;
+      color: #111111;
+      text-decoration: none;
+      position: relative;
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: background-color 0.2s ease, opacity 0.2s ease;
+    }
+
+    .header-mobile__action-btn:hover,
+    .header-mobile__action-btn:active {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .header-mobile__action-btn svg {
+      width: 2.2rem;
+      height: 2.2rem;
+      stroke: #111111;
+      stroke-width: 2;
+    }
+
+    .header-mobile__cart-count {
+      position: absolute;
+      top: -0.2rem;
+      right: -0.4rem;
+      background-color: var(--color-highlight, #997A51);
+      color: #ffffff;
+      font-size: 1.1rem;
+      font-weight: 700;
+      min-width: 1.8rem;
+      height: 1.8rem;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      padding: 0 0.35rem;
+      box-shadow: 0 2px 4px rgba(153, 122, 81, 0.35);
+    }
+
+  }
+
+  /* ==========================================================================
+     Modern Compact Search Drawer Modal (All Devices)
+     ========================================================================== */
+  .search-drawer-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 80px 16px 20px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s ease;
+  }
+
+  .search-drawer-modal.is-active {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .search-drawer-modal__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    cursor: pointer;
+  }
+
+  .search-drawer-modal__dialog {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 640px;
+    background-color: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    transform: translateY(-12px) scale(0.98);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .search-drawer-modal.is-active .search-drawer-modal__dialog {
+    transform: translateY(0) scale(1);
+  }
+
+  .search-drawer-modal__header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 8px 14px 8px 18px;
+    background-color: #ffffff;
+    gap: 12px;
+  }
+
+  .search-drawer-modal__predictive {
+    flex: 1;
+    width: 100%;
+  }
+
+  .search-drawer-modal__form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .search-drawer-modal__input-wrapper {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    gap: 12px;
+  }
+
+  .search-drawer-modal__search-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-highlight, #997A51);
+    flex-shrink: 0;
+  }
+
+  .search-drawer-modal__search-icon svg {
+    width: 2.2rem;
+    height: 2.2rem;
+    stroke: var(--color-highlight, #997A51);
+  }
+
+  .search-drawer-modal__input {
+    flex: 1;
+    height: 4.8rem;
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    font-family: var(--font-body-family, 'DM Sans', sans-serif);
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: #111111;
+    outline: none !important;
+    box-shadow: none !important;
+    width: 100%;
+  }
+
+  .search-drawer-modal__input::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 1.5rem;
+  }
+
+  .search-drawer-modal__reset-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 0, 0, 0.06);
+    color: #555555;
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.15s ease;
+  }
+
+  .search-drawer-modal__reset-btn:hover {
+    background: rgba(0, 0, 0, 0.12);
+  }
+
+  .search-drawer-modal__reset-btn svg {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+
+  .search-drawer-modal__close-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 3.6rem;
+    padding: 0 10px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(0, 0, 0, 0.05);
+    color: #333333;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    font-family: var(--font-body-family);
+    flex-shrink: 0;
+  }
+
+  .search-drawer-modal__close-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  .search-drawer-modal__close-btn svg {
+    width: 1.8rem;
+    height: 1.8rem;
+    stroke: #333333;
+  }
+
+  .search-drawer-modal__esc-badge {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #666666;
+    text-transform: uppercase;
+  }
+
+  /* Popular Searches Tags */
+  .search-drawer-modal__popular {
+    padding: 18px 20px 22px;
+    background: #fafafa;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .search-drawer-modal__popular-title {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #888888;
+    margin-bottom: 12px;
+  }
+
+  .search-drawer-modal__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .search-drawer-modal__tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 15px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 999px;
+    font-family: var(--font-body-family);
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #222222;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .search-drawer-modal__tag:hover {
+    border-color: var(--color-highlight, #997A51);
+    color: var(--color-highlight, #997A51);
+    background-color: rgba(153, 122, 81, 0.06);
+  }
+
+  /* Predictive Search Results inside Modal */
+  .predictive-search--modal {
+    max-height: 60vh;
+    overflow-y: auto;
+    padding: 12px 16px 16px;
+    background: #ffffff;
+  }
+
+  /* Desktop Search Bar Trigger Style */
+  .header-search__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 4.4rem;
+    background: #f4f6f8;
+    border: 0.1rem solid rgba(0, 0, 0, 0.12);
+    border-radius: 999px;
+    padding: 0 1.6rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .header-search__trigger:hover {
+    border-color: var(--color-highlight, #997A51);
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  .header-search__trigger .header-search__icon {
+    padding: 0;
+    margin-right: 1.2rem;
+  }
+
+  .header-search__placeholder {
+    flex: 1;
+    text-align: left;
+    font-family: var(--font-body-family, 'DM Sans', sans-serif);
+    font-size: 1.4rem;
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .header-search__shortcut {
+    display: inline-flex;
+    gap: 3px;
+  }
+
+  .header-search__shortcut kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    height: 2rem;
+    padding: 0 4px;
+    background: rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #666666;
+  }
+
+  @media screen and (max-width: 749px) {
+    .search-drawer-modal {
+      padding: 60px 12px 16px;
+    }
+
+    .search-drawer-modal__esc-badge {
       display: none;
     }
+  }
 
-    .header-mobile__controls {
-      display: flex;
+  @media screen and (max-width: 480px) {
+    .header-mobile__top {
+      padding: 8px 12px 6px 12px;
+      gap: 8px;
     }
 
-    .header__logo-text {
-      font-size: 2rem;
+    .header-mobile__left {
+      gap: 8px;
+    }
+
+    .header-mobile__actions {
+      gap: 6px;
+    }
+
+    .header-mobile__action-btn {
+      width: 3.4rem;
+      height: 3.4rem;
+    }
+
+    .header-mobile__action-btn svg {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .header-mobile__logo-text {
+      font-size: 1.8rem;
+    }
+
+    .header-mobile__heading-logo {
+      max-height: 32px;
+      max-width: 130px;
+    }
+
+    .header-mobile__search {
+      padding: 2px 12px 10px 12px;
     }
   }
 {%- endstyle -%}
@@ -429,49 +877,18 @@
       {%- endif -%}
     </a>
 
-    <!-- Desktop Wide Search Bar -->
+    <!-- Desktop Wide Search Trigger -->
     <div class="header-main__search">
-      {%- if settings.predictive_search_enabled -%}
-        <predictive-search data-loading-text="{{ 'accessibility.loading' | t }}">
-      {%- endif -%}
-      <form action="{{ routes.search_url }}" method="get" role="search" class="header-search__form">
-        <div class="header-search__icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <button type="button" class="header-search__trigger focus-inset" data-open-search-modal aria-label="{{ 'general.search.search' | t | default: 'Search' }}">
+        <div class="header-search__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
         </div>
-        <input
-          class="header-search__input"
-          type="search"
-          name="q"
-          value="{{ search.terms | escape }}"
-          placeholder="{{ section.settings.search_placeholder | default: 'What are you looking for?' }}"
-          {%- if settings.predictive_search_enabled -%}
-            role="combobox"
-            aria-expanded="false"
-            aria-owns="predictive-search-results"
-            aria-controls="predictive-search-results"
-            aria-haspopup="listbox"
-            aria-autocomplete="list"
-            autocorrect="off"
-            autocomplete="off"
-            autocapitalize="off"
-            spellcheck="false"
-          {%- endif -%}
-        >
-        <input type="hidden" name="options[prefix]" value="last">
-        <button type="submit" class="header-search__submit" aria-label="{{ 'general.search.search' | t | default: 'Search' }}">
-          {{ 'general.search.search' | t | default: 'Search' }}
-        </button>
-      </form>
-      {%- if settings.predictive_search_enabled -%}
-        <div class="predictive-search predictive-search--header" tabindex="-1" data-predictive-search>
-          {%- render 'loading-spinner', class: 'predictive-search__loading-state' -%}
-        </div>
-        <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
-        </predictive-search>
-      {%- endif -%}
+        <span class="header-search__placeholder">{{ section.settings.search_placeholder | default: 'Search rugs, collections, styles...' }}</span>
+        <span class="header-search__shortcut"><kbd>⌘</kbd><kbd>K</kbd></span>
+      </button>
     </div>
 
     <!-- Phone Support Block -->
@@ -490,14 +907,75 @@
       </a>
     </div>
 
-    <!-- Tablet / Mobile Controls -->
-    <div class="header-mobile__controls">
-      <a href="tel:{{ clean_phone }}" class="header-mobile__phone-btn focus-inset" aria-label="Call {{ section.settings.phone_number | default: '(+1 888-795-8816)' }}">
+  </div>
+
+  <!-- Mobile / Tablet Top Row (< 990px) -->
+  <div class="header-mobile__top page-width">
+    <!-- Left Group: Hamburger Menu Drawer + Logo -->
+    <div class="header-mobile__left">
+      {%- render 'header-drawer', drawer_collections: section.settings.drawer_collections -%}
+
+      <a href="{{ routes.root_url }}" class="header__heading-link header-mobile__logo-link link focus-inset">
+        {%- if settings.logo != blank -%}
+          <div class="header__heading-logo-wrapper">
+            {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+            {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+            {{
+              settings.logo
+              | image_url: width: 400
+              | image_tag:
+                class: 'header__heading-logo header-mobile__heading-logo',
+                height: logo_height,
+                width: settings.logo_width,
+                alt: logo_alt,
+                preload: true
+            }}
+          </div>
+        {%- else -%}
+          <span class="header__logo-text header-mobile__logo-text">{{ section.settings.logo_text | default: 'The Golden Rug' }}</span>
+        {%- endif -%}
+      </a>
+    </div>
+
+    <!-- Right: Search, Wishlist, User, Cart Icons -->
+    <div class="header-mobile__actions">
+      <!-- Search Trigger Button -->
+      <button type="button" class="header-mobile__action-btn link focus-inset" data-open-search-modal aria-label="{{ 'general.search.search' | t | default: 'Search' }}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </button>
+
+      {%- if section.settings.show_wishlist -%}
+        <a href="{{ section.settings.wishlist_url | default: '/pages/wishlist' }}" class="header-mobile__action-btn link focus-inset" aria-label="Wishlist">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </a>
+      {%- endif -%}
+
+      <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header-mobile__action-btn link focus-inset" aria-label="Account">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
         </svg>
       </a>
-      {%- render 'header-drawer', drawer_collections: section.settings.drawer_collections -%}
+
+      <a href="{{ routes.cart_url }}" class="header-mobile__action-btn header-mobile__cart-btn link focus-inset" id="cart-icon-bubble-mobile" aria-label="Shopping Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="header-mobile__cart-count header-nav__cart-count" aria-hidden="true">
+          {%- if cart != empty and cart.item_count > 0 -%}
+            {{ cart.item_count }}
+          {%- else -%}
+            0
+          {%- endif -%}
+        </span>
+      </a>
     </div>
   </div>
 
@@ -542,7 +1020,204 @@
       </div>
     </div>
   </div>
+  <!-- Modern Compact Search Drawer Modal (All Devices) -->
+  <div id="SearchDrawerModal" class="search-drawer-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="{{ 'general.search.search' | t | default: 'Search' }}">
+    <div class="search-drawer-modal__overlay" aria-label="Close search"></div>
+    <div class="search-drawer-modal__dialog">
+      <div class="search-drawer-modal__header">
+        {%- if settings.predictive_search_enabled -%}
+          <predictive-search class="search-drawer-modal__predictive" data-loading-text="{{ 'accessibility.loading' | t }}">
+        {%- endif -%}
+        <form action="{{ routes.search_url }}" method="get" role="search" class="search-drawer-modal__form">
+          <div class="search-drawer-modal__input-wrapper">
+            <span class="search-drawer-modal__search-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </span>
+            <input
+              id="Search-In-Modal"
+              class="search-drawer-modal__input"
+              type="search"
+              name="q"
+              value="{{ search.terms | escape }}"
+              placeholder="{{ section.settings.search_placeholder | default: 'Search rugs, collections, styles...' }}"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+              {%- if settings.predictive_search_enabled -%}
+                role="combobox"
+                aria-expanded="false"
+                aria-owns="predictive-search-results-modal"
+                aria-controls="predictive-search-results-modal"
+                aria-haspopup="listbox"
+                aria-autocomplete="list"
+              {%- endif -%}
+            >
+            <input type="hidden" name="options[prefix]" value="last">
+            <button type="reset" class="search-drawer-modal__reset-btn" aria-label="Clear search" style="display: none;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        </form>
+        <button type="button" class="search-drawer-modal__close-btn" aria-label="Close search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+          <span class="search-drawer-modal__esc-badge">ESC</span>
+        </button>
+
+        {%- if settings.predictive_search_enabled -%}
+          <div class="predictive-search predictive-search--modal" tabindex="-1" data-predictive-search id="predictive-search-results-modal">
+            {%- render 'loading-spinner', class: 'predictive-search__loading-state' -%}
+          </div>
+          <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
+          </predictive-search>
+        {%- endif -%}
+      </div>
+
+      <!-- Quick Tags when search is empty -->
+      <div class="search-drawer-modal__popular" id="SearchDrawerPopularTags">
+        <span class="search-drawer-modal__popular-title">Popular Searches</span>
+        <div class="search-drawer-modal__tags">
+          <button type="button" class="search-drawer-modal__tag" data-search-tag="Handwoven Rugs">Handwoven Rugs</button>
+          <button type="button" class="search-drawer-modal__tag" data-search-tag="Vintage Rugs">Vintage Rugs</button>
+          <button type="button" class="search-drawer-modal__tag" data-search-tag="Silk Rugs">Silk Rugs</button>
+          <button type="button" class="search-drawer-modal__tag" data-search-tag="Living Room">Living Room</button>
+          <button type="button" class="search-drawer-modal__tag" data-search-tag="Wool Rugs">Wool Rugs</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </{{ header_tag }}>
+
+<script>
+  (function() {
+    function initHeaderScripts() {
+      // Mobile Cart Drawer Trigger & Sync
+      var mobileCartBtn = document.querySelector('#cart-icon-bubble-mobile');
+      var desktopCartBubble = document.querySelector('#cart-icon-bubble');
+
+      if (mobileCartBtn) {
+        mobileCartBtn.setAttribute('role', 'button');
+        mobileCartBtn.setAttribute('aria-haspopup', 'dialog');
+        mobileCartBtn.addEventListener('click', function(e) {
+          var cartDrawer = document.querySelector('cart-drawer');
+          if (cartDrawer && typeof cartDrawer.open === 'function') {
+            e.preventDefault();
+            cartDrawer.open(mobileCartBtn);
+          }
+        });
+      }
+
+      if (desktopCartBubble && mobileCartBtn) {
+        var syncCartCount = function() {
+          var desktopCountEl = desktopCartBubble.querySelector('.header-nav__cart-count');
+          var mobileCountEl = mobileCartBtn.querySelector('.header-mobile__cart-count');
+          if (desktopCountEl && mobileCountEl) {
+            mobileCountEl.textContent = desktopCountEl.textContent.trim();
+          }
+        };
+
+        var observer = new MutationObserver(syncCartCount);
+        observer.observe(desktopCartBubble, { childList: true, subtree: true, characterData: true });
+      }
+
+      // Compact Search Drawer Modal Controller
+      var modal = document.getElementById('SearchDrawerModal');
+      if (modal) {
+        var input = document.getElementById('Search-In-Modal');
+        var resetBtn = modal.querySelector('.search-drawer-modal__reset-btn');
+        var popularTags = document.getElementById('SearchDrawerPopularTags');
+        var openTriggers = document.querySelectorAll('[data-open-search-modal]');
+        var closeTriggers = modal.querySelectorAll('.search-drawer-modal__overlay, .search-drawer-modal__close-btn');
+
+        function openModal() {
+          modal.classList.add('is-active');
+          modal.setAttribute('aria-hidden', 'false');
+          document.body.classList.add('overflow-hidden');
+          setTimeout(function() {
+            if (input) input.focus();
+          }, 60);
+        }
+
+        function closeModal() {
+          modal.classList.remove('is-active');
+          modal.setAttribute('aria-hidden', 'true');
+          document.body.classList.remove('overflow-hidden');
+        }
+
+        openTriggers.forEach(function(btn) {
+          btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            openModal();
+          });
+        });
+
+        closeTriggers.forEach(function(btn) {
+          btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            closeModal();
+          });
+        });
+
+        // ESC key & ⌘K / Ctrl+K
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && modal.classList.contains('is-active')) {
+            closeModal();
+          }
+          if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+            e.preventDefault();
+            modal.classList.contains('is-active') ? closeModal() : openModal();
+          }
+        });
+
+        // Input & Reset logic
+        if (input && resetBtn) {
+          input.addEventListener('input', function() {
+            resetBtn.style.display = this.value.length > 0 ? 'inline-flex' : 'none';
+            if (popularTags) {
+              popularTags.style.display = this.value.length > 0 ? 'none' : 'block';
+            }
+          });
+
+          resetBtn.addEventListener('click', function() {
+            input.value = '';
+            resetBtn.style.display = 'none';
+            if (popularTags) popularTags.style.display = 'block';
+            input.focus();
+            var predictiveContainer = modal.querySelector('[data-predictive-search]');
+            if (predictiveContainer) predictiveContainer.innerHTML = '';
+          });
+        }
+
+        // Quick Tags Click
+        modal.querySelectorAll('[data-search-tag]').forEach(function(tag) {
+          tag.addEventListener('click', function() {
+            var text = this.getAttribute('data-search-tag');
+            if (input) {
+              input.value = text;
+              input.dispatchEvent(new Event('input', { bubbles: true }));
+              input.focus();
+            }
+          });
+        });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initHeaderScripts);
+    } else {
+      initHeaderScripts();
+    }
+  })();
+</script>
 
 {%- if settings.cart_type == 'notification' -%}
   {%- render 'cart-notification',

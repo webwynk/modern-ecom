@@ -53,7 +53,7 @@
         "search_placeholder": "What are you looking for?",
         "menu": "main-menu",
         "menu_type_desktop": "mega",
-        "sticky_header_type": "on-scroll-up",
+        "sticky_header_type": "always",
         "color_scheme": "scheme-1",
         "show_wishlist": true,
         "padding_top": 15,
