@@ -74,22 +74,43 @@
     position: relative;
   }
 
+  .header-search__predictive {
+    display: block;
+    width: 100%;
+    position: relative;
+  }
+
   .header-search__form {
     display: flex;
     align-items: center;
     background: #f4f6f8;
     border: 0.1rem solid rgba(0, 0, 0, 0.12);
-    border-radius: 0.6rem;
-    overflow: hidden;
+    border-radius: 999px;
     height: 4.4rem;
     position: relative;
+    padding: 0 1.2rem 0 1.6rem;
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .header-search__form:focus-within {
+    border-color: var(--color-highlight, #997A51);
+    background: #ffffff;
+    box-shadow: 0 2px 10px rgba(153, 122, 81, 0.12);
+  }
+
+  .header-search__input-wrapper {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+    gap: 10px;
+    height: 100%;
   }
 
   .header-search__icon {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding-left: 1.4rem;
     color: rgba(0, 0, 0, 0.5);
     flex-shrink: 0;
   }
@@ -101,51 +122,294 @@
 
   .header-search__input {
     flex: 1;
+    min-width: 0;
     height: 100%;
-    border: none;
-    background: transparent;
-    padding: 0 1.2rem;
-    font-family: var(--font-body-family);
-    font-size: 1.4rem;
-    color: #000000;
-    outline: none;
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    font-family: var(--font-body-family, 'DM Sans', sans-serif);
+    font-size: 1.45rem;
+    font-weight: 500;
+    color: #111111;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Suppress all native browser search cancel / decoration buttons */
+  .header-search__input::-webkit-search-cancel-button,
+  .header-search__input::-webkit-search-decoration,
+  .header-search__input::-webkit-search-results-button,
+  .header-search__input::-webkit-search-results-decoration {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    display: none !important;
   }
 
   .header-search__input::placeholder {
-    color: rgba(0, 0, 0, 0.5);
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 1.4rem;
   }
 
-  .header-search__submit {
-    height: 100%;
-    padding: 0 2.4rem;
-    background-color: var(--color-highlight, #997A51);
-    color: #ffffff;
-    border: none;
-    font-family: var(--font-body-family);
-    font-size: 1.4rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: opacity 0.2s ease;
+  .header-search__reset-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 0, 0, 0.08);
+    color: #666666;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+    transition: background-color 0.15s ease, color 0.15s ease;
   }
 
-  .header-search__submit:hover {
-    opacity: 0.9;
+  .header-search__reset-btn:hover {
+    background: rgba(0, 0, 0, 0.15);
+    color: #111111;
   }
 
-  .header-main__search .predictive-search {
-    display: none;
+  .header-search__reset-btn svg {
+    width: 1.4rem;
+    height: 1.4rem;
   }
 
-  predictive-search[open] .header-main__search .predictive-search,
-  predictive-search[loading] .header-main__search .predictive-search {
+  .header-search__shortcut {
+    display: inline-flex;
+    gap: 3px;
+    flex-shrink: 0;
+  }
+
+  .header-search__shortcut kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    height: 2rem;
+    padding: 0 4px;
+    background: rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #666666;
+  }
+
+  /* Desktop Dropdown directly under the search bar */
+  .header-search__dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    width: 100%;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    z-index: 600;
+    box-sizing: border-box;
+  }
+
+  .header-search__popular {
+    padding: 16px 18px 20px;
+    background: #ffffff;
+  }
+
+  .header-search__popular-title {
     display: block;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #888888;
+    margin-bottom: 12px;
   }
 
-  predictive-search:not([loading]) .predictive-search__loading-state {
-    display: none !important;
+  .header-search__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .header-search__tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 15px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 999px;
+    font-family: var(--font-body-family, 'DM Sans', sans-serif);
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #222222;
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .header-search__tag:hover {
+    border-color: var(--color-highlight, #997A51);
+    color: var(--color-highlight, #997A51);
+    background-color: rgba(153, 122, 81, 0.06);
+  }
+
+  /* Predictive Search Results inside Desktop Dropdown */
+  .header-search__dropdown .predictive-search {
+    position: static !important;
+    max-height: 480px !important;
+    overflow-y: auto !important;
+    padding: 10px 14px 16px;
+    background: #ffffff;
+    border: none !important;
+    box-shadow: none !important;
+    width: 100% !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: var(--color-highlight, #997A51) #f4f4f4 !important;
+  }
+
+  .header-search__dropdown .predictive-search::-webkit-scrollbar {
+    width: 6px !important;
+  }
+
+  .header-search__dropdown .predictive-search::-webkit-scrollbar-track {
+    background: #f4f4f4 !important;
+    border-radius: 999px !important;
+  }
+
+  .header-search__dropdown .predictive-search::-webkit-scrollbar-thumb {
+    background: var(--color-highlight, #997A51) !important;
+    border-radius: 999px !important;
+  }
+
+  .header-search__dropdown .predictive-search::-webkit-scrollbar-thumb:hover {
+    background: #846843 !important;
+  }
+
+  .header-search__dropdown .predictive-search__results-groups-wrapper {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .header-search__dropdown .predictive-search__list-item {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .header-search__dropdown .predictive-search__list-item:last-child {
+    border-bottom: none;
+  }
+
+  .header-search__dropdown .predictive-search__item--link-with-thumbnail {
+    display: flex !important;
+    align-items: center !important;
+    gap: 14px !important;
+    padding: 10px 10px !important;
+    border-radius: 8px;
+    text-decoration: none !important;
+    transition: background-color 0.15s ease;
+  }
+
+  .header-search__dropdown .predictive-search__item--link-with-thumbnail:hover {
+    background-color: #f8fafc;
+  }
+
+  .header-search__dropdown .predictive-search__image {
+    width: 50px !important;
+    height: 50px !important;
+    min-width: 50px;
+    object-fit: contain !important;
+    border-radius: 8px !important;
+    background-color: #f9f9f9;
+    flex-shrink: 0 !important;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+  }
+
+  .header-search__dropdown .predictive-search__item-content {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    min-width: 0 !important;
+    flex: 1 !important;
+  }
+
+  .header-search__dropdown .predictive-search__item-heading {
+    font-family: var(--font-body-family, 'DM Sans', sans-serif) !important;
+    font-size: 1.45rem !important;
+    font-weight: 500 !important;
+    color: #111111 !important;
+    line-height: 1.35 !important;
+    margin: 0 !important;
+    text-decoration: none !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-height: calc(1.35em * 2) !important;
+  }
+
+  .header-search__dropdown .predictive-search__item--link-with-thumbnail:hover .predictive-search__item-heading {
+    text-decoration: none !important;
+    color: #000000 !important;
+  }
+
+  .header-search__dropdown .predictive-search__item-query-result mark,
+  .header-search__dropdown mark {
+    color: var(--color-highlight, #997A51) !important;
+    background-color: transparent !important;
+    font-weight: 700 !important;
+  }
+
+  .header-search__dropdown .predictive-search__item-query-result {
+    font-family: var(--font-body-family, 'DM Sans', sans-serif) !important;
+    font-size: 1.45rem !important;
+    color: #222222 !important;
+  }
+
+  .header-search__dropdown .predictive-search__heading {
+    font-size: 1.15rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.06em !important;
+    color: #888888 !important;
+    padding: 8px 12px 6px !important;
+    margin: 0 !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+  }
+
+  .header-search__dropdown .predictive-search__item {
+    padding: 8px 12px !important;
+    border-radius: 6px !important;
+  }
+
+  .header-search__dropdown .predictive-search__item--term {
+    font-weight: 600 !important;
+    color: var(--color-highlight, #997A51) !important;
+    padding: 12px 14px !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+  }
+
+  .header-search__dropdown .price {
+    margin-top: 0 !important;
+    line-height: 1.2 !important;
+    font-size: 1.45rem !important;
+  }
+
+  .header-search__dropdown .price__regular .price-item--regular,
+  .header-search__dropdown .price__sale .price-item--sale {
+    color: #e53935 !important;
+    font-weight: 600 !important;
+    font-size: 1.45rem !important;
+  }
+
+  .header-search__dropdown .price__sale s.price-item--regular {
+    color: #888888 !important;
+    font-size: 1.3rem !important;
+    font-weight: 400 !important;
+    text-decoration: line-through !important;
+    margin-right: 6px !important;
   }
 
   .header-main__support {
@@ -966,16 +1230,7 @@
 
   @media screen and (min-width: 990px) {
     .search-drawer-modal {
-      padding: 68px 20px 20px !important;
-      align-items: flex-start !important;
-      justify-content: center !important;
-    }
-
-    .search-drawer-modal__dialog {
-      max-width: 68rem !important; /* exact same width as .header-main__search */
-      width: 100% !important;
-      border-radius: 16px !important;
-      box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.08) !important;
+      display: none !important;
     }
   }
 
@@ -1065,18 +1320,77 @@
       {%- endif -%}
     </a>
 
-    <!-- Desktop Wide Search Trigger -->
+    <!-- Desktop Search Bar & Dropdown -->
     <div class="header-main__search">
-      <button type="button" class="header-search__trigger focus-inset" data-open-search-modal aria-label="{{ 'general.search.search' | t | default: 'Search' }}">
-        <div class="header-search__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
+      {%- if settings.predictive_search_enabled -%}
+        <predictive-search class="header-search__predictive" data-loading-text="{{ 'accessibility.loading' | t }}">
+      {%- endif -%}
+      <form action="{{ routes.search_url }}" method="get" role="search" class="header-search__form">
+        <div class="header-search__input-wrapper">
+          <span class="header-search__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </span>
+          <input
+            class="header-search__input"
+            id="Search-In-Header"
+            type="search"
+            name="q"
+            value="{{ search.terms | escape }}"
+            placeholder="{{ section.settings.search_placeholder | default: 'What are you looking for?' }}"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            {%- if settings.predictive_search_enabled -%}
+              role="combobox"
+              aria-expanded="false"
+              aria-owns="predictive-search-results-desktop"
+              aria-controls="predictive-search-results-desktop"
+              aria-haspopup="listbox"
+              aria-autocomplete="list"
+            {%- endif -%}
+          >
+          <input type="hidden" name="options[prefix]" value="last">
+          <button type="reset" class="header-search__reset-btn" aria-label="Clear search" style="display: none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+          <span class="header-search__shortcut"><kbd>⌘</kbd><kbd>K</kbd></span>
         </div>
-        <span class="header-search__placeholder">{{ section.settings.search_placeholder | default: 'Search rugs, collections, styles...' }}</span>
-        <span class="header-search__shortcut"><kbd>⌘</kbd><kbd>K</kbd></span>
-      </button>
+      </form>
+
+      <!-- Dropdown directly under the search bar -->
+      <div class="header-search__dropdown" id="HeaderSearchDropdown" style="display: none;">
+        <!-- Popular Categories when input is empty -->
+        <div class="header-search__popular" id="HeaderSearchPopularCategories">
+          <span class="header-search__popular-title">POPULAR CATEGORIES</span>
+          <div class="header-search__tags">
+            <a href="/collections/all" class="header-search__tag">All Rugs</a>
+            <a href="/collections/special-collection" class="header-search__tag">Special Deals 🔥</a>
+            <a href="/collections/handmade-rugs" class="header-search__tag">Handmade Rugs</a>
+            <a href="/collections/4-x-6-rugs" class="header-search__tag">4 x 6 Rugs</a>
+            <a href="/collections/3x5-rug" class="header-search__tag">3x5 Rugs</a>
+            <a href="/collections/small-rugs" class="header-search__tag">Small Rugs</a>
+            <a href="/collections/office-chairs" class="header-search__tag">Office Chairs</a>
+          </div>
+        </div>
+
+        {%- if settings.predictive_search_enabled -%}
+          <div class="predictive-search" tabindex="-1" data-predictive-search id="predictive-search-results-desktop">
+            {%- render 'loading-spinner', class: 'predictive-search__loading-state' -%}
+          </div>
+          <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
+        {%- endif -%}
+      </div>
+
+      {%- if settings.predictive_search_enabled -%}
+        </predictive-search>
+      {%- endif -%}
     </div>
 
     <!-- Phone Support Block -->
@@ -1274,7 +1588,7 @@
 
       <!-- Quick Categories when search is empty -->
       <div class="search-drawer-modal__popular" id="SearchDrawerPopularTags">
-        <span class="search-drawer-modal__popular-title">Popular Categories</span>
+        <span class="search-drawer-modal__popular-title">POPULAR CATEGORIES</span>
         <div class="search-drawer-modal__tags">
           <a href="/collections/all" class="search-drawer-modal__tag">All Rugs</a>
           <a href="/collections/special-collection" class="search-drawer-modal__tag">Special Deals 🔥</a>
@@ -1365,8 +1679,10 @@
             closeModal();
           }
           if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-            e.preventDefault();
-            modal.classList.contains('is-active') ? closeModal() : openModal();
+            if (window.innerWidth < 990) {
+              e.preventDefault();
+              modal.classList.contains('is-active') ? closeModal() : openModal();
+            }
           }
         });
 
@@ -1401,6 +1717,92 @@
               closeModal();
             }
           });
+        });
+      }
+
+      // Desktop Search Bar & Dropdown Controller (No Extra Modal on Desktop)
+      var desktopSearchWrapper = document.querySelector('.header-main__search');
+      if (desktopSearchWrapper) {
+        var desktopInput = desktopSearchWrapper.querySelector('.header-search__input');
+        var desktopDropdown = desktopSearchWrapper.querySelector('#HeaderSearchDropdown');
+        var desktopCategories = desktopSearchWrapper.querySelector('#HeaderSearchPopularCategories');
+        var desktopResetBtn = desktopSearchWrapper.querySelector('.header-search__reset-btn');
+
+        function openDesktopDropdown() {
+          if (desktopDropdown) {
+            desktopDropdown.style.display = 'block';
+            if (desktopCategories) {
+              desktopCategories.style.display = (desktopInput && desktopInput.value.trim().length > 0) ? 'none' : 'block';
+            }
+          }
+        }
+
+        function closeDesktopDropdown() {
+          if (desktopDropdown) {
+            desktopDropdown.style.display = 'none';
+          }
+        }
+
+        if (desktopInput) {
+          desktopInput.addEventListener('focus', openDesktopDropdown);
+          desktopInput.addEventListener('click', openDesktopDropdown);
+
+          desktopInput.addEventListener('input', function() {
+            if (desktopResetBtn) {
+              desktopResetBtn.style.display = this.value.length > 0 ? 'inline-flex' : 'none';
+            }
+            if (desktopCategories) {
+              desktopCategories.style.display = this.value.trim().length > 0 ? 'none' : 'block';
+            }
+            if (desktopDropdown) {
+              desktopDropdown.style.display = 'block';
+            }
+          });
+
+          // Ensure predictive results appearing keep dropdown open and categories hidden
+          var predictiveSearchEl = desktopSearchWrapper.querySelector('predictive-search');
+          if (predictiveSearchEl) {
+            var searchObserver = new MutationObserver(function() {
+              if (predictiveSearchEl.hasAttribute('open') || predictiveSearchEl.hasAttribute('results')) {
+                if (desktopDropdown) desktopDropdown.style.display = 'block';
+                if (desktopCategories) desktopCategories.style.display = 'none';
+              }
+            });
+            searchObserver.observe(predictiveSearchEl, { attributes: true, attributeFilter: ['open', 'results', 'loading'] });
+          }
+
+          if (desktopResetBtn) {
+            desktopResetBtn.addEventListener('click', function() {
+              desktopInput.value = '';
+              desktopResetBtn.style.display = 'none';
+              if (desktopCategories) desktopCategories.style.display = 'block';
+              desktopInput.focus();
+              var predictiveResults = desktopSearchWrapper.querySelector('[data-predictive-search]');
+              if (predictiveResults) predictiveResults.innerHTML = '';
+            });
+          }
+        }
+
+        // Close on click outside
+        document.addEventListener('click', function(e) {
+          if (desktopSearchWrapper && !desktopSearchWrapper.contains(e.target)) {
+            closeDesktopDropdown();
+          }
+        });
+
+        // Close on Escape, focus on ⌘K / Ctrl+K
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && desktopDropdown && desktopDropdown.style.display === 'block') {
+            closeDesktopDropdown();
+            if (desktopInput) desktopInput.blur();
+          }
+          if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+            if (window.innerWidth >= 990 && desktopInput) {
+              e.preventDefault();
+              desktopInput.focus();
+              openDesktopDropdown();
+            }
+          }
         });
       }
     }
