@@ -210,6 +210,11 @@ class PredictiveSearch extends SearchForm {
           return;
         }
 
+        const stopWords = new Set(['the', 'and', 'a', 'an', 'in', 'of', 'for', 'with', 'to', 'or', 'by', 'at']);
+        const queryTokens = searchTerm.toLowerCase().trim().split(/\s+/).filter((w) => !stopWords.has(w) && w.length > 0);
+
+        let finalProductCount = 0;
+
         if (productsText) {
           const productsDoc = new DOMParser().parseFromString(productsText, 'text/html');
           const ajaxProductsList = productsDoc.querySelector('#predictive-search-results-products-list');
@@ -217,37 +222,107 @@ class PredictiveSearch extends SearchForm {
           const totalCount = parseInt(totalDataEl?.dataset.totalCount) || 0;
 
           if (ajaxProductsList && totalCount > 0) {
-            const existingList = sectionContent.querySelector('#predictive-search-results-products-list');
-            if (existingList) {
-              existingList.replaceWith(ajaxProductsList);
-            }
+            const rawItems = Array.from(ajaxProductsList.querySelectorAll('.predictive-search__list-item'));
 
-            const header = sectionContent.querySelector('.predictive-search__products-header');
-            const totalPages = Math.ceil(totalCount / 5);
+            // Strict token validation: require every significant query token to match in keywords
+            const filteredItems = rawItems.filter((item) => {
+              const keywords = (item.dataset.searchKeywords || item.textContent || '').toLowerCase();
+              return queryTokens.every((token) => keywords.includes(token));
+            });
 
-            if (header) {
-              let paginationContainer = header.querySelector('[data-predictive-search-pagination]');
-              if (totalCount > 5) {
-                if (paginationContainer) {
-                  const counter = paginationContainer.querySelector('[data-pagination-counter]');
-                  if (counter) counter.textContent = `1/${totalPages}`;
+            if (filteredItems.length > 0) {
+              ajaxProductsList.innerHTML = '';
+              filteredItems.forEach((item, index) => {
+                item.setAttribute('data-product-index', index);
+                if (index >= 5) {
+                  item.style.display = 'none';
                 } else {
-                  const paginationHtml = `
-                    <div class="predictive-search__pagination" data-predictive-search-pagination>
-                      <button type="button" class="predictive-search__pagination-btn predictive-search__pagination-btn--prev" data-pagination-action="prev" aria-label="Previous products" tabindex="-1" disabled>
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                      </button>
-                      <span class="predictive-search__pagination-counter" data-pagination-counter aria-live="polite">1/${totalPages}</span>
-                      <button type="button" class="predictive-search__pagination-btn predictive-search__pagination-btn--next" data-pagination-action="next" aria-label="Next products" tabindex="-1">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                      </button>
-                    </div>`;
-                  header.insertAdjacentHTML('beforeend', paginationHtml);
+                  item.style.display = '';
                 }
-              } else if (paginationContainer) {
-                paginationContainer.remove();
+                ajaxProductsList.appendChild(item);
+              });
+
+              finalProductCount = filteredItems.length;
+
+              const existingList = sectionContent.querySelector('#predictive-search-results-products-list');
+              if (existingList) {
+                existingList.replaceWith(ajaxProductsList);
+              }
+
+              const header = sectionContent.querySelector('.predictive-search__products-header');
+              const totalPages = Math.ceil(finalProductCount / 5);
+
+              if (header) {
+                let paginationContainer = header.querySelector('[data-predictive-search-pagination]');
+                if (finalProductCount > 5) {
+                  if (paginationContainer) {
+                    const counter = paginationContainer.querySelector('[data-pagination-counter]');
+                    if (counter) counter.textContent = `1/${totalPages}`;
+                    const prevBtn = paginationContainer.querySelector('[data-pagination-action="prev"]');
+                    const nextBtn = paginationContainer.querySelector('[data-pagination-action="next"]');
+                    if (prevBtn) prevBtn.disabled = true;
+                    if (nextBtn) nextBtn.disabled = false;
+                  } else {
+                    const paginationHtml = `
+                      <div class="predictive-search__pagination" data-predictive-search-pagination>
+                        <button type="button" class="predictive-search__pagination-btn predictive-search__pagination-btn--prev" data-pagination-action="prev" aria-label="Previous products" tabindex="-1" disabled>
+                          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </button>
+                        <span class="predictive-search__pagination-counter" data-pagination-counter aria-live="polite">1/${totalPages}</span>
+                        <button type="button" class="predictive-search__pagination-btn predictive-search__pagination-btn--next" data-pagination-action="next" aria-label="Next products" tabindex="-1">
+                          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
+                      </div>`;
+                    header.insertAdjacentHTML('beforeend', paginationHtml);
+                  }
+                } else if (paginationContainer) {
+                  paginationContainer.remove();
+                }
+              }
+            } else {
+              // 0 items satisfy all search tokens! Remove the products result group from markup
+              const productsGroup = sectionContent.querySelector('#predictive-search-results-products-list')?.closest('.predictive-search__result-group');
+              if (productsGroup) {
+                productsGroup.remove();
               }
             }
+          }
+        }
+
+        // Check if any suggestions or valid products exist
+        const queriesList = sectionContent.querySelector('#predictive-search-results-queries-list');
+        const hasSuggestions = queriesList && queriesList.children.length > 0;
+        const hasValidProducts = finalProductCount > 0;
+
+        if (!hasValidProducts && !hasSuggestions) {
+          const wrapper = sectionContent.querySelector('.predictive-search__results-groups-wrapper');
+          const emptyCard = `
+            <div class="predictive-search__empty-state" data-predictive-empty-state>
+              <div class="predictive-search__empty-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  <line x1="8" y1="11" x2="14" y2="11"></line>
+                </svg>
+              </div>
+              <p class="predictive-search__empty-heading">No exact matches for <span>"${this.escapeHtml(searchTerm)}"</span></p>
+              <p class="predictive-search__empty-subtext">Check your spelling, or explore our most popular categories:</p>
+              <div class="predictive-search__empty-tags">
+                <a href="/collections/all" class="predictive-search__empty-tag">All Rugs</a>
+                <a href="/collections/special-collection" class="predictive-search__empty-tag">Special Deals 🔥</a>
+                <a href="/collections/handmade-rugs" class="predictive-search__empty-tag">Handmade Rugs</a>
+                <a href="/collections/4-x-6-rugs" class="predictive-search__empty-tag">4 x 6 Rugs</a>
+                <a href="/collections/3x5-rug" class="predictive-search__empty-tag">3x5 Rugs</a>
+                <a href="/collections/small-rugs" class="predictive-search__empty-tag">Small Rugs</a>
+                <a href="/collections/office-chairs" class="predictive-search__empty-tag">Office Chairs</a>
+              </div>
+            </div>`;
+
+          if (wrapper) {
+            wrapper.innerHTML = emptyCard;
+            wrapper.className = 'predictive-search__results-groups-wrapper predictive-search__results-groups-wrapper--empty-state';
+          } else {
+            sectionContent.insertAdjacentHTML('afterbegin', emptyCard);
           }
         }
 
@@ -274,6 +349,13 @@ class PredictiveSearch extends SearchForm {
 
   getTotalResultCount() {
     return parseInt(this.predictiveSearchResults.querySelector('[data-total-results]')?.dataset.totalResults) || 0;
+  }
+
+  escapeHtml(string) {
+    if (!string) return '';
+    const div = document.createElement('div');
+    div.textContent = string;
+    return div.innerHTML;
   }
 
   dispatchSearchUpdateEvent(query) {
