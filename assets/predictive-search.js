@@ -187,8 +187,11 @@ class PredictiveSearch extends SearchForm {
 
     const searchDeferred = this.dispatchSearchUpdateEvent(searchTerm);
 
-    const predictiveUrl = `${routes.predictive_search_url}?q=${encodeURIComponent(searchTerm)}&resources[limit]=10&resources[limit_scope]=each&section_id=predictive-search`;
-    const productsUrl = `${routes.search_url}?q=${encodeURIComponent(searchTerm)}&type=product&view=predictive-products`;
+    const predictiveBase = (typeof routes !== 'undefined' && routes.predictive_search_url) || (window.routes && window.routes.predictive_search_url) || '/search/suggest';
+    const searchBase = (typeof routes !== 'undefined' && routes.search_url) || (window.routes && window.routes.search_url) || '/search';
+
+    const predictiveUrl = `${predictiveBase}?q=${encodeURIComponent(searchTerm)}&resources[limit]=10&resources[limit_scope]=each&section_id=predictive-search`;
+    const productsUrl = `${searchBase}?q=${encodeURIComponent(searchTerm)}&type=product&view=predictive-products`;
 
     Promise.all([
       fetch(predictiveUrl, { signal: this.abortController.signal }).then((res) => (res.ok ? res.text() : '')),
