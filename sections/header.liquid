@@ -1787,6 +1787,18 @@
         });
       }
 
+      if (desktopCartBubble) {
+        desktopCartBubble.setAttribute('role', 'button');
+        desktopCartBubble.setAttribute('aria-haspopup', 'dialog');
+        desktopCartBubble.addEventListener('click', function(e) {
+          var cartDrawer = document.querySelector('cart-drawer');
+          if (cartDrawer && typeof cartDrawer.open === 'function') {
+            e.preventDefault();
+            cartDrawer.open(desktopCartBubble);
+          }
+        });
+      }
+
       if (desktopCartBubble && mobileCartBtn) {
         var syncCartCount = function() {
           var desktopCountEl = desktopCartBubble.querySelector('.header-nav__cart-count');
