@@ -262,6 +262,7 @@ class PredictiveSearch extends SearchForm {
     this.predictiveSearchResults.innerHTML = resultsMarkup;
     this.setAttribute('results', true);
 
+    this.predictiveSearchResults.scrollTop = 0;
     this.initPagination();
     this.setLiveRegionResults();
     this.open();
@@ -271,6 +272,10 @@ class PredictiveSearch extends SearchForm {
     const productsList = this.querySelector('#predictive-search-results-products-list');
     const paginationContainer = this.querySelector('[data-predictive-search-pagination]');
     if (!productsList || !paginationContainer) return;
+
+    paginationContainer.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+    });
 
     const items = Array.from(productsList.querySelectorAll('.predictive-search__list-item[data-product-index]'));
     if (items.length <= 4) {
