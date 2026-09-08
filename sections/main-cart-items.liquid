@@ -30,13 +30,6 @@
   view-event-payload="{{ cart | standard_event_data: 'view', context: 'page' | escape }}"
 >
   <div class="page-width">
-    <div class="title-wrapper-with-link">
-      <h1 class="title title--primary">{{ 'sections.cart.title' | t }}</h1>
-      <a href="{{ routes.all_products_collection_url }}" class="underlined-link">
-        {{- 'general.continue_shopping' | t -}}
-      </a>
-    </div>
-
     <div class="cart__warnings cart-empty-state">
       <div class="cart-empty-state__icon-wrap" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -66,7 +59,15 @@
       <div class="cart__items" id="main-cart-items" data-id="{{ section.id }}">
         <div class="js-contents">
           {%- if cart != empty -%}
-            {%- assign threshold_val = section.settings.free_shipping_threshold | default: settings.free_shipping_threshold | default: 500 -%}
+            {%- assign threshold_setting = section.settings.free_shipping_threshold -%}
+            {%- if threshold_setting == blank or threshold_setting <= 0 -%}
+              {%- assign threshold_val = settings.free_shipping_threshold | default: 500 -%}
+            {%- else -%}
+              {%- assign threshold_val = threshold_setting -%}
+            {%- endif -%}
+            {%- if threshold_val == blank or threshold_val <= 0 -%}
+              {%- assign threshold_val = 500 -%}
+            {%- endif -%}
             {%- assign threshold_cents = threshold_val | times: 100 -%}
             {%- assign current_total = cart.total_price -%}
             {%- assign progress_pct = current_total | times: 100.0 | divided_by: threshold_cents -%}
@@ -74,7 +75,7 @@
             {%- assign diff_cents = threshold_cents | minus: current_total -%}
 
             <div class="cart__layout-grid">
-              <!-- Left Column: Products & Free Shipping Bar (75%) -->
+              <!-- Left Column: Products & Free Shipping Bar (70%) -->
               <div class="cart__main-column">
                 {%- if section.settings.show_shipping_bar -%}
                   <div class="cart-free-shipping-bar" data-threshold="{{ threshold_cents }}" data-total="{{ current_total }}">
@@ -182,6 +183,17 @@
                               modal_id: cart_disclosure_modal_id
                             -%}
                           </div>
+
+                          {%- assign compare_price = item.variant.compare_at_price | default: item.original_price -%}
+                          {%- if compare_price > item.final_price -%}
+                            {%- assign saving_cents = compare_price | minus: item.final_price -%}
+                            <div class="cart-item__saving-wrap">
+                              <span class="cart-item__saving-badge">
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                                Instant Saving {{ saving_cents | money }}
+                              </span>
+                            </div>
+                          {%- endif -%}
 
                           <!-- Mobile-only price display -->
                           <div class="cart-item__mobile-price medium-hide large-up-hide">
@@ -468,7 +480,7 @@
                 </table>
               </div>
 
-              <!-- Right Column: Your Order Summary Card (25%) -->
+              <!-- Right Column: Your Order Summary Card (30%) -->
               <div class="cart__summary-column">
                 <div class="cart__order-summary-box">
                   <h2 class="cart__order-summary-title">Your Order</h2>
@@ -511,6 +523,40 @@
                     <p class="cart__summary-tax-note">
                       Taxes, discounts and shipping calculated at checkout.
                     </p>
+                  </div>
+
+                  <!-- Coupon Code Box -->
+                  <div class="cart__coupon-box">
+                    <label for="CartCouponInput" class="cart__coupon-label">Coupon Code</label>
+                    <div class="cart__coupon-input-wrap">
+                      <input
+                        type="text"
+                        id="CartCouponInput"
+                        placeholder="Enter coupon code"
+                        class="cart__coupon-input"
+                        autocomplete="off"
+                        autocapitalize="characters"
+                      >
+                      <button type="button" id="CartCouponBtn" class="cart__coupon-btn">
+                        Apply
+                      </button>
+                    </div>
+                    <div id="CartCouponMsg" class="cart__coupon-msg" style="display: none;"></div>
+
+                    {%- if cart.cart_level_discount_applications.size > 0 -%}
+                      <div class="cart__applied-discounts">
+                        {%- for discount in cart.cart_level_discount_applications -%}
+                          <div class="cart__applied-discount-pill">
+                            <span class="cart__applied-discount-icon" aria-hidden="true">🏷️</span>
+                            <span class="cart__applied-discount-title">{{ discount.title }}</span>
+                            <span class="cart__applied-discount-amount">(-{{ discount.total_allocated_amount | money }})</span>
+                            <a href="/discount/CLEAR?redirect=/cart" class="cart__applied-discount-remove" aria-label="Remove coupon {{ discount.title }}">
+                              ✕
+                            </a>
+                          </div>
+                        {%- endfor -%}
+                      </div>
+                    {%- endif -%}
                   </div>
 
                   {%- if settings.show_cart_note -%}
@@ -568,6 +614,50 @@
     </form>
   </div>
 </cart-items>
+
+<script>
+  (function() {
+    function initCartCoupon() {
+      var btn = document.getElementById('CartCouponBtn');
+      var input = document.getElementById('CartCouponInput');
+      var msg = document.getElementById('CartCouponMsg');
+      if (!btn || !input || btn.dataset.bound === 'true') return;
+      btn.dataset.bound = 'true';
+
+      function applyCoupon() {
+        var code = (input.value || '').trim();
+        if (!code) {
+          if (msg) {
+            msg.textContent = 'Please enter a coupon code.';
+            msg.className = 'cart__coupon-msg cart__coupon-msg--error';
+            msg.style.display = 'block';
+          }
+          return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = 'Applying...';
+        if (msg) msg.style.display = 'none';
+
+        window.location.href = '/discount/' + encodeURIComponent(code) + '?redirect=/cart';
+      }
+
+      btn.addEventListener('click', applyCoupon);
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          applyCoupon();
+        }
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initCartCoupon);
+    } else {
+      initCartCoupon();
+    }
+  })();
+</script>
 
 {% schema %}
 {
