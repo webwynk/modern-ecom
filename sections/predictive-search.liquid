@@ -117,12 +117,40 @@
       <div class="predictive-search__result-group">
         {%- if predictive_search.resources.products.size > 0 -%}
           <div>
-            <h2
-              id="predictive-search-products"
-              class="predictive-search__heading text-body caption-with-letter-spacing"
-            >
-              {{- 'templates.search.products' | t -}}
-            </h2>
+            <div class="predictive-search__products-header">
+              <h2
+                id="predictive-search-products"
+                class="predictive-search__heading text-body caption-with-letter-spacing"
+              >
+                {{- 'templates.search.products' | t -}}
+              </h2>
+              {%- if predictive_search.resources.products.size > 4 -%}
+                <div class="predictive-search__pagination" data-predictive-search-pagination>
+                  <button
+                    type="button"
+                    class="predictive-search__pagination-btn predictive-search__pagination-btn--prev"
+                    data-pagination-action="prev"
+                    aria-label="Previous products"
+                    disabled
+                  >
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                  </button>
+                  <span class="predictive-search__pagination-counter" data-pagination-counter aria-live="polite">1/{{ predictive_search.resources.products.size | plus: 3 | divided_by: 4 }}</span>
+                  <button
+                    type="button"
+                    class="predictive-search__pagination-btn predictive-search__pagination-btn--next"
+                    data-pagination-action="next"
+                    aria-label="Next products"
+                  >
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                  </button>
+                </div>
+              {%- endif -%}
+            </div>
             <ul
               id="predictive-search-results-products-list"
               class="predictive-search__results-list list-unstyled"
@@ -135,6 +163,8 @@
                   class="predictive-search__list-item"
                   role="option"
                   aria-selected="false"
+                  data-product-index="{{ forloop.index0 }}"
+                  {% if forloop.index0 >= 4 %}style="display: none;"{% endif %}
                 >
                   <product-component view-event-payload="{{ product | standard_event_data: 'view', context: 'search' | escape }}">
                     <a
