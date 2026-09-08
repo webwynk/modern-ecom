@@ -747,6 +747,54 @@
     bottom: auto !important;
   }
 
+  .header-nav__wishlist-icon-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header-wishlist-count {
+    background-color: #FF4612 !important;
+    color: #FFFFFF !important;
+    font-family: var(--font-body-family, 'DM Sans'), sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    min-width: 18px !important;
+    height: 18px !important;
+    border-radius: 999px !important;
+    display: none;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 4px !important;
+    line-height: 1 !important;
+    position: absolute !important;
+    top: -8px !important;
+    right: -10px !important;
+    z-index: 2;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25) !important;
+    pointer-events: none !important;
+    transform: scale(1);
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .header-wishlist-count.has-items {
+    display: inline-flex !important;
+  }
+
+  .header-wishlist-count.pop {
+    transform: scale(1.3);
+  }
+
+  .header-mobile__action-btn#wishlist-icon-bubble-mobile {
+    position: relative !important;
+  }
+
+  .header-mobile__action-btn#wishlist-icon-bubble-mobile .header-wishlist-count {
+    top: -4px !important;
+    right: -6px !important;
+  }
+
   /* Mobile Header Layout */
   .header-mobile__controls {
     display: none;
@@ -1615,10 +1663,11 @@
       </button>
 
       {%- if section.settings.show_wishlist -%}
-        <a href="{{ section.settings.wishlist_url | default: '/pages/wishlist' }}" class="header-mobile__action-btn link focus-inset" aria-label="Wishlist">
+        <a href="{{ section.settings.wishlist_url | default: '/pages/wishlist' }}" class="header-mobile__action-btn link focus-inset" aria-label="Wishlist" id="wishlist-icon-bubble-mobile">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
           </svg>
+          <span class="header-wishlist-count" aria-hidden="true" style="display: none;">0</span>
         </a>
       {%- endif -%}
 
@@ -1663,10 +1712,13 @@
 
       <div class="header-nav__actions">
         {%- if section.settings.show_wishlist -%}
-          <a href="{{ section.settings.wishlist_url | default: '/pages/wishlist' }}" class="header-nav__action-btn link focus-inset">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-            </svg>
+          <a href="{{ section.settings.wishlist_url | default: '/pages/wishlist' }}" class="header-nav__action-btn header-nav__wishlist-btn link focus-inset" id="wishlist-icon-bubble">
+            <span class="header-nav__wishlist-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+              <span class="header-wishlist-count" aria-hidden="true" style="display: none;">0</span>
+            </span>
             <span>{{ 'Wishlist' }}</span>
           </a>
         {%- endif -%}
