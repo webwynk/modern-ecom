@@ -69,18 +69,29 @@
         card.setAttribute('data-id', item.id || item.handle);
 
         var comparePriceHtml = '';
+        var badgeHtml = '';
         if (item.compare_at_price && item.compare_at_price !== item.price) {
           comparePriceHtml = '<span class="wishlist-card__compare-price">' + item.compare_at_price + '</span>';
+          var discountText = 'SAVE 25%';
+          try {
+            var p = parseFloat(String(item.price).replace(/[^0-9.]/g, ''));
+            var cp = parseFloat(String(item.compare_at_price).replace(/[^0-9.]/g, ''));
+            if (cp > p) {
+              var pct = Math.round(((cp - p) / cp) * 100);
+              if (pct > 0) discountText = 'SAVE ' + pct + '%';
+            }
+          } catch(e) {}
+          badgeHtml = '<span class="wishlist-card__badge">' + discountText + '</span>';
         }
 
         var imageUrl = item.image || '//cdn.shopify.com/s/assets/no-image-2048-5e88c1b20e087fb7bbe9a3771824e743c244f437e4f8ba072e080dfabac033a2.gif';
         var itemUrl = item.url || '#';
 
         card.innerHTML =
-          '<button type="button" class="wishlist-card__remove-btn" aria-label="Remove ' + (item.title ? item.title.replace(/"/g, '&quot;') : '') + ' from wishlist" title="Remove item">' +
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">' +
-              '<line x1="18" y1="6" x2="6" y2="18"></line>' +
-              '<line x1="6" y1="6" x2="18" y2="18"></line>' +
+          badgeHtml +
+          '<button type="button" class="wishlist-card__wishlist-btn is-active" aria-label="Remove ' + (item.title ? item.title.replace(/"/g, '&quot;') : '') + ' from wishlist" title="Remove from wishlist">' +
+            '<svg viewBox="0 0 24 24" fill="#E24438" stroke="#E24438" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+              '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>' +
             '</svg>' +
           '</button>' +
           '<a href="' + itemUrl + '" class="wishlist-card__media-link">' +
@@ -108,18 +119,20 @@
             '</button>' +
           '</div>';
 
-        // "X" Remove button handler
-        var removeBtn = card.querySelector('.wishlist-card__remove-btn');
-        removeBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          card.classList.add('is-removing');
-          setTimeout(function() {
-            if (window.ThemeWishlist && typeof window.ThemeWishlist.removeItem === 'function') {
-              window.ThemeWishlist.removeItem(item.id || item.handle);
-            }
-          }, 200);
-        });
+        // Red Heart Remove button handler
+        var removeBtn = card.querySelector('.wishlist-card__wishlist-btn');
+        if (removeBtn) {
+          removeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            card.classList.add('is-removing');
+            setTimeout(function() {
+              if (window.ThemeWishlist && typeof window.ThemeWishlist.removeItem === 'function') {
+                window.ThemeWishlist.removeItem(item.id || item.handle);
+              }
+            }, 200);
+          });
+        }
 
         // Buy Now handler
         var buyBtn = card.querySelector('.wishlist-card__buy-btn');

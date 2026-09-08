@@ -79,14 +79,14 @@
 
 .wishlist-grid {
   display: grid;
-  grid-template-columns: repeat(var(--grid-desktop-cols, 4), 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(var(--grid-desktop-cols, 5), 1fr);
+  gap: 14px;
 }
 
 @media screen and (max-width: 989px) {
   .wishlist-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    gap: 12px;
   }
 }
 
@@ -102,16 +102,16 @@
   }
   .wishlist-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 10px;
   }
 }
 
-/* Product Card (matches 1st attached image) */
+/* Product Card (matches attached images) */
 .wishlist-card {
   background-color: #FFFFFF;
   border-radius: 16px;
   border: 1px solid #EEEEEE;
-  padding: 16px;
+  padding: 14px 12px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -131,8 +131,26 @@
   pointer-events: none;
 }
 
-/* Top-Right "X" Remove Button */
-.wishlist-card__remove-btn {
+/* Top-Left Discount Badge */
+.wishlist-card__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background-color: #E24438;
+  color: #FFFFFF;
+  font-family: var(--font-body-family, 'DM Sans'), sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  z-index: 4;
+  line-height: 1.3;
+}
+
+/* Top-Right Wishlist Heart Button */
+.wishlist-card__wishlist-btn {
   position: absolute;
   top: 12px;
   right: 12px;
@@ -149,35 +167,31 @@
   justify-content: center;
   cursor: pointer;
   z-index: 5;
-  color: #6B7280;
   padding: 0;
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.wishlist-card__remove-btn:hover {
-  background-color: #FEE2E2;
-  border-color: #FCA5A5;
-  color: #DC2626;
-  transform: scale(1.08);
+.wishlist-card__wishlist-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(226, 68, 56, 0.25);
 }
 
-.wishlist-card__remove-btn:focus-visible {
+.wishlist-card__wishlist-btn:focus-visible {
   outline: 2px solid #997A51;
   outline-offset: 2px;
 }
 
-.wishlist-card__remove-btn svg {
-  width: 14px;
-  height: 14px;
-  stroke: currentColor;
-  stroke-width: 2.5;
+.wishlist-card__wishlist-btn svg {
+  width: 17px;
+  height: 17px;
+  display: block;
 }
 
 /* Product Media */
 .wishlist-card__media-link {
   display: block;
   width: 100%;
-  height: 200px;
+  height: 175px;
   overflow: hidden;
   margin-bottom: 12px;
   text-decoration: none;
