@@ -896,7 +896,7 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      gap: 14px;
+      gap: 8px;
       flex-shrink: 0;
     }
 
@@ -904,8 +904,8 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 3.8rem;
-      height: 3.8rem;
+      width: 3.4rem;
+      height: 3.4rem;
       border-radius: 50%;
       color: #111111;
       text-decoration: none;
@@ -1651,13 +1651,6 @@
         </a>
       {%- endif -%}
 
-      <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header-mobile__action-btn link focus-inset" aria-label="Account">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-          <circle cx="12" cy="7" r="4"></circle>
-        </svg>
-      </a>
-
       <a href="{{ routes.cart_url }}" class="header-mobile__action-btn header-mobile__cart-btn link focus-inset" id="cart-icon-bubble-mobile" aria-label="Shopping Cart">
         <span class="header-nav__cart-icon-wrap">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1673,6 +1666,13 @@
             {%- endif -%}
           </span>
         </span>
+      </a>
+
+      <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header-mobile__action-btn link focus-inset" aria-label="Account">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
       </a>
     </div>
   </div>
@@ -1719,6 +1719,14 @@
             {%- endif -%}
           </span>
           <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+        </a>
+
+        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header-nav__action-btn header-nav__account-btn link focus-inset" aria-label="{%- if customer -%}{{ 'customer.account_fallback' | t | default: 'Account' }}{%- else -%}{{ 'customer.log_in' | t | default: 'Log in' }}{%- endif -%}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span class="visually-hidden">{%- if customer -%}{{ 'customer.account_fallback' | t | default: 'Account' }}{%- else -%}{{ 'customer.log_in' | t | default: 'Log in' }}{%- endif -%}</span>
         </a>
       </div>
     </div>

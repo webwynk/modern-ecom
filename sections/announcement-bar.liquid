@@ -204,25 +204,6 @@
           <span>🇺🇸 $ {{ cart.currency.iso_code | default: 'USD' }}</span>
         </div>
       {%- endif -%}
-
-      {%- if section.settings.enable_account_link -%}
-        <a
-          href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
-          class="utility-bar__pill-btn link focus-inset"
-        >
-          <svg class="icon icon-account" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
-          <span>
-            {%- if customer -%}
-              {{ 'customer.account_fallback' | t | default: 'Account' }}
-            {%- else -%}
-              {{ 'customer.log_in' | t | default: 'Login' }}
-            {%- endif -%}
-          </span>
-        </a>
-      {%- endif -%}
     </div>
   </div>
 </div>
