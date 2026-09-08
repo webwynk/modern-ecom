@@ -124,7 +124,7 @@
               >
                 {{- 'templates.search.products' | t -}}
               </h2>
-              {%- if predictive_search.resources.products.size > 4 -%}
+              {%- if predictive_search.resources.products.size > 5 -%}
                 <div class="predictive-search__pagination" data-predictive-search-pagination>
                   <button
                     type="button"
@@ -138,7 +138,7 @@
                       <polyline points="15 18 9 12 15 6"></polyline>
                     </svg>
                   </button>
-                  <span class="predictive-search__pagination-counter" data-pagination-counter aria-live="polite">1/{{ predictive_search.resources.products.size | plus: 3 | divided_by: 4 }}</span>
+                  <span class="predictive-search__pagination-counter" data-pagination-counter aria-live="polite">1/{{ predictive_search.resources.products.size | plus: 4 | divided_by: 5 }}</span>
                   <button
                     type="button"
                     class="predictive-search__pagination-btn predictive-search__pagination-btn--next"
@@ -166,7 +166,7 @@
                   role="option"
                   aria-selected="false"
                   data-product-index="{{ forloop.index0 }}"
-                  {% if forloop.index0 >= 4 %}style="display: none;"{% endif %}
+                  {% if forloop.index0 >= 5 %}style="display: none;"{% endif %}
                 >
                   <product-component view-event-payload="{{ product | standard_event_data: 'view', context: 'search' | escape }}">
                     <a
