@@ -1,0 +1,58 @@
+﻿{% layout none %}
+{% paginate search.results by 50 %}
+  <div
+    id="predictive-products-data"
+    data-total-count="{{ search.results_count }}"
+    data-current-page="{{ paginate.current_page }}"
+    data-total-pages="{{ paginate.pages }}"
+  >
+    <ul
+      id="predictive-search-results-products-list"
+      class="predictive-search__results-list list-unstyled"
+      role="group"
+      aria-labelledby="predictive-search-products"
+    >
+      {%- for product in search.results -%}
+        {%- if product.object_type == 'product' -%}
+          <li
+            id="predictive-search-option-product-{{ forloop.index }}"
+            class="predictive-search__list-item"
+            role="option"
+            aria-selected="false"
+            data-product-index="{{ forloop.index0 }}"
+            {% if forloop.index0 >= 5 %}style="display: none;"{% endif %}
+          >
+            <product-component view-event-payload="{{ product | standard_event_data: 'view', context: 'search' | escape }}">
+              <a
+                href="{{ product.url }}"
+                class="predictive-search__item predictive-search__item--link-with-thumbnail link link--text"
+                tabindex="-1"
+              >
+                {%- if product.featured_media != blank -%}
+                  <img
+                    class="predictive-search__image"
+                    src="{{ product.featured_media | image_url: width: 150 }}"
+                    alt="{{ product.featured_media.alt | escape }}"
+                    width="50"
+                    height="{{ 50 | divided_by: product.featured_media.preview_image.aspect_ratio }}"
+                    loading="lazy"
+                  >
+                {%- endif -%}
+                <div class="predictive-search__item-content">
+                  {%- if settings.predictive_search_show_vendor -%}
+                    <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
+                    <div class="predictive-search__item-vendor caption-with-letter-spacing">
+                      {{ product.vendor }}
+                    </div>
+                  {%- endif -%}
+                  <p class="predictive-search__item-heading h5">{{ product.title | escape }}</p>
+                  {% render 'price', product: product, use_variant: true, show_badges: false %}
+                </div>
+              </a>
+            </product-component>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+{% endpaginate %}
