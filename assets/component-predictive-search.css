@@ -33,9 +33,20 @@
     left: 0;
     top: 100%;
   }
+}
 
+@media screen and (max-width: 989px) {
   .predictive-search__results-groups-wrapper {
     flex-direction: column;
+  }
+
+  /* Show products first, suggestions second on mobile and tablet */
+  .predictive-search__result-group:nth-child(2) {
+    order: 1;
+  }
+
+  .predictive-search__result-group:first-child {
+    order: 2;
   }
 
   .predictive-search__results-groups-wrapper:not(.predictive-search__results-groups-wrapper--no-suggestions) {
