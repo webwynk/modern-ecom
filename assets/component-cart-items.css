@@ -636,8 +636,8 @@ cart-remove-button .icon-remove {
 @media screen and (min-width: 990px) {
   .cart__layout-grid {
     display: grid;
-    grid-template-columns: minmax(0, 3fr) minmax(310px, 1fr);
-    gap: 36px;
+    grid-template-columns: minmax(0, 70%) minmax(0, 30%);
+    gap: 32px;
     align-items: start;
   }
 }
