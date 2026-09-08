@@ -1909,6 +1909,14 @@
         }
 
         if (desktopInput) {
+          // Clicking anywhere in the search bar container (icon, border, form area) opens the dropdown
+          desktopSearchWrapper.addEventListener('click', function(e) {
+            // Don't hijack clicks on category tag links inside the dropdown
+            if (!e.target.closest('a, button')) {
+              desktopInput.focus();
+            }
+          });
+
           desktopInput.addEventListener('focus', openDesktopDropdown);
           desktopInput.addEventListener('click', openDesktopDropdown);
 
