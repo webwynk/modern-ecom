@@ -1,4 +1,27 @@
 MatchingTranslations:
   enabled: false
+
 TemplateLength:
   enabled: false
+
+ImgWidthAndHeight:
+  enabled: false
+
+TranslationKeyExists:
+  enabled: false
+
+HardcodedRoutes:
+  enabled: false
+
+UndefinedObject:
+  enabled: false
+
+UnusedAssign:
+  enabled: false
+
+OrphanedSnippet:
+  enabled: false
+
+VariableName:
+  enabled: false
+
