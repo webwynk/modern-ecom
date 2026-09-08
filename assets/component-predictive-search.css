@@ -43,10 +43,14 @@
   /* Show products first, suggestions second on mobile and tablet */
   .predictive-search__result-group:nth-child(2) {
     order: 1;
+    flex: 1 1 auto;
+    width: 100%;
   }
 
   .predictive-search__result-group:first-child {
     order: 2;
+    flex: 1 1 auto;
+    width: 100%;
   }
 
   .predictive-search__results-groups-wrapper:not(.predictive-search__results-groups-wrapper--no-suggestions) {
