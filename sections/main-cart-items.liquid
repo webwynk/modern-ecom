@@ -641,24 +641,17 @@
   (function() {
     /*
      * Coupon code handler for cart page.
-     * Uses Shopify.routes.root to build an absolute storefront URL so
-     * the /discount/ endpoint resolves correctly on both the Shopify CLI
-     * dev proxy (127.0.0.1:9292) AND the live storefront.
-     * The Shopify object is injected by Shopify's own theme.js on every page.
+     * window.shopUrl is set by Dawn's theme.liquid as {{ request.origin }}
+     * which always resolves to the REAL Shopify storefront URL
+     * (e.g. https://ecommerce-tg2fc9c1.myshopify.com) even when the theme
+     * is being previewed locally via `shopify theme dev` (127.0.0.1:9292).
+     * This ensures /discount/ endpoint is always reached on the live domain.
      */
     function getStorefrontRoot() {
-      // Shopify.routes.root is e.g. 'https://mystore.myshopify.com/'
-      // on dev preview it still resolves to the real storefront origin.
-      if (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) {
-        return window.Shopify.routes.root.replace(/\/$/, '');
-      }
-      // Fallback: read from the meta tag Dawn injects, or just use origin
-      var meta = document.querySelector('meta[name="shopify-checkout-api-token"]');
-      if (meta) {
-        // We have a real Shopify page — use the page's own origin
-        return window.location.origin;
-      }
-      return '';
+      // window.shopUrl = {{ request.origin }} — injected by theme.liquid
+      if (window.shopUrl) return window.shopUrl;
+      // Safety fallback: current page origin
+      return window.location.origin;
     }
 
     function initCartCoupon() {
@@ -683,8 +676,9 @@
         btn.textContent = 'Applying...';
         if (msg) msg.style.display = 'none';
 
-        // Build absolute URL using Shopify's own storefront root —
-        // this bypasses the CLI dev proxy and hits the real Shopify endpoint.
+        /* Redirect to the real Shopify storefront /discount/ endpoint.
+           After the discount cookie is set, Shopify redirects back to /cart.
+           Works in dev preview because window.shopUrl points to the live store. */
         var base = getStorefrontRoot();
         window.location.href = base + '/discount/' + encodeURIComponent(code) + '?redirect=/cart';
       }
