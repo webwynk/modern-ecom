@@ -61,7 +61,7 @@
           {%- if cart != empty -%}
             {%- assign threshold_setting = section.settings.free_shipping_threshold -%}
             {%- if threshold_setting == blank or threshold_setting <= 0 -%}
-              {%- assign threshold_val = settings.free_shipping_threshold | default: 500 -%}
+              {%- assign threshold_val = settings.free_shipping_threshold -%}
             {%- else -%}
               {%- assign threshold_val = threshold_setting -%}
             {%- endif -%}
@@ -70,15 +70,26 @@
             {%- endif -%}
             {%- assign threshold_cents = threshold_val | times: 100 -%}
             {%- assign current_total = cart.total_price -%}
-            {%- assign progress_pct = current_total | times: 100.0 | divided_by: threshold_cents -%}
-            {%- if progress_pct > 100 -%}{%- assign progress_pct = 100 -%}{%- endif -%}
-            {%- assign diff_cents = threshold_cents | minus: current_total -%}
+            {%- if current_total >= threshold_cents -%}
+              {%- assign is_free_shipping = true -%}
+              {%- assign progress_pct = 100 -%}
+              {%- assign diff_cents = 0 -%}
+            {%- else -%}
+              {%- assign is_free_shipping = false -%}
+              {%- assign progress_pct = current_total | times: 100.0 | divided_by: threshold_cents -%}
+              {%- if progress_pct > 100 -%}{%- assign progress_pct = 100 -%}{%- endif -%}
+              {%- assign diff_cents = threshold_cents | minus: current_total -%}
+            {%- endif -%}
 
             <div class="cart__layout-grid">
               <!-- Left Column: Products & Free Shipping Bar (70%) -->
               <div class="cart__main-column">
                 {%- if section.settings.show_shipping_bar -%}
-                  <div class="cart-free-shipping-bar" data-threshold="{{ threshold_cents }}" data-total="{{ current_total }}">
+                  <div
+                    class="cart-free-shipping-bar{% if is_free_shipping %} cart-free-shipping-bar--unlocked{% endif %}"
+                    data-threshold="{{ threshold_cents }}"
+                    data-total="{{ current_total }}"
+                  >
                     <div class="cart-free-shipping-bar__header">
                       <span class="cart-free-shipping-bar__icon" aria-hidden="true">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -88,15 +99,18 @@
                         </svg>
                       </span>
                       <span class="cart-free-shipping-bar__text">
-                        {%- if current_total >= threshold_cents -%}
+                        {%- if is_free_shipping -%}
                           <strong>Congratulations!</strong> You have unlocked <strong>FREE shipping!</strong>
                         {%- else -%}
                           Add <strong class="cart-free-shipping-bar__amount">{{ diff_cents | money }}</strong> to cart and get free shipping!
                         {%- endif -%}
                       </span>
                     </div>
-                    <div class="cart-free-shipping-bar__track" role="progressbar" aria-valuenow="{{ progress_pct | round }}" aria-valuemin="0" aria-valuemax="100">
-                      <div class="cart-free-shipping-bar__fill" style="width: {{ progress_pct }}%;"></div>
+                    <div class="cart-free-shipping-bar__track" role="progressbar" aria-valuenow="{% if is_free_shipping %}100{% else %}{{ progress_pct | round }}{% endif %}" aria-valuemin="0" aria-valuemax="100">
+                      <div
+                        class="cart-free-shipping-bar__fill{% if is_free_shipping %} cart-free-shipping-bar__fill--unlocked{% endif %}"
+                        style="width: {% if is_free_shipping %}100%{% else %}{{ progress_pct }}%{% endif %};"
+                      ></div>
                     </div>
                   </div>
                 {%- endif -%}
