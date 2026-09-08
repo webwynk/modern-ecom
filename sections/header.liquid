@@ -258,7 +258,7 @@
   /* Predictive Search Results inside Desktop Dropdown */
   .header-search__dropdown .predictive-search {
     position: static !important;
-    max-height: 480px !important;
+    max-height: 520px !important;
     overflow-y: auto !important;
     padding: 10px 14px 16px;
     background: #ffffff;
@@ -284,6 +284,33 @@
   }
 
   .header-search__dropdown .predictive-search::-webkit-scrollbar-thumb:hover {
+    background: #846843 !important;
+  }
+
+  /* Independent scroll for desktop Suggestions column if lots of suggestions */
+  .header-search__dropdown .predictive-search__result-group:first-child {
+    max-height: 400px !important;
+    overflow-y: auto !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: var(--color-highlight, #997A51) #f4f4f4 !important;
+    padding-right: 6px !important;
+  }
+
+  .header-search__dropdown .predictive-search__result-group:first-child::-webkit-scrollbar {
+    width: 5px !important;
+  }
+
+  .header-search__dropdown .predictive-search__result-group:first-child::-webkit-scrollbar-track {
+    background: #f4f4f4 !important;
+    border-radius: 999px !important;
+  }
+
+  .header-search__dropdown .predictive-search__result-group:first-child::-webkit-scrollbar-thumb {
+    background: var(--color-highlight, #997A51) !important;
+    border-radius: 999px !important;
+  }
+
+  .header-search__dropdown .predictive-search__result-group:first-child::-webkit-scrollbar-thumb:hover {
     background: #846843 !important;
   }
 
@@ -1261,6 +1288,29 @@
   @media screen and (min-width: 990px) {
     .search-drawer-modal {
       display: none !important;
+    }
+  }
+
+  /* Tablet and Mobile: Products FIRST, Suggestions SECOND */
+  @media screen and (max-width: 989px) {
+    .predictive-search--modal .predictive-search__results-groups-wrapper {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
+    /* Products FIRST */
+    .predictive-search--modal .predictive-search__result-group:nth-child(2) {
+      order: 1 !important;
+      width: 100% !important;
+    }
+
+    /* Suggestions SECOND */
+    .predictive-search--modal .predictive-search__result-group:first-child {
+      order: 2 !important;
+      width: 100% !important;
+      margin-top: 1.5rem !important;
+      border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+      padding-top: 0.8rem !important;
     }
   }
 
