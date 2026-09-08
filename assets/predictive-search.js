@@ -18,6 +18,13 @@ class PredictiveSearch extends SearchForm {
     this.addEventListener('focusout', this.onFocusOut.bind(this));
     this.addEventListener('keyup', this.onKeyup.bind(this));
     this.addEventListener('keydown', this.onKeydown.bind(this));
+
+    this.predictiveSearchResults.addEventListener('click', (event) => {
+      const termButton = event.target.closest('#predictive-search-option-search-keywords button, .predictive-search__item--term');
+      if (termButton) {
+        this.input.form.submit();
+      }
+    });
   }
 
   getQuery() {
@@ -180,7 +187,7 @@ class PredictiveSearch extends SearchForm {
 
     const searchDeferred = this.dispatchSearchUpdateEvent(searchTerm);
 
-    fetch(`${routes.predictive_search_url}?q=${encodeURIComponent(searchTerm)}&section_id=predictive-search`, {
+    fetch(`${routes.predictive_search_url}?q=${encodeURIComponent(searchTerm)}&resources[limit]=10&resources[limit_scope]=each&section_id=predictive-search`, {
       signal: this.abortController.signal,
     })
       .then((response) => {
@@ -255,8 +262,72 @@ class PredictiveSearch extends SearchForm {
     this.predictiveSearchResults.innerHTML = resultsMarkup;
     this.setAttribute('results', true);
 
+    this.initPagination();
     this.setLiveRegionResults();
     this.open();
+  }
+
+  initPagination() {
+    const productsList = this.querySelector('#predictive-search-results-products-list');
+    const paginationContainer = this.querySelector('[data-predictive-search-pagination]');
+    if (!productsList || !paginationContainer) return;
+
+    const items = Array.from(productsList.querySelectorAll('.predictive-search__list-item[data-product-index]'));
+    if (items.length <= 4) {
+      paginationContainer.style.display = 'none';
+      return;
+    }
+
+    const pageSize = 4;
+    let currentPage = 1;
+    const totalPages = Math.ceil(items.length / pageSize);
+
+    const prevBtn = paginationContainer.querySelector('[data-pagination-action="prev"]');
+    const nextBtn = paginationContainer.querySelector('[data-pagination-action="next"]');
+    const counter = paginationContainer.querySelector('[data-pagination-counter]');
+
+    const updatePage = (page) => {
+      currentPage = page;
+      const startIndex = (currentPage - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+
+      items.forEach((item, index) => {
+        if (index >= startIndex && index < endIndex) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      if (counter) {
+        counter.textContent = `${currentPage}/${totalPages}`;
+      }
+
+      if (prevBtn) {
+        prevBtn.disabled = currentPage === 1;
+      }
+      if (nextBtn) {
+        nextBtn.disabled = currentPage === totalPages;
+      }
+    };
+
+    prevBtn?.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (currentPage > 1) {
+        updatePage(currentPage - 1);
+      }
+    });
+
+    nextBtn?.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (currentPage < totalPages) {
+        updatePage(currentPage + 1);
+      }
+    });
+
+    updatePage(1);
   }
 
   setLiveRegionResults() {

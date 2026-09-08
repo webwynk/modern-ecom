@@ -223,3 +223,74 @@ predictive-search[loading] .predictive-search__results-groups-wrapper ~ .predict
   object-fit: contain;
   font-family: 'object-fit: contain';
 }
+
+/* Compact Pagination in Predictive Search Products Header */
+.predictive-search__products-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.08);
+  margin: 0 2rem;
+  padding: 1.5rem 0 0.75rem;
+}
+
+.predictive-search__products-header .predictive-search__heading {
+  border-bottom: none;
+  margin: 0;
+  padding: 0;
+}
+
+.predictive-search__pagination {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.predictive-search__pagination-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid rgba(var(--color-foreground), 0.15);
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.predictive-search__pagination-btn:hover:not(:disabled) {
+  border-color: var(--color-highlight, #997A51);
+  color: var(--color-highlight, #997A51);
+  background-color: rgba(153, 122, 81, 0.08);
+  transform: scale(1.05);
+}
+
+.predictive-search__pagination-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  border-color: rgba(var(--color-foreground), 0.08);
+  color: rgba(var(--color-foreground), 0.4);
+  pointer-events: none;
+}
+
+.predictive-search__pagination-btn svg {
+  width: 13px;
+  height: 13px;
+  stroke: currentColor;
+}
+
+.predictive-search__pagination-counter {
+  font-family: var(--font-body-family, 'DM Sans', sans-serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: rgba(var(--color-foreground), 0.6);
+  min-width: 22px;
+  text-align: center;
+  user-select: none;
+  letter-spacing: 0.02em;
+}
+
