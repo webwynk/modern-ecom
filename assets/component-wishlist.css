@@ -136,10 +136,10 @@
   position: absolute;
   top: 12px;
   right: 12px;
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  min-height: 32px;
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  min-height: 34px;
   border-radius: 50%;
   background-color: #FFFFFF;
   border: 1px solid #E5E7EB;
@@ -158,7 +158,12 @@
   background-color: #FEE2E2;
   border-color: #FCA5A5;
   color: #DC2626;
-  transform: scale(1.1);
+  transform: scale(1.08);
+}
+
+.wishlist-card__remove-btn:focus-visible {
+  outline: 2px solid #997A51;
+  outline-offset: 2px;
 }
 
 .wishlist-card__remove-btn svg {
