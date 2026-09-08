@@ -90,27 +90,35 @@
                     data-threshold="{{ threshold_cents }}"
                     data-total="{{ current_total }}"
                   >
-                    <div class="cart-free-shipping-bar__header">
-                      <span class="cart-free-shipping-bar__icon" aria-hidden="true">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                          <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                          <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                        </svg>
+                    <!-- Row 1: truck icon + "FREE SHIPPING ON ORDER $X" title -->
+                    <div class="cart-free-shipping-bar__top">
+                      <span class="cart-free-shipping-bar__truck-icon" aria-hidden="true">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
                       </span>
-                      <span class="cart-free-shipping-bar__text">
-                        {%- if is_free_shipping -%}
-                          <strong>Congratulations!</strong> You have unlocked <strong>FREE shipping!</strong>
-                        {%- else -%}
-                          Add <strong class="cart-free-shipping-bar__amount">{{ diff_cents | money }}</strong> to cart and get free shipping!
-                        {%- endif -%}
+                      <span class="cart-free-shipping-bar__title">
+                        FREE SHIPPING ON ORDER <strong class="cart-free-shipping-bar__target">{{ threshold_cents | money }}</strong>
                       </span>
                     </div>
-                    <div class="cart-free-shipping-bar__track" role="progressbar" aria-valuenow="{% if is_free_shipping %}100{% else %}{{ progress_pct | round }}{% endif %}" aria-valuemin="0" aria-valuemax="100">
-                      <div
-                        class="cart-free-shipping-bar__fill{% if is_free_shipping %} cart-free-shipping-bar__fill--unlocked{% endif %}"
-                        style="width: {% if is_free_shipping %}100%{% else %}{{ progress_pct }}%{% endif %};"
-                      ></div>
+                    <!-- Row 2: message -->
+                    <div class="cart-free-shipping-bar__msg">
+                      {%- if is_free_shipping -%}
+                        Congratulations, you have got free shipping!
+                      {%- else -%}
+                        Add <strong class="cart-free-shipping-bar__diff">{{ diff_cents | money }}</strong> more to get free shipping!
+                      {%- endif -%}
+                    </div>
+                    <!-- Row 3: progress bar with truck pin -->
+                    <div class="cart-free-shipping-bar__progress-container">
+                      <div class="cart-free-shipping-bar__track" role="progressbar" aria-valuenow="{% if is_free_shipping %}100{% else %}{{ progress_pct | round }}{% endif %}" aria-valuemin="0" aria-valuemax="100">
+                        <div
+                          class="cart-free-shipping-bar__fill{% if is_free_shipping %} cart-free-shipping-bar__fill--unlocked{% endif %}"
+                          style="width: {% if is_free_shipping %}100%{% else %}{{ progress_pct }}%{% endif %};"
+                        >
+                          <span class="cart-free-shipping-bar__pin" aria-hidden="true">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 {%- endif -%}
