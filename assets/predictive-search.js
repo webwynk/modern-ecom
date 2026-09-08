@@ -444,19 +444,26 @@ class PredictiveSearch extends SearchForm {
         }
       });
 
-      if (counter) {
-        counter.textContent = `${currentPage}/${totalPages}`;
+      const currentCounter = paginationContainer.querySelector('[data-pagination-counter]');
+      const currentPrevBtn = paginationContainer.querySelector('[data-pagination-action="prev"]');
+      const currentNextBtn = paginationContainer.querySelector('[data-pagination-action="next"]');
+
+      if (currentCounter) {
+        currentCounter.textContent = `${currentPage}/${totalPages}`;
       }
 
-      if (prevBtn) {
-        prevBtn.disabled = currentPage === 1;
+      if (currentPrevBtn) {
+        currentPrevBtn.disabled = currentPage <= 1;
       }
-      if (nextBtn) {
-        nextBtn.disabled = currentPage === totalPages;
+      if (currentNextBtn) {
+        currentNextBtn.disabled = currentPage >= totalPages;
       }
 
       this.predictiveSearchResults.scrollTop = 0;
     };
+
+    const prevBtn = paginationContainer.querySelector('[data-pagination-action="prev"]');
+    const nextBtn = paginationContainer.querySelector('[data-pagination-action="next"]');
 
     if (prevBtn && nextBtn) {
       const newPrevBtn = prevBtn.cloneNode(true);
