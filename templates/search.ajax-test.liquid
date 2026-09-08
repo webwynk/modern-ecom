@@ -1,9 +1,0 @@
-﻿{% layout none %}
-{% paginate search.results by 50 %}
-{
-  "total_count": {{ search.results_count }},
-  "current_page": {{ paginate.current_page }},
-  "pages": {{ paginate.pages }},
-  "products_count": {{ search.results.size }}
-}
-{% endpaginate %}
