@@ -642,65 +642,126 @@ cart-remove-button .icon-remove {
   }
 }
 
-/* Free Shipping Progress Bar */
+/* ============================================================
+   Free Shipping Progress Bar — Cart Page (mirrors cart drawer)
+   Design tokens: #997A51 accent, #000 text, #fff bg
+   ============================================================ */
 .cart-free-shipping-bar {
-  background: #FAF8F5;
-  border: 1px solid #F0ECE4;
+  background-color: #FAF7F5;
+  border: 1px solid #EFEAE4;
   border-radius: 8px;
-  padding: 16px 20px;
+  padding: 14px 18px;
   margin-bottom: 28px;
 }
 
-.cart-free-shipping-bar__header {
+/* Row 1: truck + title */
+.cart-free-shipping-bar__top {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 14px;
-  color: #111827;
-  line-height: 1.4;
+  gap: 7px;
+  margin-bottom: 3px;
 }
 
-.cart-free-shipping-bar__icon {
-  display: flex;
-  align-items: center;
-  color: #2563EB;
+.cart-free-shipping-bar__truck-icon {
+  display: inline-flex;
+  color: #997A51;
   flex-shrink: 0;
 }
 
-.cart-free-shipping-bar__amount {
-  color: #1E60D5;
+.cart-free-shipping-bar__title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #000000;
+  line-height: 1.3;
+}
+
+.cart-free-shipping-bar__target {
+  color: #997A51;
   font-weight: 700;
 }
 
-.cart-free-shipping-bar__track {
+/* Row 2: message */
+.cart-free-shipping-bar__msg {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: #555555;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.cart-free-shipping-bar__diff {
+  color: #997A51;
+  font-weight: 600;
+}
+
+/* Row 3: progress bar */
+.cart-free-shipping-bar__progress-container {
   width: 100%;
+}
+
+.cart-free-shipping-bar__track {
+  position: relative;
   height: 6px;
-  background: #E5E7EB;
-  border-radius: 3px;
-  overflow: hidden;
-  margin-top: 12px;
+  background: #E8E2DA;
+  border-radius: 999px;
+  overflow: visible;
 }
 
 .cart-free-shipping-bar__fill {
+  position: relative;
   height: 100%;
-  background: #2563EB;
-  border-radius: 3px;
+  background: #997A51;
+  border-radius: 999px;
   transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 22px; /* ensure pin is visible even at low %  */
+}
+
+/* Truck pin at the fill endpoint */
+.cart-free-shipping-bar__pin {
+  position: absolute;
+  right: -11px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  background: #997A51;
+  border: 2px solid #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+  z-index: 2;
+}
+
+/* Unlocked / free shipping achieved state */
+.cart-free-shipping-bar--unlocked {
+  background-color: #FAF7F5;
+  border-color: #EFEAE4;
+}
+
+.cart-free-shipping-bar--unlocked .cart-free-shipping-bar__truck-icon {
+  color: #997A51;
+}
+
+.cart-free-shipping-bar--unlocked .cart-free-shipping-bar__msg {
+  color: #333333;
+  font-weight: 500;
 }
 
 .cart-free-shipping-bar__fill--unlocked {
   width: 100% !important;
-  background: #10B981 !important;
+  background: #997A51 !important;
 }
 
-.cart-free-shipping-bar--unlocked {
-  background: #F0FDF4;
-  border-color: #DCFCE7;
-}
 
-.cart-free-shipping-bar--unlocked .cart-free-shipping-bar__icon {
-  color: #10B981;
-}
 
 /* Cart Table Headers & Structure */
 .cart-items {
