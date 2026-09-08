@@ -572,7 +572,7 @@
                             <span class="cart__applied-discount-icon" aria-hidden="true">🏷️</span>
                             <span class="cart__applied-discount-title">{{ discount.title }}</span>
                             <span class="cart__applied-discount-amount">(-{{ discount.total_allocated_amount | money }})</span>
-                            <a href="/discount/CLEAR?redirect=/cart" class="cart__applied-discount-remove" aria-label="Remove coupon {{ discount.title }}">
+                            <a href="{{ routes.root_url }}discount/CLEAR?redirect=/cart" class="cart__applied-discount-remove" aria-label="Remove coupon {{ discount.title }}">
                               ✕
                             </a>
                           </div>
@@ -639,6 +639,28 @@
 
 <script>
   (function() {
+    /*
+     * Coupon code handler for cart page.
+     * Uses Shopify.routes.root to build an absolute storefront URL so
+     * the /discount/ endpoint resolves correctly on both the Shopify CLI
+     * dev proxy (127.0.0.1:9292) AND the live storefront.
+     * The Shopify object is injected by Shopify's own theme.js on every page.
+     */
+    function getStorefrontRoot() {
+      // Shopify.routes.root is e.g. 'https://mystore.myshopify.com/'
+      // on dev preview it still resolves to the real storefront origin.
+      if (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) {
+        return window.Shopify.routes.root.replace(/\/$/, '');
+      }
+      // Fallback: read from the meta tag Dawn injects, or just use origin
+      var meta = document.querySelector('meta[name="shopify-checkout-api-token"]');
+      if (meta) {
+        // We have a real Shopify page — use the page's own origin
+        return window.location.origin;
+      }
+      return '';
+    }
+
     function initCartCoupon() {
       var btn = document.getElementById('CartCouponBtn');
       var input = document.getElementById('CartCouponInput');
@@ -661,7 +683,10 @@
         btn.textContent = 'Applying...';
         if (msg) msg.style.display = 'none';
 
-        window.location.href = '/discount/' + encodeURIComponent(code) + '?redirect=/cart';
+        // Build absolute URL using Shopify's own storefront root —
+        // this bypasses the CLI dev proxy and hits the real Shopify endpoint.
+        var base = getStorefrontRoot();
+        window.location.href = base + '/discount/' + encodeURIComponent(code) + '?redirect=/cart';
       }
 
       btn.addEventListener('click', applyCoupon);
