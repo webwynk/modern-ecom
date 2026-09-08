@@ -67,6 +67,7 @@ cart-drawer.active .drawer__inner,
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .cart-drawer__warnings {
@@ -74,6 +75,59 @@ cart-drawer.active .drawer__inner,
   flex-direction: column;
   flex: 1;
   justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.cart-drawer.is-empty .drawer__close,
+.cart-drawer__warnings .drawer__close {
+  position: absolute !important;
+  top: 16px !important;
+  right: 16px !important;
+  z-index: 10 !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #000000 !important;
+  border: none !important;
+  background: transparent !important;
+  cursor: pointer !important;
+  border-radius: 50% !important;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease !important;
+}
+
+.cart-drawer.is-empty .drawer__close:hover,
+.cart-drawer__warnings .drawer__close:hover {
+  color: #997A51 !important;
+  background-color: #F8F5F2 !important;
+  transform: rotate(90deg) !important;
+}
+
+.cart-drawer.is-empty .drawer__close .svg-wrapper,
+.cart-drawer__warnings .drawer__close .svg-wrapper {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+.cart-drawer__empty-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.cart-drawer__empty-content .cart__empty-text {
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 24px !important;
+  font-weight: 600 !important;
+  color: #000000 !important;
+  margin-bottom: 24px !important;
+  letter-spacing: -0.01em !important;
 }
 
 cart-drawer.is-empty .drawer__inner {
@@ -320,7 +374,7 @@ cart-drawer-items {
   font-size: 16px;
 }
 
-.cart-drawer .drawer__close {
+.cart-drawer .drawer__header .drawer__close {
   position: static;
   width: 36px;
   height: 36px;
@@ -337,13 +391,13 @@ cart-drawer-items {
   transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
-.cart-drawer .drawer__close:hover {
+.cart-drawer .drawer__header .drawer__close:hover {
   color: #997A51;
   background-color: #F8F5F2;
   transform: rotate(90deg);
 }
 
-.cart-drawer .drawer__close .svg-wrapper {
+.cart-drawer .drawer__header .drawer__close .svg-wrapper {
   width: 14px;
   height: 14px;
 }
