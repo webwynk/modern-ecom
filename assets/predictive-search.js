@@ -427,10 +427,6 @@ class PredictiveSearch extends SearchForm {
     let currentPage = 1;
     const totalPages = Math.ceil(totalItems / pageSize);
 
-    const prevBtn = paginationContainer.querySelector('[data-pagination-action="prev"]');
-    const nextBtn = paginationContainer.querySelector('[data-pagination-action="next"]');
-    const counter = paginationContainer.querySelector('[data-pagination-counter]');
-
     const updatePage = (page) => {
       currentPage = page;
       const startIndex = (currentPage - 1) * pageSize;
