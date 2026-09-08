@@ -220,3 +220,7 @@ cart-items {
     gap: 1rem;
   }
 }
+
+.cart__footer-standalone-hidden {
+  display: none !important;
+}
