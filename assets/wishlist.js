@@ -133,8 +133,11 @@
           badge.classList.remove('pop');
           void badge.offsetWidth; // trigger reflow for animation
           badge.classList.add('pop');
+          setTimeout(function() {
+            badge.classList.remove('pop');
+          }, 350);
         } else {
-          badge.classList.remove('has-items');
+          badge.classList.remove('has-items', 'pop');
           badge.style.display = 'none';
         }
       });

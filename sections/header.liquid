@@ -748,26 +748,26 @@
     background-color: #FF4612 !important;
     color: #FFFFFF !important;
     font-family: var(--font-body-family, 'DM Sans'), sans-serif !important;
-    font-size: 10px !important;
+    font-size: 9px !important;
     font-weight: 700 !important;
-    min-width: 16px !important;
-    height: 16px !important;
+    min-width: 15px !important;
+    height: 15px !important;
     border-radius: 999px !important;
     display: none;
     align-items: center !important;
     justify-content: center !important;
-    padding: 0 4px !important;
-    line-height: 16px !important;
+    padding: 0 3px !important;
+    line-height: 15px !important;
     position: absolute !important;
-    top: -8px !important;
-    right: -12px !important;
+    top: -6px !important;
+    right: -8px !important;
     left: auto !important;
     bottom: auto !important;
     z-index: 3 !important;
-    box-shadow: 0 0 0 2px #FFFFFF, 0 1px 4px rgba(0, 0, 0, 0.25) !important;
+    box-shadow: 0 0 0 1.5px #FFFFFF !important;
     pointer-events: none !important;
     transform: scale(1);
-    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-sizing: border-box !important;
   }
 
   .header-nav__cart-count.has-items,
@@ -776,10 +776,16 @@
     display: inline-flex !important;
   }
 
+  @keyframes badgePop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.25); }
+    100% { transform: scale(1); }
+  }
+
   .header-nav__cart-count.pop,
   .header-wishlist-count.pop,
   .header-mobile__cart-count.pop {
-    transform: scale(1.25);
+    animation: badgePop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 
   /* Mobile Header Layout */
