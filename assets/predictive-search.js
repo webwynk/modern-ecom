@@ -187,22 +187,68 @@ class PredictiveSearch extends SearchForm {
 
     const searchDeferred = this.dispatchSearchUpdateEvent(searchTerm);
 
-    fetch(`${routes.predictive_search_url}?q=${encodeURIComponent(searchTerm)}&resources[limit]=10&resources[limit_scope]=each&section_id=predictive-search`, {
-      signal: this.abortController.signal,
-    })
-      .then((response) => {
-        if (!response.ok) {
-          var error = new Error(response.status);
+    const predictiveUrl = `${routes.predictive_search_url}?q=${encodeURIComponent(searchTerm)}&resources[limit]=10&resources[limit_scope]=each&section_id=predictive-search`;
+    const productsUrl = `${routes.search_url}?q=${encodeURIComponent(searchTerm)}&type=product&view=predictive-products`;
+
+    Promise.all([
+      fetch(predictiveUrl, { signal: this.abortController.signal }).then((res) => (res.ok ? res.text() : '')),
+      fetch(productsUrl, { signal: this.abortController.signal }).then((res) => (res.ok ? res.text() : '')).catch(() => '')
+    ])
+      .then(([predictiveText, productsText]) => {
+        if (!predictiveText) {
           this.close();
-          throw error;
+          return;
         }
 
-        return response.text();
-      })
-      .then((text) => {
-        const resultsMarkup = new DOMParser()
-          .parseFromString(text, 'text/html')
-          .querySelector('#shopify-section-predictive-search').innerHTML;
+        const predictiveDoc = new DOMParser().parseFromString(predictiveText, 'text/html');
+        const sectionContent = predictiveDoc.querySelector('#shopify-section-predictive-search');
+        if (!sectionContent) {
+          this.close();
+          return;
+        }
+
+        if (productsText) {
+          const productsDoc = new DOMParser().parseFromString(productsText, 'text/html');
+          const ajaxProductsList = productsDoc.querySelector('#predictive-search-results-products-list');
+          const totalDataEl = productsDoc.querySelector('#predictive-products-data');
+          const totalCount = parseInt(totalDataEl?.dataset.totalCount) || 0;
+
+          if (ajaxProductsList && totalCount > 0) {
+            const existingList = sectionContent.querySelector('#predictive-search-results-products-list');
+            if (existingList) {
+              existingList.replaceWith(ajaxProductsList);
+            }
+
+            const header = sectionContent.querySelector('.predictive-search__products-header');
+            const totalPages = Math.ceil(totalCount / 5);
+
+            if (header) {
+              let paginationContainer = header.querySelector('[data-predictive-search-pagination]');
+              if (totalCount > 5) {
+                if (paginationContainer) {
+                  const counter = paginationContainer.querySelector('[data-pagination-counter]');
+                  if (counter) counter.textContent = `1/${totalPages}`;
+                } else {
+                  const paginationHtml = `
+                    <div class="predictive-search__pagination" data-predictive-search-pagination>
+                      <button type="button" class="predictive-search__pagination-btn predictive-search__pagination-btn--prev" data-pagination-action="prev" aria-label="Previous products" tabindex="-1" disabled>
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                      </button>
+                      <span class="predictive-search__pagination-counter" data-pagination-counter aria-live="polite">1/${totalPages}</span>
+                      <button type="button" class="predictive-search__pagination-btn predictive-search__pagination-btn--next" data-pagination-action="next" aria-label="Next products" tabindex="-1">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                      </button>
+                    </div>`;
+                  header.insertAdjacentHTML('beforeend', paginationHtml);
+                }
+              } else if (paginationContainer) {
+                paginationContainer.remove();
+              }
+            }
+          }
+        }
+
+        const resultsMarkup = sectionContent.innerHTML;
         // Save bandwidth keeping the cache in all instances synced
         this.allPredictiveSearchInstances.forEach((predictiveSearchInstance) => {
           predictiveSearchInstance.cachedResults[queryKey] = resultsMarkup;
@@ -277,15 +323,24 @@ class PredictiveSearch extends SearchForm {
       e.preventDefault();
     });
 
-    const items = Array.from(productsList.querySelectorAll('.predictive-search__list-item[data-product-index]'));
-    if (items.length <= 4) {
+    const items = Array.from(productsList.querySelectorAll('.predictive-search__list-item'));
+    items.forEach((item, index) => {
+      item.setAttribute('data-product-index', index);
+    });
+
+    const pageSize = 5;
+    const totalItems = items.length;
+
+    if (totalItems <= pageSize) {
       paginationContainer.style.display = 'none';
+      items.forEach((item) => (item.style.display = ''));
       return;
     }
 
-    const pageSize = 4;
+    paginationContainer.style.display = 'flex';
+
     let currentPage = 1;
-    const totalPages = Math.ceil(items.length / pageSize);
+    const totalPages = Math.ceil(totalItems / pageSize);
 
     const prevBtn = paginationContainer.querySelector('[data-pagination-action="prev"]');
     const nextBtn = paginationContainer.querySelector('[data-pagination-action="next"]');
@@ -314,23 +369,32 @@ class PredictiveSearch extends SearchForm {
       if (nextBtn) {
         nextBtn.disabled = currentPage === totalPages;
       }
+
+      this.predictiveSearchResults.scrollTop = 0;
     };
 
-    prevBtn?.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      if (currentPage > 1) {
-        updatePage(currentPage - 1);
-      }
-    });
+    if (prevBtn && nextBtn) {
+      const newPrevBtn = prevBtn.cloneNode(true);
+      const newNextBtn = nextBtn.cloneNode(true);
+      prevBtn.replaceWith(newPrevBtn);
+      nextBtn.replaceWith(newNextBtn);
 
-    nextBtn?.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      if (currentPage < totalPages) {
-        updatePage(currentPage + 1);
-      }
-    });
+      newPrevBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (currentPage > 1) {
+          updatePage(currentPage - 1);
+        }
+      });
+
+      newNextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (currentPage < totalPages) {
+          updatePage(currentPage + 1);
+        }
+      });
+    }
 
     updatePage(1);
   }
