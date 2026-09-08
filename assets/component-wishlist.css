@@ -1,0 +1,375 @@
+/* ==========================================================================
+   Wishlist Styles (DM Sans - Category Hero & Product Cards)
+   ========================================================================== */
+
+/* Hero Banner (matches Category Hero design) */
+.wishlist-hero {
+  background-color: #F5F6F8 !important;
+  padding: 4.5rem 0 !important;
+  text-align: center !important;
+  width: 100% !important;
+}
+
+.wishlist-hero__inner {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+.wishlist-hero__title {
+  margin: 0 0 1rem 0 !important;
+  font-family: var(--font-heading-family, 'DM Sans'), sans-serif !important;
+  font-size: 3.4rem !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+  line-height: 1.2 !important;
+  text-align: center !important;
+  letter-spacing: -0.02em;
+}
+
+.wishlist-hero .breadcrumbs {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: auto !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.wishlist-hero .breadcrumbs__list {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  gap: 0.8rem !important;
+  font-size: 1.35rem !important;
+}
+
+.wishlist-hero .breadcrumbs__link {
+  color: #6B7280 !important;
+  font-weight: 400 !important;
+  font-size: 1.35rem !important;
+  text-decoration: none !important;
+  transition: color 0.15s ease !important;
+}
+
+.wishlist-hero .breadcrumbs__link:hover {
+  color: #111827 !important;
+}
+
+.wishlist-hero .breadcrumbs__separator {
+  display: flex !important;
+  align-items: center !important;
+  color: #9CA3AF !important;
+}
+
+.wishlist-hero .breadcrumbs__current {
+  color: #111827 !important;
+  font-weight: 500 !important;
+  font-size: 1.35rem !important;
+}
+
+/* Wishlist Section & Grid */
+.wishlist-section {
+  padding: 40px 0 60px;
+}
+
+.wishlist-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-desktop-cols, 4), 1fr);
+  gap: 24px;
+}
+
+@media screen and (max-width: 989px) {
+  .wishlist-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .wishlist-hero {
+    padding: 3rem 0 !important;
+  }
+  .wishlist-hero__title {
+    font-size: 2.6rem !important;
+  }
+  .wishlist-section {
+    padding: 24px 0 40px;
+  }
+  .wishlist-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+/* Product Card (matches 1st attached image) */
+.wishlist-card {
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid #EEEEEE;
+  padding: 16px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.3s ease;
+}
+
+.wishlist-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.wishlist-card.is-removing {
+  opacity: 0;
+  transform: scale(0.9);
+  pointer-events: none;
+}
+
+/* Top-Right "X" Remove Button */
+.wishlist-card__remove-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 5;
+  color: #6B7280;
+  padding: 0;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.wishlist-card__remove-btn:hover {
+  background-color: #FEE2E2;
+  border-color: #FCA5A5;
+  color: #DC2626;
+  transform: scale(1.1);
+}
+
+.wishlist-card__remove-btn svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width: 2.5;
+}
+
+/* Product Media */
+.wishlist-card__media-link {
+  display: block;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  text-decoration: none;
+  background-color: #FAFAFA;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wishlist-card__image {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.wishlist-card:hover .wishlist-card__image {
+  transform: scale(1.05);
+}
+
+/* Content Details */
+.wishlist-card__details {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.wishlist-card__meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-family: var(--font-body-family, 'DM Sans'), sans-serif;
+  font-size: 11px;
+  color: #71717A;
+}
+
+.wishlist-card__sku {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.wishlist-card__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: #997A51;
+  font-weight: 600;
+}
+
+.wishlist-card__title-link {
+  text-decoration: none;
+  color: inherit;
+  margin-bottom: 8px;
+}
+
+.wishlist-card__title {
+  font-family: var(--font-body-family, 'DM Sans'), sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #111827;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.7em;
+  transition: color 0.15s ease;
+}
+
+.wishlist-card__title-link:hover .wishlist-card__title {
+  color: #997A51;
+}
+
+/* Price */
+.wishlist-card__price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.wishlist-card__price {
+  font-family: var(--font-body-family, 'DM Sans'), sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.wishlist-card__compare-price {
+  font-family: var(--font-body-family, 'DM Sans'), sans-serif;
+  font-size: 12.5px;
+  color: #9CA3AF;
+  text-decoration: line-through;
+}
+
+/* Buy Now / Add to Cart Button (matches 1st attached image) */
+.wishlist-card__buy-btn {
+  width: 100%;
+  height: 42px;
+  background-color: #997A51;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-body-family, 'DM Sans'), sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+  user-select: none;
+}
+
+.wishlist-card__buy-btn:hover {
+  background-color: #836742;
+  transform: translateY(-1px);
+}
+
+.wishlist-card__buy-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+}
+
+.wishlist-card__buy-btn.is-added {
+  background-color: #16A34A;
+}
+
+/* Empty State */
+.wishlist-empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.wishlist-empty-state__icon-wrap {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #FAF7F4;
+  border: 1px solid #EFEAE4;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: #997A51;
+}
+
+.wishlist-empty-state__icon-wrap svg {
+  width: 38px;
+  height: 38px;
+}
+
+.wishlist-empty-state__title {
+  font-family: var(--font-heading-family, 'DM Sans'), sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.01em;
+}
+
+.wishlist-empty-state__desc {
+  font-family: var(--font-body-family, 'DM Sans'), sans-serif;
+  font-size: 15px;
+  color: #6B7280;
+  line-height: 1.5;
+  margin: 0 0 24px 0;
+}
+
+.wishlist-empty-state__btn {
+  height: 44px;
+  background-color: #997A51;
+  color: #FFFFFF;
+  border-radius: 8px;
+  padding: 0 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body-family, 'DM Sans'), sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.wishlist-empty-state__btn:hover {
+  background-color: #836742;
+  transform: translateY(-1px);
+}
