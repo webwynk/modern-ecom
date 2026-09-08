@@ -572,7 +572,7 @@
                             <span class="cart__applied-discount-icon" aria-hidden="true">🏷️</span>
                             <span class="cart__applied-discount-title">{{ discount.title }}</span>
                             <span class="cart__applied-discount-amount">(-{{ discount.total_allocated_amount | money }})</span>
-                            <a href="{{ routes.root_url }}discount/CLEAR?redirect=/cart" class="cart__applied-discount-remove" aria-label="Remove coupon {{ discount.title }}">
+                            <a href="{{ shop.url }}/discount/CLEAR?redirect=/cart" class="cart__applied-discount-remove" aria-label="Remove coupon {{ discount.title }}">
                               ✕
                             </a>
                           </div>
