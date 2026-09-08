@@ -1,0 +1,18 @@
+﻿{% layout none %}
+{% paginate search.results by 24 %}
+{
+  "total": {{ search.results_count }},
+  "products": [
+    {% for item in search.results %}
+      {% if item.object_type == 'product' %}
+        {
+          "id": {{ item.id }},
+          "title": {{ item.title | json }},
+          "url": {{ item.url | json }},
+          "image": {{ item.featured_media | image_url: width: 150 | json }}
+        }{% unless forloop.last %},{% endunless %}
+      {% endif %}
+    {% endfor %}
+  ]
+}
+{% endpaginate %}
