@@ -90,8 +90,47 @@
     "disclosures": {
       "type": "disclosures",
       "settings": {
+        "heading": "Disclosures",
+        "heading_size": "h2",
+        "open_by_default": false,
+        "color_scheme": "",
         "padding_top": 36,
         "padding_bottom": 0
+      }
+    },
+    "1790508392aff14fbe": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_verified_badge_ywXirG": {
+          "type": "shopify://apps/judge-me-reviews/blocks/verified_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_verified_badge_ywXirG"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "179050836289ad52e4": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_pH9TLq": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_pH9TLq"
+      ],
+      "settings": {
+        "include_margins": true
       }
     },
     "related-products": {
@@ -116,6 +155,8 @@
   "order": [
     "main",
     "disclosures",
+    "1790508392aff14fbe",
+    "179050836289ad52e4",
     "related-products"
   ]
 }
