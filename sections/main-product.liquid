@@ -26,7 +26,7 @@
   {%- endif -%}
   {%- assign has_aov_volume_block = false -%}
   {%- for block in section.blocks -%}
-    {%- if block.type contains 'aov-ai-bundle' -%}
+    {%- if block.id contains 'aov_ai_bundle' -%}
       {%- assign has_aov_volume_block = true -%}
     {%- endif -%}
   {%- endfor -%}
