@@ -146,7 +146,7 @@
       >
         <div class="judgeme-reviews-tab">
           {%- assign judgeme_rating = product.metafields.reviews.rating.value -%}
-          {%- if judgeme_rating != blank -%}
+          {%- if judgeme_rating != blank and judgeme_rating > 0 -%}
             <div class="jdgm-rating-tile">
               <p class="jdgm-rating-tile__label">{{ 'products.product.tabs.average_rating' | t }}</p>
               <p class="jdgm-rating-tile__value">{{ judgeme_rating | round: 1 }}</p>
