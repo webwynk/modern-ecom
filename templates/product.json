@@ -52,6 +52,12 @@
         "trust_badges": {
           "type": "trust_badges",
           "settings": {}
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
         }
       },
       "block_order": [
@@ -62,7 +68,8 @@
         "aov_ai_bundle_offer_volume_XyGQNa",
         "quantity_selector",
         "buy_buttons",
-        "trust_badges"
+        "trust_badges",
+        "share"
       ],
       "settings": {
         "enable_sticky_info": true,
