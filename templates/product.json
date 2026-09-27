@@ -34,6 +34,10 @@
             "swatch_shape": "circle"
           }
         },
+        "aov_ai_bundle_offer_bundle_builder_9NJGhX": {
+          "type": "shopify://apps/aov-ai-bundle/blocks/offer-bundle-builder/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "settings": {}
+        },
         "quantity_selector": {
           "type": "quantity_selector",
           "settings": {}
@@ -48,12 +52,6 @@
         "trust_badges": {
           "type": "trust_badges",
           "settings": {}
-        },
-        "share": {
-          "type": "share",
-          "settings": {
-            "share_label": "Share"
-          }
         }
       },
       "block_order": [
@@ -61,10 +59,10 @@
         "title",
         "price",
         "variant_picker",
+        "aov_ai_bundle_offer_bundle_builder_9NJGhX",
         "quantity_selector",
         "buy_buttons",
-        "trust_badges",
-        "share"
+        "trust_badges"
       ],
       "settings": {
         "enable_sticky_info": true,
