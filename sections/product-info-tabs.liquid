@@ -1,0 +1,218 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .product-tabs-{{ section.id }} {
+    container-type: inline-size;
+  }
+
+  .product-tabs-{{ section.id }} .product-tabs__list {
+    display: flex;
+    border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.08);
+    gap: 3.2rem;
+  }
+
+  .product-tabs-{{ section.id }} .product-tabs__trigger {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 4.4rem;
+    padding: 0 0.2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1.7rem;
+    font-weight: 400;
+    color: #000000;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .product-tabs-{{ section.id }} .product-tabs__trigger::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.1rem;
+    height: 0.2rem;
+    background: transparent;
+    transition: background-color 0.15s ease;
+  }
+
+  .product-tabs-{{ section.id }} .product-tabs__trigger[aria-selected='true'] {
+    font-weight: 600;
+  }
+
+  .product-tabs-{{ section.id }} .product-tabs__trigger[aria-selected='true']::after {
+    background-color: #997A51;
+  }
+
+  .product-tabs-{{ section.id }} .product-tabs__trigger:focus-visible {
+    outline: var(--focused-base-outline, 0.2rem solid rgba(0, 0, 0, 0.5));
+    outline-offset: 0.2rem;
+  }
+
+  .product-tabs-{{ section.id }} .product-tabs__panel {
+    padding-top: 3.2rem;
+  }
+
+  .product-tabs-{{ section.id }} .product-tabs__empty {
+    color: rgba(var(--color-foreground), 0.75);
+    font-size: 1.6rem;
+  }
+
+  @media screen and (max-width: 749px) {
+    .product-tabs-{{ section.id }} .product-tabs__list {
+      gap: 2.4rem;
+    }
+
+    .product-tabs-{{ section.id }} .product-tabs__trigger {
+      font-size: 1.6rem;
+    }
+  }
+{%- endstyle -%}
+
+{%- capture details_panel_content -%}
+  {%- if product.description != blank -%}
+    <div class="product__description rte">{{ product.description }}</div>
+  {%- endif -%}
+{%- endcapture -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding">
+    <div
+      class="product-tabs-{{ section.id }}"
+      data-section-id="{{ section.id }}"
+      data-product-tabs
+    >
+      <div class="product-tabs__list" role="tablist" aria-label="{{ section.settings.details_tab_label | escape }} / {{ section.settings.reviews_tab_label | escape }}">
+        <button
+          type="button"
+          class="product-tabs__trigger"
+          id="ProductTab-Details-{{ section.id }}"
+          role="tab"
+          aria-selected="true"
+          aria-controls="ProductPanel-Details-{{ section.id }}"
+          data-tab-trigger="details"
+        >
+          {{ section.settings.details_tab_label | escape }}
+        </button>
+        <button
+          type="button"
+          class="product-tabs__trigger"
+          id="ProductTab-Reviews-{{ section.id }}"
+          role="tab"
+          aria-selected="false"
+          tabindex="-1"
+          aria-controls="ProductPanel-Reviews-{{ section.id }}"
+          data-tab-trigger="reviews"
+        >
+          {{ section.settings.reviews_tab_label | escape }}
+        </button>
+      </div>
+
+      <div
+        id="ProductPanel-Details-{{ section.id }}"
+        class="product-tabs__panel"
+        role="tabpanel"
+        aria-labelledby="ProductTab-Details-{{ section.id }}"
+        data-tab-panel="details"
+      >
+        {%- if details_panel_content == blank -%}
+          <p class="product-tabs__empty">{{ 'products.product.tabs.no_details' | t }}</p>
+        {%- else -%}
+          {{ details_panel_content }}
+        {%- endif -%}
+      </div>
+
+      <div
+        id="ProductPanel-Reviews-{{ section.id }}"
+        class="product-tabs__panel"
+        role="tabpanel"
+        aria-labelledby="ProductTab-Reviews-{{ section.id }}"
+        data-tab-panel="reviews"
+        hidden
+      >
+        {%- for block in section.blocks -%}
+          {%- render block -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'product-info-tabs.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Details & reviews tabs",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "details_tab_label",
+      "label": "Product details tab label",
+      "default": "Product Details"
+    },
+    {
+      "type": "text",
+      "id": "reviews_tab_label",
+      "label": "Reviews tab label",
+      "default": "Reviews"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 28
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "presets": [
+    {
+      "name": "Details & reviews tabs"
+    }
+  ]
+}
+{% endschema %}

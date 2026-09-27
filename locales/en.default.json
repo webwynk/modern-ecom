@@ -132,6 +132,9 @@
       "sku": "SKU",
       "on_sale": "Sale",
       "product_variants": "Product variants",
+      "tabs": {
+        "no_details": "No additional product details have been added yet."
+      },
       "media": {
         "gallery_viewer": "Gallery Viewer",
         "load_image": "Load image {{ index }} in gallery view",
