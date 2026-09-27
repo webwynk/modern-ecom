@@ -1,145 +1,296 @@
-/* Custom restyle of the AOV.ai "Volume Discount" app block's real widget (Avada-*/AOV-* classes
-   are the app's own — confirmed via a real headless-browser render, not just curl, per the
-   lesson learned restyling Judge.me).
+/* ============================================================================
+   AOV.ai Volume Discount Widget — Modern & Premium Restyle v2
+   ============================================================================
+   CSS-only override targeting the real post-hydration DOM classes.
+   Uses dual selectors (old + new class names) for robustness.
 
-   Like Judge.me, this widget drives its palette through CSS custom properties it sets inline
-   on its own container — overriding those (with !important, required to beat an inline style)
-   reliably re-colors every part of the widget that reads them. */
+   Design tokens (design.md):
+     Accent:  #997A51  |  Black: #000000  |  White: #FFFFFF
+     Font:    DM Sans  |  Weights: 400, 500, 600
+     Breakpoints: <750px mobile | 750-989px tablet | >=990px desktop
+   ============================================================================ */
 
+/* ---------------------------------------------------------------------------
+   Container — inherit DM Sans, remap palette to our 3-color system
+   --------------------------------------------------------------------------- */
 .Avada-Bundle-Volume__Container {
   font-family: inherit !important;
   --aov-volume-header-text-color: #000000 !important;
   --aov-volume-primary-text-color: #000000 !important;
-  --aov-volume-secondary-text-color: rgba(0, 0, 0, 0.6) !important;
+  --aov-volume-secondary-text-color: rgba(0, 0, 0, 0.55) !important;
   --aov-volume-item-background-color: #ffffff !important;
-  --aov-volume-item-border-color: rgba(0, 0, 0, 0.08) !important;
+  --aov-volume-item-border-color: rgba(0, 0, 0, 0.1) !important;
   --aov-volume-item-selected-border-checkbox-color: #997a51 !important;
   --aov-volume-item-price-color: #000000 !important;
   --aov-volume-atc-button-bg-color: #997a51 !important;
   --aov-volume-atc-button-text-color: #ffffff !important;
-  --aov-volume-badge-background-color: #997a51 !important;
-  --aov-volume-badge-color: #ffffff !important;
-  --aov-volume-tag-background-color: rgba(153, 122, 81, 0.12) !important;
+  --aov-volume-badge-background-color: rgba(153, 122, 81, 0.08) !important;
+  --aov-volume-badge-color: #997a51 !important;
+  --aov-volume-tag-background-color: rgba(153, 122, 81, 0.08) !important;
   --aov-volume-tag-color: #997a51 !important;
 }
 
+/* ---------------------------------------------------------------------------
+   Table wrapper
+   --------------------------------------------------------------------------- */
 .AOV-VolumeTable {
   --aov-volume-item-selected-background: rgba(153, 122, 81, 0.06) !important;
-  --aov-volume-table-radius: 12px !important;
-}
-
-.Avada-Volume__HeaderTitle-Text {
-  font-weight: 600 !important;
-  font-size: 1.7rem !important;
-}
-
-.Avada-Volume__HeaderDescription {
-  color: rgba(0, 0, 0, 0.6) !important;
-}
-
-.AOV-VolumeTable__Saving {
-  display: inline-block;
-  padding: 0.15rem 0.6rem;
-  border-radius: 999px;
-  background: rgba(153, 122, 81, 0.12);
-  color: #997a51 !important;
-  font-weight: 600;
-  font-size: 1.1rem !important;
-}
-
-.AOV-VolumeTable__QuantityText {
-  font-weight: 600 !important;
-  font-size: 1.4rem !important;
-}
-
-/* Redundant with the "Save X%" pill badge next to the price */
-.AOV-VolumeTable__Subtitle {
-  display: none !important;
-}
-
-.AOV-Offer__DiscountPrice {
-  font-weight: 600 !important;
-  font-size: 1.5rem !important;
-}
-
-.AOV-Offer__BasePrice {
-  color: rgba(0, 0, 0, 0.4) !important;
-}
-
-/* Card grid redesign: converts the app's default single-column row-list into a
-   compact 3-column card grid (2 columns tablet, 1 mobile), each tier as its own
-   bordered, rounded card. */
-.AOV-VolumeTable__Rows {
-  display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 0.8rem !important;
-  background: transparent !important;
-}
-
-.AOV-VolumeTable {
+  --aov-volume-table-radius: 14px !important;
   border: none !important;
   background: transparent !important;
   overflow: visible !important;
 }
 
-.AOV-VolumeTable__Header {
+/* ---------------------------------------------------------------------------
+   Section header ("Get more, save more")
+   Targets the TABLE-level header, not the card-level header.
+   --------------------------------------------------------------------------- */
+.AOV-VolumeTable > .AOV-VolumeTable__Header {
   border-bottom: none !important;
-  padding: 0 0 1.6rem !important;
+  padding: 0 0 1.2rem !important;
+  margin-bottom: 0.4rem !important;
 }
 
-.AOV-VolumeTable__Row {
-  flex-direction: column !important;
-  align-items: flex-start !important;
-  gap: 0.4rem !important;
-  border: 0.1rem solid rgba(0, 0, 0, 0.08) !important;
-  border-radius: 1rem !important;
-  padding: 1.1rem !important;
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+/* Title — design.md h3: 21px/600 desktop */
+.Avada-Volume__HeaderTitle-Text {
+  font-weight: 600 !important;
+  font-size: 2.1rem !important;
+  letter-spacing: -0.02em !important;
+  color: #000000 !important;
 }
 
-.AOV-VolumeTable__Row--Selected {
-  border-color: #997a51 !important;
-  box-shadow: none !important;
+/* Subtitle — design.md p: 17px/400 desktop */
+.Avada-Volume__HeaderDescription {
+  color: rgba(0, 0, 0, 0.55) !important;
+  font-size: 1.5rem !important;
+  font-weight: 400 !important;
+  margin-top: 0.2rem !important;
 }
 
-.AOV-VolumeTable__Radio {
-  order: -1;
-  align-self: flex-end;
-  margin-top: -0.4rem;
-}
-
-.AOV-VolumeTable__Info {
-  flex-direction: column !important;
-  align-items: flex-start !important;
-  width: 100%;
-}
-
-.AOV-VolumeTable__InfoText {
-  width: 100%;
-}
-
-.AOV-VolumeTable__Meta {
-  justify-content: flex-start !important;
-  flex-direction: row !important;
-  flex-wrap: wrap !important;
-  align-items: center !important;
-  width: 100%;
-  margin-top: 0.4rem;
+/* ---------------------------------------------------------------------------
+   Card grid — 3-col desktop, 2-col tablet, 1-col mobile
+   --------------------------------------------------------------------------- */
+.AOV-VolumeTable__Rows {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
   gap: 0.6rem !important;
+  background: transparent !important;
 }
 
+/* ===========================================================================
+   INDIVIDUAL CARD — CSS Grid with display:contents flattening
+   =========================================================================== */
+
+/* Each card: grid with 3 columns for inline title + badge + radio row */
+.AOV-VolumeTable__Row {
+  display: grid !important;
+  grid-template-columns: auto auto 1fr !important;
+  grid-template-rows: auto auto !important;
+  column-gap: 0.6rem !important;
+  row-gap: 1rem !important;
+  align-items: center !important;
+  border: 1.5px solid rgba(0, 0, 0, 0.1) !important;
+  border-radius: 14px !important;
+  padding: 1.2rem 1.3rem !important;
+  background: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+  cursor: pointer !important;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease !important;
+}
+
+/* ---------------------------------------------------------------------------
+   Flatten intermediate wrapper divs so leaf elements become grid items.
+   Scoped inside .AOV-VolumeTable__Row to avoid affecting the section header.
+   Covers both old and new DOM class-name patterns.
+   --------------------------------------------------------------------------- */
+.AOV-VolumeTable__Row .AOV-VolumeTable__Content,
+.AOV-VolumeTable__Row .AOV-VolumeTable__Header,
+.AOV-VolumeTable__Row .AOV-VolumeTable__TitleWrapper,
+.AOV-VolumeTable__Row .AOV-VolumeTable__Footer,
+.AOV-VolumeTable__Info,
+.AOV-VolumeTable__InfoText,
+.AOV-VolumeTable__Meta {
+  display: contents !important;
+}
+
+/* Hidden / redundant elements */
+.AOV-VolumeTable__Subtitle {
+  display: none !important;
+}
+
+/* ---------------------------------------------------------------------------
+   Grid placement — Row 1: Title + Badge + Radio
+   --------------------------------------------------------------------------- */
+
+/* Title ("Buy 1", "Buy 2"…): Col 1, Row 1 */
+.AOV-VolumeTable__Title,
+.AOV-VolumeTable__QuantityText {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  font-weight: 600 !important;
+  font-size: 1.5rem !important;
+  color: #000000 !important;
+  letter-spacing: -0.01em !important;
+  white-space: nowrap !important;
+  align-self: center !important;
+}
+
+/* Badge ("Save 2%"): Col 2, Row 1 — outlined pill matching reference */
+.AOV-VolumeTable__Badge,
+.AOV-VolumeTable__Saving {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0.15rem 0.65rem !important;
+  border-radius: 999px !important;
+  border: 1px solid #997a51 !important;
+  background: rgba(153, 122, 81, 0.08) !important;
+  color: #997a51 !important;
+  font-weight: 600 !important;
+  font-size: 1.1rem !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0.02em !important;
+  white-space: nowrap !important;
+  align-self: center !important;
+}
+
+/* Radio: Col 3, Row 1, right-aligned */
+.AOV-VolumeTable__Radio {
+  grid-column: 3 !important;
+  grid-row: 1 !important;
+  justify-self: end !important;
+  align-self: center !important;
+}
+
+/* ---------------------------------------------------------------------------
+   Grid placement — Row 2: Prices (spans all columns)
+   --------------------------------------------------------------------------- */
+.AOV-VolumeTable__Prices,
 .AOV-VolumeTable__Price {
+  grid-column: 1 / -1 !important;
+  grid-row: 2 !important;
+  justify-self: start !important;
+  align-self: start !important;
   text-align: left !important;
 }
 
+/* Force left-align on all inner price wrappers */
+.AOV-VolumeTable__PriceAmount,
+.AOV-VolumeTable__Prices *,
+.AOV-VolumeTable__Price * {
+  text-align: left !important;
+  justify-content: flex-start !important;
+}
+
+/* ---------------------------------------------------------------------------
+   Price typography
+   --------------------------------------------------------------------------- */
+
+/* Discount price — large, bold, commanding */
+.AOV-VolumeTable__Amount,
+.AOV-Offer__DiscountPrice {
+  font-weight: 600 !important;
+  font-size: 1.7rem !important;
+  color: #000000 !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* "/each" unit label — lighter, secondary */
+.AOV-VolumeTable__Unit {
+  font-weight: 400 !important;
+  font-size: 1.4rem !important;
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Original/compare price — muted strikethrough */
+.AOV-VolumeTable__ComparePrice,
+.AOV-Offer__BasePrice {
+  color: rgba(0, 0, 0, 0.35) !important;
+  font-size: 1.3rem !important;
+  font-weight: 400 !important;
+  text-decoration: line-through !important;
+}
+
+/* ---------------------------------------------------------------------------
+   Hover state — lift + shadow
+   --------------------------------------------------------------------------- */
+.AOV-VolumeTable__Row:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  border-color: rgba(0, 0, 0, 0.18) !important;
+}
+
+/* ---------------------------------------------------------------------------
+   Selected state — gold border + warm cream background
+   --------------------------------------------------------------------------- */
+.AOV-VolumeTable__Row--Selected {
+  border-color: #997a51 !important;
+  border-width: 2px !important;
+  background: rgba(153, 122, 81, 0.06) !important;
+  box-shadow: 0 2px 8px rgba(153, 122, 81, 0.1) !important;
+}
+
+.AOV-VolumeTable__Row--Selected:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 14px rgba(153, 122, 81, 0.15) !important;
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive — Tablet (750-989px)
+   --------------------------------------------------------------------------- */
 @media screen and (min-width: 750px) and (max-width: 989px) {
   .AOV-VolumeTable__Rows {
     grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.6rem !important;
+  }
+
+  .Avada-Volume__HeaderTitle-Text {
+    font-size: 2.0rem !important;
+  }
+
+  .Avada-Volume__HeaderDescription {
+    font-size: 1.5rem !important;
   }
 }
 
+/* ---------------------------------------------------------------------------
+   Responsive — Mobile (<750px)
+   --------------------------------------------------------------------------- */
 @media screen and (max-width: 749px) {
   .AOV-VolumeTable__Rows {
     grid-template-columns: 1fr !important;
+    gap: 0.5rem !important;
+  }
+
+  .Avada-Volume__HeaderTitle-Text {
+    font-size: 1.8rem !important;
+  }
+
+  .Avada-Volume__HeaderDescription {
+    font-size: 1.5rem !important;
+  }
+
+  .AOV-VolumeTable__Row {
+    padding: 1rem 1.1rem !important;
+  }
+
+  .AOV-VolumeTable__Title,
+  .AOV-VolumeTable__QuantityText {
+    font-size: 1.4rem !important;
+  }
+
+  .AOV-VolumeTable__Amount,
+  .AOV-Offer__DiscountPrice {
+    font-size: 1.5rem !important;
+  }
+
+  .AOV-VolumeTable__Unit {
+    font-size: 1.3rem !important;
   }
 }
