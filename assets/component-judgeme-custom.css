@@ -1,64 +1,62 @@
 /* Custom restyle of Judge.me's real review widget DOM (jdgm-* classes are Judge.me's own,
-   scoped here via Custom CSS pattern per their docs — no custom markup/data, real reviews only). */
+   scoped here via Custom CSS pattern per their docs — no custom markup/data, real reviews only).
+
+   Layout: 2-column grid. Judge.me nests its real content several levels deep (Shopify's own
+   app-block wrapper > .jdgm-rev-widg > .jdgm-rev-widg__header > title/summary/histogram/write-link),
+   so display:contents flattens those wrapper layers into direct grid children, letting each real
+   piece be placed individually via grid-column + order without touching Judge.me's own markup. */
 
 .judgeme-reviews-tab {
-  font-family: inherit;
+  display: grid;
+  grid-template-columns: minmax(24rem, 30rem) 1fr;
+  column-gap: 4.8rem;
+  row-gap: 1.6rem;
+  align-items: start;
 }
 
-.judgeme-reviews-tab .jdgm-stat-row {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 3.2rem;
+.judgeme-reviews-tab > [data-block-handle='review_widget'],
+.judgeme-reviews-tab .jdgm-rev-widg,
+.judgeme-reviews-tab .jdgm-rev-widg__header {
+  display: contents;
 }
 
-.judgeme-reviews-tab .jdgm-stat-tile {
-  flex: 1 1 20rem;
-  padding: 0 2.4rem;
+/* Left column: rating number, real stars + review count, real histogram, write-review CTA */
+.judgeme-reviews-tab .jdgm-rating-tile,
+.judgeme-reviews-tab .jdgm-rev-widg__summary,
+.judgeme-reviews-tab .jdgm-histogram,
+.judgeme-reviews-tab .jdgm-write-rev-copy,
+.judgeme-reviews-tab .jdgm-write-rev-link {
+  grid-column: 1;
 }
 
-.judgeme-reviews-tab .jdgm-stat-tile:first-child {
-  padding-left: 0;
+.judgeme-reviews-tab .jdgm-rating-tile {
+  order: 1;
 }
 
-.judgeme-reviews-tab .jdgm-stat-tile + .jdgm-stat-tile {
-  border-left: 0.1rem solid rgba(var(--color-foreground), 0.1);
-}
-
-.judgeme-reviews-tab .jdgm-stat-tile__label {
+.judgeme-reviews-tab .jdgm-rating-tile__label {
   font-size: 1.4rem;
   color: rgba(var(--color-foreground), 0.75);
-  margin: 0 0 0.8rem;
+  margin: 0 0 0.4rem;
 }
 
-.judgeme-reviews-tab .jdgm-stat-tile__value {
-  font-size: 3rem;
+.judgeme-reviews-tab .jdgm-rating-tile__value {
+  font-size: 3.6rem;
   font-weight: 600;
   color: #000000;
   line-height: 1;
 }
 
-/* Header / summary */
-.judgeme-reviews-tab .jdgm-rev-widg__header {
-  padding: 0 0 2.4rem;
-  border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.08);
-  margin-bottom: 2.4rem;
-}
-
-.judgeme-reviews-tab .jdgm-rev-widg__title {
-  font-size: 1.7rem;
-  font-weight: 600;
-  margin: 0 0 1.2rem;
-}
-
 .judgeme-reviews-tab .jdgm-rev-widg__summary {
+  order: 2;
   display: flex;
   align-items: center;
-  gap: 1.2rem;
-  margin-bottom: 1.6rem;
+  flex-wrap: wrap;
+  column-gap: 1rem;
+  row-gap: 0.4rem;
 }
 
 .judgeme-reviews-tab .jdgm-rev-widg__summary-text {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   color: rgba(var(--color-foreground), 0.75);
 }
 
@@ -73,8 +71,8 @@
 
 /* Star-count histogram */
 .judgeme-reviews-tab .jdgm-histogram {
-  display: block !important;
-  max-width: 40rem;
+  order: 3;
+  margin-top: 0.8rem;
 }
 
 .judgeme-reviews-tab .jdgm-histogram__row {
@@ -134,21 +132,82 @@
   min-width: 3.6rem;
 }
 
-/* Individual review cards */
+/* Write-a-review CTA — real Judge.me trigger link, just restyled as a button.
+   Judge.me controls its own visibility (inline style/JS); we only style appearance. */
+.judgeme-reviews-tab .jdgm-write-rev-copy {
+  order: 4;
+  margin-top: 1.6rem;
+}
+
+.judgeme-reviews-tab .jdgm-write-rev-copy__heading {
+  font-size: 1.7rem;
+  font-weight: 600;
+  margin: 0 0 0.6rem;
+}
+
+.judgeme-reviews-tab .jdgm-write-rev-copy__text {
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgba(var(--color-foreground), 0.75);
+  margin: 0 0 1.2rem;
+}
+
+.judgeme-reviews-tab .jdgm-write-rev-link {
+  order: 5;
+  display: inline-block;
+  padding: 1.2rem 2.4rem;
+  background: #997A51;
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 0.6rem;
+  min-height: 4.4rem;
+}
+
+/* Right column */
+.judgeme-reviews-tab .jdgm-feedback-heading,
+.judgeme-reviews-tab .jdgm-rev-widg__sort-wrapper,
+.judgeme-reviews-tab .jdgm-rev-widg__body {
+  grid-column: 2;
+}
+
+.judgeme-reviews-tab .jdgm-feedback-heading {
+  order: 1;
+  font-size: 1.9rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.judgeme-reviews-tab .jdgm-rev-widg__sort-wrapper {
+  order: 2;
+}
+
+.judgeme-reviews-tab .jdgm-rev-widg__body {
+  order: 3;
+}
+
+/* Not part of this design */
+.judgeme-reviews-tab .jdgm-rev-widg__title,
+.judgeme-reviews-tab [data-block-handle='verified_badge'] {
+  display: none;
+}
+
+/* Individual review cards — bordered, rounded */
 .judgeme-reviews-tab .jdgm-rev-widg__reviews {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
 }
 
 .judgeme-reviews-tab .jdgm-rev {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
-  padding: 2.4rem 0;
-  border-top: 0.1rem solid rgba(var(--color-foreground), 0.08);
-}
-
-.judgeme-reviews-tab .jdgm-rev:first-child {
-  border-top: none;
+  padding: 2rem;
+  border: 0.1rem solid rgba(var(--color-foreground), 0.08);
+  border-radius: 1.2rem;
 }
 
 .judgeme-reviews-tab .jdgm-rev__icon {
@@ -158,11 +217,12 @@
   justify-content: center;
   width: 4.8rem;
   height: 4.8rem;
-  border-radius: 1.2rem;
+  border-radius: 50%;
   background: #997A51;
   color: #ffffff;
   font-size: 1.7rem;
   font-weight: 600;
+  order: 1;
 }
 
 .judgeme-reviews-tab .jdgm-rev__header {
@@ -171,25 +231,21 @@
   align-items: center;
   column-gap: 1.2rem;
   row-gap: 0.4rem;
-  margin-bottom: 0.8rem;
-}
-
-.judgeme-reviews-tab .jdgm-rev__icon {
-  order: 1;
 }
 
 .judgeme-reviews-tab .jdgm-rev__author-wrapper {
   order: 2;
+  margin-right: auto;
 }
 
 .judgeme-reviews-tab .jdgm-rev__rating {
   order: 3;
-  flex-basis: 100%;
-  margin-left: 6rem;
 }
 
 .judgeme-reviews-tab .jdgm-rev__timestamp {
   order: 4;
+  flex-basis: 100%;
+  margin-left: 6rem;
 }
 
 .judgeme-reviews-tab .jdgm-rev__author {
@@ -227,19 +283,30 @@
   display: none;
 }
 
+@media screen and (max-width: 989px) {
+  .judgeme-reviews-tab {
+    grid-template-columns: 1fr;
+  }
+
+  .judgeme-reviews-tab .jdgm-feedback-heading,
+  .judgeme-reviews-tab .jdgm-rev-widg__sort-wrapper,
+  .judgeme-reviews-tab .jdgm-rev-widg__body {
+    grid-column: 1;
+  }
+
+  .judgeme-reviews-tab .jdgm-feedback-heading {
+    margin-top: 1.6rem;
+  }
+}
+
 @media screen and (max-width: 749px) {
-  .judgeme-reviews-tab .jdgm-stat-row {
-    flex-direction: column;
-    gap: 1.2rem;
-  }
-
-  .judgeme-reviews-tab .jdgm-rev {
-    gap: 1.2rem;
-  }
-
   .judgeme-reviews-tab .jdgm-rev__icon {
     width: 4rem;
     height: 4rem;
     font-size: 1.5rem;
+  }
+
+  .judgeme-reviews-tab .jdgm-rev__timestamp {
+    margin-left: 5rem;
   }
 }

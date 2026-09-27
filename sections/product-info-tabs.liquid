@@ -146,23 +146,17 @@
       >
         <div class="judgeme-reviews-tab">
           {%- assign judgeme_rating = product.metafields.reviews.rating.value -%}
-          {%- assign judgeme_rating_count = product.metafields.reviews.rating_count.value -%}
-          {%- if judgeme_rating != blank or judgeme_rating_count != blank -%}
-            <div class="jdgm-stat-row">
-              {%- if judgeme_rating_count != blank -%}
-                <div class="jdgm-stat-tile">
-                  <p class="jdgm-stat-tile__label">{{ 'products.product.tabs.total_reviews' | t }}</p>
-                  <p class="jdgm-stat-tile__value">{{ judgeme_rating_count }}</p>
-                </div>
-              {%- endif -%}
-              {%- if judgeme_rating != blank -%}
-                <div class="jdgm-stat-tile">
-                  <p class="jdgm-stat-tile__label">{{ 'products.product.tabs.average_rating' | t }}</p>
-                  <p class="jdgm-stat-tile__value">{{ judgeme_rating | round: 1 }}</p>
-                </div>
-              {%- endif -%}
+          {%- if judgeme_rating != blank -%}
+            <div class="jdgm-rating-tile">
+              <p class="jdgm-rating-tile__label">{{ 'products.product.tabs.average_rating' | t }}</p>
+              <p class="jdgm-rating-tile__value">{{ judgeme_rating | round: 1 }}</p>
             </div>
           {%- endif -%}
+          <div class="jdgm-write-rev-copy">
+            <h3 class="jdgm-write-rev-copy__heading">{{ 'products.product.tabs.write_review_heading' | t }}</h3>
+            <p class="jdgm-write-rev-copy__text">{{ 'products.product.tabs.write_review_text' | t }}</p>
+          </div>
+          <h3 class="jdgm-feedback-heading">{{ 'products.product.tabs.customer_feedback' | t }}</h3>
           {%- for block in section.blocks -%}
             {%- render block -%}
           {%- endfor -%}

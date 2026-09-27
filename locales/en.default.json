@@ -134,8 +134,10 @@
       "product_variants": "Product variants",
       "tabs": {
         "no_details": "No additional product details have been added yet.",
-        "total_reviews": "Total Reviews",
-        "average_rating": "Average Rating"
+        "average_rating": "Average Rating",
+        "write_review_heading": "Write your Review",
+        "write_review_text": "Share your feedback and help create a better shopping experience for everyone.",
+        "customer_feedback": "Customer Feedback"
       },
       "media": {
         "gallery_viewer": "Gallery Viewer",
