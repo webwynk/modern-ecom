@@ -22,8 +22,7 @@
   align-items: start;
 }
 
-.judgeme-reviews-tab > .jdgm-rating-tile,
-.judgeme-reviews-tab > .jdgm-write-rev-copy {
+.judgeme-reviews-tab > .jdgm-rating-tile {
   grid-column: 1;
 }
 
@@ -42,23 +41,6 @@
   font-weight: 600;
   color: #000000;
   line-height: 1;
-}
-
-.judgeme-reviews-tab .jdgm-write-rev-copy {
-  margin-top: 1.6rem;
-}
-
-.judgeme-reviews-tab .jdgm-write-rev-copy__heading {
-  font-size: 1.7rem;
-  font-weight: 600;
-  margin: 0 0 0.6rem;
-}
-
-.judgeme-reviews-tab .jdgm-write-rev-copy__text {
-  font-size: 1.4rem;
-  line-height: 1.5;
-  color: rgba(var(--color-foreground), 0.75);
-  margin: 0;
 }
 
 /* Not part of this design */

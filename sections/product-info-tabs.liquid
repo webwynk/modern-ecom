@@ -152,10 +152,6 @@
               <p class="jdgm-rating-tile__value">{{ judgeme_rating | round: 1 }}</p>
             </div>
           {%- endif -%}
-          <div class="jdgm-write-rev-copy">
-            <h3 class="jdgm-write-rev-copy__heading">{{ 'products.product.tabs.write_review_heading' | t }}</h3>
-            <p class="jdgm-write-rev-copy__text">{{ 'products.product.tabs.write_review_text' | t }}</p>
-          </div>
           {%- for block in section.blocks -%}
             {%- render block -%}
           {%- endfor -%}
