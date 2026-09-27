@@ -52,6 +52,11 @@
   font-size: 1.4rem !important;
 }
 
+/* Redundant with the "Save X%" pill badge next to the price */
+.AOV-VolumeTable__Subtitle {
+  display: none !important;
+}
+
 .AOV-Offer__DiscountPrice {
   font-weight: 600 !important;
   font-size: 1.5rem !important;
