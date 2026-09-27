@@ -81,6 +81,8 @@
   }
 {%- endstyle -%}
 
+{{ 'component-judgeme-custom.css' | asset_url | stylesheet_tag }}
+
 {%- capture details_panel_content -%}
   {%- if product.description != blank -%}
     <div class="product__description rte">{{ product.description }}</div>
@@ -142,9 +144,29 @@
         data-tab-panel="reviews"
         hidden
       >
-        {%- for block in section.blocks -%}
-          {%- render block -%}
-        {%- endfor -%}
+        <div class="judgeme-reviews-tab">
+          {%- assign judgeme_rating = product.metafields.reviews.rating.value -%}
+          {%- assign judgeme_rating_count = product.metafields.reviews.rating_count.value -%}
+          {%- if judgeme_rating != blank or judgeme_rating_count != blank -%}
+            <div class="jdgm-stat-row">
+              {%- if judgeme_rating_count != blank -%}
+                <div class="jdgm-stat-tile">
+                  <p class="jdgm-stat-tile__label">{{ 'products.product.tabs.total_reviews' | t }}</p>
+                  <p class="jdgm-stat-tile__value">{{ judgeme_rating_count }}</p>
+                </div>
+              {%- endif -%}
+              {%- if judgeme_rating != blank -%}
+                <div class="jdgm-stat-tile">
+                  <p class="jdgm-stat-tile__label">{{ 'products.product.tabs.average_rating' | t }}</p>
+                  <p class="jdgm-stat-tile__value">{{ judgeme_rating | round: 1 }}</p>
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+          {%- for block in section.blocks -%}
+            {%- render block -%}
+          {%- endfor -%}
+        </div>
       </div>
     </div>
   </div>

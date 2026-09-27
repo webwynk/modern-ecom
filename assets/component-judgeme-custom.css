@@ -1,0 +1,218 @@
+/* Custom restyle of Judge.me's real review widget DOM (jdgm-* classes are Judge.me's own,
+   scoped here via Custom CSS pattern per their docs — no custom markup/data, real reviews only). */
+
+.judgeme-reviews-tab {
+  font-family: inherit;
+}
+
+.judgeme-reviews-tab .jdgm-stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.4rem;
+  margin-bottom: 3.2rem;
+}
+
+.judgeme-reviews-tab .jdgm-stat-tile {
+  flex: 1 1 20rem;
+  padding: 2rem 2.4rem;
+  border: 0.1rem solid rgba(var(--color-foreground), 0.08);
+}
+
+.judgeme-reviews-tab .jdgm-stat-tile__label {
+  font-size: 1.4rem;
+  color: rgba(var(--color-foreground), 0.75);
+  margin: 0 0 0.8rem;
+}
+
+.judgeme-reviews-tab .jdgm-stat-tile__value {
+  font-size: 3rem;
+  font-weight: 600;
+  color: #000000;
+  line-height: 1;
+}
+
+/* Header / summary */
+.judgeme-reviews-tab .jdgm-rev-widg__header {
+  padding: 0 0 2.4rem;
+  border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.08);
+  margin-bottom: 2.4rem;
+}
+
+.judgeme-reviews-tab .jdgm-rev-widg__title {
+  font-size: 1.7rem;
+  font-weight: 600;
+  margin: 0 0 1.2rem;
+}
+
+.judgeme-reviews-tab .jdgm-rev-widg__summary {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 1.6rem;
+}
+
+.judgeme-reviews-tab .jdgm-rev-widg__summary-text {
+  font-size: 1.5rem;
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+.judgeme-reviews-tab .jdgm-star.jdgm--on,
+.judgeme-reviews-tab .jdgm-star.jdgm--half {
+  color: #997A51;
+}
+
+.judgeme-reviews-tab .jdgm-star.jdgm--off {
+  color: rgba(var(--color-foreground), 0.2);
+}
+
+/* Star-count histogram */
+.judgeme-reviews-tab .jdgm-histogram {
+  display: block !important;
+  max-width: 40rem;
+}
+
+.judgeme-reviews-tab .jdgm-histogram__row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.judgeme-reviews-tab .jdgm-histogram__star {
+  flex: 0 0 auto;
+  display: flex;
+  font-size: 1.2rem;
+}
+
+.judgeme-reviews-tab .jdgm-histogram__bar {
+  flex: 1 1 auto;
+  height: 0.8rem;
+  background: rgba(var(--color-foreground), 0.08);
+  border-radius: 0.4rem;
+  overflow: hidden;
+}
+
+.judgeme-reviews-tab .jdgm-histogram__bar-content {
+  height: 100%;
+  background: #997A51;
+}
+
+.judgeme-reviews-tab .jdgm-histogram__row[data-rating='4'] .jdgm-histogram__bar-content {
+  opacity: 0.8;
+}
+
+.judgeme-reviews-tab .jdgm-histogram__row[data-rating='3'] .jdgm-histogram__bar-content {
+  opacity: 0.6;
+}
+
+.judgeme-reviews-tab .jdgm-histogram__row[data-rating='2'] .jdgm-histogram__bar-content {
+  opacity: 0.4;
+}
+
+.judgeme-reviews-tab .jdgm-histogram__row[data-rating='1'] .jdgm-histogram__bar-content {
+  opacity: 0.2;
+}
+
+.judgeme-reviews-tab .jdgm-histogram__percentage {
+  flex: 0 0 auto;
+  font-size: 1.3rem;
+  color: rgba(var(--color-foreground), 0.75);
+  min-width: 3.6rem;
+  text-align: right;
+}
+
+.judgeme-reviews-tab .jdgm-histogram__frequency {
+  flex: 0 0 auto;
+  font-size: 1.3rem;
+  color: rgba(var(--color-foreground), 0.5);
+  min-width: 3.6rem;
+}
+
+/* Individual review cards */
+.judgeme-reviews-tab .jdgm-rev-widg__reviews {
+  display: block;
+}
+
+.judgeme-reviews-tab .jdgm-rev {
+  display: flex;
+  gap: 1.6rem;
+  padding: 2.4rem 0;
+  border-top: 0.1rem solid rgba(var(--color-foreground), 0.08);
+}
+
+.judgeme-reviews-tab .jdgm-rev:first-child {
+  border-top: none;
+}
+
+.judgeme-reviews-tab .jdgm-rev__icon {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.8rem;
+  height: 4.8rem;
+  border-radius: 50%;
+  background: #997A51;
+  color: #ffffff;
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+.judgeme-reviews-tab .jdgm-rev__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem 1.2rem;
+  margin-bottom: 0.8rem;
+}
+
+.judgeme-reviews-tab .jdgm-rev__author {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #000000;
+}
+
+.judgeme-reviews-tab .jdgm-rev__timestamp {
+  font-size: 1.4rem;
+  color: rgba(var(--color-foreground), 0.5);
+}
+
+.judgeme-reviews-tab .jdgm-rev__br {
+  display: none;
+}
+
+.judgeme-reviews-tab .jdgm-rev__title {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.judgeme-reviews-tab .jdgm-rev__body {
+  font-size: 1.6rem;
+  line-height: 1.6;
+  color: rgba(var(--color-foreground), 0.85);
+}
+
+/* Not part of the reference layout — hide merchant-reply / helpful-vote rows for a cleaner card */
+.judgeme-reviews-tab .jdgm-rev__actions,
+.judgeme-reviews-tab .jdgm-rev__reply {
+  display: none;
+}
+
+@media screen and (max-width: 749px) {
+  .judgeme-reviews-tab .jdgm-stat-row {
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .judgeme-reviews-tab .jdgm-rev {
+    gap: 1.2rem;
+  }
+
+  .judgeme-reviews-tab .jdgm-rev__icon {
+    width: 4rem;
+    height: 4rem;
+    font-size: 1.5rem;
+  }
+}

@@ -133,7 +133,9 @@
       "on_sale": "Sale",
       "product_variants": "Product variants",
       "tabs": {
-        "no_details": "No additional product details have been added yet."
+        "no_details": "No additional product details have been added yet.",
+        "total_reviews": "Total Reviews",
+        "average_rating": "Average Rating"
       },
       "media": {
         "gallery_viewer": "Gallery Viewer",
