@@ -931,6 +931,20 @@
     }
   }
 
+  /* Large Order Card: Selected State (Purple Accent) */
+  .Avada-Bundle-Volume__Container .Avada-Volume__Item:last-child.Avada-Volume__Item--Selected {
+    border-color: #7c3aed !important;
+    border-width: 2px !important;
+    background-color: #ede9fe !important;
+    box-shadow: 0 4px 14px rgba(124, 58, 237, 0.2) !important;
+  }
+  .Avada-Bundle-Volume__Container .Avada-Volume__Item:last-child.Avada-Volume__Item--Selected::after {
+    display: none !important;
+  }
+  .Avada-Bundle-Volume__Container .Avada-Volume__Item:last-child.Avada-Volume__Item--Selected .Avada-VolumeBoxBadge {
+    display: none !important;
+  }
+
   /* ========================================================================
      Large Order Quote Modal Styles
      ======================================================================== */
@@ -1236,13 +1250,17 @@
       var btnText = modal.querySelector('.quote-modal__btn-text');
       var btnLoading = modal.querySelector('.quote-modal__btn-loading');
 
-      function openModal() {
-        var pageQtyInput = document.getElementById('Quantity-{{ section.id }}') ||
-                             document.querySelector('input[name="quantity"]') ||
-                             document.querySelector('.quantity__input');
-        if (pageQtyInput && qtyInput) {
-          var val = parseInt(pageQtyInput.value, 10);
-          qtyInput.value = isNaN(val) || val < 1 ? 1 : val;
+      function openModal(specifiedQty) {
+        if (typeof specifiedQty === 'number' && specifiedQty > 0) {
+          if (qtyInput) qtyInput.value = specifiedQty;
+        } else {
+          var pageQtyInput = document.getElementById('Quantity-{{ section.id }}') ||
+                               document.querySelector('input[name="quantity"]') ||
+                               document.querySelector('.quantity__input');
+          if (pageQtyInput && qtyInput) {
+            var val = parseInt(pageQtyInput.value, 10);
+            qtyInput.value = isNaN(val) || val < 1 ? 1 : val;
+          }
         }
 
         modal.classList.add('is-open');
@@ -1269,8 +1287,51 @@
           if (typeof e.stopImmediatePropagation === 'function') {
             e.stopImmediatePropagation();
           }
-          openModal();
+
+          // 1. Determine tier quantity from the card
+          var tierQty = 15;
+          var tierEl = quoteCard.querySelector('.Avada-ItemTier');
+          if (tierEl) {
+            var match = tierEl.textContent.match(/\d+/);
+            if (match) {
+              tierQty = parseInt(match[0], 10);
+            }
+          }
+
+          // 2. Manage selection state: unselect siblings, select Large Order card
+          var container = quoteCard.closest('.Avada-Bundle-Volume__Container');
+          if (container) {
+            var allCards = container.querySelectorAll('.Avada-Volume__Item');
+            allCards.forEach(function(card) {
+              card.classList.remove('Avada-Volume__Item--Selected');
+            });
+          }
+          quoteCard.classList.add('Avada-Volume__Item--Selected');
+
+          // 3. Sync page quantity
+          var pageQtyInput = document.getElementById('Quantity-{{ section.id }}') ||
+                               document.querySelector('input[name="quantity"]') ||
+                               document.querySelector('.quantity__input');
+          if (pageQtyInput) {
+            pageQtyInput.value = tierQty;
+            pageQtyInput.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+
+          // 4. Open modal with that quantity
+          openModal(tierQty);
           return false;
+        }
+
+        // When any regular card is clicked, clear selected state from the quote card
+        var regularCard = e.target.closest('.Avada-Bundle-Volume__Container .Avada-Volume__Item:not(:last-child)');
+        if (regularCard) {
+          var container = regularCard.closest('.Avada-Bundle-Volume__Container');
+          if (container) {
+            var lastCard = container.querySelector('.Avada-Volume__Item:last-child');
+            if (lastCard) {
+              lastCard.classList.remove('Avada-Volume__Item--Selected');
+            }
+          }
         }
 
         if (e.target.closest('[data-quote-close]')) {
