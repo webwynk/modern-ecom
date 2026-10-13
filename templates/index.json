@@ -7,82 +7,88 @@
     "category_slider": {
       "type": "custom-category-slider",
       "blocks": {
-        "cat_handmade_rugs": {
+        "cat_furniture": {
           "type": "category_card",
           "settings": {
-            "collection": "handmade-rugs",
-            "static_image": "cat-handmade-rugs.jpg"
+            "collection": "furniture",
+            "title": "All Furniture"
           }
         },
-        "cat_4x6_rugs": {
+        "cat_desks": {
           "type": "category_card",
           "settings": {
-            "collection": "4-x-6-rugs",
-            "title": "4 x 6 Rugs",
-            "static_image": "cat-handmade-rugs.jpg"
+            "collection": "desks",
+            "title": "Desks"
           }
         },
-        "cat_3x5_rugs": {
+        "cat_chairs": {
           "type": "category_card",
           "settings": {
-            "collection": "3x5-rug",
-            "title": "3x5 Rugs",
-            "static_image": "cat-bokhara-rugs.jpg"
+            "collection": "chairs",
+            "title": "Chairs"
           }
         },
-        "cat_executive_desks": {
+        "cat_tables": {
           "type": "category_card",
           "settings": {
-            "collection": "executive-desks",
-            "static_image": "cat-executive-desks.jpg"
-          }
-        },
-        "cat_small_rugs": {
-          "type": "category_card",
-          "settings": {
-            "collection": "small-rugs",
-            "static_image": "cat-kilim-rugs.jpg"
-          }
-        },
-        "cat_office_chairs": {
-          "type": "category_card",
-          "settings": {
-            "collection": "office-chairs",
-            "static_image": "cat-chairs.jpg"
+            "collection": "tables",
+            "title": "Tables"
           }
         },
         "cat_storage": {
           "type": "category_card",
           "settings": {
             "collection": "storage",
-            "static_image": "cat-storage.jpg"
+            "title": "Storage"
           }
         },
-        "cat_table": {
+        "cat_desk_accessories": {
           "type": "category_card",
           "settings": {
-            "collection": "table",
-            "static_image": "cat-tables.jpg"
+            "collection": "desk-parts-and-accessories",
+            "title": "Desk Parts & Accessories"
           }
         },
-        "cat_special_collection": {
+        "cat_large_rugs": {
           "type": "category_card",
           "settings": {
-            "collection": "special-collection",
-            "static_image": "cat-bokhara-rugs.jpg"
+            "collection": "large-rugs",
+            "title": "Large Rugs"
+          }
+        },
+        "cat_medium_rugs": {
+          "type": "category_card",
+          "settings": {
+            "collection": "medium-rugs",
+            "title": "Medium Rugs"
+          }
+        },
+        "cat_small_rugs": {
+          "type": "category_card",
+          "settings": {
+            "collection": "small-rugs",
+            "title": "Small Rugs"
+          }
+        },
+        "cat_best_sellers": {
+          "type": "category_card",
+          "settings": {
+            "collection": "best-sellers",
+            "title": "Best Sellers"
           }
         }
       },
       "block_order": [
-        "cat_handmade_rugs",
-        "cat_4x6_rugs",
-        "cat_3x5_rugs",
-        "cat_executive_desks",
-        "cat_small_rugs",
-        "cat_office_chairs",
+        "cat_furniture",
+        "cat_desks",
+        "cat_chairs",
+        "cat_tables",
         "cat_storage",
-        "cat_table",
-        "cat_special_collection"
+        "cat_desk_accessories",
+        "cat_large_rugs",
+        "cat_medium_rugs",
+        "cat_small_rugs",
+        "cat_best_sellers"
       ],
       "settings": {
         "heading": "Explore Popular Categories",
@@ -115,13 +121,13 @@
       "type": "custom-special-offer-grid",
       "settings": {
         "offer_label": "Special Offer",
-        "offer_save_amount": "$400",
-        "offer_title": "Royal Isfahan Masterpiece Silk & Wool Area Rug",
-        "offer_price": "$1,499.00",
-        "offer_old_price": "$1,899.00",
-        "collection_featured": "special-collection",
-        "collection_onsale": "special-collection",
-        "collection_toprated": "handmade-rugs"
+        "offer_save_amount": "$200",
+        "offer_title": "Coastal Gray Table Top Collection",
+        "offer_price": "$499.00",
+        "offer_old_price": "$699.00",
+        "collection_featured": "furniture",
+        "collection_onsale": "chairs",
+        "collection_toprated": "tables"
       }
     },
     "brand_logos": {
@@ -149,60 +155,39 @@
       "settings": {
         "default_desktop_asset": "discount-banner-16x9.jpg",
         "default_mobile_asset": "discount-banner-4x2.jpg",
-        "alt_text": "Special Collection Deals Discount",
-        "link": "/collections/special-collection"
+        "alt_text": "Special Furniture Deals Discount",
+        "link": "/collections/furniture"
       }
     },
     "featured_deals_grid": {
       "type": "custom-product-grid",
       "blocks": {
-        "tab_special": {
+        "tab_furniture": {
           "type": "collection_tab",
           "settings": {
-            "collection": "special-collection",
-            "title": "Special Collection"
+            "collection": "furniture",
+            "title": "All Furniture"
           }
         },
-        "tab_handmade_rugs": {
+        "tab_desks": {
           "type": "collection_tab",
           "settings": {
-            "collection": "handmade-rugs",
-            "title": "Handmade Rugs"
+            "collection": "desks",
+            "title": "Desks"
           }
         },
-        "tab_4x6_rugs": {
+        "tab_chairs": {
           "type": "collection_tab",
           "settings": {
-            "collection": "4-x-6-rugs",
-            "title": "4 x 6 Rugs"
+            "collection": "chairs",
+            "title": "Chairs"
           }
         },
-        "tab_3x5_rugs": {
+        "tab_tables": {
           "type": "collection_tab",
           "settings": {
-            "collection": "3x5-rug",
-            "title": "3x5 Rugs"
-          }
-        },
-        "tab_executive_desks": {
-          "type": "collection_tab",
-          "settings": {
-            "collection": "executive-desks",
-            "title": "Executive Desks"
-          }
-        },
-        "tab_office_chairs": {
-          "type": "collection_tab",
-          "settings": {
-            "collection": "office-chairs",
-            "title": "Office Chairs"
-          }
-        },
-        "tab_small_rugs": {
-          "type": "collection_tab",
-          "settings": {
-            "collection": "small-rugs",
-            "title": "Small Rugs"
+            "collection": "tables",
+            "title": "Tables"
           }
         },
         "tab_storage": {
@@ -212,29 +197,50 @@
             "title": "Storage"
           }
         },
-        "tab_tables": {
+        "tab_desk_accessories": {
           "type": "collection_tab",
           "settings": {
-            "collection": "table",
-            "title": "Tables"
+            "collection": "desk-parts-and-accessories",
+            "title": "Desk Parts & Accessories"
+          }
+        },
+        "tab_large_rugs": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "large-rugs",
+            "title": "Large Rugs"
+          }
+        },
+        "tab_small_rugs": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "small-rugs",
+            "title": "Small Rugs"
+          }
+        },
+        "tab_best_sellers": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "best-sellers",
+            "title": "Best Sellers"
           }
         }
       },
       "block_order": [
-        "tab_special",
-        "tab_handmade_rugs",
-        "tab_4x6_rugs",
-        "tab_3x5_rugs",
-        "tab_executive_desks",
-        "tab_office_chairs",
-        "tab_small_rugs",
+        "tab_furniture",
+        "tab_desks",
+        "tab_chairs",
+        "tab_tables",
         "tab_storage",
-        "tab_tables"
+        "tab_desk_accessories",
+        "tab_large_rugs",
+        "tab_small_rugs",
+        "tab_best_sellers"
       ],
       "settings": {
         "heading": "Special Collection Deals",
         "subheading": "Curated selection of handcrafted rugs and premium executive office furniture",
-        "collection": "special-collection",
+        "collection": "furniture",
         "products_per_page": 10,
         "enable_pagination": true,
         "show_tab_arrows": true

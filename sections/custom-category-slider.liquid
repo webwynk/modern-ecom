@@ -44,6 +44,7 @@
     <!-- Category Slider Track -->
     <div class="category-slider__wrapper">
       <div class="category-slider__track" id="CatTrack-{{ section.id }}" role="region" aria-label="Categories Carousel">
+        {%- assign rendered_cards = 0 -%}
         {% if section.blocks.size > 0 %}
           {% for block in section.blocks %}
             {%- liquid
@@ -52,12 +53,20 @@
                 assign col = collections[block.settings.collection]
               endif
 
+              assign col_count_num = col.all_products_count | default: 0
+            -%}
+            {%- comment %} Strictly omit any collection with 0 products or invalid collection {% endcomment -%}
+            {%- if col == blank or col_count_num == 0 -%}
+              {%- continue -%}
+            {%- endif -%}
+            {%- assign rendered_cards = rendered_cards | plus: 1 -%}
+            {%- liquid
               assign card_title = block.settings.title
               if card_title == blank and col != blank and col.title != blank
                 assign card_title = col.title
               endif
               if card_title == blank
-                assign card_title = 'Collection ' | append: forloop.index
+                assign card_title = 'Collection ' | append: rendered_cards
               endif
 
               assign card_url = block.settings.link
@@ -69,15 +78,17 @@
               endif
 
               assign card_count = block.settings.count
-              if card_count == blank and col != blank and col.all_products_count != blank
-                assign card_count = col.all_products_count | append: ' Items'
+              if card_count == blank and col_count_num > 0
+                assign card_count = col_count_num | append: ' Items'
               endif
 
               assign card_image = block.settings.image
               if card_image == blank and col != blank and col.featured_image != blank
                 assign card_image = col.featured_image
               endif
-              if card_image == blank and col != blank and col.products.first.featured_image != blank
+              if card_image == blank and col != blank and col.products.first.featured_media != blank
+                assign card_image = col.products.first.featured_media
+              elsif card_image == blank and col != blank and col.products.first.featured_image != blank
                 assign card_image = col.products.first.featured_image
               endif
             -%}
@@ -106,39 +117,52 @@
               {% endif %}
             </a>
           {% endfor %}
-        {% else %}
-          <!-- Dynamic Store Collections Loop when no blocks configured -->
-          {% for col in collections limit: 12 %}
-            <a
-              href="{{ col.url }}"
-              class="category-card"
-            >
-              <div class="category-card__image-wrapper">
-                {% if col.featured_image != blank %}
-                  <img
-                    src="{{ col.featured_image | image_url: width: 320 }}"
-                    alt="{{ col.title | escape }}"
-                    class="category-card__image"
-                    loading="lazy"
-                    width="160"
-                    height="160"
-                  >
-                {% elsif col.products.first.featured_image != blank %}
-                  <img
-                    src="{{ col.products.first.featured_image | image_url: width: 320 }}"
-                    alt="{{ col.title | escape }}"
-                    class="category-card__image"
-                    loading="lazy"
-                    width="160"
-                    height="160"
-                  >
-                {% else %}
-                  {{ 'collection-1' | placeholder_svg_tag: 'category-card__image' }}
-                {% endif %}
-              </div>
-              <h3 class="category-card__title">{{ col.title }}</h3>
-              <span class="category-card__count">{{ col.all_products_count }} Items</span>
-            </a>
+        {% endif %}
+
+        {% if rendered_cards == 0 %}
+          <!-- Dynamic Store Collections Loop (Strictly showing collections with > 0 products) -->
+          {% for col in collections %}
+            {% if col.all_products_count > 0 and col.handle != 'all' %}
+              <a
+                href="{{ col.url }}"
+                class="category-card"
+              >
+                <div class="category-card__image-wrapper">
+                  {% if col.featured_image != blank %}
+                    <img
+                      src="{{ col.featured_image | image_url: width: 320 }}"
+                      alt="{{ col.title | escape }}"
+                      class="category-card__image"
+                      loading="lazy"
+                      width="160"
+                      height="160"
+                    >
+                  {% elsif col.products.first.featured_media != blank %}
+                    <img
+                      src="{{ col.products.first.featured_media | image_url: width: 320 }}"
+                      alt="{{ col.title | escape }}"
+                      class="category-card__image"
+                      loading="lazy"
+                      width="160"
+                      height="160"
+                    >
+                  {% elsif col.products.first.featured_image != blank %}
+                    <img
+                      src="{{ col.products.first.featured_image | image_url: width: 320 }}"
+                      alt="{{ col.title | escape }}"
+                      class="category-card__image"
+                      loading="lazy"
+                      width="160"
+                      height="160"
+                    >
+                  {% else %}
+                    {{ 'collection-1' | placeholder_svg_tag: 'category-card__image' }}
+                  {% endif %}
+                </div>
+                <h3 class="category-card__title">{{ col.title }}</h3>
+                <span class="category-card__count">{{ col.all_products_count }} Items</span>
+              </a>
+            {% endif %}
           {% endfor %}
         {% endif %}
       </div>

@@ -66,6 +66,7 @@
          ======================================== -->
     <div class="deal-tabs-wrapper" role="tablist" aria-label="Product Collections Filter" id="dealTabs-{{ section.id }}">
       {% if has_tab_blocks %}
+        {%- assign rendered_tab_count = 0 -%}
         {% for block in section.blocks %}
           {% if block.type == 'collection_tab' %}
             {%- liquid
@@ -74,49 +75,54 @@
                 assign col = collections[block.settings.collection]
               endif
 
+              assign col_count = col.all_products_count | default: 0
+            -%}
+            {%- comment %} Strictly omit any collection with 0 products or invalid collection {% endcomment -%}
+            {%- if col == blank or col_count == 0 -%}
+              {%- continue -%}
+            {%- endif -%}
+            {%- assign rendered_tab_count = rendered_tab_count | plus: 1 -%}
+            {%- liquid
               assign tab_title = block.settings.title
               if tab_title == blank and col != blank and col.title != blank
                 assign tab_title = col.title
               endif
               if tab_title == blank
-                assign tab_title = 'Collection ' | append: forloop.index
+                assign tab_title = 'Collection ' | append: rendered_tab_count
               endif
-              assign col_count = col.all_products_count | default: col.products.size | default: 0
             -%}
             <button
               type="button"
-              class="deal-tab-btn {% if forloop.first %}is-active{% endif %}"
-              data-tab-target="deal-tab-{{ section.id }}-{{ forloop.index }}"
+              class="deal-tab-btn {% if rendered_tab_count == 1 %}is-active{% endif %}"
+              data-tab-target="deal-tab-{{ section.id }}-{{ block.id }}"
               data-collection-url="{{ col.url | default: '/collections/all' }}"
               role="tab"
-              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              aria-selected="{% if rendered_tab_count == 1 %}true{% else %}false{% endif %}"
               {{ block.shopify_attributes }}
             >
               <span>{{ tab_title }}</span>
-              {% if col_count > 0 %}
-                <span class="deal-tab-btn__count">({{ col_count }})</span>
-              {% endif %}
+              <span class="deal-tab-btn__count">({{ col_count }})</span>
             </button>
           {% endif %}
         {% endfor %}
-      {% else %}
-        <!-- Dynamic Store Collection Tabs -->
+      {% endif %}
+
+      {% if has_tab_blocks == false or rendered_tab_count == 0 %}
+        <!-- Dynamic Store Collection Tabs (Strictly showing collections with > 0 products) -->
         {%- assign rendered_tabs = 0 -%}
         {% for col in collections %}
-          {% if col.all_products_count > 0 or request.design_mode %}
+          {% if col.all_products_count > 0 and col.handle != 'all' %}
             {%- assign rendered_tabs = rendered_tabs | plus: 1 -%}
             <button
               type="button"
               class="deal-tab-btn {% if rendered_tabs == 1 %}is-active{% endif %}"
-              data-tab-target="deal-tab-{{ section.id }}-{{ rendered_tabs }}"
+              data-tab-target="deal-tab-{{ section.id }}-col-{{ col.id }}"
               data-collection-url="{{ col.url | default: '/collections/all' }}"
               role="tab"
               aria-selected="{% if rendered_tabs == 1 %}true{% else %}false{% endif %}"
             >
               <span>{{ col.title }}</span>
-              {% if col.all_products_count > 0 %}
-                <span class="deal-tab-btn__count">({{ col.all_products_count }})</span>
-              {% endif %}
+              <span class="deal-tab-btn__count">({{ col.all_products_count }})</span>
             </button>
             {% if rendered_tabs >= 8 %}{% break %}{% endif %}
           {% endif %}
@@ -125,7 +131,7 @@
           <button
             type="button"
             class="deal-tab-btn is-active"
-            data-tab-target="deal-tab-{{ section.id }}-1"
+            data-tab-target="deal-tab-{{ section.id }}-all"
             data-collection-url="/collections/all"
             role="tab"
             aria-selected="true"
@@ -141,6 +147,7 @@
          ======================================== -->
     <div class="deal-tab-panels-wrapper" id="dealPanels-{{ section.id }}">
       {% if has_tab_blocks %}
+        {%- assign rendered_panel_count = 0 -%}
         {% for block in section.blocks %}
           {% if block.type == 'collection_tab' %}
             {%- liquid
@@ -149,38 +156,32 @@
                 assign col = collections[block.settings.collection]
               endif
 
-              assign prod_count = col.products.size | default: 0
+              assign prod_count = col.all_products_count | default: 0
+            -%}
+            {%- comment %} Strictly omit any collection with 0 products or invalid collection {% endcomment -%}
+            {%- if col == blank or prod_count == 0 -%}
+              {%- continue -%}
+            {%- endif -%}
+            {%- assign rendered_panel_count = rendered_panel_count | plus: 1 -%}
+            {%- liquid
               assign total_pages = prod_count | times: 1.0 | divided_by: per_page | ceil
               if total_pages < 1
                 assign total_pages = 1
               endif
             -%}
             <div
-              class="deal-tab-panel {% if forloop.first %}is-active{% endif %}"
-              id="deal-tab-{{ section.id }}-{{ forloop.index }}"
+              class="deal-tab-panel {% if rendered_panel_count == 1 %}is-active{% endif %}"
+              id="deal-tab-{{ section.id }}-{{ block.id }}"
               data-total-pages="{{ total_pages }}"
               data-current-page="1"
               role="tabpanel"
             >
-              {% if prod_count > 0 %}
-                <ul class="product-grid__items" role="list">
-                  {% for product in col.products limit: 50 %}
-                    {% assign page_num = forloop.index0 | divided_by: per_page | plus: 1 %}
-                    {% render 'deal-grid-card', product: product, page_num: page_num %}
-                  {% endfor %}
-                </ul>
-              {% else %}
-                <div class="product-grid__empty-container">
-                  <svg class="product-grid__empty-icon" viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <circle cx="9" cy="21" r="1"></circle>
-                    <circle cx="20" cy="21" r="1"></circle>
-                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                  </svg>
-                  <p class="product-grid__empty-title">No products found in this collection</p>
-                  <p class="product-grid__empty-desc">Products assigned to this collection in Shopify will appear here automatically.</p>
-                  <a href="/collections/all" class="product-grid__empty-btn">Browse All Products</a>
-                </div>
-              {% endif %}
+              <ul class="product-grid__items" role="list">
+                {% for product in col.products limit: 50 %}
+                  {% assign page_num = forloop.index0 | divided_by: per_page | plus: 1 %}
+                  {% render 'deal-grid-card', product: product, page_num: page_num %}
+                {% endfor %}
+              </ul>
 
               <!-- Pagination Controls for this Tab Panel -->
               {% if section.settings.enable_pagination and total_pages > 1 and prod_count > 0 %}
@@ -211,14 +212,16 @@
             </div>
           {% endif %}
         {% endfor %}
-      {% else %}
+      {% endif %}
+
+      {% if has_tab_blocks == false or rendered_panel_count == 0 %}
         <!-- Dynamic Store Collection Panels -->
         {%- assign rendered_panels = 0 -%}
         {% for col in collections %}
-          {% if col.all_products_count > 0 or request.design_mode %}
+          {% if col.all_products_count > 0 and col.handle != 'all' %}
             {%- assign rendered_panels = rendered_panels | plus: 1 -%}
             {%- liquid
-              assign prod_count = col.products.size | default: 0
+              assign prod_count = col.all_products_count | default: 0
               assign total_pages = prod_count | times: 1.0 | divided_by: per_page | ceil
               if total_pages < 1
                 assign total_pages = 1
@@ -226,30 +229,17 @@
             -%}
             <div
               class="deal-tab-panel {% if rendered_panels == 1 %}is-active{% endif %}"
-              id="deal-tab-{{ section.id }}-{{ rendered_panels }}"
+              id="deal-tab-{{ section.id }}-col-{{ col.id }}"
               data-total-pages="{{ total_pages }}"
               data-current-page="1"
               role="tabpanel"
             >
-              {% if prod_count > 0 %}
-                <ul class="product-grid__items" role="list">
-                  {% for product in col.products limit: 50 %}
-                    {% assign page_num = forloop.index0 | divided_by: per_page | plus: 1 %}
-                    {% render 'deal-grid-card', product: product, page_num: page_num %}
-                  {% endfor %}
-                </ul>
-              {% else %}
-                <div class="product-grid__empty-container">
-                  <svg class="product-grid__empty-icon" viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <circle cx="9" cy="21" r="1"></circle>
-                    <circle cx="20" cy="21" r="1"></circle>
-                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                  </svg>
-                  <p class="product-grid__empty-title">No products found in this collection</p>
-                  <p class="product-grid__empty-desc">Products assigned to this collection in Shopify will appear here automatically.</p>
-                  <a href="/collections/all" class="product-grid__empty-btn">Browse All Products</a>
-                </div>
-              {% endif %}
+              <ul class="product-grid__items" role="list">
+                {% for product in col.products limit: 50 %}
+                  {% assign page_num = forloop.index0 | divided_by: per_page | plus: 1 %}
+                  {% render 'deal-grid-card', product: product, page_num: page_num %}
+                {% endfor %}
+              </ul>
 
               {% if section.settings.enable_pagination and total_pages > 1 and prod_count > 0 %}
                 <div class="deal-pagination" aria-label="Pagination">
@@ -283,7 +273,7 @@
         {% if rendered_panels == 0 %}
           <div
             class="deal-tab-panel is-active"
-            id="deal-tab-{{ section.id }}-1"
+            id="deal-tab-{{ section.id }}-all"
             data-total-pages="1"
             data-current-page="1"
             role="tabpanel"
