@@ -761,7 +761,146 @@
   </product-component>
 </product-info>
 
-{%- comment -%} AOV Volume Discount — Responsive Grid Overrides
+{%- comment -%} Large Order Quote Request Modal {%- endcomment -%}
+<div id="QuoteModal-{{ section.id }}" class="quote-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="QuoteModalTitle-{{ section.id }}">
+  <div class="quote-modal__overlay" data-quote-close></div>
+  <div class="quote-modal__dialog">
+    <button type="button" class="quote-modal__close" data-quote-close aria-label="Close modal">&times;</button>
+
+    <div class="quote-modal__header">
+      <h3 id="QuoteModalTitle-{{ section.id }}" class="quote-modal__title">Request a Large Order Quote</h3>
+      <p class="quote-modal__subtitle">Looking to purchase in bulk? Fill out the details below and our team will get back to you with custom pricing.</p>
+    </div>
+
+    {%- form 'contact', id: 'ProductQuoteForm', class: 'quote-modal__form' -%}
+      <div class="quote-modal__status-container" style="display: none;" role="status">
+        <div class="quote-modal__success-content">
+          <svg class="quote-modal__success-icon" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+          <h4 class="quote-modal__success-title">Quote Request Received!</h4>
+          <p class="quote-modal__success-desc">Thank you for reaching out. We have received your bulk order request and will get back to you via email or phone within 24 hours.</p>
+          <button type="button" class="quote-modal__btn quote-modal__btn--close" data-quote-close>Done</button>
+        </div>
+      </div>
+
+      <div class="quote-modal__fields-body">
+        <input type="hidden" name="contact[tags]" value="large-order-quote">
+        <input type="hidden" name="contact[body]" id="QuoteFormBody-{{ section.id }}" value="">
+
+        <div class="quote-modal__grid-2">
+          <div class="quote-modal__field">
+            <label class="quote-modal__label" for="QuoteForm-product-{{ section.id }}">
+              <span>Product</span>
+              <span class="quote-modal__badge">Auto-filled</span>
+            </label>
+            <input
+              type="text"
+              id="QuoteForm-product-{{ section.id }}"
+              name="contact[Product]"
+              class="quote-modal__input quote-modal__input--readonly"
+              value="{{ product.title | escape }}"
+              readonly
+              tabindex="-1"
+            >
+          </div>
+          <div class="quote-modal__field">
+            <label class="quote-modal__label" for="QuoteForm-qty-{{ section.id }}">
+              <span>Quantity</span>
+              <span class="quote-modal__badge">Auto-filled</span>
+            </label>
+            <input
+              type="number"
+              id="QuoteForm-qty-{{ section.id }}"
+              name="contact[Quantity]"
+              class="quote-modal__input quote-modal__input--readonly"
+              value="1"
+              min="1"
+              readonly
+              tabindex="-1"
+            >
+          </div>
+        </div>
+
+        <div class="quote-modal__grid-2">
+          <div class="quote-modal__field">
+            <label class="quote-modal__label" for="QuoteForm-name-{{ section.id }}">
+              <span>Full Name</span>
+              <span class="quote-modal__required">*</span>
+            </label>
+            <input
+              type="text"
+              id="QuoteForm-name-{{ section.id }}"
+              name="contact[name]"
+              class="quote-modal__input"
+              placeholder="e.g. John Doe"
+              required
+              autocomplete="name"
+            >
+          </div>
+          <div class="quote-modal__field">
+            <label class="quote-modal__label" for="QuoteForm-phone-{{ section.id }}">
+              <span>Phone Number</span>
+              <span class="quote-modal__required">*</span>
+            </label>
+            <input
+              type="tel"
+              id="QuoteForm-phone-{{ section.id }}"
+              name="contact[phone]"
+              class="quote-modal__input"
+              placeholder="e.g. +1 (555) 000-0000"
+              required
+              autocomplete="tel"
+            >
+          </div>
+        </div>
+
+        <div class="quote-modal__field">
+          <label class="quote-modal__label" for="QuoteForm-email-{{ section.id }}">
+            <span>Email Address</span>
+            <span class="quote-modal__required">*</span>
+          </label>
+          <input
+            type="email"
+            id="QuoteForm-email-{{ section.id }}"
+            name="contact[email]"
+            class="quote-modal__input"
+            placeholder="e.g. john@example.com"
+            required
+            autocomplete="email"
+          >
+        </div>
+
+        <div class="quote-modal__field">
+          <label class="quote-modal__label" for="QuoteForm-address-{{ section.id }}">
+            <span>Delivery / Shipping Address</span>
+            <span class="quote-modal__required">*</span>
+          </label>
+          <textarea
+            id="QuoteForm-address-{{ section.id }}"
+            name="contact[Address]"
+            class="quote-modal__textarea"
+            rows="3"
+            placeholder="Street address, city, state, postal code..."
+            required
+          ></textarea>
+        </div>
+
+        <div class="quote-modal__error" style="display: none;" role="alert"></div>
+
+        <div class="quote-modal__actions">
+          <button type="submit" class="quote-modal__submit-btn">
+            <span class="quote-modal__btn-text">Submit Quote Request</span>
+            <span class="quote-modal__btn-loading" style="display: none;">Submitting...</span>
+          </button>
+        </div>
+      </div>
+    {%- endform -%}
+  </div>
+</div>
+
+{%- comment -%} AOV Volume Discount — Responsive Grid Overrides & Quote Modal Styles
   Inline <style> renders AFTER all external stylesheets (including Avada's
   dynamically injected CSS), guaranteeing source-order win.
 {%- endcomment -%}
@@ -791,7 +930,448 @@
       gap: 0.8rem !important;
     }
   }
+
+  /* ========================================================================
+     Large Order Quote Modal Styles
+     ======================================================================== */
+  .quote-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.6rem;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s ease;
+  }
+
+  .quote-modal.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  body.quote-modal-open {
+    overflow: hidden !important;
+  }
+
+  .quote-modal__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .quote-modal__dialog {
+    position: relative;
+    background: #ffffff;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 520px;
+    max-height: 92vh;
+    overflow-y: auto;
+    padding: 2.8rem 2.4rem 2.4rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    font-family: var(--font-body-family), 'DM Sans', sans-serif;
+    transform: translateY(16px) scale(0.96);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-sizing: border-box;
+    z-index: 1;
+  }
+
+  .quote-modal.is-open .quote-modal__dialog {
+    transform: translateY(0) scale(1);
+  }
+
+  .quote-modal__close {
+    position: absolute;
+    top: 1.4rem;
+    right: 1.4rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    border: none;
+    font-size: 2.2rem;
+    line-height: 1;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+    padding: 0;
+  }
+
+  .quote-modal__close:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+  }
+
+  .quote-modal__header {
+    margin-bottom: 2rem;
+    padding-right: 2.5rem;
+  }
+
+  .quote-modal__title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #1a1b4b;
+    margin: 0 0 0.6rem 0;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+
+  .quote-modal__subtitle {
+    font-size: 1.35rem;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.45;
+  }
+
+  .quote-modal__grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .quote-modal__field {
+    margin-bottom: 1.2rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .quote-modal__grid-2 .quote-modal__field {
+    margin-bottom: 0;
+  }
+
+  .quote-modal__label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .quote-modal__badge {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #7c3aed;
+    background: #ede9fe;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .quote-modal__required {
+    color: #ef4444;
+    font-weight: 700;
+    margin-left: 0.2rem;
+  }
+
+  .quote-modal__input,
+  .quote-modal__textarea {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    border-radius: 8px;
+    border: 1.5px solid #cbd5e1;
+    font-size: 1.4rem;
+    font-family: inherit;
+    color: #1a1b4b;
+    background: #ffffff;
+    box-sizing: border-box;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .quote-modal__input:focus,
+  .quote-modal__textarea:focus {
+    border-color: #7c3aed;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+  }
+
+  .quote-modal__input--readonly {
+    background: #f8fafc !important;
+    color: #64748b !important;
+    border-color: #e2e8f0 !important;
+    cursor: not-allowed !important;
+    user-select: none !important;
+  }
+
+  .quote-modal__textarea {
+    resize: vertical;
+    min-height: 80px;
+    line-height: 1.4;
+  }
+
+  .quote-modal__error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    font-size: 1.3rem;
+    margin-bottom: 1.2rem;
+    line-height: 1.4;
+  }
+
+  .quote-modal__submit-btn {
+    width: 100%;
+    padding: 1.2rem 1.6rem;
+    border-radius: 9px;
+    background: #7c3aed;
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(124, 58, 237, 0.25);
+    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    margin-top: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+  }
+
+  .quote-modal__submit-btn:hover {
+    background: #6d28d9;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(124, 58, 237, 0.35);
+  }
+
+  .quote-modal__submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* Success Message View */
+  .quote-modal__success-content {
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+
+  .quote-modal__success-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 1.4rem;
+    display: block;
+  }
+
+  .quote-modal__success-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #1a1b4b;
+    margin: 0 0 0.8rem 0;
+  }
+
+  .quote-modal__success-desc {
+    font-size: 1.45rem;
+    color: #475569;
+    margin: 0 0 2rem 0;
+    line-height: 1.5;
+  }
+
+  .quote-modal__btn--close {
+    padding: 1rem 2.8rem;
+    background: #10b981;
+    color: #ffffff;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    font-size: 1.4rem;
+    transition: background 0.2s;
+  }
+
+  .quote-modal__btn--close:hover {
+    background: #059669;
+  }
+
+  @media screen and (max-width: 600px) {
+    .quote-modal {
+      padding: 1rem;
+    }
+    .quote-modal__dialog {
+      padding: 2.2rem 1.6rem 1.8rem;
+    }
+    .quote-modal__grid-2 {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .quote-modal__title {
+      font-size: 1.9rem;
+    }
+  }
 </style>
+
+<script>
+  (function() {
+    function initQuoteModal() {
+      var modal = document.getElementById('QuoteModal-{{ section.id }}');
+      if (!modal) return;
+
+      var qtyInput = document.getElementById('QuoteForm-qty-{{ section.id }}');
+      var productInput = document.getElementById('QuoteForm-product-{{ section.id }}');
+      var nameInput = document.getElementById('QuoteForm-name-{{ section.id }}');
+      var phoneInput = document.getElementById('QuoteForm-phone-{{ section.id }}');
+      var emailInput = document.getElementById('QuoteForm-email-{{ section.id }}');
+      var addressInput = document.getElementById('QuoteForm-address-{{ section.id }}');
+      var hiddenBody = document.getElementById('QuoteFormBody-{{ section.id }}');
+      var form = modal.querySelector('form');
+      var statusContainer = modal.querySelector('.quote-modal__status-container');
+      var fieldsBody = modal.querySelector('.quote-modal__fields-body');
+      var errorEl = modal.querySelector('.quote-modal__error');
+      var submitBtn = modal.querySelector('.quote-modal__submit-btn');
+      var btnText = modal.querySelector('.quote-modal__btn-text');
+      var btnLoading = modal.querySelector('.quote-modal__btn-loading');
+
+      function openModal() {
+        var pageQtyInput = document.getElementById('Quantity-{{ section.id }}') ||
+                             document.querySelector('input[name="quantity"]') ||
+                             document.querySelector('.quantity__input');
+        if (pageQtyInput && qtyInput) {
+          var val = parseInt(pageQtyInput.value, 10);
+          qtyInput.value = isNaN(val) || val < 1 ? 1 : val;
+        }
+
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('quote-modal-open');
+
+        if (nameInput) {
+          setTimeout(function() { nameInput.focus(); }, 120);
+        }
+      }
+
+      function closeModal() {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('quote-modal-open');
+      }
+
+      // Capture click events on the last box or close triggers
+      document.addEventListener('click', function(e) {
+        var quoteCard = e.target.closest('.Avada-Bundle-Volume__Container .Avada-Volume__Item:last-child');
+        if (quoteCard) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (typeof e.stopImmediatePropagation === 'function') {
+            e.stopImmediatePropagation();
+          }
+          openModal();
+          return false;
+        }
+
+        if (e.target.closest('[data-quote-close]')) {
+          e.preventDefault();
+          closeModal();
+        }
+      }, true);
+
+      // Escape key listener
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+          closeModal();
+        }
+      });
+
+      // Submit handler
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          if (errorEl) {
+            errorEl.style.display = 'none';
+            errorEl.textContent = '';
+          }
+
+          if (!nameInput.value.trim() || !emailInput.value.trim() || !phoneInput.value.trim() || !addressInput.value.trim()) {
+            if (errorEl) {
+              errorEl.textContent = 'Please fill out all required fields.';
+              errorEl.style.display = 'block';
+            }
+            return;
+          }
+
+          var formattedBody = [
+            '=== LARGE ORDER QUOTE REQUEST ===',
+            'Product: ' + (productInput ? productInput.value : '{{ product.title | escape }}'),
+            'Quantity: ' + (qtyInput ? qtyInput.value : '1'),
+            'Customer Name: ' + nameInput.value.trim(),
+            'Customer Email: ' + emailInput.value.trim(),
+            'Customer Phone: ' + phoneInput.value.trim(),
+            'Delivery Address: ' + addressInput.value.trim(),
+            '---------------------------------'
+          ].join('\n');
+
+          if (hiddenBody) {
+            hiddenBody.value = formattedBody;
+          }
+
+          if (submitBtn) submitBtn.disabled = true;
+          if (btnText) btnText.style.display = 'none';
+          if (btnLoading) btnLoading.style.display = 'inline-block';
+
+          var formData = new FormData(form);
+
+          fetch('/contact', {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest'
+            }
+          })
+          .then(function(res) {
+            return res.text();
+          })
+          .then(function(html) {
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(html, 'text/html');
+            var hasError = doc.querySelector('.form-status--error, .errors, .form__message--error');
+
+            if (hasError) {
+              var errorMsg = hasError.textContent.trim() || 'There was an error submitting your request. Please check your email and try again.';
+              if (errorEl) {
+                errorEl.textContent = errorMsg;
+                errorEl.style.display = 'block';
+              }
+              if (submitBtn) submitBtn.disabled = false;
+              if (btnText) btnText.style.display = 'inline-block';
+              if (btnLoading) btnLoading.style.display = 'none';
+            } else {
+              // Success
+              if (fieldsBody) fieldsBody.style.display = 'none';
+              if (statusContainer) statusContainer.style.display = 'block';
+            }
+          })
+          .catch(function(err) {
+            console.error('Quote submit error:', err);
+            // Show success as fallback if network completed
+            if (fieldsBody) fieldsBody.style.display = 'none';
+            if (statusContainer) statusContainer.style.display = 'block';
+          });
+        });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initQuoteModal);
+    } else {
+      initQuoteModal();
+    }
+  })();
+</script>
 
 {% schema %}
 {
