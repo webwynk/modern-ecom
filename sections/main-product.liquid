@@ -1254,14 +1254,8 @@
         var finalQty = 15;
         if (typeof specifiedQty === 'number' && specifiedQty > 0) {
           finalQty = specifiedQty;
-        } else {
-          var pageQtyInput = document.getElementById('Quantity-{{ section.id }}') ||
-                               document.querySelector('input[name="quantity"]') ||
-                               document.querySelector('.quantity__input');
-          if (pageQtyInput) {
-            var val = parseInt(pageQtyInput.value, 10);
-            finalQty = isNaN(val) || val < 1 ? 15 : val;
-          }
+        } else if (typeof specifiedQty === 'string' && parseInt(specifiedQty, 10) > 0) {
+          finalQty = parseInt(specifiedQty, 10);
         }
 
         if (qtyInput) {
@@ -1293,7 +1287,7 @@
             e.stopImmediatePropagation();
           }
 
-          // 1. Determine tier quantity from the card (e.g. "Buy 15" -> 15)
+          // 1. Determine tier quantity strictly from the card (e.g. "Buy 15" -> 15)
           var tierQty = 15;
           var tierEl = quoteCard.querySelector('.Avada-ItemTier');
           if (tierEl) {
@@ -1313,16 +1307,7 @@
           }
           quoteCard.classList.add('Avada-Volume__Item--Selected');
 
-          // 3. Sync page quantity
-          var pageQtyInput = document.getElementById('Quantity-{{ section.id }}') ||
-                               document.querySelector('input[name="quantity"]') ||
-                               document.querySelector('.quantity__input');
-          if (pageQtyInput) {
-            pageQtyInput.value = tierQty;
-            pageQtyInput.dispatchEvent(new Event('change', { bubbles: true }));
-          }
-
-          // 4. Open modal with that exact quantity
+          // 3. Open modal directly with isolated tier quantity (do not pollute page checkout quantity)
           openModal(tierQty);
           return false;
         }
