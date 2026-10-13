@@ -268,35 +268,19 @@
 }
 
 /* ---------------------------------------------------------------------------
-   8. Bundle Variant Selection Dropdowns
+   8. Hide Redundant Nested Variant Pickers & Dropdowns (#1 4x6, See more)
    --------------------------------------------------------------------------- */
-.Avada-Bundle-Volume__Container .Avada-Volume__Products {
-  width: 100% !important;
-  margin-top: 0.6rem !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 0.4rem !important;
-}
-
-.Avada-Bundle-Volume__Container .Avada-Volume__Product {
-  padding-left: 0 !important;
-  justify-content: center !important;
-  align-items: center !important;
-  font-size: 1.2rem !important;
-}
-
-.Avada-Bundle-Volume__Container .Avada-VariantSelection__Trigger {
-  border: 1px solid rgba(0, 0, 0, 0.15) !important;
-  border-radius: 6px !important;
-  padding: 0.25rem 0.6rem !important;
-  background: #ffffff !important;
-  font-size: 1.2rem !important;
-  color: #000000 !important;
-  transition: border-color 0.2s ease !important;
-}
-
-.Avada-Bundle-Volume__Container .Avada-VariantSelection__Trigger:hover {
-  border-color: #997a51 !important;
+.Avada-Bundle-Volume__Container .Avada-VolumeVariantSelection,
+.Avada-Bundle-Volume__Container .Avada-Volume__Products,
+.Avada-Bundle-Volume__Container .Avada-Volume__Product,
+.Avada-Bundle-Volume__Container .Avada-Volume__Number,
+.Avada-Bundle-Volume__Container .Avada-ToggleText,
+.Avada-Bundle-Volume__Container .Avada-Volume__VariantSelection,
+.Avada-Bundle-Volume__Container .Avada-VariantSelection,
+.Avada-Bundle-Volume__Container .Avada-VariantSelection__Trigger,
+.Avada-Bundle-Volume__Container .Avada-Offer__VariantSection,
+.Avada-Bundle-Volume__Container .Avada-Volume__Gift--Trigger {
+  display: none !important;
 }
 
 /* ---------------------------------------------------------------------------
