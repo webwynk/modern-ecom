@@ -110,6 +110,15 @@
   margin-top: 0.6rem !important;
 }
 
+/* Override Avada app's own --horizontal 2-col default & :has() variants */
+.Avada-VolumeItem__Container.Avada-VolumeItem__Container--horizontal,
+.Avada-Bundle-Volume__Container .Avada-VolumeItem__Container.Avada-VolumeItem__Container--horizontal,
+.Avada-VolumeItem__Container.Avada-VolumeItem__Container--horizontal:has(> :nth-child(3):last-child),
+.Avada-VolumeItem__Container.Avada-VolumeItem__Container--horizontal:has(> :nth-child(5):last-child),
+.Avada-VolumeItem__Container.Avada-VolumeItem__Container--horizontal:has(> :nth-child(6):last-child) {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
 /* ---------------------------------------------------------------------------
    4. Individual 2-Box Tier Cards (.Avada-Volume__Item)
    --------------------------------------------------------------------------- */
@@ -420,7 +429,9 @@
 
   .Avada-Bundle-Volume__Container .Avada-VolumeItem__Container,
   .Avada-Bundle-Volume__Container.Avada-Bundle-Volume__Container--Desktop .Avada-VolumeItem__Container,
-  .Avada-Bundle-Volume__Container.Avada-Bundle-Volume__Container--Mobile .Avada-VolumeItem__Container {
+  .Avada-Bundle-Volume__Container.Avada-Bundle-Volume__Container--Mobile .Avada-VolumeItem__Container,
+  .Avada-VolumeItem__Container.Avada-VolumeItem__Container--horizontal,
+  .Avada-Bundle-Volume__Container .Avada-VolumeItem__Container.Avada-VolumeItem__Container--horizontal {
     grid-template-columns: 1fr !important;
     gap: 0.8rem !important;
   }
