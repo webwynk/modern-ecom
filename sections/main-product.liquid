@@ -1251,16 +1251,21 @@
       var btnLoading = modal.querySelector('.quote-modal__btn-loading');
 
       function openModal(specifiedQty) {
+        var finalQty = 15;
         if (typeof specifiedQty === 'number' && specifiedQty > 0) {
-          if (qtyInput) qtyInput.value = specifiedQty;
+          finalQty = specifiedQty;
         } else {
           var pageQtyInput = document.getElementById('Quantity-{{ section.id }}') ||
                                document.querySelector('input[name="quantity"]') ||
                                document.querySelector('.quantity__input');
-          if (pageQtyInput && qtyInput) {
+          if (pageQtyInput) {
             var val = parseInt(pageQtyInput.value, 10);
-            qtyInput.value = isNaN(val) || val < 1 ? 1 : val;
+            finalQty = isNaN(val) || val < 1 ? 15 : val;
           }
+        }
+
+        if (qtyInput) {
+          qtyInput.value = String(finalQty);
         }
 
         modal.classList.add('is-open');
@@ -1288,11 +1293,11 @@
             e.stopImmediatePropagation();
           }
 
-          // 1. Determine tier quantity from the card
+          // 1. Determine tier quantity from the card (e.g. "Buy 15" -> 15)
           var tierQty = 15;
           var tierEl = quoteCard.querySelector('.Avada-ItemTier');
           if (tierEl) {
-            var match = tierEl.textContent.match(/\d+/);
+            var match = tierEl.textContent.match(/\b\d+\b/);
             if (match) {
               tierQty = parseInt(match[0], 10);
             }
@@ -1317,7 +1322,7 @@
             pageQtyInput.dispatchEvent(new Event('change', { bubbles: true }));
           }
 
-          // 4. Open modal with that quantity
+          // 4. Open modal with that exact quantity
           openModal(tierQty);
           return false;
         }
