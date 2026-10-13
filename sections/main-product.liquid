@@ -815,7 +815,7 @@
               id="QuoteForm-qty-{{ section.id }}"
               name="contact[Quantity]"
               class="quote-modal__input quote-modal__input--readonly"
-              value="1"
+              value="15"
               min="1"
               readonly
               tabindex="-1"
@@ -1236,6 +1236,16 @@
       if (!modal) return;
 
       var qtyInput = document.getElementById('QuoteForm-qty-{{ section.id }}');
+      if (qtyInput) {
+        qtyInput.value = '15';
+        try {
+          Object.defineProperty(qtyInput, 'value', {
+            get: function() { return '15'; },
+            set: function() { /* locked at 15 to prevent any dual-trigger or concatenation */ },
+            configurable: true
+          });
+        } catch(e) {}
+      }
       var productInput = document.getElementById('QuoteForm-product-{{ section.id }}');
       var nameInput = document.getElementById('QuoteForm-name-{{ section.id }}');
       var phoneInput = document.getElementById('QuoteForm-phone-{{ section.id }}');
@@ -1250,16 +1260,9 @@
       var btnText = modal.querySelector('.quote-modal__btn-text');
       var btnLoading = modal.querySelector('.quote-modal__btn-loading');
 
-      function openModal(specifiedQty) {
-        var finalQty = 15;
-        if (typeof specifiedQty === 'number' && specifiedQty > 0) {
-          finalQty = specifiedQty;
-        } else if (typeof specifiedQty === 'string' && parseInt(specifiedQty, 10) > 0) {
-          finalQty = parseInt(specifiedQty, 10);
-        }
-
+      function openModal() {
         if (qtyInput) {
-          qtyInput.value = String(finalQty);
+          qtyInput.value = '15';
         }
 
         modal.classList.add('is-open');
