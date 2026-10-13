@@ -779,7 +779,7 @@
     }
   }
 
-  /* Mobile: 1 column (< 750px) */
+  /* Mobile: 2 columns (< 750px) */
   @media screen and (max-width: 749px) {
     .Avada-Bundle-Volume__Container .Avada-VolumeItem__Container,
     .Avada-Bundle-Volume__Container .Avada-VolumeItem__Container.Avada-VolumeItem__Container--horizontal,
@@ -787,7 +787,7 @@
     .Avada-VolumeItem__Container.Avada-VolumeItem__Container--horizontal:has(> :nth-child(3):last-child),
     .Avada-VolumeItem__Container.Avada-VolumeItem__Container--horizontal:has(> :nth-child(5):last-child),
     .Avada-VolumeItem__Container.Avada-VolumeItem__Container--horizontal:has(> :nth-child(6):last-child) {
-      grid-template-columns: 1fr !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
       gap: 0.8rem !important;
     }
   }
