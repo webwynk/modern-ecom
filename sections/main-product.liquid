@@ -761,6 +761,38 @@
   </product-component>
 </product-info>
 
+{%- comment -%} AOV Volume Discount — Responsive Grid Overrides
+  Inline <style> renders AFTER all external stylesheets (including Avada's
+  dynamically injected CSS), guaranteeing source-order win.
+{%- endcomment -%}
+<style>
+  /* Tablet: 2 columns (750px – 989px) */
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .Avada-Bundle-Volume__Container .Avada-VolumeItem__Container,
+    .Avada-Bundle-Volume__Container .Avada-VolumeItem__Container.Avada-VolumeItem__Container--horizontal,
+    .Avada-VolumeItem__Container.Avada-VolumeItem__Container--horizontal,
+    .Avada-VolumeItem__Container.Avada-VolumeItem__Container--horizontal:has(> :nth-child(3):last-child),
+    .Avada-VolumeItem__Container.Avada-VolumeItem__Container--horizontal:has(> :nth-child(5):last-child),
+    .Avada-VolumeItem__Container.Avada-VolumeItem__Container--horizontal:has(> :nth-child(6):last-child) {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 1rem !important;
+    }
+  }
+
+  /* Mobile: 1 column (< 750px) */
+  @media screen and (max-width: 749px) {
+    .Avada-Bundle-Volume__Container .Avada-VolumeItem__Container,
+    .Avada-Bundle-Volume__Container .Avada-VolumeItem__Container.Avada-VolumeItem__Container--horizontal,
+    .Avada-VolumeItem__Container.Avada-VolumeItem__Container--horizontal,
+    .Avada-VolumeItem__Container.Avada-VolumeItem__Container--horizontal:has(> :nth-child(3):last-child),
+    .Avada-VolumeItem__Container.Avada-VolumeItem__Container--horizontal:has(> :nth-child(5):last-child),
+    .Avada-VolumeItem__Container.Avada-VolumeItem__Container--horizontal:has(> :nth-child(6):last-child) {
+      grid-template-columns: 1fr !important;
+      gap: 0.8rem !important;
+    }
+  }
+</style>
+
 {% schema %}
 {
   "name": "t:sections.main-product.name",
