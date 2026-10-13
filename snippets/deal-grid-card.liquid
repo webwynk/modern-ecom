@@ -65,14 +65,7 @@
         height="200"
       >
     {%- else -%}
-      <img
-        src="{{ 'cat-handmade-rugs.jpg' | asset_url }}"
-        alt="{{ product.title | escape }}"
-        class="deal-grid-card__image"
-        loading="lazy"
-        width="200"
-        height="200"
-      >
+      {{ 'product-1' | placeholder_svg_tag: 'deal-grid-card__image' }}
     {%- endif -%}
   </a>
 
@@ -85,18 +78,16 @@
         SKU: PR-{{ product.id | slice: -4, 4 }}
       {%- endif -%}
     </span>
-    <div class="deal-grid-card__rating">
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-      </svg>
-      <span>
-        {%- if product.metafields.reviews.rating.value != blank -%}
-          {{ product.metafields.reviews.rating.value | round: 1 }} ({{ product.metafields.reviews.rating_count | default: 1 }})
-        {%- else -%}
-          4.9 ({{ product.id | slice: -2, 2 | plus: 20 }})
-        {%- endif -%}
-      </span>
-    </div>
+    {%- if product.metafields.reviews.rating.value != blank -%}
+      <div class="deal-grid-card__rating">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+        <span>
+          {{ product.metafields.reviews.rating.value | round: 1 }} ({{ product.metafields.reviews.rating_count | default: 0 }})
+        </span>
+      </div>
+    {%- endif -%}
   </div>
 
   <!-- Title (2-Line Limit) -->

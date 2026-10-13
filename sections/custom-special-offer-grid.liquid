@@ -15,8 +15,11 @@
            ======================================== -->
       {%- liquid
         assign offer_prod = section.settings.offer_product
-        if offer_prod.title == blank and section.settings.offer_product != blank
+        if offer_prod == blank and section.settings.offer_product != blank
           assign offer_prod = all_products[section.settings.offer_product]
+        endif
+        if offer_prod == blank
+          assign offer_prod = collections['all'].products.first
         endif
       -%}
       {%- assign offer_url = section.settings.offer_link -%}
@@ -24,12 +27,15 @@
         {%- assign offer_url = offer_prod.url -%}
       {%- endif -%}
       {%- if offer_url == blank -%}
-        {%- assign offer_url = '/collections/special-collection' -%}
+        {%- assign offer_url = '/collections/all' -%}
       {%- endif -%}
 
       {%- assign offer_title = section.settings.offer_title -%}
       {%- if offer_prod != blank -%}
         {%- assign offer_title = offer_prod.title -%}
+      {%- endif -%}
+      {%- if offer_title == blank -%}
+        {%- assign offer_title = 'Special Spotlight Deal' -%}
       {%- endif -%}
 
       {%- assign offer_price_str = section.settings.offer_price -%}
@@ -51,8 +57,10 @@
               <span>
                 {%- if offer_prod != blank and offer_prod.compare_at_price > offer_prod.price -%}
                   {{ offer_prod.compare_at_price | minus: offer_prod.price | money }}
+                {%- elsif section.settings.offer_save_amount != blank -%}
+                  {{ section.settings.offer_save_amount }}
                 {%- else -%}
-                  {{ section.settings.offer_save_amount | default: '$400' }}
+                  DEAL
                 {%- endif -%}
               </span>
             </div>
@@ -63,15 +71,19 @@
               <img src="{{ section.settings.offer_image | image_url: width: 500 }}" alt="{{ offer_title | escape }}" loading="lazy">
             {% elsif offer_prod != blank and offer_prod.featured_media != blank %}
               <img src="{{ offer_prod.featured_media | image_url: width: 500 }}" alt="{{ offer_title | escape }}" loading="lazy">
+            {% elsif offer_prod != blank and offer_prod.featured_image != blank %}
+              <img src="{{ offer_prod.featured_image | image_url: width: 500 }}" alt="{{ offer_title | escape }}" loading="lazy">
             {% else %}
-              <img src="{{ 'cat-handmade-rugs.jpg' | asset_url }}" alt="{{ offer_title | escape }}" loading="lazy">
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
             {% endif %}
           </div>
 
           <div class="special-offer-card__info">
             <h4 class="special-offer-card__title">{{ offer_title }}</h4>
             <div class="special-offer-card__pricing">
-              <span class="special-offer-card__price">{{ offer_price_str }}</span>
+              {% if offer_price_str != blank %}
+                <span class="special-offer-card__price">{{ offer_price_str }}</span>
+              {% endif %}
               {% if offer_old_price_str != blank %}
                 <span class="special-offer-card__old-price">{{ offer_old_price_str }}</span>
               {% endif %}
@@ -119,9 +131,6 @@
             if col_featured.title == blank and section.settings.collection_featured != blank
               assign col_featured = collections[section.settings.collection_featured]
             endif
-            if col_featured == blank or col_featured.title == blank
-              assign col_featured = collections['special-collection']
-            endif
             if col_featured == blank or col_featured.all_products_count == 0
               assign col_featured = collections['all']
             endif
@@ -137,7 +146,7 @@
                   {%- elsif product.featured_image != blank -%}
                     <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title | escape }}" loading="lazy">
                   {%- else -%}
-                    <img src="{{ 'cat-handmade-rugs.jpg' | asset_url }}" alt="{{ product.title | escape }}" loading="lazy">
+                    {{ 'product-1' | placeholder_svg_tag }}
                   {%- endif -%}
                 </div>
                 <div class="grid-product-card__footer">
@@ -154,19 +163,9 @@
               </a>
             {%- endfor -%}
           {%- else -%}
-            <a href="/collections/special-collection" class="grid-product-card">
-              <span class="grid-product-card__category">Special Collection</span>
-              <h4 class="grid-product-card__title">Handcrafted Artisan Rug</h4>
-              <div class="grid-product-card__media">
-                <img src="{{ 'cat-handmade-rugs.jpg' | asset_url }}" alt="Rug" loading="lazy">
-              </div>
-              <div class="grid-product-card__footer">
-                <div class="grid-product-card__pricing"><span class="grid-product-card__price">$349.00</span></div>
-                <button type="button" class="grid-product-card__cart-btn" aria-label="View product">
-                  <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                </button>
-              </div>
-            </a>
+            <div class="special-offer-tab__empty">
+              <p>No products found in this collection.</p>
+            </div>
           {%- endif -%}
         </div>
 
@@ -176,9 +175,6 @@
             assign col_onsale = section.settings.collection_onsale
             if col_onsale.title == blank and section.settings.collection_onsale != blank
               assign col_onsale = collections[section.settings.collection_onsale]
-            endif
-            if col_onsale == blank or col_onsale.title == blank
-              assign col_onsale = collections['special-collection']
             endif
             if col_onsale == blank or col_onsale.all_products_count == 0
               assign col_onsale = collections['all']
@@ -195,7 +191,7 @@
                   {%- elsif product.featured_image != blank -%}
                     <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title | escape }}" loading="lazy">
                   {%- else -%}
-                    <img src="{{ 'cat-executive-desks.jpg' | asset_url }}" alt="{{ product.title | escape }}" loading="lazy">
+                    {{ 'product-2' | placeholder_svg_tag }}
                   {%- endif -%}
                 </div>
                 <div class="grid-product-card__footer">
@@ -212,19 +208,9 @@
               </a>
             {%- endfor -%}
           {%- else -%}
-            <a href="/collections/special-collection" class="grid-product-card">
-              <span class="grid-product-card__category">On Sale</span>
-              <h4 class="grid-product-card__title">Executive Office Furniture</h4>
-              <div class="grid-product-card__media">
-                <img src="{{ 'cat-executive-desks.jpg' | asset_url }}" alt="Furniture" loading="lazy">
-              </div>
-              <div class="grid-product-card__footer">
-                <div class="grid-product-card__pricing"><span class="grid-product-card__price grid-product-card__price--sale">$1,249.00</span></div>
-                <button type="button" class="grid-product-card__cart-btn" aria-label="View product">
-                  <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                </button>
-              </div>
-            </a>
+            <div class="special-offer-tab__empty">
+              <p>No products found in this collection.</p>
+            </div>
           {%- endif -%}
         </div>
 
@@ -234,9 +220,6 @@
             assign col_toprated = section.settings.collection_toprated
             if col_toprated.title == blank and section.settings.collection_toprated != blank
               assign col_toprated = collections[section.settings.collection_toprated]
-            endif
-            if col_toprated == blank or col_toprated.title == blank
-              assign col_toprated = collections['handmade-rugs']
             endif
             if col_toprated == blank or col_toprated.all_products_count == 0
               assign col_toprated = collections['all']
@@ -253,7 +236,7 @@
                   {%- elsif product.featured_image != blank -%}
                     <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title | escape }}" loading="lazy">
                   {%- else -%}
-                    <img src="{{ 'cat-bokhara-rugs.jpg' | asset_url }}" alt="{{ product.title | escape }}" loading="lazy">
+                    {{ 'product-3' | placeholder_svg_tag }}
                   {%- endif -%}
                 </div>
                 <div class="grid-product-card__footer">
@@ -270,19 +253,9 @@
               </a>
             {%- endfor -%}
           {%- else -%}
-            <a href="/collections/handmade-rugs" class="grid-product-card">
-              <span class="grid-product-card__category">Top Rated</span>
-              <h4 class="grid-product-card__title">Royal Bokhara Area Rug</h4>
-              <div class="grid-product-card__media">
-                <img src="{{ 'cat-bokhara-rugs.jpg' | asset_url }}" alt="Rug" loading="lazy">
-              </div>
-              <div class="grid-product-card__footer">
-                <div class="grid-product-card__pricing"><span class="grid-product-card__price grid-product-card__price--sale">$629.00</span></div>
-                <button type="button" class="grid-product-card__cart-btn" aria-label="View product">
-                  <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                </button>
-              </div>
-            </a>
+            <div class="special-offer-tab__empty">
+              <p>No products found in this collection.</p>
+            </div>
           {%- endif -%}
         </div>
 
@@ -379,19 +352,17 @@
       "type": "text",
       "id": "offer_title",
       "label": "Offer Product Title (Fallback if no product chosen)",
-      "default": "Royal Isfahan Masterpiece Silk & Wool Area Rug"
+      "default": "Special Spotlight Deal"
     },
     {
       "type": "text",
       "id": "offer_price",
-      "label": "Sale Price (Fallback)",
-      "default": "$1,499.00"
+      "label": "Sale Price (Fallback)"
     },
     {
       "type": "text",
       "id": "offer_old_price",
-      "label": "Old Price (Fallback)",
-      "default": "$1,899.00"
+      "label": "Old Price (Fallback)"
     },
     {
       "type": "url",

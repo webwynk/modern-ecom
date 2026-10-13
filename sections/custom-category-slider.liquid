@@ -44,116 +44,103 @@
     <!-- Category Slider Track -->
     <div class="category-slider__wrapper">
       <div class="category-slider__track" id="CatTrack-{{ section.id }}" role="region" aria-label="Categories Carousel">
-        {% for block in section.blocks %}
-          {%- liquid
-            assign col = block.settings.collection
-            if col.title == blank and block.settings.collection != blank
-              assign col = collections[block.settings.collection]
-            endif
-            if col == blank or col.title == blank
-              assign slug1 = block.settings.collection | handleize
-              assign col = collections[slug1]
-            endif
-            if col == blank or col.title == blank
-              assign slug2 = block.settings.title | handleize
-              assign col = collections[slug2]
-            endif
-            if col == blank or col.title == blank
-              assign slug3 = block.settings.collection | replace: '-x-', 'x'
-              assign col = collections[slug3]
-            endif
-            if col == blank or col.title == blank
-              assign slug4 = block.settings.collection | replace: 'x', '-x-'
-              assign col = collections[slug4]
-            endif
-            if col == blank or col.title == blank
-              assign slug5 = block.settings.title | replace: ' x ', 'x' | handleize
-              assign col = collections[slug5]
-            endif
-            if col == blank or col.title == blank
-              assign slug6 = block.settings.title | replace: ' ', '' | handleize
-              assign col = collections[slug6]
-            endif
-            if col == blank or col.title == blank
-              assign slug_sing = block.settings.collection | replace: '-rugs', '-rug'
-              assign col = collections[slug_sing]
-            endif
-            if col == blank or col.title == blank
-              assign slug_plur = block.settings.collection | replace: '-rug', '-rugs'
-              assign col = collections[slug_plur]
-            endif
-            if col == blank or col.title == blank
-              for c in collections
-                if c.title == block.settings.title or c.title == '3x5 Rugs'
-                  assign col = c
-                  break
-                endif
-              endfor
-            endif
+        {% if section.blocks.size > 0 %}
+          {% for block in section.blocks %}
+            {%- liquid
+              assign col = block.settings.collection
+              if col.title == blank and block.settings.collection != blank
+                assign col = collections[block.settings.collection]
+              endif
 
-            assign card_title = block.settings.title
-            if card_title == blank and col != blank and col.title != blank
-              assign card_title = col.title
-            endif
-            if card_title == blank
-              assign card_title = 'Collection'
-            endif
+              assign card_title = block.settings.title
+              if card_title == blank and col != blank and col.title != blank
+                assign card_title = col.title
+              endif
+              if card_title == blank
+                assign card_title = 'Collection ' | append: forloop.index
+              endif
 
-            assign card_url = block.settings.link
-            if card_url == blank and col != blank and col.url != blank
-              assign card_url = col.url
-            endif
-            if card_url == blank
-              assign card_url = '/collections/all'
-            endif
+              assign card_url = block.settings.link
+              if card_url == blank and col != blank and col.url != blank
+                assign card_url = col.url
+              endif
+              if card_url == blank
+                assign card_url = '/collections/all'
+              endif
 
-            assign card_count = block.settings.count
-            if card_count == blank and col != blank and col.all_products_count != blank
-              assign card_count = col.all_products_count | append: ' Items'
-            endif
+              assign card_count = block.settings.count
+              if card_count == blank and col != blank and col.all_products_count != blank
+                assign card_count = col.all_products_count | append: ' Items'
+              endif
 
-            assign card_image = block.settings.image
-            if card_image == blank and col != blank and col.featured_image != blank
-              assign card_image = col.featured_image
-            endif
-            if card_image == blank and col != blank and col.products.first.featured_image != blank
-              assign card_image = col.products.first.featured_image
-            endif
-          -%}
-          <a
-            href="{{ card_url }}"
-            class="category-card"
-            {{ block.shopify_attributes }}
-          >
-            <div class="category-card__image-wrapper">
-              {% if card_image != blank %}
-                <img
-                  src="{{ card_image | image_url: width: 320 }}"
-                  alt="{{ card_title | escape }}"
-                  class="category-card__image"
-                  loading="lazy"
-                  width="160"
-                  height="160"
-                >
-              {% elsif block.settings.static_image != blank %}
-                <img
-                  src="{{ block.settings.static_image | asset_url }}"
-                  alt="{{ card_title | escape }}"
-                  class="category-card__image"
-                  loading="lazy"
-                  width="160"
-                  height="160"
-                >
-              {% else %}
-                {{ 'collection-1' | placeholder_svg_tag: 'category-card__image' }}
+              assign card_image = block.settings.image
+              if card_image == blank and col != blank and col.featured_image != blank
+                assign card_image = col.featured_image
+              endif
+              if card_image == blank and col != blank and col.products.first.featured_image != blank
+                assign card_image = col.products.first.featured_image
+              endif
+            -%}
+            <a
+              href="{{ card_url }}"
+              class="category-card"
+              {{ block.shopify_attributes }}
+            >
+              <div class="category-card__image-wrapper">
+                {% if card_image != blank %}
+                  <img
+                    src="{{ card_image | image_url: width: 320 }}"
+                    alt="{{ card_title | escape }}"
+                    class="category-card__image"
+                    loading="lazy"
+                    width="160"
+                    height="160"
+                  >
+                {% else %}
+                  {{ 'collection-1' | placeholder_svg_tag: 'category-card__image' }}
+                {% endif %}
+              </div>
+              <h3 class="category-card__title">{{ card_title }}</h3>
+              {% if card_count != blank %}
+                <span class="category-card__count">{{ card_count }}</span>
               {% endif %}
-            </div>
-            <h3 class="category-card__title">{{ card_title }}</h3>
-            {% if card_count != blank %}
-              <span class="category-card__count">{{ card_count }}</span>
-            {% endif %}
-          </a>
-        {% endfor %}
+            </a>
+          {% endfor %}
+        {% else %}
+          <!-- Dynamic Store Collections Loop when no blocks configured -->
+          {% for col in collections limit: 12 %}
+            <a
+              href="{{ col.url }}"
+              class="category-card"
+            >
+              <div class="category-card__image-wrapper">
+                {% if col.featured_image != blank %}
+                  <img
+                    src="{{ col.featured_image | image_url: width: 320 }}"
+                    alt="{{ col.title | escape }}"
+                    class="category-card__image"
+                    loading="lazy"
+                    width="160"
+                    height="160"
+                  >
+                {% elsif col.products.first.featured_image != blank %}
+                  <img
+                    src="{{ col.products.first.featured_image | image_url: width: 320 }}"
+                    alt="{{ col.title | escape }}"
+                    class="category-card__image"
+                    loading="lazy"
+                    width="160"
+                    height="160"
+                  >
+                {% else %}
+                  {{ 'collection-1' | placeholder_svg_tag: 'category-card__image' }}
+                {% endif %}
+              </div>
+              <h3 class="category-card__title">{{ col.title }}</h3>
+              <span class="category-card__count">{{ col.all_products_count }} Items</span>
+            </a>
+          {% endfor %}
+        {% endif %}
       </div>
     </div>
   </div>
@@ -253,60 +240,12 @@
     {
       "name": "Category Slider",
       "blocks": [
-        {
-          "type": "category_card",
-          "settings": {
-            "collection": "handmade-rugs"
-          }
-        },
-        {
-          "type": "category_card",
-          "settings": {
-            "collection": "4-x-6-rugs"
-          }
-        },
-        {
-          "type": "category_card",
-          "settings": {
-            "collection": "3x5-rug"
-          }
-        },
-        {
-          "type": "category_card",
-          "settings": {
-            "collection": "executive-desks"
-          }
-        },
-        {
-          "type": "category_card",
-          "settings": {
-            "collection": "small-rugs"
-          }
-        },
-        {
-          "type": "category_card",
-          "settings": {
-            "collection": "office-chairs"
-          }
-        },
-        {
-          "type": "category_card",
-          "settings": {
-            "collection": "storage"
-          }
-        },
-        {
-          "type": "category_card",
-          "settings": {
-            "collection": "table"
-          }
-        },
-        {
-          "type": "category_card",
-          "settings": {
-            "collection": "special-collection"
-          }
-        }
+        { "type": "category_card" },
+        { "type": "category_card" },
+        { "type": "category_card" },
+        { "type": "category_card" },
+        { "type": "category_card" },
+        { "type": "category_card" }
       ]
     }
   ]
