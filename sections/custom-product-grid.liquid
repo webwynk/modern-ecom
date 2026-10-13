@@ -156,7 +156,7 @@
                 assign col = collections[block.settings.collection]
               endif
 
-              assign prod_count = col.all_products_count | default: 0
+              assign prod_count = col.products.size | default: 0
             -%}
             {%- comment %} Strictly omit any collection with 0 products or invalid collection {% endcomment -%}
             {%- if col == blank or prod_count == 0 -%}
@@ -183,26 +183,16 @@
                 {% endfor %}
               </ul>
 
-              <!-- Pagination Controls for this Tab Panel -->
+              <!-- Clean Prev/Next Pagination Controls -->
               {% if section.settings.enable_pagination and total_pages > 1 and prod_count > 0 %}
                 <div class="deal-pagination" aria-label="Pagination">
-                  <button type="button" class="deal-pagination__nav-btn deal-pagination__prev" disabled aria-label="Previous page">
+                  <button type="button" class="deal-pagination__nav-btn deal-pagination__prev is-disabled" disabled aria-label="Previous page">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
                     <span>Prev</span>
                   </button>
-                  <div class="deal-pagination__pages">
-                    {% for p in (1..total_pages) %}
-                      <button
-                        type="button"
-                        class="deal-pagination__page-btn {% if forloop.first %}is-active{% endif %}"
-                        data-page-target="{{ p }}"
-                        aria-label="Go to page {{ p }}"
-                        {% if forloop.first %}aria-current="page"{% endif %}
-                      >
-                        {{ p }}
-                      </button>
-                    {% endfor %}
-                  </div>
+                  <span class="deal-pagination__info">
+                    Page <strong class="deal-pagination__current">1</strong> of <span class="deal-pagination__total">{{ total_pages }}</span>
+                  </span>
                   <button type="button" class="deal-pagination__nav-btn deal-pagination__next" aria-label="Next page">
                     <span>Next</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -221,7 +211,7 @@
           {% if col.all_products_count > 0 and col.handle != 'all' %}
             {%- assign rendered_panels = rendered_panels | plus: 1 -%}
             {%- liquid
-              assign prod_count = col.all_products_count | default: 0
+              assign prod_count = col.products.size | default: 0
               assign total_pages = prod_count | times: 1.0 | divided_by: per_page | ceil
               if total_pages < 1
                 assign total_pages = 1
@@ -243,23 +233,13 @@
 
               {% if section.settings.enable_pagination and total_pages > 1 and prod_count > 0 %}
                 <div class="deal-pagination" aria-label="Pagination">
-                  <button type="button" class="deal-pagination__nav-btn deal-pagination__prev" disabled aria-label="Previous page">
+                  <button type="button" class="deal-pagination__nav-btn deal-pagination__prev is-disabled" disabled aria-label="Previous page">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
                     <span>Prev</span>
                   </button>
-                  <div class="deal-pagination__pages">
-                    {% for p in (1..total_pages) %}
-                      <button
-                        type="button"
-                        class="deal-pagination__page-btn {% if forloop.first %}is-active{% endif %}"
-                        data-page-target="{{ p }}"
-                        aria-label="Go to page {{ p }}"
-                        {% if forloop.first %}aria-current="page"{% endif %}
-                      >
-                        {{ p }}
-                      </button>
-                    {% endfor %}
-                  </div>
+                  <span class="deal-pagination__info">
+                    Page <strong class="deal-pagination__current">1</strong> of <span class="deal-pagination__total">{{ total_pages }}</span>
+                  </span>
                   <button type="button" class="deal-pagination__nav-btn deal-pagination__next" aria-label="Next page">
                     <span>Next</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -495,16 +475,14 @@
             }
           }
 
-          pageBtns.forEach(function(btn) {
-            var p = parseInt(btn.getAttribute('data-page-target'), 10);
-            if (p === pageNum) {
-              btn.classList.add('is-active');
-              btn.setAttribute('aria-current', 'page');
-            } else {
-              btn.classList.remove('is-active');
-              btn.removeAttribute('aria-current');
-            }
-          });
+          var currentEl = pagination.querySelector('.deal-pagination__current');
+          if (currentEl) {
+            currentEl.textContent = pageNum;
+          }
+          var totalEl = pagination.querySelector('.deal-pagination__total');
+          if (totalEl) {
+            totalEl.textContent = totalPages;
+          }
         }
 
         // Smooth scroll to top of section on user pagination click

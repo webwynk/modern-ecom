@@ -668,9 +668,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.8rem;
+  gap: 1.6rem;
   margin-top: 3.6rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .deal-pagination__nav-btn {
@@ -678,7 +678,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  padding: 0.8rem 1.6rem;
+  padding: 0.8rem 1.8rem;
   background-color: #ffffff;
   border: 0.1rem solid rgba(0, 0, 0, 0.15);
   border-radius: 3rem;
@@ -706,49 +706,31 @@
 
 .deal-pagination__nav-btn:disabled,
 .deal-pagination__nav-btn.is-disabled {
-  opacity: 0.4;
+  opacity: 0.35;
   cursor: not-allowed;
   pointer-events: none;
-  background-color: #f5f5f5;
+  background-color: #f7f7f7;
   border-color: rgba(0, 0, 0, 0.08);
 }
 
-.deal-pagination__pages {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.deal-pagination__page-btn {
-  width: 3.8rem;
-  height: 3.8rem;
-  border-radius: 50%;
-  background-color: #ffffff;
-  border: 0.1rem solid rgba(0, 0, 0, 0.15);
-  color: #000000;
+.deal-pagination__info {
   font-family: var(--font-heading-family);
-  font-size: 1.35rem;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #666666;
+  padding: 0 0.8rem;
+  user-select: none;
+  white-space: nowrap;
 }
 
-.deal-pagination__page-btn:hover {
-  border-color: #997A51;
-  color: #997A51;
-  transform: translateY(-1px);
-}
-
-.deal-pagination__page-btn.is-active {
-  background-color: #997A51;
-  border-color: #997A51;
-  color: #ffffff;
+.deal-pagination__current {
+  color: #000000;
   font-weight: 700;
-  box-shadow: 0 4px 12px rgba(153, 122, 81, 0.28);
+}
+
+.deal-pagination__total {
+  color: #000000;
+  font-weight: 600;
 }
 
 @media screen and (max-width: 768px) {
@@ -810,18 +792,12 @@
   }
 
   .deal-pagination {
-    gap: 0.5rem;
+    gap: 1rem;
     margin-top: 2.6rem;
   }
 
-  .deal-pagination__page-btn {
-    width: 3.4rem;
-    height: 3.4rem;
-    font-size: 1.25rem;
-  }
-
   .deal-pagination__nav-btn {
-    padding: 0.7rem 1.2rem;
+    padding: 0.7rem 1.4rem;
     font-size: 1.25rem;
   }
 }
