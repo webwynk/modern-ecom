@@ -406,14 +406,6 @@
 
         var prevBtn = pagination.querySelector('.deal-pagination__prev');
         var nextBtn = pagination.querySelector('.deal-pagination__next');
-        var pageBtns = pagination.querySelectorAll('.deal-pagination__page-btn');
-
-        pageBtns.forEach(function(pBtn) {
-          pBtn.addEventListener('click', function() {
-            var targetPage = parseInt(this.getAttribute('data-page-target'), 10);
-            setPanelPage(panel, targetPage, true);
-          });
-        });
 
         if (prevBtn) {
           prevBtn.addEventListener('click', function() {
