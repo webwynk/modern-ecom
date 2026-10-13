@@ -1,10 +1,10 @@
 /* ============================================================================
-   AOV.ai (Avada) Volume Discount Widget — Reference 2-Box Grid Layout
+   AOV.ai (Avada) Volume Discount Widget — Reference 3-Column Grid Layout
    ============================================================================
    Styles the Avada Volume Discount widget to match the exact reference layout:
      - Outer container: Pale ivory background (#FFFDF2), warm gold border (#F6D565)
      - Section header: Price tag icon (🏷️) with bold "Volume Discounts" title
-     - 2-Box Grid: 2 clean columns side-by-side
+     - 3-Column Grid: 3 clean columns side-by-side (desktop), 1 column (mobile)
      - Active / Selected card: Emerald green border (#10B981), soft mint background (#EAF7EE),
        and an "APPLIED" badge pill at the top-right corner
      - Pricing: Emerald green commanding price (#00A862) with unit (/ea)
@@ -98,13 +98,13 @@
 }
 
 /* ---------------------------------------------------------------------------
-   3. 2-Box Grid Layout Container
+   3. 3-Column Grid Layout Container
    --------------------------------------------------------------------------- */
 .Avada-Bundle-Volume__Container .Avada-VolumeItem__Container,
 .Avada-Bundle-Volume__Container.Avada-Bundle-Volume__Container--Desktop .Avada-VolumeItem__Container,
 .Avada-Bundle-Volume__Container.Avada-Bundle-Volume__Container--Mobile .Avada-VolumeItem__Container {
   display: grid !important;
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   gap: 1.2rem !important;
   width: 100% !important;
   margin-top: 0.6rem !important;
@@ -410,22 +410,28 @@
 }
 
 /* ---------------------------------------------------------------------------
-   12. Responsive Tweaks for Narrow Mobile Screens (<520px)
+   12. Responsive: Mobile 1-Column Grid (< 750px)
    --------------------------------------------------------------------------- */
-@media screen and (max-width: 520px) {
+@media screen and (max-width: 749px) {
   .Avada-Bundle-Volume__Container,
   .Avada-Bundle-Volume__Container--Mobile {
     padding: 1.2rem 1rem 1.4rem !important;
   }
 
   .Avada-Bundle-Volume__Container .Avada-VolumeItem__Container,
+  .Avada-Bundle-Volume__Container.Avada-Bundle-Volume__Container--Desktop .Avada-VolumeItem__Container,
   .Avada-Bundle-Volume__Container.Avada-Bundle-Volume__Container--Mobile .Avada-VolumeItem__Container {
+    grid-template-columns: 1fr !important;
     gap: 0.8rem !important;
   }
 
   .Avada-Bundle-Volume__Container .Avada-Volume__Item {
     padding: 1.4rem 0.8rem 1.2rem !important;
     min-height: 130px !important;
+  }
+
+  .Avada-Bundle-Volume__Container .Avada-Volume__Item:last-child {
+    grid-column: auto !important;
   }
 
   .Avada-Bundle-Volume__Container .Avada-ItemTier {
@@ -460,7 +466,7 @@
 
 .AOV-VolumeTable__Rows {
   display: grid !important;
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   gap: 1.2rem !important;
 }
 
