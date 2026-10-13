@@ -1,15 +1,15 @@
 /* ============================================================================
-   AOV.ai (Avada) Volume Discount Widget — Reference 3-Column Grid Layout
+   AOV.ai (Avada) Volume Discount Widget — Reference Design Match
    ============================================================================
    Styles the Avada Volume Discount widget to match the exact reference layout:
      - Outer container: Pale ivory background (#FFFDF2), warm gold border (#F6D565)
      - Section header: Price tag icon (🏷️) with bold "Volume Discounts" title
-     - 3-Column Grid: 3 clean columns side-by-side (desktop), 1 column (mobile)
-     - Active / Selected card: Emerald green border (#10B981), soft mint background (#EAF7EE),
-       and an "APPLIED" badge pill at the top-right corner
-     - Pricing: Emerald green commanding price (#00A862) with unit (/ea)
-     - Last Box (Large Order): Full width across both columns (grid-column: 1 / -1)
-       with "Large Order?" subtitle and bold "You Should Req. Quote!" callout
+     - 3-Column Grid: 3 items per row (desktop), 1 per row (mobile)
+     - LEFT-ALIGNED text throughout (titles, subtitles, prices)
+     - Active / Selected card: Green border, mint bg, "APPLIED" pill badge inside card
+     - Pricing: Dark navy (#1a1b4b) bold price, stacked compare price below
+     - Last card: Regular grid item (NOT full-width), dashed lavender border,
+       light purple bg, chat icon, purple CTA button
    ============================================================================ */
 
 /* ---------------------------------------------------------------------------
@@ -125,16 +125,16 @@
 .Avada-Bundle-Volume__Container .Avada-Volume__Item {
   border: 1.5px solid #e2e8f0 !important;
   border-radius: 10px !important;
-  padding: 1.6rem 1rem 1.4rem !important;
+  padding: 1.6rem 1.2rem 1.4rem !important;
   background: #ffffff !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
   cursor: pointer !important;
   position: relative !important;
   display: flex !important;
   flex-direction: column !important;
-  align-items: center !important;
+  align-items: flex-start !important;
   justify-content: space-between !important;
-  text-align: center !important;
+  text-align: left !important;
   min-height: 140px !important;
   transition:
     transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
@@ -169,7 +169,7 @@
 .Avada-Bundle-Volume__Container .Avada-Volume__Item .Avada-Volume__Content {
   display: flex !important;
   flex-direction: column !important;
-  align-items: center !important;
+  align-items: flex-start !important;
   justify-content: space-between !important;
   padding-left: 0 !important;
   width: 100% !important;
@@ -180,9 +180,9 @@
 .Avada-Bundle-Volume__Container .Avada-Volume__Item .Avada-Volume__Info--TriggerQty {
   display: flex !important;
   flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-align: center !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
   gap: 0.25rem !important;
   width: 100% !important;
 }
@@ -230,20 +230,21 @@
 /* ---------------------------------------------------------------------------
    7. Top-Right "APPLIED" Badge on Selected Card
    --------------------------------------------------------------------------- */
-/* Standard Avada Badge styled at top-right corner */
+/* Standard Avada Badge styled inside card at top-right corner (pill shape) */
 .Avada-Bundle-Volume__Container .Avada-VolumeBoxBadge {
   position: absolute !important;
-  top: -10px !important;
-  right: 12px !important;
+  top: 10px !important;
+  right: 10px !important;
   left: auto !important;
   transform: none !important;
-  border-radius: 4px !important;
+  border-radius: 999px !important;
   background: #10b981 !important;
   color: #ffffff !important;
   box-shadow: 0 2px 4px rgba(16, 185, 129, 0.25) !important;
   border: none !important;
   z-index: 2 !important;
   white-space: nowrap !important;
+  padding: 0.2rem 0.7rem !important;
 }
 
 .Avada-Bundle-Volume__Container .Avada-VolumeBoxBadge .Avada-BadgeText {
@@ -275,85 +276,100 @@
 
 /* Fallback "APPLIED" badge on any selected item without an existing badge element */
 .Avada-Bundle-Volume__Container .Avada-Volume__Item.Avada-Volume__Item--Selected:not(:has(.Avada-VolumeBoxBadge))::after {
-  content: "APPLIED" !important;
+  content: "✅ APPLIED" !important;
   position: absolute !important;
-  top: -10px !important;
-  right: 12px !important;
+  top: 10px !important;
+  right: 10px !important;
   background: #10b981 !important;
   color: #ffffff !important;
   font-size: 1.05rem !important;
   font-weight: 700 !important;
   letter-spacing: 0.04em !important;
   text-transform: uppercase !important;
-  padding: 0.2rem 0.65rem !important;
-  border-radius: 4px !important;
+  padding: 0.2rem 0.7rem !important;
+  border-radius: 999px !important;
   box-shadow: 0 2px 4px rgba(16, 185, 129, 0.25) !important;
   z-index: 2 !important;
   line-height: 1.2 !important;
 }
 
 /* ---------------------------------------------------------------------------
-   8. Price Display (Emerald Green Commanding Price)
+   8. Price Display (Dark Navy Bold + Stacked Compare Price)
    --------------------------------------------------------------------------- */
 .Avada-Bundle-Volume__Container .Avada-Offer__Price {
   display: flex !important;
-  flex-direction: row !important;
-  align-items: baseline !important;
-  justify-content: center !important;
-  text-align: center !important;
-  gap: 0.2rem !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  gap: 0.15rem !important;
   width: 100% !important;
   margin-top: auto !important;
   padding-top: 0.6rem !important;
   border-top: none !important;
 }
 
-/* Discount price: bold commanding emerald green */
+/* Discount price: bold commanding dark navy */
 .Avada-Bundle-Volume__Container .Avada-Offer__PriceDiscount {
   font-size: 1.7rem !important;
   font-weight: 700 !important;
-  color: #00a862 !important;
+  color: #1a1b4b !important;
   letter-spacing: -0.01em !important;
   line-height: 1.2 !important;
 }
 
-/* Unit label: "/ea" in matching emerald green */
+/* Unit label: "/each" in matching dark navy */
 .Avada-Bundle-Volume__Container .Avada-Offer__PriceUnit {
   font-size: 1.25rem !important;
   font-weight: 600 !important;
-  color: #00a862 !important;
+  color: #1a1b4b !important;
   line-height: 1.2 !important;
 }
 
-/* Compare price: muted strikethrough */
+/* Compare price: stacked below, muted gray (no strikethrough per reference) */
 .Avada-Bundle-Volume__Container .Avada-Offer__PriceDefault {
   font-size: 1.15rem !important;
   font-weight: 400 !important;
   color: #94a3b8 !important;
-  text-decoration: line-through !important;
+  text-decoration: none !important;
   line-height: 1.2 !important;
-  margin-left: 0.35rem !important;
+  margin-left: 0 !important;
+  margin-top: 0.25rem !important;
 }
 
 /* ---------------------------------------------------------------------------
-   9. Full-Width Last Box for Large Orders
+   9. Last Card — Regular Grid Item with Lavender/Purple CTA
    --------------------------------------------------------------------------- */
 .Avada-Bundle-Volume__Container .Avada-Volume__Item:last-child {
-  grid-column: 1 / -1 !important;
-  width: 100% !important;
-  min-height: 130px !important;
-  padding: 1.6rem 1.4rem !important;
-  background: #ffffff !important;
-  border: 1.5px solid #e2e8f0 !important;
+  grid-column: auto !important;
+  min-height: 140px !important;
+  padding: 1.6rem 1.2rem 1.4rem !important;
+  background: #f5f3ff !important;
+  border: 1.5px dashed #c4b5fd !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Chat bubble icon at top-right of last card */
+.Avada-Bundle-Volume__Container .Avada-Volume__Item:last-child::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 12px !important;
+  right: 12px !important;
+  width: 28px !important;
+  height: 28px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%237c3aed'%3E%3Cpath d='M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2zm0 15.17L18.83 16H4V4h16v13.17z'/%3E%3Cpath d='M13 5h-2v4H7v2h4v4h2v-4h4V9h-4z' fill='%237c3aed'/%3E%3C/svg%3E") !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  z-index: 1 !important;
+  display: block !important;
 }
 
 /* Selected state for Large Order box */
 .Avada-Bundle-Volume__Container .Avada-Volume__Item:last-child.Avada-Volume__Item--Selected {
-  border-color: #10b981 !important;
+  border-color: #7c3aed !important;
   border-width: 2px !important;
-  background-color: #eaf7ee !important;
-  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.15) !important;
+  background-color: #ede9fe !important;
+  box-shadow: 0 2px 10px rgba(124, 58, 237, 0.15) !important;
 }
 
 /* Subtitle for Large Order card: "Large Order?" */
@@ -370,21 +386,32 @@
   margin-top: 0.2rem !important;
 }
 
-/* Hide standard numeric price on the Large Order card to feature the quote callout */
+/* Hide standard numeric price on the Large Order card */
 .Avada-Bundle-Volume__Container .Avada-Volume__Item:last-child .Avada-Offer__Price {
   display: none !important;
 }
 
-/* Large Order Quote Callout: "You Should Req. Quote!" */
+/* Purple CTA Button: "You Should Req. Quote! →" */
 .Avada-Bundle-Volume__Container .Avada-Volume__Item:last-child .Avada-Volume__Content::after {
-  content: "You Should Req. Quote!" !important;
-  display: block !important;
-  font-size: 1.7rem !important;
-  font-weight: 700 !important;
-  color: #00a862 !important;
-  margin-top: 0.6rem !important;
-  line-height: 1.2 !important;
-  letter-spacing: -0.01em !important;
+  content: "You Should Req. Quote!  →" !important;
+  display: inline-block !important;
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  background: #7c3aed !important;
+  padding: 0.6rem 1.4rem !important;
+  border-radius: 8px !important;
+  margin-top: 0.8rem !important;
+  line-height: 1.3 !important;
+  letter-spacing: 0 !important;
+  box-shadow: 0 2px 6px rgba(124, 58, 237, 0.25) !important;
+  transition: background 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+/* Hover state for the purple CTA */
+.Avada-Bundle-Volume__Container .Avada-Volume__Item:last-child:hover .Avada-Volume__Content::after {
+  background: #6d28d9 !important;
+  box-shadow: 0 4px 10px rgba(124, 58, 237, 0.35) !important;
 }
 
 /* ---------------------------------------------------------------------------
@@ -492,7 +519,7 @@
 }
 
 .AOV-VolumeTable__Row:last-child {
-  grid-column: 1 / -1 !important;
+  grid-column: auto !important;
 }
 
 .AOV-VolumeTable__Row:hover {
