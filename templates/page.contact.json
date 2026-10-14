@@ -12,20 +12,12 @@
     "custom_contact": {
       "type": "custom-contact",
       "settings": {
-        "badge_text": "24/7 Dedicated Support",
-        "heading": "Get in Touch with SniMart",
-        "subheading": "Have questions about our collections, custom orders, or delivery? Our dedicated concierge team is at your service.",
-        "info_heading": "Contact Information",
-        "info_desc": "We look forward to hearing from you. Connect with our dedicated concierge team through any channel below.",
-        "address": "11373 Trade Center Dr, Suite 245, Rancho Cordova, CA 95742, USA",
-        "phone": "(888) 795-8816",
-        "phone_hours": "Mon – Fri: 9:00 AM – 6:00 PM EST",
+        "badge_text": "Contact",
+        "heading": "How can we help you today?",
+        "subheading": "Our dedicated customer support team is just a message or call away.",
         "email": "support@snimart.com",
-        "fax": "(510) 225-1054",
-        "form_heading": "Send Us a Message",
-        "form_desc": "Fill out the form below and our concierge team will respond promptly.",
-        "show_quick_help": true,
-        "quick_title": "Looking for Quick Answers?"
+        "phone": "+1 (888) 795-8816",
+        "address": "11373 Trade Center Dr, Suite 245, Rancho Cordova, CA 95742, USA"
       }
     }
   },

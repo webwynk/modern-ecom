@@ -1,338 +1,219 @@
 {% comment %}
-  Custom Modern Luxury Contact Us Section
+  Compact Modern Luxury Contact Us Section
   SniMart E-Commerce
-  Per docs/design.md: DM Sans, #997A51 accent, #000000, 3 responsive breakpoints
-  Features:
-  - Hero Header with luxury accent badge and divider
-  - 2-Column Desktop Grid (Left: Showroom & Direct Contact Channels, Right: Interactive Form)
-  - Full Form Handling with inline error/success validation
-  - Bottom Quick Help Cards Strip (Tracking, Returns, Sizing)
+  Matches User Reference Design with SniMart Brand Guide Tokens (#997A51, DM Sans, #000000)
 {% endcomment %}
 
 {{ 'component-custom-contact.css' | asset_url | stylesheet_tag }}
 
 <section class="custom-contact-section" id="CustomContact-{{ section.id }}" aria-label="{{ section.settings.heading | default: 'Contact Us' }}">
   <div class="custom-contact__container">
-    
-    <!-- Hero Header -->
-    <header class="custom-contact__header">
-      {%- if section.settings.badge_text != blank -%}
-        <span class="custom-contact__badge">{{ section.settings.badge_text }}</span>
-      {%- endif -%}
-
-      <h1 class="custom-contact__title">
-        {{ section.settings.heading | default: 'Get in Touch with SniMart' }}
-      </h1>
-
-      {%- if section.settings.subheading != blank -%}
-        <p class="custom-contact__subtitle">
-          {{ section.settings.subheading }}
-        </p>
-      {%- endif -%}
-
-      <div class="custom-contact__divider" aria-hidden="true"></div>
-    </header>
-
-    <!-- Main 2-Column Split Grid -->
     <div class="custom-contact__grid">
       
       <!-- ========================================
-           COLUMN 1: Contact Information & Channels
+           LEFT COLUMN: Information & Headings
            ======================================== -->
-      <aside class="custom-contact__info-card">
-        <h2 class="custom-contact__info-heading">{{ section.settings.info_heading | default: 'Contact Information' }}</h2>
-        <p class="custom-contact__info-desc">{{ section.settings.info_desc | default: 'We look forward to hearing from you. Connect with our dedicated concierge team through any channel below.' }}</p>
+      <div class="custom-contact__info-col">
+        
+        <!-- Compact Pill Badge -->
+        <div class="custom-contact__badge-wrap">
+          <span class="custom-contact__badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-badge__icon" aria-hidden="true">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span>{{ section.settings.badge_text | default: 'Contact' }}</span>
+          </span>
+        </div>
 
+        <!-- Big Bold Modern Heading -->
+        <h1 class="custom-contact__title">
+          {{ section.settings.heading | default: 'How can we help you today?' }}
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="custom-contact__subtitle">
+          {{ section.settings.subheading | default: 'Our dedicated customer support team is just a message or call away.' }}
+        </p>
+
+        <!-- 3 Contact Channels with Rounded Squircles -->
         <div class="custom-contact__channels">
           
-          <!-- Channel: Address -->
-          {%- if section.settings.address != blank -%}
-            <div class="contact-channel-item">
-              <div class="contact-channel__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                  <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-              </div>
-              <div class="contact-channel__details">
-                <div class="contact-channel__label">Showroom &amp; Office</div>
-                <p class="contact-channel__value">{{ section.settings.address }}</p>
-              </div>
-            </div>
-          {%- endif -%}
-
-          <!-- Channel: Phone -->
-          {%- if section.settings.phone != blank -%}
-            <div class="contact-channel-item">
-              <div class="contact-channel__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                </svg>
-              </div>
-              <div class="contact-channel__details">
-                <div class="contact-channel__label">Telephone Support</div>
-                <p class="contact-channel__value">
-                  <a href="tel:{{ section.settings.phone | replace: ' ', '' | replace: '(', '' | replace: ')', '' | replace: '-', '' }}">{{ section.settings.phone }}</a>
-                </p>
-                {%- if section.settings.phone_hours != blank -%}
-                  <p class="contact-channel__subtext">{{ section.settings.phone_hours }}</p>
-                {%- endif -%}
-              </div>
-            </div>
-          {%- endif -%}
-
-          <!-- Channel: Email -->
+          <!-- Channel 1: Email -->
           {%- if section.settings.email != blank -%}
-            <div class="contact-channel-item">
-              <div class="contact-channel__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                  <polyline points="22,6 12,13 2,6"></polyline>
+            <div class="contact-channel-row">
+              <div class="contact-channel__squircle" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                 </svg>
               </div>
-              <div class="contact-channel__details">
-                <div class="contact-channel__label">Concierge Email</div>
-                <p class="contact-channel__value">
-                  <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>
-                </p>
-                <p class="contact-channel__subtext">Guaranteed response within 24 hours</p>
+              <div class="contact-channel__content">
+                <div class="contact-channel__label">Email:</div>
+                <a href="mailto:{{ section.settings.email }}" class="contact-channel__link">{{ section.settings.email }}</a>
               </div>
             </div>
           {%- endif -%}
 
-          <!-- Channel: Fax -->
-          {%- if section.settings.fax != blank -%}
-            <div class="contact-channel-item">
-              <div class="contact-channel__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="6 9 6 2 18 2 18 9"></polyline>
-                  <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
-                  <rect x="6" y="14" width="12" height="8"></rect>
+          <!-- Channel 2: Phone -->
+          {%- if section.settings.phone != blank -%}
+            <div class="contact-channel-row">
+              <div class="contact-channel__squircle" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                 </svg>
               </div>
-              <div class="contact-channel__details">
-                <div class="contact-channel__label">Direct Fax</div>
-                <p class="contact-channel__value">{{ section.settings.fax }}</p>
+              <div class="contact-channel__content">
+                <div class="contact-channel__label">Phone:</div>
+                <a href="tel:{{ section.settings.phone | replace: ' ', '' | replace: '(', '' | replace: ')', '' | replace: '-', '' }}" class="contact-channel__link">{{ section.settings.phone }}</a>
+              </div>
+            </div>
+          {%- endif -%}
+
+          <!-- Channel 3: Location -->
+          {%- if section.settings.address != blank -%}
+            <div class="contact-channel-row">
+              <div class="contact-channel__squircle" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+              </div>
+              <div class="contact-channel__content">
+                <div class="contact-channel__label">Location:</div>
+                <div class="contact-channel__text">{{ section.settings.address }}</div>
               </div>
             </div>
           {%- endif -%}
 
         </div>
 
-        <!-- Trust Badges Block in Card -->
-        <div class="contact-info__trust">
-          <div class="contact-trust-pill">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-            </svg>
-            <span>100% Dedicated Artisan Care &amp; Support</span>
-          </div>
-          <div class="contact-trust-pill">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="1" y="3" width="15" height="13"></rect>
-              <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
-              <circle cx="5.5" cy="18.5" r="2.5"></circle>
-              <circle cx="18.5" cy="18.5" r="2.5"></circle>
-            </svg>
-            <span>Fast, Insured Nationwide Delivery Tracking</span>
-          </div>
-        </div>
-      </aside>
+      </div>
 
       <!-- ========================================
-           COLUMN 2: Modern Interactive Contact Form
+           RIGHT COLUMN: Compact Form Card
            ======================================== -->
-      <div class="custom-contact__form-card">
-        <h2 class="custom-contact__form-heading">{{ section.settings.form_heading | default: 'Send Us a Message' }}</h2>
-        <p class="custom-contact__form-desc">{{ section.settings.form_desc | default: 'Fill out the form below and our concierge team will respond promptly.' }}</p>
-
-        {%- form 'contact', id: 'CustomContactForm', class: 'custom-contact__form' -%}
+      <div class="custom-contact__form-col">
+        <div class="custom-contact__card">
           
-          {%- if form.posted_successfully? -%}
-            <div class="custom-contact__status custom-contact__status--success" role="status" tabindex="-1" autofocus>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-              </svg>
-              <div>
-                <strong>Thank you!</strong> Your message has been sent successfully. We will reply shortly.
+          {%- form 'contact', id: 'ContactFormCompact', class: 'contact-form-compact' -%}
+            
+            {%- if form.posted_successfully? -%}
+              <div class="form-compact__alert form-compact__alert--success" role="status" tabindex="-1" autofocus>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <span><strong>Thank you!</strong> Your message has been sent successfully. We will be in touch shortly.</span>
+              </div>
+            {%- elsif form.errors -%}
+              <div class="form-compact__alert form-compact__alert--error" role="alert" tabindex="-1" autofocus>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span><strong>Please check your submission:</strong> {{ form.errors | default_errors }}</span>
+              </div>
+            {%- endif -%}
+
+            <!-- Row 1: First name & Last name -->
+            <div class="form-compact__row form-compact__row--two-col">
+              <div class="form-compact__field">
+                <label for="ContactFirstName-{{ section.id }}" class="form-compact__label">First name*</label>
+                <input 
+                  type="text" 
+                  id="ContactFirstName-{{ section.id }}" 
+                  name="contact[first_name]" 
+                  class="form-compact__input" 
+                  placeholder="First name" 
+                  required 
+                  autocomplete="given-name"
+                >
+              </div>
+              <div class="form-compact__field">
+                <label for="ContactLastName-{{ section.id }}" class="form-compact__label">Last name*</label>
+                <input 
+                  type="text" 
+                  id="ContactLastName-{{ section.id }}" 
+                  name="contact[last_name]" 
+                  class="form-compact__input" 
+                  placeholder="Last name" 
+                  required 
+                  autocomplete="family-name"
+                >
               </div>
             </div>
-          {%- elsif form.errors -%}
-            <div class="custom-contact__status custom-contact__status--error" role="alert" tabindex="-1" autofocus>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="8" x2="12" y2="12"></line>
-                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-              </svg>
-              <div>
-                <strong>Please check your submission:</strong> {{ form.errors | default_errors }}
+
+            <!-- Row 2: Work email -->
+            <div class="form-compact__row">
+              <div class="form-compact__field">
+                <label for="ContactEmail-{{ section.id }}" class="form-compact__label">Work email*</label>
+                <input 
+                  type="email" 
+                  id="ContactEmail-{{ section.id }}" 
+                  name="contact[email]" 
+                  class="form-compact__input" 
+                  placeholder="Enter email" 
+                  required 
+                  autocomplete="email"
+                  spellcheck="false" 
+                  autocapitalize="off"
+                >
               </div>
             </div>
-          {%- endif -%}
 
-          <!-- Row 1: Name & Email -->
-          <div class="custom-contact__row custom-contact__row--two-col">
-            <div class="custom-contact__field">
-              <label for="ContactName-{{ section.id }}">Full Name <span class="required-star">*</span></label>
-              <input 
-                type="text" 
-                id="ContactName-{{ section.id }}" 
-                name="contact[name]" 
-                class="custom-contact__input" 
-                placeholder="e.g. Eleanor Vance" 
-                value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}" 
-                required 
-                autocomplete="name"
-              >
+            <!-- Row 3: Phone number with country prefix -->
+            <div class="form-compact__row">
+              <div class="form-compact__field">
+                <label for="ContactPhone-{{ section.id }}" class="form-compact__label">Phone number*</label>
+                <div class="form-compact__phone-wrap">
+                  <div class="form-compact__phone-prefix" aria-hidden="true">
+                    <span class="phone-prefix__flag">🇺🇸</span>
+                    <span class="phone-prefix__code">+1</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="phone-prefix__chevron">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </div>
+                  <input 
+                    type="tel" 
+                    id="ContactPhone-{{ section.id }}" 
+                    name="contact[phone]" 
+                    class="form-compact__phone-input" 
+                    placeholder="Enter phone number" 
+                    required 
+                    autocomplete="tel"
+                  >
+                </div>
+              </div>
             </div>
-            <div class="custom-contact__field">
-              <label for="ContactEmail-{{ section.id }}">Email Address <span class="required-star">*</span></label>
-              <input 
-                type="email" 
-                id="ContactEmail-{{ section.id }}" 
-                name="contact[email]" 
-                class="custom-contact__input" 
-                placeholder="e.g. eleanor@example.com" 
-                value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" 
-                required 
-                autocomplete="email"
-                spellcheck="false" 
-                autocapitalize="off"
-              >
+
+            <!-- Row 4: Message -->
+            <div class="form-compact__row">
+              <div class="form-compact__field">
+                <label for="ContactMessage-{{ section.id }}" class="form-compact__label">Message*</label>
+                <textarea 
+                  id="ContactMessage-{{ section.id }}" 
+                  name="contact[body]" 
+                  class="form-compact__textarea" 
+                  placeholder="Enter a question, feedback, or suggestions..." 
+                  rows="4" 
+                  required
+                ></textarea>
+              </div>
             </div>
-          </div>
 
-          <!-- Row 2: Phone & Order / Subject -->
-          <div class="custom-contact__row custom-contact__row--two-col">
-            <div class="custom-contact__field">
-              <label for="ContactPhone-{{ section.id }}">Phone Number</label>
-              <input 
-                type="tel" 
-                id="ContactPhone-{{ section.id }}" 
-                name="contact[phone]" 
-                class="custom-contact__input" 
-                placeholder="e.g. (888) 795-8816" 
-                value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}" 
-                autocomplete="tel"
-              >
+            <!-- Row 5: Submit Button -->
+            <div class="form-compact__submit-wrap">
+              <button type="submit" class="form-compact__submit-btn">
+                <span>Submit</span>
+              </button>
             </div>
-            <div class="custom-contact__field">
-              <label for="ContactSubject-{{ section.id }}">Inquiry Topic / Order #</label>
-              <input 
-                type="text" 
-                id="ContactSubject-{{ section.id }}" 
-                name="contact[Inquiry Topic]" 
-                class="custom-contact__input" 
-                placeholder="e.g. Custom Sizing / Order #1042"
-              >
-            </div>
-          </div>
 
-          <!-- Row 3: Message Textarea -->
-          <div class="custom-contact__row">
-            <div class="custom-contact__field">
-              <label for="ContactBody-{{ section.id }}">How can we help? <span class="required-star">*</span></label>
-              <textarea 
-                id="ContactBody-{{ section.id }}" 
-                name="contact[body]" 
-                class="custom-contact__textarea" 
-                placeholder="Tell us about the piece you are interested in, your project dimensions, or your order question..." 
-                required
-              >{{ form.body }}</textarea>
-            </div>
-          </div>
+          {%- endform -%}
 
-          <!-- Submit Button & Assurance -->
-          <div class="custom-contact__submit-wrap">
-            <button type="submit" class="custom-contact__submit-btn">
-              <span>Send Message</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </button>
-            <p class="custom-contact__assurance">🔒 Your information is confidential and will never be shared with third parties.</p>
-          </div>
-
-        {%- endform -%}
-
+        </div>
       </div>
 
     </div>
-
-    <!-- ========================================
-         BOTTOM: Quick Help Cards Strip
-         ======================================== -->
-    {%- if section.settings.show_quick_help -%}
-      <div class="custom-contact__quick-help">
-        <h3 class="custom-contact__quick-title">{{ section.settings.quick_title | default: 'Looking for Quick Answers?' }}</h3>
-        
-        <div class="quick-help-grid">
-          
-          <!-- Card 1: Track Shipment -->
-          <a href="/pages/track-order" class="quick-help-card">
-            <div class="quick-help__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="1" y="3" width="15" height="13"></rect>
-                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
-                <circle cx="5.5" cy="18.5" r="2.5"></circle>
-                <circle cx="18.5" cy="18.5" r="2.5"></circle>
-              </svg>
-            </div>
-            <div class="quick-help__text">
-              <h4 class="quick-help__title">Track My Order</h4>
-              <p class="quick-help__desc">Check live courier transit updates &amp; estimated delivery.</p>
-            </div>
-            <div class="quick-help__arrow" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </div>
-          </a>
-
-          <!-- Card 2: Returns & Refunds -->
-          <a href="/policies/refund-policy" class="quick-help-card">
-            <div class="quick-help__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="1 4 1 10 7 10"></polyline>
-                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-              </svg>
-            </div>
-            <div class="quick-help__text">
-              <h4 class="quick-help__title">Returns &amp; Refunds</h4>
-              <p class="quick-help__desc">Review our seamless 15-day return policy &amp; instructions.</p>
-            </div>
-            <div class="quick-help__arrow" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </div>
-          </a>
-
-          <!-- Card 3: Custom Sizing -->
-          <a href="/pages/bespoke-rugs" class="quick-help-card">
-            <div class="quick-help__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-              </svg>
-            </div>
-            <div class="quick-help__text">
-              <h4 class="quick-help__title">Custom Rug Sizing</h4>
-              <p class="quick-help__desc">Commission tailored dimensions for your architectural space.</p>
-            </div>
-            <div class="quick-help__arrow" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </div>
-          </a>
-
-        </div>
-      </div>
-    {%- endif -%}
-
   </div>
 </section>
 
@@ -343,60 +224,26 @@
   "class": "section-custom-contact-wrapper",
   "settings": [
     {
-      "type": "header",
-      "content": "Hero Header"
-    },
-    {
       "type": "text",
       "id": "badge_text",
       "label": "Badge Text",
-      "default": "24/7 Dedicated Support"
+      "default": "Contact"
     },
     {
       "type": "text",
       "id": "heading",
-      "label": "Page Title",
-      "default": "Get in Touch with SniMart"
+      "label": "Main Heading",
+      "default": "How can we help you today?"
     },
     {
       "type": "textarea",
       "id": "subheading",
       "label": "Subtitle",
-      "default": "Have questions about our collections, custom orders, or delivery? Our dedicated concierge team is at your service."
+      "default": "Our dedicated customer support team is just a message or call away."
     },
     {
       "type": "header",
-      "content": "Contact Information Card"
-    },
-    {
-      "type": "text",
-      "id": "info_heading",
-      "label": "Card Heading",
-      "default": "Contact Information"
-    },
-    {
-      "type": "textarea",
-      "id": "info_desc",
-      "label": "Card Description",
-      "default": "We look forward to hearing from you. Connect with our dedicated concierge team through any channel below."
-    },
-    {
-      "type": "text",
-      "id": "address",
-      "label": "Showroom Address",
-      "default": "11373 Trade Center Dr, Suite 245, Rancho Cordova, CA 95742, USA"
-    },
-    {
-      "type": "text",
-      "id": "phone",
-      "label": "Phone Number",
-      "default": "(888) 795-8816"
-    },
-    {
-      "type": "text",
-      "id": "phone_hours",
-      "label": "Phone Support Hours",
-      "default": "Mon – Fri: 9:00 AM – 6:00 PM EST"
+      "content": "Contact Details"
     },
     {
       "type": "text",
@@ -406,41 +253,15 @@
     },
     {
       "type": "text",
-      "id": "fax",
-      "label": "Fax Number",
-      "default": "(510) 225-1054"
-    },
-    {
-      "type": "header",
-      "content": "Form Card"
-    },
-    {
-      "type": "text",
-      "id": "form_heading",
-      "label": "Form Heading",
-      "default": "Send Us a Message"
+      "id": "phone",
+      "label": "Phone Number",
+      "default": "+1 (888) 795-8816"
     },
     {
       "type": "textarea",
-      "id": "form_desc",
-      "label": "Form Subtext",
-      "default": "Fill out the form below and our concierge team will respond promptly."
-    },
-    {
-      "type": "header",
-      "content": "Quick Help Cards Strip"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_quick_help",
-      "label": "Show Quick Help Strip",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "quick_title",
-      "label": "Quick Help Title",
-      "default": "Looking for Quick Answers?"
+      "id": "address",
+      "label": "Location Address",
+      "default": "11373 Trade Center Dr, Suite 245, Rancho Cordova, CA 95742, USA"
     }
   ],
   "presets": [

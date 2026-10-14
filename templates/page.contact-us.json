@@ -1,0 +1,27 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_contact": {
+      "type": "custom-contact",
+      "settings": {
+        "badge_text": "Contact",
+        "heading": "How can we help you today?",
+        "subheading": "Our dedicated customer support team is just a message or call away.",
+        "email": "support@snimart.com",
+        "phone": "+1 (888) 795-8816",
+        "address": "11373 Trade Center Dr, Suite 245, Rancho Cordova, CA 95742, USA"
+      }
+    }
+  },
+  "order": [
+    "custom_contact"
+  ]
+}
