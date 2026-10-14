@@ -74,7 +74,17 @@
     position: absolute;
     width: 24px;
     height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: opacity 0.2s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .support-fab__icon-open svg,
+  .support-fab__icon-close svg {
+    width: 24px;
+    height: 24px;
+    display: block;
   }
 
   .support-fab__icon-open {
@@ -95,6 +105,14 @@
   .support-fab--open .support-fab__icon-close {
     opacity: 1;
     transform: rotate(0deg) scale(1);
+  }
+
+  /* Hide back to top when FAB is open to prevent collision */
+  body.support-fab-active .footer-scroll-top-btn,
+  .support-fab--open ~ footer .footer-scroll-top-btn {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
   }
 
   /* Menu container */
@@ -224,6 +242,7 @@
     border-radius: 50%;
     border: 2px solid rgba(153, 122, 81, 0.35);
     animation: supportFabPulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    pointer-events: none;
   }
 
   .support-fab--open .support-fab__toggle::before {
@@ -253,6 +272,12 @@
 
     .support-fab__icon-open,
     .support-fab__icon-close {
+      width: 22px;
+      height: 22px;
+    }
+
+    .support-fab__icon-open svg,
+    .support-fab__icon-close svg {
       width: 22px;
       height: 22px;
     }
@@ -377,10 +402,8 @@
     <!-- Headset / Support Icon (shown when closed) -->
     <span class="support-fab__icon-open" aria-hidden="true">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M18 18h1a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2h-1v5z"/>
-        <path d="M6 18H5a2 2 0 0 1-2-2v-1a2 2 0 0 1 2-2h1v5z"/>
-        <path d="M3 13V8a9 9 0 0 1 18 0v5"/>
-        <path d="M18 18a4 4 0 0 1-4 4h-2"/>
+        <path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z"/>
+        <path d="M21 16v2a4 4 0 0 1-4 4h-5"/>
       </svg>
     </span>
 
@@ -402,9 +425,16 @@
     var toggle = document.getElementById('SupportFab-Toggle');
     var backdrop = document.getElementById('SupportFab-Backdrop');
     var menuItems = fab.querySelectorAll('.support-fab__link');
+    var scrollTopBtn = document.getElementById('footerScrollTop');
 
     function openFab() {
       fab.classList.add('support-fab--open');
+      document.body.classList.add('support-fab-active');
+      if (scrollTopBtn) {
+        scrollTopBtn.style.opacity = '0';
+        scrollTopBtn.style.visibility = 'hidden';
+        scrollTopBtn.style.pointerEvents = 'none';
+      }
       toggle.setAttribute('aria-expanded', 'true');
       toggle.setAttribute('aria-label', 'Close support options');
       /* Enable tabbing into menu items */
@@ -415,6 +445,12 @@
 
     function closeFab() {
       fab.classList.remove('support-fab--open');
+      document.body.classList.remove('support-fab-active');
+      if (scrollTopBtn && window.pageYOffset > 400) {
+        scrollTopBtn.style.opacity = '1';
+        scrollTopBtn.style.visibility = 'visible';
+        scrollTopBtn.style.pointerEvents = 'auto';
+      }
       toggle.setAttribute('aria-expanded', 'false');
       toggle.setAttribute('aria-label', 'Open support options');
       /* Disable tabbing into menu items */

@@ -336,9 +336,11 @@
         if (window.pageYOffset > 400) {
           scrollBtn.style.opacity = '1';
           scrollBtn.style.visibility = 'visible';
+          scrollBtn.style.pointerEvents = 'auto';
         } else {
           scrollBtn.style.opacity = '0';
           scrollBtn.style.visibility = 'hidden';
+          scrollBtn.style.pointerEvents = 'none';
         }
       });
     }

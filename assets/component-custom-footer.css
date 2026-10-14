@@ -397,11 +397,11 @@
   display: block;
 }
 
-/* Back to Top Floating Button */
+/* Back to Top Floating Button (positioned above Support FAB) */
 .footer-scroll-top-btn {
   position: fixed;
-  bottom: 2.4rem;
-  right: 2.4rem;
+  bottom: 8.4rem;
+  right: 2.2rem;
   width: 4.8rem;
   height: 4.8rem;
   background-color: #ffffff;
@@ -415,8 +415,11 @@
   box-shadow: 0 0.8rem 2.4rem rgba(0, 0, 0, 0.15);
   cursor: pointer;
   z-index: 99;
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   text-decoration: none;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .footer-scroll-top-btn:hover {
@@ -439,6 +442,15 @@
   font-weight: 700;
   line-height: 1;
   margin-top: 0.2rem;
+}
+
+@media screen and (max-width: 749px) {
+  .footer-scroll-top-btn {
+    bottom: 7.4rem;
+    right: 1.8rem;
+    width: 4.2rem;
+    height: 4.2rem;
+  }
 }
 
 /* ========================================
